@@ -6,7 +6,8 @@ import { useBoards } from '@/hooks';
 const useDrawerItem = (id: string) => {
   const [showRemoveConfirmation, setShowRemoveConfirmation] = useState(false);
 
-  const { invalidate } = useBoards();
+  const { boards } = useBoards();
+  const invalidate = () => {};
 
   const publish = usePublish(['wss://nos.lol']);
 

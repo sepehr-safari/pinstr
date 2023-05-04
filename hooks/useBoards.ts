@@ -1,4 +1,4 @@
-import { useSubscribe, usePubkey } from 'nostr-hooks';
+import { usePubkey, useSubscribe } from 'nostr-hooks';
 import { useMemo } from 'react';
 
 import { Event } from 'nostr-hooks/dist/types';

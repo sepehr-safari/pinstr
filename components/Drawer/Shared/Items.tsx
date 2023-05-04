@@ -1,10 +1,11 @@
 import Image from 'next/image';
+
 import Item from './Item';
 
 interface ItemsParams {
   items: any[];
   eose: boolean;
-  activeItem?: string;
+  activeItem: string | undefined;
 }
 
 const Items = ({ eose, items, activeItem }: ItemsParams) => {
@@ -22,12 +23,12 @@ const Items = ({ eose, items, activeItem }: ItemsParams) => {
         />
       ) : null}
 
-      {items.map((board) => (
+      {items.map((item) => (
         <Item
-          key={board.id}
-          id={board.id}
-          title={board.name}
-          isActive={board.id === activeItem}
+          key={item.id}
+          id={item.id}
+          name={item.name}
+          isActive={item.id === activeItem}
         />
       ))}
     </>

@@ -6,19 +6,11 @@ import { useBoards } from '@/hooks';
 
 import { BoardsDrawer } from '@/components';
 
-// const boards = [
-//   'Best Nostr Clients',
-//   'Most Handsome Nostr Users',
-//   'Best Movies in History',
-//   'Best Nostr Development Tools',
-//   'Top Nostr Chatrooms',
-// ];
-
-export default function MyLayout({ children }: { children: React.ReactNode }) {
+const MyLayout = ({ children }: { children: React.ReactNode }) => {
   const params = useParams();
   const boardId = params ? params?.boardId : undefined;
 
-  const { pubkey, boards, eose } = useBoards();
+  const { pubkey } = useBoards();
 
   if (!pubkey) {
     return (
@@ -30,12 +22,9 @@ export default function MyLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <BoardsDrawer
-        main={children}
-        activeBoard={boardId}
-        boards={boards}
-        eose={eose}
-      />
+      <BoardsDrawer main={children} activeBoard={boardId} />
     </>
   );
-}
+};
+
+export default MyLayout;

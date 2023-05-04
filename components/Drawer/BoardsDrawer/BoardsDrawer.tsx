@@ -1,18 +1,15 @@
+import { useBoards } from '@/hooks';
+
 import { Layout, Items, Header, NewItemInput } from '../Shared';
 
 interface BoardsDrawerParams {
   main: React.ReactNode;
   activeBoard?: string;
-  boards: any[];
-  eose: boolean;
 }
 
-const BoardsDrawer = ({
-  main,
-  activeBoard,
-  boards,
-  eose,
-}: BoardsDrawerParams) => {
+const BoardsDrawer = ({ main, activeBoard }: BoardsDrawerParams) => {
+  const { boards, eose } = useBoards();
+
   return (
     <>
       <Layout

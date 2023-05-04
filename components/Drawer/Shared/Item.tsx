@@ -2,17 +2,17 @@
 
 import { CheckIcon, FolderIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import { memo } from 'react';
 
 import { useDrawerItem } from '@/hooks';
-import { memo } from 'react';
 
 interface BoardItemParams {
   id: string;
-  title: string;
+  name: string;
   isActive: boolean;
 }
 
-const Item = ({ id, title, isActive }: BoardItemParams) => {
+const Item = ({ id, name, isActive }: BoardItemParams) => {
   const { confirmRemove, setShowRemoveConfirmation, showRemoveConfirmation } =
     useDrawerItem(id);
 
@@ -25,7 +25,7 @@ const Item = ({ id, title, isActive }: BoardItemParams) => {
           </div>
 
           <Link prefetch={false} href={`/my/${id}`} className="w-full p-2">
-            {title}
+            {name}
           </Link>
 
           {showRemoveConfirmation && (
