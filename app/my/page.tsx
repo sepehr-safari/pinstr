@@ -5,7 +5,7 @@ import { useBoards } from '@/hooks';
 const My = () => {
   const { boards, eose } = useBoards();
 
-  if (!boards.length) {
+  if (!boards.size) {
     if (eose) {
       return (
         <>

@@ -8,7 +8,7 @@ import { BoardsDrawer } from '@/components';
 
 const MyLayout = ({ children }: { children: React.ReactNode }) => {
   const params = useParams();
-  const boardId = params ? params?.boardId : undefined;
+  const board = params ? decodeURIComponent(params.board) : undefined;
 
   const { pubkey } = useBoards();
 
@@ -22,7 +22,7 @@ const MyLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <>
-      <BoardsDrawer main={children} activeBoard={boardId} />
+      <BoardsDrawer main={children} activeBoard={board} />
     </>
   );
 };

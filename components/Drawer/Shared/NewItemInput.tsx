@@ -4,9 +4,9 @@ import { PlusIcon } from '@heroicons/react/24/outline';
 
 import { useNewItemInput } from '@/hooks';
 
-interface NewItemInputParams {
+type NewItemInputParams = {
   inputId: string;
-}
+};
 
 const NewItemInput = ({ inputId }: NewItemInputParams) => {
   const { handleOnChange, handleOnKeyDown, handlePublish, newBoardInput } =
@@ -15,7 +15,9 @@ const NewItemInput = ({ inputId }: NewItemInputParams) => {
   return (
     <>
       <div className="px-4 py-2 flex gap-2 items-center">
-        <PlusIcon className="h-4 w-4" />
+        <div className="w-5 h-5 inline-block">
+          <PlusIcon />
+        </div>
         <input
           id={inputId}
           type="text"

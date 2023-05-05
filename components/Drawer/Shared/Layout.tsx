@@ -1,8 +1,8 @@
-interface LayoutProps {
+type LayoutProps = {
   drawerId: string;
   main: React.ReactNode;
   drawer: React.ReactNode;
-}
+};
 
 const Layout = ({ drawer, drawerId, main }: LayoutProps) => {
   return (
@@ -14,7 +14,7 @@ const Layout = ({ drawer, drawerId, main }: LayoutProps) => {
         </div>
         <div className="drawer-side">
           <label htmlFor={drawerId} className="drawer-overlay"></label>
-          <ul className="menu menu-compact w-80 bg-base-200 border-r-[1px] border-neutral-600">
+          <ul className="menu menu-compact w-80 bg-base-200 border-r-[1px] border-neutral">
             {drawer}
           </ul>
         </div>

@@ -1,39 +1,35 @@
 'use client';
 
-import { CheckIcon, FolderIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { CheckIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import { memo } from 'react';
+import { memo, useState } from 'react';
 
-import { useDrawerItem } from '@/hooks';
-
-interface BoardItemParams {
-  id: string;
+type BoardItemParams = {
   name: string;
   isActive: boolean;
-}
+  icon: React.ReactNode;
+  removeHandler: () => void;
+};
 
-const Item = ({ id, name, isActive }: BoardItemParams) => {
-  const { confirmRemove, setShowRemoveConfirmation, showRemoveConfirmation } =
-    useDrawerItem(id);
+const Item = ({ name, isActive, icon, removeHandler }: BoardItemParams) => {
+  const [showRemoveConfirmation, setShowRemoveConfirmation] = useState(false);
 
   return (
     <>
-      <li key={id} className="group">
+      <li key={name} className="group">
         <div className={isActive ? 'active' : 'py-0'}>
-          <div>
-            <FolderIcon className="h-4 w-4" />
-          </div>
+          <div className="w-5 h-5 flex">{icon}</div>
 
-          <Link prefetch={false} href={`/my/${id}`} className="w-full p-2">
+          <Link prefetch={false} href={`/my/${name}`} className="w-full p-2">
             {name}
           </Link>
 
           {showRemoveConfirmation && (
             <button
               className="ml-auto btn btn-ghost btn-square btn-xs opacity-0 group-hover:opacity-100"
-              onClick={() => confirmRemove()}
+              onClick={() => removeHandler()}
             >
-              <CheckIcon className="h-4 w-4" />
+              <CheckIcon className="w-5 h-5" />
             </button>
           )}
 
@@ -41,7 +37,7 @@ const Item = ({ id, name, isActive }: BoardItemParams) => {
             className="ml-auto btn btn-ghost btn-square btn-xs opacity-0 group-hover:opacity-100"
             onClick={() => setShowRemoveConfirmation((prev) => !prev)}
           >
-            <XMarkIcon className="h-4 w-4" />
+            <XMarkIcon className="w-5 h-5" />
           </button>
         </div>
       </li>

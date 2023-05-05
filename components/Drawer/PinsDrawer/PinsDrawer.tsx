@@ -1,24 +1,24 @@
-import { useMemo } from 'react';
+'use client';
 
-import { usePins } from '@/hooks';
+import { PaperClipIcon } from '@heroicons/react/24/outline';
 
-import { Layout, Items, Header } from '../Shared';
+import { useBoards, useRemovePin } from '@/hooks';
 
-interface PinsDrawerParams {
-  boardId: string | undefined;
+import { Header, Item, ItemsLoading, Layout } from '../Shared';
+
+type PinsDrawerParams = {
+  board: string | undefined;
   main: React.ReactNode;
   activePin: string | undefined;
-}
+};
 
-const PinsDrawer = ({ boardId, main, activePin }: PinsDrawerParams) => {
-  const { pins, eose } = usePins(boardId);
-  // console.log(pins);
-  const items = useMemo(
-    () => pins.map((pin) => ({ id: pin.id, name: pin['Title'] })),
-    [pins]
-  );
+const PinsDrawer = ({ board, main, activePin }: PinsDrawerParams) => {
+  const { boards } = useBoards();
+  const { removePin } = useRemovePin(board);
 
-  if (items.length === 0) {
+  const pins = board ? boards.get(board) : undefined;
+
+  if (!pins || pins.size === 0) {
     return <>{main}</>;
   }
 
@@ -30,11 +30,17 @@ const PinsDrawer = ({ boardId, main, activePin }: PinsDrawerParams) => {
           <>
             <Header inputId="new-pin-input" header="My Pins" />
 
-            <Items
-              activeItem={activePin}
-              items={[{ id: pins[0].id, name: 'sd' }]}
-              eose={eose}
-            />
+            <ItemsLoading items={pins} />
+
+            {Array.from(pins).map(([name]) => (
+              <Item
+                key={name}
+                name={name}
+                icon={<PaperClipIcon />}
+                isActive={name === activePin}
+                removeHandler={() => removePin(name)}
+              />
+            ))}
           </>
         }
         main={main}

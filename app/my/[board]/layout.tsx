@@ -8,15 +8,15 @@ import { PinsDrawer } from '@/components';
 
 const MyBoardLayout = ({ children }: { children: React.ReactNode }) => {
   const params = useParams();
-  const boardId = params ? params.boardId : undefined;
-  const pinId = params ? params.pinId : undefined;
+  const board = params ? decodeURIComponent(params.board) : undefined;
+  const pin = params ? decodeURIComponent(params.pin) : undefined;
 
   const { boards } = useBoards();
 
   return (
     <>
-      {boards.find((b) => b.id === boardId) && (
-        <PinsDrawer boardId={boardId} main={children} activePin={pinId} />
+      {board && boards.has(board) && (
+        <PinsDrawer board={board} main={children} activePin={pin} />
       )}
     </>
   );

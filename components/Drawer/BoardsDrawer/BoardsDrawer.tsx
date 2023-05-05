@@ -1,14 +1,19 @@
-import { useBoards } from '@/hooks';
+'use client';
 
-import { Layout, Items, Header, NewItemInput } from '../Shared';
+import { FolderIcon } from '@heroicons/react/24/outline';
 
-interface BoardsDrawerParams {
+import { useBoards, useRemoveBoard } from '@/hooks';
+
+import { Layout, Header, NewItemInput, ItemsLoading, Item } from '../Shared';
+
+type BoardsDrawerParams = {
   main: React.ReactNode;
   activeBoard?: string;
-}
+};
 
 const BoardsDrawer = ({ main, activeBoard }: BoardsDrawerParams) => {
-  const { boards, eose } = useBoards();
+  const { boards } = useBoards();
+  const { removeBoard } = useRemoveBoard();
 
   return (
     <>
@@ -18,7 +23,17 @@ const BoardsDrawer = ({ main, activeBoard }: BoardsDrawerParams) => {
           <>
             <Header inputId="new-board-input" header="My Boards" />
 
-            <Items activeItem={activeBoard} items={boards} eose={eose} />
+            <ItemsLoading items={boards} />
+
+            {Array.from(boards).map(([name]) => (
+              <Item
+                key={name}
+                name={name}
+                icon={<FolderIcon />}
+                isActive={name === activeBoard}
+                removeHandler={() => removeBoard(name)}
+              />
+            ))}
 
             <NewItemInput inputId="new-board-input" />
           </>

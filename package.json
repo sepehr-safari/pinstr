@@ -1,6 +1,6 @@
 {
   "name": "pinstr",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -17,6 +17,7 @@
     "daisyui": "^2.51.6",
     "eslint": "8.39.0",
     "eslint-config-next": "13.3.4",
+    "formik": "^2.2.9",
     "next": "13.3.4",
     "nostr-hooks": "^1.6.5",
     "postcss": "8.4.23",
