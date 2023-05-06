@@ -1,15 +1,10 @@
 'use client';
 
-import { useParams } from 'next/navigation';
-
 import { useBoards } from '@/hooks';
 
 import { BoardsDrawer } from '@/components';
 
 const MyLayout = ({ children }: { children: React.ReactNode }) => {
-  const params = useParams();
-  const board = params ? decodeURIComponent(params.board) : undefined;
-
   const { pubkey } = useBoards();
 
   if (!pubkey) {
@@ -22,7 +17,7 @@ const MyLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <>
-      <BoardsDrawer main={children} activeBoard={board} />
+      <BoardsDrawer main={children} />
     </>
   );
 };

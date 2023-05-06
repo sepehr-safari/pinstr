@@ -12,8 +12,14 @@ const useNewItemInput = () => {
 
   const handlePublish = useCallback(async () => {
     if (newBoardInput) {
-      // @ts-ignore
-      publish({ kind: 33888, tags: [['d', newBoardInput]] }).then(invalidate);
+      publish({
+        // @ts-ignore
+        kind: 33888,
+        tags: [
+          ['d', newBoardInput],
+          ['headers', 'Name'],
+        ],
+      }).then(invalidate);
       setNewBoardInput('');
     }
   }, [newBoardInput, invalidate, publish]);

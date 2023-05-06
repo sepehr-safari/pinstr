@@ -1,22 +1,20 @@
 'use client';
 
-import { useParams } from 'next/navigation';
-
-import { useBoards } from '@/hooks';
+import { useBoards, useCurrentBoard } from '@/hooks';
 
 import { PinsDrawer } from '@/components';
 
 const MyBoardLayout = ({ children }: { children: React.ReactNode }) => {
-  const params = useParams();
-  const board = params ? decodeURIComponent(params.board) : undefined;
-  const pin = params ? decodeURIComponent(params.pin) : undefined;
+  const { currentBoard } = useCurrentBoard();
 
   const { boards } = useBoards();
 
+  currentBoard.name && console.log(!!boards[currentBoard.name], 'my / [board]');
+
   return (
     <>
-      {board && boards.has(board) && (
-        <PinsDrawer board={board} main={children} activePin={pin} />
+      {currentBoard.name && !!boards[currentBoard.name] && (
+        <PinsDrawer main={children} />
       )}
     </>
   );

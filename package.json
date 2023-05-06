@@ -1,6 +1,6 @@
 {
   "name": "pinstr",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -19,7 +19,7 @@
     "eslint-config-next": "13.3.4",
     "formik": "^2.2.9",
     "next": "13.3.4",
-    "nostr-hooks": "^1.6.5",
+    "nostr-hooks": "^1.6.7",
     "postcss": "8.4.23",
     "react": "18.2.0",
     "react-dom": "18.2.0",

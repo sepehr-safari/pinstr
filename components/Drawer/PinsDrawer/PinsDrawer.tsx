@@ -2,23 +2,19 @@
 
 import { PaperClipIcon } from '@heroicons/react/24/outline';
 
-import { useBoards, useRemovePin } from '@/hooks';
+import { useCurrentBoard, useRemovePin } from '@/hooks';
 
 import { Header, Item, ItemsLoading, Layout } from '../Shared';
 
 type PinsDrawerParams = {
-  board: string | undefined;
   main: React.ReactNode;
-  activePin: string | undefined;
 };
 
-const PinsDrawer = ({ board, main, activePin }: PinsDrawerParams) => {
-  const { boards } = useBoards();
-  const { removePin } = useRemovePin(board);
+const PinsDrawer = ({ main }: PinsDrawerParams) => {
+  const { currentBoard, currentPin } = useCurrentBoard();
+  const { removePin } = useRemovePin();
 
-  const pins = board ? boards.get(board) : undefined;
-
-  if (!pins || pins.size === 0) {
+  if (!currentBoard.pins || Object.keys(currentBoard.pins).length === 0) {
     return <>{main}</>;
   }
 
@@ -30,14 +26,15 @@ const PinsDrawer = ({ board, main, activePin }: PinsDrawerParams) => {
           <>
             <Header inputId="new-pin-input" header="My Pins" />
 
-            <ItemsLoading items={pins} />
+            <ItemsLoading items={currentBoard.pins} />
 
-            {Array.from(pins).map(([name]) => (
+            {Object.keys(currentBoard.pins).map((name) => (
               <Item
                 key={name}
                 name={name}
                 icon={<PaperClipIcon />}
-                isActive={name === activePin}
+                href={`/my/${currentBoard.name}/${name}`}
+                isActive={name === currentPin.name}
                 removeHandler={() => removePin(name)}
               />
             ))}
