@@ -53,7 +53,9 @@ const PinEditor = ({
       <div className="w-full p-4 md:p-10 lg:w-3/4">
         <div className="rounded-lg bg-base-200 border-[1px] border-neutral p-8 gap-2 flex flex-col">
           <div className="flex gap-2 items-start">
-            <FolderIcon className="w-6 h-6 " />
+            <div className="w-6 h-6">
+              <FolderIcon />
+            </div>
             <p className="text-lg font-bold">{boardName}</p>
           </div>
 
