@@ -4,34 +4,58 @@ import { useBoards } from '@/hooks';
 
 const useCurrentBoard = () => {
   const params = useParams();
-  const name = params ? decodeURIComponent(params.board) : undefined;
-  const currentPinName = params ? decodeURIComponent(params.pin) : undefined;
+  const currentBoardName = params?.board
+    ? decodeURIComponent(params.board)
+    : undefined;
+  const currentPinName = params?.pin
+    ? decodeURIComponent(params.pin)
+    : undefined;
 
   const { boards } = useBoards();
-  const headers: string[] | undefined = name
-    ? boards[name]?.headers
+  const currentBoardHeaders: string[] | undefined = currentBoardName
+    ? boards[currentBoardName]?.headers
     : undefined;
-  const pins: Pins | undefined = name ? boards[name]?.pins : undefined;
+  const currentBoardPins: Pins | undefined = currentBoardName
+    ? boards[currentBoardName]?.pins
+    : undefined;
 
-  const dTag = name ? ['d', name] : undefined;
-  const headersTag = headers ? ['headers', ...headers] : ['headers', 'Name'];
-  const pinTags: string[][] = pins
-    ? Object.entries(pins).map(([name, values]) => ['pin', name, ...values])
+  const dTag = currentBoardName ? ['d', currentBoardName] : undefined;
+  const headersTag = currentBoardHeaders
+    ? ['headers', ...currentBoardHeaders]
+    : ['headers', 'Name'];
+  const pinTags: string[][] = currentBoardPins
+    ? Object.entries(currentBoardPins).map(([name, values]) => [
+        'pin',
+        name,
+        ...values,
+      ])
     : [];
+
+  const pinItems: { [header: string]: string } = {};
+  currentBoardHeaders?.forEach((header, index) => {
+    if (currentBoardPins && currentPinName) {
+      if (header === 'Name') {
+        pinItems['Name'] = currentPinName;
+      } else {
+        pinItems[header] = currentBoardPins[currentPinName][index - 1];
+      }
+    }
+  });
 
   return {
     currentBoard: {
-      name,
-      headers,
-      pins,
+      name: currentBoardName,
+      headers: currentBoardHeaders,
+      pins: currentBoardPins,
     },
     currentTags: {
-      dTag,
-      headersTag,
-      pinTags,
+      d: dTag,
+      headers: headersTag,
+      pins: pinTags,
     },
     currentPin: {
       name: currentPinName,
+      items: pinItems,
     },
   };
 };

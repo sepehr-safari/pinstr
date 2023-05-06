@@ -1,8 +1,7 @@
 import { usePublish } from 'nostr-hooks';
 import { useCallback } from 'react';
 
-import useBoards from './useBoards';
-import useCurrentBoard from './useCurrentBoard';
+import { useBoards, useCurrentBoard } from '@/hooks';
 
 const useAddPin = () => {
   const publish = usePublish(['wss://nos.lol']);
@@ -12,12 +11,12 @@ const useAddPin = () => {
   const { currentBoard, currentTags } = useCurrentBoard();
 
   const addPin = useCallback(
-    (name: string, values: string[]) => {
+    (name: string, items: string[]) => {
       if (
         !name ||
         !currentBoard.name ||
-        !currentTags.dTag ||
-        !currentTags.headersTag
+        !currentTags.d ||
+        !currentTags.headers
       ) {
         return;
       }
@@ -26,10 +25,10 @@ const useAddPin = () => {
         // @ts-ignore
         kind: 33888,
         tags: [
-          currentTags.dTag,
-          currentTags.headersTag,
-          ...currentTags.pinTags,
-          ['pin', name, ...values],
+          currentTags.d,
+          currentTags.headers,
+          ...currentTags.pins,
+          ['pin', name, ...items],
         ],
       }).then((event) => {
         if (!event) return;

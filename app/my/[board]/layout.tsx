@@ -9,8 +9,6 @@ const MyBoardLayout = ({ children }: { children: React.ReactNode }) => {
 
   const { boards } = useBoards();
 
-  currentBoard.name && console.log(!!boards[currentBoard.name], 'my / [board]');
-
   return (
     <>
       {currentBoard.name && !!boards[currentBoard.name] && (

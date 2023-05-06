@@ -15,8 +15,8 @@ const useRemovePin = () => {
       if (
         !pin ||
         !currentBoard.name ||
-        !currentTags.dTag ||
-        !currentTags.headersTag
+        !currentTags.d ||
+        !currentTags.headers
       ) {
         return;
       }
@@ -25,9 +25,9 @@ const useRemovePin = () => {
         // @ts-ignore
         kind: 33888,
         tags: [
-          currentTags.dTag,
-          currentTags.headersTag,
-          ...currentTags.pinTags.filter((pinTag) => pinTag[1] !== pin),
+          currentTags.d,
+          currentTags.headers,
+          ...currentTags.pins.filter((pinTag) => pinTag[1] !== pin),
         ],
       }).then((event) => {
         if (!event) return;

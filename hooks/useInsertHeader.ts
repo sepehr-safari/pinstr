@@ -15,8 +15,8 @@ const useInsertHeader = () => {
       if (
         !header ||
         !currentBoard.name ||
-        !currentTags.dTag ||
-        !currentTags.headersTag
+        !currentTags.d ||
+        !currentTags.headers
       ) {
         return;
       }
@@ -25,9 +25,9 @@ const useInsertHeader = () => {
         // @ts-ignore
         kind: 33888,
         tags: [
-          currentTags.dTag,
-          [...currentTags.headersTag, header],
-          ...currentTags.pinTags,
+          currentTags.d,
+          [...currentTags.headers, header],
+          ...currentTags.pins,
         ],
       }).then((event) => {
         if (!event) return;
