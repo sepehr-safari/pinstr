@@ -6,20 +6,18 @@ import { parseBoardsFromEvents } from '@/utils';
 import { Filter } from 'nostr-hooks/dist/types';
 
 type Params = {
-  pubkey?: string | undefined;
+  pubkeys?: string[] | undefined;
   boardName?: string | undefined;
   enabled: boolean;
-  until?: number | undefined;
 };
 
-const useBoards = ({ pubkey, boardName, enabled, until }: Params) => {
+const useBoards = ({ pubkeys, boardName, enabled }: Params) => {
   const filter: Filter = {
     kinds: [33888],
     limit: 20,
-    until,
   };
-  if (!!pubkey) {
-    filter.authors = [pubkey];
+  if (!!pubkeys && pubkeys.length > 0) {
+    filter.authors = pubkeys;
   }
   if (!!boardName) {
     filter['#d'] = [boardName];

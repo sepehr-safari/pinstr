@@ -9,7 +9,7 @@ import { PinsDrawer } from '@/components';
 const MyBoardLayout = ({ children }: { children: React.ReactNode }) => {
   const pubkey = usePubkey();
   const { boardName } = useCurrentParams();
-  const { boards } = useBoards({ pubkey, enabled: !!pubkey });
+  const { boards } = useBoards({ pubkeys: [pubkey], enabled: !!pubkey });
   const currentBoard = boards.find((board) => board.name === boardName);
 
   if (!currentBoard) {

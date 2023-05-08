@@ -14,7 +14,10 @@ type PinsDrawerParams = {
 const PinsDrawer = ({ main }: PinsDrawerParams) => {
   const pubkey = usePubkey();
   const { boardName, pinName } = useCurrentParams();
-  const { boards, eose, invalidate } = useBoards({ pubkey, enabled: !!pubkey });
+  const { boards, eose, invalidate } = useBoards({
+    pubkeys: [pubkey],
+    enabled: !!pubkey,
+  });
   const currentBoard = boards.find((board) => board.name === boardName);
 
   const { removePin } = useRemovePin();

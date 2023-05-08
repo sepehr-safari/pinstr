@@ -12,7 +12,10 @@ import { NewHeaderInput } from '@/components';
 const PinEditor = () => {
   const pubkey = usePubkey();
   const { boardName, pinName } = useCurrentParams();
-  const { boards, invalidate } = useBoards({ pubkey, enabled: !!pubkey });
+  const { boards, invalidate } = useBoards({
+    pubkeys: [pubkey],
+    enabled: !!pubkey,
+  });
   const currentBoard = boards.find((board) => board.name === boardName);
 
   const { addPin } = useAddPin();

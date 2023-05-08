@@ -1,12 +1,22 @@
 'use client';
 
-import BoardCard from '@/components/BoardCard';
 import { useBoards } from '@/hooks';
-import { useState } from 'react';
+
+import BoardCard from '@/components/BoardCard';
+import { usePubkey } from 'nostr-hooks';
+import useContacts from '@/hooks/sub/useContacts';
 
 const Feed = () => {
-  const [until, setUntil] = useState<number | undefined>(undefined);
-  const { boards } = useBoards({ enabled: true, until });
+  const pubkey = usePubkey();
+  const { events } = useContacts({ pubkey });
+
+  const { boards } = useBoards({
+    pubkeys:
+      events && events.length > 0
+        ? events[0].tags.map((tag) => tag[1])
+        : undefined,
+    enabled: events && events.length > 0 && events[0].tags.length > 0,
+  });
 
   return (
     <>

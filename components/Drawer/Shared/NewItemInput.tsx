@@ -16,7 +16,7 @@ const NewItemInput = ({ inputId }: NewItemInputParams) => {
   const [newBoardInput, setNewBoardInput] = useState('');
 
   const pubkey = usePubkey();
-  const { invalidate } = useBoards({ pubkey, enabled: !!pubkey });
+  const { invalidate } = useBoards({ pubkeys: [pubkey], enabled: !!pubkey });
 
   const { addBoard } = useAddBoard();
 

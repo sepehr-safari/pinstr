@@ -10,12 +10,15 @@ const useInsertHeader = () => {
         return;
       }
 
+      const newHeaders = ['headers', ...board.headers];
+      if (!board.headers.includes(header)) newHeaders.push(header);
+
       publish({
         // @ts-ignore
         kind: 33888,
         tags: [
           ['d', board.name],
-          ['headers', ...board.headers, header],
+          newHeaders,
           ...board.pins.map((p) => ['pin', ...p]),
         ],
       }).then((event) => {

@@ -7,7 +7,7 @@ import { usePubkey } from 'nostr-hooks';
 const MyPin = () => {
   const pubkey = usePubkey();
   const { boardName, pinName } = useCurrentParams();
-  const { boards, eose } = useBoards({ pubkey, enabled: !!pubkey });
+  const { boards, eose } = useBoards({ pubkeys: [pubkey], enabled: !!pubkey });
   const currentBoard = boards.find((board) => board.name === boardName);
   const currentPin = currentBoard?.pins.find((pin) => pin[0] === pinName);
 

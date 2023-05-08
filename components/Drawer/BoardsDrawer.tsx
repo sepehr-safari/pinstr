@@ -15,7 +15,10 @@ const BoardsDrawer = ({ main }: BoardsDrawerParams) => {
   const { boardName } = useCurrentParams();
 
   const pubkey = usePubkey();
-  const { boards, eose, invalidate } = useBoards({ pubkey, enabled: !!pubkey });
+  const { boards, eose, invalidate } = useBoards({
+    pubkeys: [pubkey],
+    enabled: !!pubkey,
+  });
 
   const { removeBoard } = useRemoveBoard();
 
