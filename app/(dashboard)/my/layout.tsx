@@ -1,11 +1,11 @@
 'use client';
 
-import { useBoards } from '@/hooks';
+import { usePubkey } from 'nostr-hooks';
 
 import { BoardsDrawer } from '@/components';
 
 const MyLayout = ({ children }: { children: React.ReactNode }) => {
-  const { pubkey } = useBoards();
+  const pubkey = usePubkey();
 
   if (!pubkey) {
     return (

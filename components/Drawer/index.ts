@@ -1,2 +1,2 @@
-export * from './BoardsDrawer';
-export * from './PinsDrawer';
+export { default as BoardsDrawer } from './BoardsDrawer';
+export { default as PinsDrawer } from './PinsDrawer';

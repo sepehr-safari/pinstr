@@ -1,16 +1,40 @@
 'use client';
 
 import { PlusIcon } from '@heroicons/react/24/outline';
+import { useRouter } from 'next/navigation';
+import { usePubkey } from 'nostr-hooks';
+import { useCallback, useState } from 'react';
 
-import { useNewItemInput } from '@/hooks';
+import { useAddBoard, useBoards } from '@/hooks';
 
 type NewItemInputParams = {
   inputId: string;
 };
 
 const NewItemInput = ({ inputId }: NewItemInputParams) => {
-  const { handleOnChange, handleOnKeyDown, handlePublish, newBoardInput } =
-    useNewItemInput();
+  const router = useRouter();
+  const [newBoardInput, setNewBoardInput] = useState('');
+
+  const pubkey = usePubkey();
+  const { invalidate } = useBoards({ pubkey, enabled: !!pubkey });
+
+  const { addBoard } = useAddBoard();
+
+  const handleOnChange = useCallback(
+    (e: any) => setNewBoardInput(e.target.value),
+    []
+  );
+
+  const handleOnKeyDown = useCallback(
+    (e: any) => {
+      if (e.key === 'Enter') {
+        addBoard(newBoardInput, invalidate);
+        setNewBoardInput('');
+        router.push(`/my/${newBoardInput}`);
+      }
+    },
+    [addBoard, newBoardInput]
+  );
 
   return (
     <>
@@ -27,7 +51,6 @@ const NewItemInput = ({ inputId }: NewItemInputParams) => {
           value={newBoardInput}
           onChange={handleOnChange}
           onKeyDown={handleOnKeyDown}
-          onBlur={handlePublish}
         />
       </div>
     </>

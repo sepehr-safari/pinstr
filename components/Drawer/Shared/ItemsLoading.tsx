@@ -2,20 +2,17 @@
 
 import Image from 'next/image';
 
-import { useBoards } from '@/hooks';
-
 type ItemsParams = {
-  items: Pins | Boards;
+  items: Pin[] | Board[];
+  eose: boolean;
 };
 
-const ItemsLoading = ({ items }: ItemsParams) => {
-  const { eose } = useBoards();
-
+const ItemsLoading = ({ items, eose }: ItemsParams) => {
   return (
     <>
-      {Object.keys(items).length === 0 && !eose ? (
+      {!items.length && !eose ? (
         <button className="loading btn-xs btn rounded-none" />
-      ) : Object.keys(items).length === 0 && eose ? (
+      ) : !items.length && eose ? (
         <Image
           src="/empty.png"
           alt="Empty"

@@ -1,51 +1,35 @@
 'use client';
 
-import {
-  FolderIcon,
-  PaperClipIcon,
-  PlusIcon,
-} from '@heroicons/react/24/outline';
+import { FolderIcon, PaperClipIcon } from '@heroicons/react/24/outline';
+import { usePubkey } from 'nostr-hooks';
+import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { useAddPin, useInsertHeader } from '@/hooks';
-import { useCallback } from 'react';
+import { useAddPin, useBoards, useCurrentParams } from '@/hooks';
 
-const PinEditor = ({
-  boardName,
-  initialData,
-  pinName,
-}: {
-  boardName: string | undefined;
-  pinName?: string | undefined;
-  initialData: PinEditorFormData;
-}) => {
+import { NewHeaderInput } from '@/components';
+
+const PinEditor = () => {
+  const pubkey = usePubkey();
+  const { boardName, pinName } = useCurrentParams();
+  const { boards, invalidate } = useBoards({ pubkey, enabled: !!pubkey });
+  const currentBoard = boards.find((board) => board.name === boardName);
+
   const { addPin } = useAddPin();
-  const { insertHeader } = useInsertHeader();
 
   const {
     register,
-    watch,
     handleSubmit,
     formState: { errors },
   } = useForm<PinEditorFormData>();
 
   const onSubmit = useCallback(
     (data: PinEditorFormData) => {
-      let name = '';
-      let items = new Array<string>();
+      if (!currentBoard) return;
 
-      Object.entries(data).forEach(([header, value]) => {
-        if (header === 'Name') {
-          name = value;
-          return;
-        } else if (value) {
-          items.push(value);
-        }
-      });
-
-      addPin(name, items);
+      addPin(Object.values(data), currentBoard, invalidate);
     },
-    [addPin]
+    [addPin, currentBoard, invalidate]
   );
 
   return (
@@ -71,47 +55,40 @@ const PinEditor = ({
             className="flex flex-col gap-2"
             onSubmit={handleSubmit(onSubmit)}
           >
-            {Object.entries(initialData).map(([header, item]) => (
-              <div key={header} className="flex flex-col gap-2">
-                <label htmlFor={header} className="text-xs">
-                  {header}:
-                </label>
+            {currentBoard &&
+              currentBoard.headers.map((header, index) => (
+                <div key={header} className="flex flex-col gap-2">
+                  <label htmlFor={header} className="text-xs">
+                    {header}:
+                  </label>
 
-                <input
-                  className="input input-sm bg-neutral text-neutral-content"
-                  type="text"
-                  placeholder={header}
-                  defaultValue={item}
-                  autoComplete="off"
-                  {...register(header, { required: header === 'Name' })}
-                />
+                  <input
+                    className="input input-sm bg-neutral text-neutral-content"
+                    type="text"
+                    placeholder={header}
+                    defaultValue={
+                      currentBoard.pins.find((pin) => pin[0] === pinName)?.[
+                        index
+                      ] || ''
+                    }
+                    autoComplete="off"
+                    {...register(`${index}_${header}`, {
+                      required: header === 'Name',
+                    })}
+                  />
 
-                {header === 'Name' && errors['Name']?.type === 'required' && (
-                  <span className="text-warning text-sm">
-                    Name is required!
-                  </span>
-                )}
-              </div>
-            ))}
+                  {header === 'Name' && errors['Name']?.type === 'required' && (
+                    <span className="text-warning text-sm">
+                      Name is required!
+                    </span>
+                  )}
+                </div>
+              ))}
 
-            <div className="flex gap-2 items-center mt-4">
-              <input
-                type="text"
-                className="bg-transparent border-b-[1px] border-neutral outline-none text-sm text-neutral-content w-28"
-                placeholder="Add an item"
-                autoComplete="off"
-                {...register('newHeader')}
-              />
-              <button
-                className={`btn btn-xs btn-square ${
-                  watch('newHeader') ? null : 'hidden'
-                }`}
-                type="button"
-                onClick={() => insertHeader(watch('newHeader'))}
-              >
-                <PlusIcon className="w-5 h-5" />
-              </button>
-            </div>
+            <NewHeaderInput
+              currentBoard={currentBoard}
+              invalidate={invalidate}
+            />
 
             <hr className="my-4 border-neutral" />
 

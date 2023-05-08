@@ -1,12 +1,11 @@
-type Pins = {
-  [name: string]: string[];
+type Pin = string[];
+
+type Board = {
+  id: string;
+  pubkey: string;
+  name: string;
+  headers: string[];
+  pins: Pin[];
 };
 
-type Boards = {
-  [d: string]: {
-    headers: string[];
-    pins: Pins;
-  };
-};
-
-type PinEditorFormData = { [header: string]: string };
+type PinEditorFormData = { [key: string]: string };

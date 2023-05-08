@@ -1,7 +1,7 @@
 import { Event } from 'nostr-hooks/dist/types';
 
 const parseBoardsFromEvents = (events: Event[]) => {
-  const boards: Boards = {};
+  const boards: Board[] = [];
   for (let event of events) {
     const tags = event.tags;
     const dTag = tags.find((tag) => tag[0] === 'd');
@@ -12,13 +12,15 @@ const parseBoardsFromEvents = (events: Event[]) => {
 
     const pinTags = tags.filter((tag) => tag[0] === 'pin');
 
-    boards[dTag[1]] = {
+    boards.push({
+      id: event.id,
+      pubkey: event.pubkey,
+      name: dTag[1],
       headers: headersTag.slice(1),
-      pins: pinTags.reduce<Pins>((pins, pinTag) => {
-        pins[pinTag[1]] = pinTag.slice(2);
-        return pins;
-      }, {}),
-    };
+      pins: pinTags.reduce<Pin[]>((pins, pinTag) => {
+        return [...pins, pinTag.slice(1)];
+      }, []),
+    });
   }
 
   return boards;

@@ -1,23 +1,12 @@
 import { usePublish } from 'nostr-hooks';
 import { useCallback } from 'react';
 
-import { useBoards, useCurrentBoard } from '@/hooks';
-
 const useInsertHeader = () => {
   const publish = usePublish(['wss://nos.lol']);
 
-  const { invalidate } = useBoards();
-
-  const { currentBoard, currentTags } = useCurrentBoard();
-
   const insertHeader = useCallback(
-    (header: string) => {
-      if (
-        !header ||
-        !currentBoard.name ||
-        !currentTags.d ||
-        !currentTags.headers
-      ) {
+    (header: string, board: Board, invalidate: () => void) => {
+      if (!header || board.headers.length === 0) {
         return;
       }
 
@@ -25,9 +14,9 @@ const useInsertHeader = () => {
         // @ts-ignore
         kind: 33888,
         tags: [
-          currentTags.d,
-          [...currentTags.headers, header],
-          ...currentTags.pins,
+          ['d', board.name],
+          ['headers', ...board.headers, header],
+          ...board.pins.map((p) => ['pin', ...p]),
         ],
       }).then((event) => {
         if (!event) return;
@@ -35,7 +24,7 @@ const useInsertHeader = () => {
         invalidate();
       });
     },
-    [invalidate, publish, currentBoard, currentTags]
+    [publish]
   );
 
   return {
