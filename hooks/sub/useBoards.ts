@@ -9,12 +9,14 @@ type Params = {
   pubkey?: string | undefined;
   boardName?: string | undefined;
   enabled: boolean;
+  until?: number | undefined;
 };
 
-const useBoards = ({ pubkey, boardName, enabled }: Params) => {
+const useBoards = ({ pubkey, boardName, enabled, until }: Params) => {
   const filter: Filter = {
     kinds: [33888],
     limit: 20,
+    until,
   };
   if (!!pubkey) {
     filter.authors = [pubkey];

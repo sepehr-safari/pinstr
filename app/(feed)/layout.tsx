@@ -3,5 +3,9 @@ export default function FeedLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <div className="flex flex-col gap-4 justify-center items-center p-4">
+      {children}
+    </div>
+  );
 }

@@ -1,5 +1,6 @@
 'use client';
 
+import { useBoards } from '@/hooks';
 import {
   BoltIcon,
   ChatBubbleLeftIcon,
@@ -9,12 +10,16 @@ import {
 } from '@heroicons/react/24/outline';
 
 type BoardCardProps = {
-  author: string;
+  pubkey: string;
   boardName: string;
 };
 
-const BoardCard = ({ author, boardName }: BoardCardProps) => {
-  //
+const BoardCard = ({ pubkey, boardName }: BoardCardProps) => {
+  const { boards } = useBoards({
+    pubkey,
+    boardName,
+    enabled: !!pubkey && !!boardName,
+  });
 
   return (
     <>
