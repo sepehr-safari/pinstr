@@ -7,6 +7,7 @@ import {
   PaperClipIcon,
   StarIcon,
 } from '@heroicons/react/24/outline';
+import Link from 'next/link';
 
 import { useBoards, useMetadata } from '@/hooks';
 
@@ -24,18 +25,20 @@ const BoardCard = ({ pubkey, boardName }: BoardCardProps) => {
     enabled: !!pubkey && !!boardName,
   });
 
-  const { name, picture } = useMetadata({ pubkey });
+  const { name, picture, npub } = useMetadata({ pubkey });
 
   return (
     <>
       <div className="flex flex-col gap-2 border-neutral-700 border-[1px] rounded-xl bg-base-200 max-w-screen-lg w-full">
         <div className="p-4 gap-4 flex items-center border-b border-neutral">
-          <div className="avatar">
-            <div className="w-10 rounded-xl">
-              <img src={picture || '/pinstr.png'} />
+          <Link href={`/p/${npub}`} className="flex gap-2 items-center">
+            <div className="avatar">
+              <div className="w-10 rounded-xl">
+                <img src={picture || '/pinstr.png'} />
+              </div>
             </div>
-          </div>
-          <h2 className="text-lg">{name}</h2>
+            <h2 className="text-lg">{name}</h2>
+          </Link>
           <div className="ml-auto">
             <p className="text-xs text-neutral-500">
               {events.length > 0 && formatRelativeTime(events[0].created_at)}

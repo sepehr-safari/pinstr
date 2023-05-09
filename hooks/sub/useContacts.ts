@@ -1,13 +1,13 @@
 import { useSubscribe } from 'nostr-hooks';
 
 type Params = {
-  pubkey: string;
+  pubkey: string | undefined;
 };
 
 const useContacts = ({ pubkey }: Params) => {
   const { events, eose } = useSubscribe({
     relays: ['wss://nos.lol'],
-    filters: [{ authors: [pubkey], kinds: [3] }],
+    filters: pubkey ? [{ authors: [pubkey], kinds: [3] }] : [],
     options: { enabled: !!pubkey },
   });
 

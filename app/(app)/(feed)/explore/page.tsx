@@ -5,7 +5,7 @@ import { useBoards } from '@/hooks';
 import BoardCard from '@/components/BoardCard';
 
 const FeedExplore = () => {
-  const { boards } = useBoards({ enabled: true });
+  const { boards } = useBoards({ enabled: true, autoInvalidate: true });
 
   return (
     <>

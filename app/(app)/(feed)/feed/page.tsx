@@ -16,6 +16,7 @@ const Feed = () => {
         ? events[0].tags.map((tag) => tag[1])
         : undefined,
     enabled: events && events.length > 0 && events[0].tags.length > 0,
+    autoInvalidate: true,
   });
 
   return (

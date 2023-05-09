@@ -6,7 +6,10 @@ import { useBoards } from '@/hooks';
 
 const My = () => {
   const pubkey = usePubkey();
-  const { boards, eose } = useBoards({ pubkeys: [pubkey], enabled: !!pubkey });
+  const { boards, eose } = useBoards({
+    pubkeys: [pubkey],
+    enabled: !!pubkey,
+  });
 
   if (boards.length === 0) {
     if (eose) {

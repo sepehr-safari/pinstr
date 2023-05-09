@@ -6,10 +6,12 @@ const useCurrentParams = () => {
     ? decodeURIComponent(params.board)
     : undefined;
   const pinName = params?.pin ? decodeURIComponent(params.pin) : undefined;
+  const npub = params?.npub || undefined;
 
   return {
     boardName,
     pinName,
+    npub,
   };
 };
 

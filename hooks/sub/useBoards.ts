@@ -9,9 +9,10 @@ type Params = {
   pubkeys?: string[] | undefined;
   boardName?: string | undefined;
   enabled: boolean;
+  autoInvalidate?: boolean;
 };
 
-const useBoards = ({ pubkeys, boardName, enabled }: Params) => {
+const useBoards = ({ pubkeys, boardName, enabled, autoInvalidate }: Params) => {
   const filter: Filter = {
     kinds: [33888],
     limit: 20,
@@ -26,7 +27,7 @@ const useBoards = ({ pubkeys, boardName, enabled }: Params) => {
   const { events, eose, invalidate } = useSubscribe({
     relays: ['wss://nos.lol'],
     filters: [filter],
-    options: { enabled },
+    options: { enabled, invalidate: autoInvalidate },
   });
 
   const boards = useMemo(() => parseBoardsFromEvents(events), [events]);

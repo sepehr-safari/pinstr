@@ -57,10 +57,4 @@ const MyPin = () => {
   );
 };
 
-// {!pins.length && eose && <></>}
-
-//  <label htmlFor="pins-drawer" className="btn btn-primary btn-sm lg:hidden">
-//    Create a new pin
-//  </label>;
-
 export default MyPin;
