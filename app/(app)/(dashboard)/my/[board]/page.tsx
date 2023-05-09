@@ -1,8 +1,10 @@
 'use client';
 
-import { PinEditor } from '@/components';
-import { useBoards, useCurrentParams } from '@/hooks';
 import { usePubkey } from 'nostr-hooks';
+
+import { useBoards, useCurrentParams } from '@/hooks';
+
+import { PinEditor } from '@/components';
 
 const MyBoard = () => {
   const pubkey = usePubkey();
@@ -47,11 +49,5 @@ const MyBoard = () => {
     </>
   );
 };
-
-// {!pins.length && eose && <></>}
-
-//  <label htmlFor="pins-drawer" className="btn btn-primary btn-sm lg:hidden">
-//    Create a new pin
-//  </label>;
 
 export default MyBoard;

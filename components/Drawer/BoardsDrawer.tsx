@@ -27,7 +27,7 @@ const BoardsDrawer = ({ main }: BoardsDrawerParams) => {
       <Layout
         drawerId="boards-drawer"
         drawer={
-          <>
+          <ul className="menu menu-compact w-80 bg-base-200 border-r-[1px] border-neutral">
             <Header inputId="new-board-input" header="My Boards" />
 
             <ItemsLoading items={boards} eose={eose} />
@@ -44,7 +44,7 @@ const BoardsDrawer = ({ main }: BoardsDrawerParams) => {
             ))}
 
             <NewItemInput inputId="new-board-input" />
-          </>
+          </ul>
         }
         main={main}
       />
