@@ -66,16 +66,18 @@ const Navbar = () => {
         </div>
 
         <div className="flex-none">
-          <Link
-            prefetch={false}
-            href="/feed"
-            className="btn-ghost btn rounded-full p-3 md:rounded-lg"
-          >
-            <div className="block w-6 md:hidden">
-              <HomeIcon />
-            </div>
-            <div className="hidden md:block">Feed</div>
-          </Link>
+          {!!pubkey && (
+            <Link
+              prefetch={false}
+              href="/feed"
+              className="btn-ghost btn rounded-full p-3 md:rounded-lg"
+            >
+              <div className="block w-6 md:hidden">
+                <HomeIcon />
+              </div>
+              <div className="hidden md:block">Feed</div>
+            </Link>
+          )}
           <Link
             prefetch={false}
             href="/explore"
@@ -86,27 +88,31 @@ const Navbar = () => {
             </div>
             <div className="hidden md:block">Explore</div>
           </Link>
-          <Link
-            prefetch={false}
-            href="/my"
-            className="btn-ghost btn rounded-full p-3 md:rounded-lg"
-          >
-            <div className="block w-6 md:hidden">
-              <UserIcon />
-            </div>
-            <div className="hidden md:block">My</div>
-          </Link>
+          {!!pubkey && (
+            <Link
+              prefetch={false}
+              href="/my"
+              className="btn-ghost btn rounded-full p-3 md:rounded-lg"
+            >
+              <div className="block w-6 md:hidden">
+                <UserIcon />
+              </div>
+              <div className="hidden md:block">My</div>
+            </Link>
+          )}
         </div>
 
-        <div className="flex-none">
-          <Link prefetch={false} href={`/p/${npub}`} className="">
-            <div className="avatar">
-              <div className="w-10 rounded-xl">
-                <img src={picture || '/pinstr.png'} />
+        {!!pubkey && (
+          <div className="flex-none">
+            <Link prefetch={false} href={`/p/${npub}`} className="">
+              <div className="avatar">
+                <div className="w-10 rounded-xl">
+                  <img src={picture || '/pinstr.png'} />
+                </div>
               </div>
-            </div>
-          </Link>
-        </div>
+            </Link>
+          </div>
+        )}
       </div>
     </>
   );

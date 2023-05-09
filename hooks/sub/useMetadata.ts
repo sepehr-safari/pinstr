@@ -9,7 +9,7 @@ const useMetadata = ({ pubkey }: Params) => {
   const { events, eose } = useSubscribe({
     relays: ['wss://nos.lol'],
     filters: [{ authors: [pubkey], kinds: [0] }],
-    options: { enabled: !!pubkey },
+    options: { enabled: !!pubkey, batchingInterval: 800 },
   });
 
   const profile = events.length > 0 && JSON.parse(events[0]?.content || '{}');

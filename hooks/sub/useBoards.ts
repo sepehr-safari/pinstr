@@ -27,7 +27,7 @@ const useBoards = ({ pubkeys, boardName, enabled, autoInvalidate }: Params) => {
   const { events, eose, invalidate } = useSubscribe({
     relays: ['wss://nos.lol'],
     filters: [filter],
-    options: { enabled, invalidate: autoInvalidate },
+    options: { enabled, batchingInterval: 800, invalidate: autoInvalidate },
   });
 
   const boards = useMemo(() => parseBoardsFromEvents(events), [events]);

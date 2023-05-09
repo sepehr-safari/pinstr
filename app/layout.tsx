@@ -1,6 +1,8 @@
 import './globals.css';
 import { Cairo } from 'next/font/google';
 
+import { Navbar } from '@/components';
+
 const inter = Cairo({ subsets: ['latin'] });
 
 export const metadata = {
@@ -15,7 +17,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="h-full">
-      <body className={`h-full ${inter.className}`}>{children}</body>
+      <body className={`h-full ${inter.className}`}>
+        <Navbar />
+
+        {children}
+      </body>
     </html>
   );
 }

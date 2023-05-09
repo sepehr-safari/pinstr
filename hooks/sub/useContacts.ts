@@ -8,7 +8,7 @@ const useContacts = ({ pubkey }: Params) => {
   const { events, eose } = useSubscribe({
     relays: ['wss://nos.lol'],
     filters: pubkey ? [{ authors: [pubkey], kinds: [3] }] : [],
-    options: { enabled: !!pubkey },
+    options: { enabled: !!pubkey, batchingInterval: 800 },
   });
 
   return {
