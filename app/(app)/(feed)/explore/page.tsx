@@ -5,7 +5,24 @@ import { useBoards } from '@/hooks';
 import BoardCard from '@/components/BoardCard';
 
 const FeedExplore = () => {
-  const { boards } = useBoards({ enabled: true, autoInvalidate: true });
+  const { boards, eose } = useBoards({ enabled: true, autoInvalidate: true });
+
+  if (boards.length === 0) {
+    if (eose) {
+      return (
+        <>
+          <p>Hello 👋</p>
+          <p>No boards!</p>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <button className="loading btn-sm btn btn-wide" />
+        </>
+      );
+    }
+  }
 
   return (
     <>

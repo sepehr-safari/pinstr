@@ -10,7 +10,7 @@ const Feed = () => {
   const pubkey = usePubkey();
   const { events } = useContacts({ pubkey });
 
-  const { boards } = useBoards({
+  const { boards, eose } = useBoards({
     pubkeys:
       events && events.length > 0
         ? events[0].tags.map((tag) => tag[1])
@@ -18,6 +18,23 @@ const Feed = () => {
     enabled: events && events.length > 0 && events[0].tags.length > 0,
     autoInvalidate: true,
   });
+
+  if (boards.length === 0) {
+    if (eose) {
+      return (
+        <>
+          <p>Hello 👋</p>
+          <p>No boards!</p>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <button className="loading btn-sm btn btn-wide" />
+        </>
+      );
+    }
+  }
 
   return (
     <>

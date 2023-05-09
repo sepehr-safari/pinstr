@@ -9,8 +9,8 @@ const Layout = ({ drawer, drawerId, main }: LayoutProps) => {
     <>
       <div
         className={`h-full drawer ${
-          drawerId === 'pins-drawer' ? 'xl:' : ''
-        }drawer-mobile`}
+          drawerId === 'pins-drawer' ? 'xl:drawer-mobile' : 'drawer-mobile'
+        }`}
       >
         <input id={drawerId} type="checkbox" className="drawer-toggle" />
         <div className="drawer-content flex flex-col items-center justify-center gap-2">

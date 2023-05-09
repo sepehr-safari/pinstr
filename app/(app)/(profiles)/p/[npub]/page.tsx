@@ -10,11 +10,28 @@ const Profile = () => {
   const { npub } = useCurrentParams();
   const pubkey = npub && nip19.decode(npub).data.toString();
 
-  const { boards } = useBoards({
+  const { boards, eose } = useBoards({
     pubkeys: pubkey ? [pubkey] : undefined,
     enabled: !!pubkey,
     autoInvalidate: true,
   });
+
+  if (boards.length === 0) {
+    if (eose) {
+      return (
+        <>
+          <p>Hello 👋</p>
+          <p>No boards!</p>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <button className="loading btn-sm btn btn-wide" />
+        </>
+      );
+    }
+  }
 
   return (
     <>
