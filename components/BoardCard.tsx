@@ -33,6 +33,7 @@ const BoardCard = ({ pubkey, boardName }: BoardCardProps) => {
       <div className="flex flex-col gap-2 border-neutral-700 border-[1px] rounded-xl bg-base-200 max-w-screen-lg w-full">
         <div className="p-4 gap-4 flex items-center border-b border-neutral">
           <Link
+            prefetch={false}
             href={`/p/${npub}`}
             className="flex gap-2 items-center hover:translate-x-1 hover:text-primary ease-in-out transition-all duration-200"
           >
@@ -52,6 +53,7 @@ const BoardCard = ({ pubkey, boardName }: BoardCardProps) => {
         <div className="flex flex-col grow gap-4 p-4">
           <div className="flex gap-2 items-center">
             <Link
+              prefetch={false}
               href={`/p/${npub}/${boardName}`}
               className="flex gap-2 items-center  hover:text-primary hover:translate-x-1 ease-in-out transition-all duration-200"
             >
@@ -64,6 +66,7 @@ const BoardCard = ({ pubkey, boardName }: BoardCardProps) => {
             </Link>
 
             <Link
+              prefetch={false}
               href={`/explore/${boardName}`}
               className="ml-auto btn btn-xs bg-neutral"
             >

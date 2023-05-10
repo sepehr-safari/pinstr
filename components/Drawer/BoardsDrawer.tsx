@@ -7,6 +7,8 @@ import { useBoards, useCurrentParams, useRemoveBoard } from '@/hooks';
 
 import { Header, Item, ItemsLoading, Layout, NewItemInput } from './Shared';
 
+import { GithubIcon } from '@/components';
+
 type BoardsDrawerParams = {
   main: React.ReactNode;
 };
@@ -27,24 +29,35 @@ const BoardsDrawer = ({ main }: BoardsDrawerParams) => {
       <Layout
         drawerId="boards-drawer"
         drawer={
-          <ul className="menu menu-compact w-80 bg-base-200 border-r-[1px] border-neutral">
+          <div className="menu menu-compact w-80 bg-base-200 border-r-[1px] border-neutral">
             <Header inputId="new-board-input" header="My Boards" />
 
             <ItemsLoading items={boards} eose={eose} />
 
-            {boards.map((board) => (
-              <Item
-                key={board.name}
-                name={board.name}
-                icon={<FolderIcon />}
-                href={`/my/${board.name}`}
-                isActive={board.name === boardName}
-                removeHandler={() => removeBoard(board, invalidate)}
-              />
-            ))}
+            <ul>
+              {boards.map((board) => (
+                <Item
+                  key={board.name}
+                  name={board.name}
+                  icon={<FolderIcon />}
+                  href={`/my/${board.name}`}
+                  isActive={board.name === boardName}
+                  removeHandler={() => removeBoard(board, invalidate)}
+                />
+              ))}
+            </ul>
 
             <NewItemInput inputId="new-board-input" />
-          </ul>
+
+            <div className="fixed bottom-20 w-full">
+              <p className="text-sm text-neutral-500 inline-flex items-center justify-center gap-2 w-full">
+                <span>Made with &#10084; by Sepehr</span>
+                <a href="https://github.com/sepehr-safari/pinstr">
+                  <GithubIcon />
+                </a>
+              </p>
+            </div>
+          </div>
         }
         main={main}
       />
