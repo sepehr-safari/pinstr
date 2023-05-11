@@ -68,7 +68,11 @@ const PinEditor = () => {
                   <input
                     className="input input-sm bg-neutral text-neutral-content"
                     type="text"
-                    placeholder={header}
+                    placeholder={
+                      header === 'Name'
+                        ? 'Enter Name (e.g. The Godfather)'
+                        : `Enter a value for ${header}`
+                    }
                     defaultValue={
                       currentBoard.pins.find((pin) => pin[0] === pinName)?.[
                         index

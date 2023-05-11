@@ -1,12 +1,18 @@
 'use client';
 
 import { usePubkey } from 'nostr-hooks';
+import { useEffect } from 'react';
 
 import { useBoards } from '@/hooks';
+import { toggleDrawer } from '@/utils';
 
 const My = () => {
   const pubkey = usePubkey();
   const { boards, eose } = useBoards({ pubkeys: [pubkey], enabled: !!pubkey });
+
+  useEffect(() => {
+    toggleDrawer('boards-drawer', true);
+  }, []);
 
   if (boards.length === 0) {
     if (eose) {

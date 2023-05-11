@@ -1,5 +1,6 @@
 'use client';
 
+import { toggleDrawer } from '@/utils';
 import { CheckIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { memo, useState } from 'react';
@@ -27,7 +28,15 @@ const Item = ({
         <div className={isActive ? 'active' : 'py-0'}>
           <div className="w-5 h-5 flex">{icon}</div>
 
-          <Link prefetch={false} href={href} className="w-full p-2">
+          <Link
+            prefetch={false}
+            href={href}
+            className="w-full p-2"
+            onClick={() => {
+              toggleDrawer('boards-drawer', false);
+              toggleDrawer('pins-drawer', false);
+            }}
+          >
             {name}
           </Link>
 

@@ -10,7 +10,8 @@ import {
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { usePubkey } from 'nostr-hooks';
-import { useCallback } from 'react';
+
+import { toggleDrawer } from '@/utils';
 
 import { useCurrentParams, useMetadata } from '@/hooks';
 
@@ -23,13 +24,6 @@ const Navbar = () => {
   const pubkey = usePubkey();
   const { picture, npub } = useMetadata({ pubkey });
 
-  const uncheckById = useCallback((id: string) => {
-    const checkbox = document.getElementById(id) as HTMLInputElement;
-    if (!checkbox) return;
-
-    checkbox.checked = false;
-  }, []);
-
   return (
     <>
       <div className="navbar fixed top-0 z-30 gap-2 bg-base-200 border-b-[1px] border-neutral-700">
@@ -39,7 +33,7 @@ const Navbar = () => {
               <label
                 htmlFor="boards-drawer"
                 className="btn btn-square btn-ghost"
-                onClick={() => uncheckById('pins-drawer')}
+                onClick={() => toggleDrawer('pins-drawer', false)}
               >
                 <FolderIcon className="h-6 w-6" />
               </label>
@@ -49,7 +43,7 @@ const Navbar = () => {
                 <label
                   htmlFor="pins-drawer"
                   className="btn btn-square btn-ghost"
-                  onClick={() => uncheckById('boards-drawer')}
+                  onClick={() => toggleDrawer('boards-drawer', false)}
                 >
                   <PaperClipIcon className="h-6 w-6" />
                 </label>

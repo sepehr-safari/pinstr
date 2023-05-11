@@ -1,5 +1,5 @@
 type LayoutProps = {
-  drawerId: 'pins-drawer' | 'boards-drawer';
+  drawerId: DrawerId;
   main: React.ReactNode;
   drawer: React.ReactNode;
 };

@@ -21,3 +21,5 @@ type Author = {
   lud06: string;
   website: string;
 };
+
+type DrawerId = 'pins-drawer' | 'boards-drawer';
