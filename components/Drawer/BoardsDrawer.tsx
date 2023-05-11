@@ -49,7 +49,7 @@ const BoardsDrawer = ({ main }: BoardsDrawerParams) => {
 
             <NewItemInput inputId="new-board-input" />
 
-            <div className="fixed bottom-20 w-full">
+            <div className="fixed bottom-6 w-full">
               <p className="text-sm text-neutral-500 inline-flex items-center justify-center gap-2 w-full">
                 <span>Made with &#10084; by Sepehr</span>
                 <a href="https://github.com/sepehr-safari/pinstr">

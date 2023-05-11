@@ -32,7 +32,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="navbar gap-2 bg-base-200 border-b-[1px] border-neutral-700">
+      <div className="navbar fixed top-0 z-30 gap-2 bg-base-200 border-b-[1px] border-neutral-700">
         {isDashboard && (
           <>
             <div className="flex-none lg:hidden">
@@ -100,6 +100,15 @@ const Navbar = () => {
               <div className="hidden md:block">My</div>
             </Link>
           )}
+          {/* {!pubkey && (
+            <Link
+              prefetch={false}
+              href="/login"
+              className="btn-ghost btn rounded-full p-3 md:rounded-lg"
+            >
+              Login
+            </Link>
+          )} */}
         </div>
 
         {!!pubkey && (

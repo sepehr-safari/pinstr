@@ -21,6 +21,9 @@ const Hero = () => {
             <Link prefetch={false} href="/explore" className="btn-primary btn">
               Explore
             </Link>
+            {/* <Link prefetch={false} href="/login" className="btn ml-2">
+              Login
+            </Link> */}
           </div>
         </div>
       </div>
