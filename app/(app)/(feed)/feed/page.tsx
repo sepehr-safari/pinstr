@@ -1,10 +1,10 @@
 'use client';
 
-import { useBoards } from '@/hooks';
-
-import BoardCard from '@/components/BoardCard';
 import { usePubkey } from 'nostr-hooks';
-import useContacts from '@/hooks/sub/useContacts';
+
+import { useBoards, useContacts } from '@/hooks';
+
+import { BoardCard } from '@/components';
 
 const Feed = () => {
   const pubkey = usePubkey();

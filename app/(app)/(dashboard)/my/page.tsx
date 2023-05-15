@@ -4,6 +4,7 @@ import { usePubkey } from 'nostr-hooks';
 import { useEffect } from 'react';
 
 import { useBoards } from '@/hooks';
+
 import { toggleDrawer } from '@/utils';
 
 const My = () => {

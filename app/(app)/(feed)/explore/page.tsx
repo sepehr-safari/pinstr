@@ -2,7 +2,7 @@
 
 import { useBoards } from '@/hooks';
 
-import BoardCard from '@/components/BoardCard';
+import { BoardCard } from '@/components';
 
 const FeedExplore = () => {
   const { boards, eose } = useBoards({ enabled: true, autoInvalidate: true });

@@ -1,4 +1,4 @@
-export { default as BoardCard } from './BoardCard';
+export * from './BoardCard';
 export * from './Drawer';
 export { default as GithubIcon } from './GithubIcon';
 export { default as Hero } from './Hero';

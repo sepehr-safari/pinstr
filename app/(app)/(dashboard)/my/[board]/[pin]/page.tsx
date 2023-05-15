@@ -1,8 +1,10 @@
 'use client';
 
-import { PinEditor } from '@/components';
-import { useBoards, useCurrentParams } from '@/hooks';
 import { usePubkey } from 'nostr-hooks';
+
+import { useBoards, useCurrentParams } from '@/hooks';
+
+import { PinEditor } from '@/components';
 
 const MyPin = () => {
   const pubkey = usePubkey();
