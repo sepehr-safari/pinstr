@@ -32,20 +32,20 @@ const Navbar = () => {
             <div className="flex-none lg:hidden">
               <label
                 htmlFor="boards-drawer"
-                className="btn btn-square btn-ghost"
+                className="btn btn-square btn-ghost btn-sm"
                 onClick={() => toggleDrawer('pins-drawer', false)}
               >
-                <FolderIcon className="h-6 w-6" />
+                <FolderIcon className="h-5 w-5 lg:h-6 lg:w-6" />
               </label>
             </div>
             {boardName && (
               <div className="flex-none xl:hidden">
                 <label
                   htmlFor="pins-drawer"
-                  className="btn btn-square btn-ghost"
+                  className="btn btn-square btn-ghost btn-sm"
                   onClick={() => toggleDrawer('boards-drawer', false)}
                 >
-                  <PaperClipIcon className="h-6 w-6" />
+                  <PaperClipIcon className="h-5 w-5 lg:h-6 lg:w-6" />
                 </label>
               </div>
             )}
@@ -53,8 +53,12 @@ const Navbar = () => {
         )}
 
         <div className="flex-1 gap-2">
-          <a className="btn btn-ghost gap-2 text-xl">
-            <img src="/pinstr.png" alt="Pinstr.app" className="h-6 w-6" />
+          <a className="flex items-center cursor-pointer gap-2 text-lg md:text-xl">
+            <img
+              src="/pinstr.png"
+              alt="Pinstr.app"
+              className="h-5 w-5 md:h-6 md:w-6"
+            />
             Pinstr
           </a>
         </div>
@@ -64,9 +68,9 @@ const Navbar = () => {
             <Link
               prefetch={false}
               href="/feed"
-              className="btn-ghost btn rounded-full p-3 md:rounded-lg"
+              className="btn-ghost btn btn-sm max-md:btn-circle"
             >
-              <div className="block w-6 md:hidden">
+              <div className="block w-5 md:hidden">
                 <HomeIcon />
               </div>
               <div className="hidden md:block">Feed</div>
@@ -75,9 +79,9 @@ const Navbar = () => {
           <Link
             prefetch={false}
             href="/explore"
-            className="btn-ghost btn rounded-full p-3 md:rounded-lg"
+            className="btn-ghost btn btn-sm max-md:btn-circle"
           >
-            <div className="block w-6 md:hidden">
+            <div className="block w-5 md:hidden">
               <HashtagIcon />
             </div>
             <div className="hidden md:block">Explore</div>
@@ -86,9 +90,9 @@ const Navbar = () => {
             <Link
               prefetch={false}
               href="/my"
-              className="btn-ghost btn rounded-full p-3 md:rounded-lg"
+              className="btn-ghost btn btn-sm max-md:btn-circle"
             >
-              <div className="block w-6 md:hidden">
+              <div className="block w-5 md:hidden">
                 <UserIcon />
               </div>
               <div className="hidden md:block">My</div>
@@ -98,7 +102,7 @@ const Navbar = () => {
             <Link
               prefetch={false}
               href="/login"
-              className="btn-ghost btn rounded-full p-3 md:rounded-lg"
+              className="btn-ghost btn btn-sm max-md:btn-circle"
             >
               Login
             </Link>

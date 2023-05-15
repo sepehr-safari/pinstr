@@ -3,7 +3,6 @@
 import {
   BoltIcon,
   ChatBubbleLeftIcon,
-  ChevronRightIcon,
   FolderIcon,
   PaperClipIcon,
   StarIcon,
@@ -42,7 +41,7 @@ const BoardCard = ({ pubkey, boardName }: BoardCardProps) => {
                 <img src={picture || '/pinstr.png'} />
               </div>
             </div>
-            <h2 className="text-lg">{name}</h2>
+            <h2 className="lg:text-lg">{name}</h2>
           </Link>
           <div className="ml-auto">
             <p className="text-xs text-neutral-500">
@@ -57,10 +56,10 @@ const BoardCard = ({ pubkey, boardName }: BoardCardProps) => {
               href={`/p/${npub}/${boardName}`}
               className="flex gap-2 items-center  hover:text-primary hover:translate-x-1 ease-in-out transition-all duration-200"
             >
-              <h3 className="text-lg font-bold flex items-start gap-2">
-                <div className="h-6 w-6">
-                  <FolderIcon />
-                </div>
+              <div className="h-6 w-6">
+                <FolderIcon className="h-6 w-6" />
+              </div>
+              <h3 className="lg:text-lg font-bold flex items-start gap-2">
                 {boardName}
               </h3>
             </Link>
@@ -73,7 +72,7 @@ const BoardCard = ({ pubkey, boardName }: BoardCardProps) => {
               Explore
             </Link>
           </div>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 text-sm lg:text-base">
             {boards.length > 0 &&
               boards[0].pins.length > 0 &&
               boards[0].pins.map((pin) => (
@@ -82,25 +81,29 @@ const BoardCard = ({ pubkey, boardName }: BoardCardProps) => {
                   tabIndex={0}
                   className="collapse collapse-arrow bg-neutral rounded-lg"
                 >
-                  <div className="collapse-title p-2 min-h-0 flex gap-2 items-center">
+                  <div className="collapse-title px-2 py-1 min-h-0 flex gap-2 items-center">
                     <div className="h-5 w-5">
-                      <PaperClipIcon />
+                      <PaperClipIcon className="h-5 w-5" />
                     </div>
-                    {pin[0]}
+                    <span className="mr-8">{pin[0]}</span>
                   </div>
                   <div className="collapse-content">
-                    <ul>
+                    <ul className="flex flex-col gap-2 mt-2">
                       {pin.slice(1).map((item, index) => (
                         <li key={boards[0].headers[index + 1]}>
-                          <p className="inline-flex gap-2">
-                            <strong>{boards[0].headers[index + 1]}:</strong>
-                            {item.startsWith('https://' || 'http://') ? (
-                              <a className="text-primary" href={item}>
-                                {item}
-                              </a>
-                            ) : (
-                              item
-                            )}
+                          <p className="flex flex-col md:flex-row md:gap-2">
+                            <strong className="break-keep">
+                              {boards[0].headers[index + 1]}:
+                            </strong>
+                            <span className="break-all">
+                              {item.startsWith('https://' || 'http://') ? (
+                                <a className="text-primary" href={item}>
+                                  {item}
+                                </a>
+                              ) : (
+                                item
+                              )}
+                            </span>
                           </p>
                         </li>
                       ))}
@@ -112,13 +115,13 @@ const BoardCard = ({ pubkey, boardName }: BoardCardProps) => {
         </div>
         <div className="p-4 gap-20 flex items-center border-t border-neutral">
           <div className="h-5 w-5">
-            <StarIcon />
+            <StarIcon className="h-5 w-5" />
           </div>
           <div className="h-5 w-5">
-            <ChatBubbleLeftIcon />
+            <ChatBubbleLeftIcon className="h-5 w-5" />
           </div>
           <div className="h-5 w-5">
-            <BoltIcon />
+            <BoltIcon className="h-5 w-5" />
           </div>
         </div>
       </div>

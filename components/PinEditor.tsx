@@ -41,7 +41,7 @@ const PinEditor = () => {
         <div className="rounded-lg bg-base-200 border-[1px] border-neutral p-8 gap-2 flex flex-col">
           <div className="flex gap-2 items-start">
             <div className="w-6 h-6">
-              <FolderIcon />
+              <FolderIcon className="w-6 h-6" />
             </div>
             <p className="text-lg font-bold">{boardName}</p>
           </div>
@@ -101,7 +101,7 @@ const PinEditor = () => {
 
             <button className="btn btn-primary ml-auto gap-2" type="submit">
               <div className="w-5 h-5 inline-block">
-                <PaperClipIcon />
+                <PaperClipIcon className="w-5 h-5" />
               </div>
               Pin it!
             </button>
