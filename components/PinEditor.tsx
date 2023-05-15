@@ -24,10 +24,10 @@ const PinEditor = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<PinEditorFormData>();
+  } = useForm<SimpleFormData>();
 
   const onSubmit = useCallback(
-    (data: PinEditorFormData) => {
+    (data: SimpleFormData) => {
       if (!currentBoard) return;
 
       addPin(Object.values(data), currentBoard, invalidate);
@@ -111,11 +111,5 @@ const PinEditor = () => {
     </>
   );
 };
-
-// {!pins.length && eose && <></>}
-
-//  <label htmlFor="pins-drawer" className="btn btn-primary btn-sm lg:hidden">
-//    Create a new pin
-//  </label>;
 
 export default PinEditor;

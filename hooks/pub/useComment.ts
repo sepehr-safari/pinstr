@@ -1,14 +1,14 @@
 import { usePublish } from 'nostr-hooks';
 import { useCallback } from 'react';
 
-const useStar = () => {
+const useComment = () => {
   const publish = usePublish(['wss://nos.lol']);
 
-  const starBoard = useCallback(
-    (board: Board, invalidate: () => void) => {
+  const commentOnBoard = useCallback(
+    (comment: string, board: Board, invalidate: () => void) => {
       publish({
-        content: '+',
-        kind: 7,
+        content: comment,
+        kind: 1,
         tags: [
           ['a', `${33888}:${board.pubkey}:${board.name}`],
           ['p', board.pubkey],
@@ -23,8 +23,8 @@ const useStar = () => {
   );
 
   return {
-    starBoard,
+    commentOnBoard,
   };
 };
 
-export default useStar;
+export default useComment;

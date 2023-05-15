@@ -8,7 +8,7 @@ type Board = {
   pins: Pin[];
 };
 
-type PinEditorFormData = { [key: string]: string };
+type SimpleFormData = { [key: string]: string };
 
 type Author = {
   id: string;

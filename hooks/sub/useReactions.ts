@@ -1,14 +1,17 @@
 import { useSubscribe } from 'nostr-hooks';
 
-type Params = {
-  boardId: string | undefined;
-};
-
-const useReactions = ({ boardId }: Params) => {
+const useReactions = (board: Board | undefined) => {
   const { events, eose, invalidate } = useSubscribe({
     relays: ['wss://nos.lol'],
-    filters: boardId ? [{ '#e': [boardId], kinds: [1, 7, 9735] }] : [],
-    options: { enabled: !!boardId, batchingInterval: 800 },
+    filters: board
+      ? [
+          {
+            '#a': [`${33888}:${board.pubkey}:${board.name}`],
+            kinds: [1, 7, 9735],
+          },
+        ]
+      : [],
+    options: { enabled: !!board, batchingInterval: 800 },
   });
 
   return {

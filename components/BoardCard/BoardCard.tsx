@@ -9,11 +9,15 @@ import {
 } from '@heroicons/react/24/outline';
 import { StarIcon as StarFilledIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
+import { usePubkey } from 'nostr-hooks';
+import { useCallback, useState } from 'react';
 
 import { useBoards, useMetadata, useReactions, useStar } from '@/hooks';
 
 import { formatRelativeTime } from '@/utils';
-import { usePubkey } from 'nostr-hooks';
+
+import Commentor from './Commentor';
+import LoginWarning from './LoginWarning';
 
 type BoardCardProps = {
   pubkey: string;
@@ -21,13 +25,15 @@ type BoardCardProps = {
 };
 
 const BoardCard = ({ pubkey, boardName }: BoardCardProps) => {
+  const [commentorState, setCommentorState] = useState(false);
+  const [loginWarningState, setLoginWarningState] = useState(false);
+
   const viewerPubkey = usePubkey();
   const { boards, events } = useBoards({
     pubkeys: [pubkey],
     boardName,
     enabled: !!pubkey && !!boardName,
   });
-
   const { name, picture, npub } = useMetadata({ pubkey });
   const {
     commentsEvents,
@@ -35,9 +41,20 @@ const BoardCard = ({ pubkey, boardName }: BoardCardProps) => {
     zapEvents,
     isReactionsEmpty,
     isFetchingReactions,
-    invalidate,
-  } = useReactions({ boardId: events[0]?.id });
+    invalidate: invalidateReactions,
+  } = useReactions(boards.length ? boards[0] : undefined);
   const { starBoard } = useStar();
+
+  const showLoginWarning = useCallback(() => {
+    setLoginWarningState(true);
+    const timeoutId = setTimeout(() => {
+      setLoginWarningState(false);
+    }, 3000);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, []);
 
   return (
     <>
@@ -152,6 +169,12 @@ const BoardCard = ({ pubkey, boardName }: BoardCardProps) => {
           </div>
         )}
 
+        {commentorState == true && boards.length && (
+          <div className="px-4 py-2 flex items-center border-t border-neutral text-sm text-neutral-500 gap-1">
+            <Commentor board={boards[0]} invalidate={invalidateReactions} />
+          </div>
+        )}
+
         <div className="p-4 gap-20 flex items-center border-t border-neutral">
           {viewerPubkey && starsEvents.length > 0 ? (
             starsEvents.some((e) => e.pubkey === viewerPubkey) && (
@@ -160,12 +183,23 @@ const BoardCard = ({ pubkey, boardName }: BoardCardProps) => {
           ) : (
             <div
               className="h-5 w-5 cursor-pointer hover:rotate-[20deg] transition-all duration-500 hover:text-primary"
-              onClick={() => starBoard(boards[0], invalidate)}
+              onClick={() =>
+                viewerPubkey
+                  ? starBoard(boards[0], invalidateReactions)
+                  : showLoginWarning()
+              }
             >
               <StarIcon className="h-5 w-5" />
             </div>
           )}
-          <div className="h-5 w-5 cursor-pointer hover:rotate-[20deg] transition-all duration-500 hover:text-primary">
+          <div
+            className="h-5 w-5 cursor-pointer hover:rotate-[20deg] transition-all duration-500 hover:text-primary"
+            onClick={() =>
+              viewerPubkey
+                ? setCommentorState((state) => !state)
+                : showLoginWarning()
+            }
+          >
             <ChatBubbleLeftIcon className="h-5 w-5" />
           </div>
           <div className="h-5 w-5 cursor-pointer hover:rotate-[20deg] transition-all duration-500 hover:text-primary">
@@ -173,6 +207,8 @@ const BoardCard = ({ pubkey, boardName }: BoardCardProps) => {
           </div>
         </div>
       </div>
+
+      {loginWarningState == true && <LoginWarning />}
     </>
   );
 };
