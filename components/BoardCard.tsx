@@ -7,11 +7,13 @@ import {
   PaperClipIcon,
   StarIcon,
 } from '@heroicons/react/24/outline';
+import { StarIcon as StarFilledIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 
-import { useBoards, useMetadata } from '@/hooks';
+import { useBoards, useMetadata, useReactions, useStar } from '@/hooks';
 
 import { formatRelativeTime } from '@/utils';
+import { usePubkey } from 'nostr-hooks';
 
 type BoardCardProps = {
   pubkey: string;
@@ -19,6 +21,7 @@ type BoardCardProps = {
 };
 
 const BoardCard = ({ pubkey, boardName }: BoardCardProps) => {
+  const viewerPubkey = usePubkey();
   const { boards, events } = useBoards({
     pubkeys: [pubkey],
     boardName,
@@ -26,10 +29,19 @@ const BoardCard = ({ pubkey, boardName }: BoardCardProps) => {
   });
 
   const { name, picture, npub } = useMetadata({ pubkey });
+  const {
+    commentsEvents,
+    starsEvents,
+    zapEvents,
+    isReactionsEmpty,
+    isFetchingReactions,
+    invalidate,
+  } = useReactions({ boardId: events[0]?.id });
+  const { starBoard } = useStar();
 
   return (
     <>
-      <div className="flex flex-col gap-2 border-neutral-700 border-[1px] rounded-xl bg-base-200 max-w-screen-lg w-full">
+      <div className="flex flex-col border-neutral-700 border-[1px] rounded-xl bg-base-200 max-w-screen-lg w-full">
         <div className="p-4 gap-4 flex items-center border-b border-neutral">
           <Link
             prefetch={false}
@@ -113,14 +125,50 @@ const BoardCard = ({ pubkey, boardName }: BoardCardProps) => {
               ))}
           </div>
         </div>
-        <div className="p-4 gap-20 flex items-center border-t border-neutral">
-          <div className="h-5 w-5">
-            <StarIcon className="h-5 w-5" />
+
+        {!isFetchingReactions && !isReactionsEmpty && (
+          <div className="px-4 py-2 flex items-center border-t border-neutral text-sm text-neutral-500 gap-1">
+            {starsEvents.length > 0 && (
+              <>
+                <span className="font-bold">{starsEvents.length}</span>
+                <span>Stars</span>
+              </>
+            )}
+            {starsEvents.length > 0 && commentsEvents.length > 0 && (
+              <span>-</span>
+            )}
+            {commentsEvents.length > 0 && (
+              <>
+                <span>{commentsEvents.length}</span>
+                <span>Comments</span>
+              </>
+            )}
+            {zapEvents.length > 0 && (
+              <div className="ml-auto flex items-center gap-1">
+                <span>x</span>
+                <span>Sats</span>
+              </div>
+            )}
           </div>
-          <div className="h-5 w-5">
+        )}
+
+        <div className="p-4 gap-20 flex items-center border-t border-neutral">
+          {viewerPubkey && starsEvents.length > 0 ? (
+            starsEvents.some((e) => e.pubkey === viewerPubkey) && (
+              <StarFilledIcon className="h-5 w-5 text-primary" />
+            )
+          ) : (
+            <div
+              className="h-5 w-5 cursor-pointer hover:rotate-[20deg] transition-all duration-500 hover:text-primary"
+              onClick={() => starBoard(boards[0], invalidate)}
+            >
+              <StarIcon className="h-5 w-5" />
+            </div>
+          )}
+          <div className="h-5 w-5 cursor-pointer hover:rotate-[20deg] transition-all duration-500 hover:text-primary">
             <ChatBubbleLeftIcon className="h-5 w-5" />
           </div>
-          <div className="h-5 w-5">
+          <div className="h-5 w-5 cursor-pointer hover:rotate-[20deg] transition-all duration-500 hover:text-primary">
             <BoltIcon className="h-5 w-5" />
           </div>
         </div>
