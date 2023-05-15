@@ -44,7 +44,7 @@ const Feed = () => {
               return (
                 <BoardCard
                   key={board.id}
-                  pubkey={board.pubkey}
+                  boardAuthor={board.pubkey}
                   boardName={board.name}
                 />
               );

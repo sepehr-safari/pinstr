@@ -1,4 +1,5 @@
 import { usePublish } from 'nostr-hooks';
+import { Event } from 'nostr-tools';
 import { useCallback } from 'react';
 
 const useStar = () => {
@@ -22,8 +23,27 @@ const useStar = () => {
     [publish]
   );
 
+  const starNote = useCallback(
+    (note: Event, invalidate: () => void) => {
+      publish({
+        content: '+',
+        kind: 7,
+        tags: [
+          ['e', note.id],
+          ['p', note.pubkey],
+        ],
+      }).then((event) => {
+        if (!event) return;
+
+        invalidate();
+      });
+    },
+    [publish]
+  );
+
   return {
     starBoard,
+    starNote,
   };
 };
 
