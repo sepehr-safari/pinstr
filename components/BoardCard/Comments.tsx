@@ -11,7 +11,7 @@ type Params = {
 const Comments = ({ commentsEvents, board, note }: Params) => {
   return (
     <>
-      <div className="p-4 flex flex-col items-center border-t-2 border-neutral gap-4">
+      <div className="p-2 flex flex-col items-center border-t-2 border-neutral gap-2">
         {commentsEvents.length > 0 &&
           commentsEvents
             .filter((event) => {

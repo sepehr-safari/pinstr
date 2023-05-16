@@ -31,7 +31,7 @@ const SingleComment = ({ event }: Params) => {
 
   return (
     <>
-      <div className="flex items-start gap-4 w-full p-2">
+      <div className="flex items-start gap-2 w-full p-2">
         <div className="avatar">
           <div className="w-10 rounded-xl">
             <img src={picture || '/pinstr.png'} />
