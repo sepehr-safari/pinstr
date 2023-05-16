@@ -22,7 +22,7 @@ const BoardCard = ({ boardAuthor, boardName }: BoardCardProps) => {
   const [commentorState, setCommentorState] = useState(false);
   const [commentsState, setCommentsState] = useState(false);
 
-  const { name, picture, npub } = useMetadata({ pubkey: boardAuthor });
+  const { displayName, picture, npub } = useMetadata({ pubkey: boardAuthor });
   const { boards, events } = useBoards({
     pubkeys: [boardAuthor],
     boardName,
@@ -51,7 +51,7 @@ const BoardCard = ({ boardAuthor, boardName }: BoardCardProps) => {
                 <img src={picture || '/pinstr.png'} />
               </div>
             </div>
-            <h2 className="lg:text-lg">{name}</h2>
+            <h2 className="lg:text-lg">{displayName}</h2>
           </Link>
           <div className="ml-auto">
             <p className="text-xs text-neutral-500">
