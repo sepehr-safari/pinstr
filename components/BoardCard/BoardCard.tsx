@@ -89,7 +89,9 @@ const BoardCard = ({ boardAuthor, boardName }: BoardCardProps) => {
                 <div
                   key={pin[0]}
                   tabIndex={0}
-                  className="collapse collapse-arrow bg-neutral rounded-lg"
+                  className={`bg-neutral rounded-lg${
+                    pin.length > 1 ? ' collapse collapse-arrow' : ''
+                  }`}
                 >
                   <div className="collapse-title px-2 py-1 min-h-0 flex gap-2 items-center">
                     <div className="h-5 w-5">
@@ -97,28 +99,30 @@ const BoardCard = ({ boardAuthor, boardName }: BoardCardProps) => {
                     </div>
                     <span className="mr-8">{pin[0]}</span>
                   </div>
-                  <div className="collapse-content">
-                    <ul className="flex flex-col gap-2 mt-2">
-                      {pin.slice(1).map((item, index) => (
-                        <li key={boards[0].headers[index + 1]}>
-                          <p className="flex flex-col md:flex-row md:gap-2">
-                            <strong className="break-keep">
-                              {boards[0].headers[index + 1]}:
-                            </strong>
-                            <span className="break-all">
-                              {item.startsWith('https://' || 'http://') ? (
-                                <a className="text-primary" href={item}>
-                                  {item}
-                                </a>
-                              ) : (
-                                item
-                              )}
-                            </span>
-                          </p>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  {pin.length > 1 && (
+                    <div className="collapse-content">
+                      <ul className="flex flex-col gap-2 mt-2">
+                        {pin.slice(1).map((item, index) => (
+                          <li key={boards[0].headers[index + 1]}>
+                            <p className="flex flex-col md:flex-row md:gap-2">
+                              <strong className="break-keep">
+                                {boards[0].headers[index + 1]}:
+                              </strong>
+                              <span className="break-all">
+                                {item.startsWith('https://' || 'http://') ? (
+                                  <a className="text-primary" href={item}>
+                                    {item}
+                                  </a>
+                                ) : (
+                                  item
+                                )}
+                              </span>
+                            </p>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
               ))}
           </div>
