@@ -32,7 +32,7 @@ const Commentor = ({ board, note, invalidate }: Params) => {
   }, []);
 
   return (
-    <div className="px-4 py-2 flex items-center border-t border-neutral text-sm text-neutral-500 gap-1">
+    <div className="px-4 py-2 flex items-center border-t-2 border-neutral text-sm text-neutral-500 gap-1">
       <div className="flex flex-col gap-2 w-full">
         <div className="flex items-center gap-2 w-full">
           <div className="avatar">

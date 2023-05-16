@@ -46,7 +46,7 @@ const Reactions = ({
 
   return (
     <>
-      <div className="px-4 py-2 gap-10 flex items-center border-t border-neutral">
+      <div className="px-4 py-2 gap-10 flex items-center border-t-2 border-neutral">
         {viewerPubkey &&
         starsEvents.length > 0 &&
         starsEvents.some((e) => e.pubkey === viewerPubkey) ? (

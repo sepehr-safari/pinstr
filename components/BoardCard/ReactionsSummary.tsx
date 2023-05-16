@@ -15,7 +15,7 @@ const ReactionsSummary = ({
   setCommentsState,
 }: Params) => {
   return (
-    <div className="px-4 py-2 flex items-center border-t border-neutral text-sm text-neutral-400 gap-1">
+    <div className="px-4 py-2 flex items-center border-t-2 border-neutral text-sm text-neutral-400 gap-1">
       {starsEvents.length > 0 && (
         <>
           <span className="font-bold">{starsEvents.length}</span>

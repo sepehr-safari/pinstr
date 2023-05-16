@@ -38,7 +38,7 @@ const PinEditor = () => {
   return (
     <>
       <div className="w-full p-4 md:p-10 lg:w-3/4">
-        <div className="rounded-lg bg-base-200 border-[1px] border-neutral p-8 gap-2 flex flex-col">
+        <div className="rounded-lg bg-base-200 border-2 border-neutral p-8 gap-2 flex flex-col">
           <div className="flex gap-2 items-start">
             <div className="w-6 h-6">
               <FolderIcon className="w-6 h-6" />
@@ -52,7 +52,7 @@ const PinEditor = () => {
             <p className="text-xs">Let's pin on this board!</p>
           )}
 
-          <hr className="my-4 border-neutral" />
+          <hr className="my-4 border-neutral border-2" />
 
           <form
             className="flex flex-col gap-2"
@@ -97,7 +97,7 @@ const PinEditor = () => {
               invalidate={invalidate}
             />
 
-            <hr className="my-4 border-neutral" />
+            <hr className="my-4 border-neutral border-2" />
 
             <button className="btn btn-primary ml-auto gap-2" type="submit">
               <div className="w-5 h-5 inline-block">

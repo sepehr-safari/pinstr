@@ -26,7 +26,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="navbar fixed top-0 z-30 gap-2 bg-base-200 border-b-[1px] border-neutral-700">
+      <div className="navbar fixed top-0 z-30 gap-2 bg-base-200 border-b-2 border-neutral-700">
         {isDashboard && (
           <>
             <div className="flex-none lg:hidden">

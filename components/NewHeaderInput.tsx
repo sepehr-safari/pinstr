@@ -38,7 +38,7 @@ const NewHeaderInput = ({ currentBoard, invalidate }: Params) => {
         <input
           type="text"
           autoComplete="off"
-          className="bg-transparent border-b-[1px] border-neutral outline-none text-sm text-neutral-content w-52"
+          className="bg-transparent border-b-2 border-neutral outline-none text-sm text-neutral-content w-52"
           placeholder="Add a new label (e.g. Director)"
           value={input}
           onChange={handleOnChange}

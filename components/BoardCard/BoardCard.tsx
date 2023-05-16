@@ -39,8 +39,8 @@ const BoardCard = ({ boardAuthor, boardName }: BoardCardProps) => {
 
   return (
     <>
-      <div className="flex flex-col border-neutral-700 border-[1px] rounded-lg bg-base-200 max-w-screen-lg w-full">
-        <div className="p-4 gap-4 flex items-center border-b border-neutral">
+      <div className="flex flex-col border-neutral-700 border-2 rounded-lg bg-base-200 max-w-screen-lg w-full">
+        <div className="p-4 gap-4 flex items-center border-b-2 border-neutral">
           <Link
             prefetch={false}
             href={`/p/${npub}`}

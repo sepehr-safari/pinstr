@@ -11,7 +11,7 @@ type Params = {
 const Comments = ({ commentsEvents, board, note }: Params) => {
   return (
     <>
-      <div className="p-4 flex flex-col items-center border-t border-neutral gap-4">
+      <div className="p-4 flex flex-col items-center border-t-2 border-neutral gap-4">
         {commentsEvents.length > 0 &&
           commentsEvents
             .filter((event) => {
@@ -35,7 +35,7 @@ const Comments = ({ commentsEvents, board, note }: Params) => {
             .map((event) => (
               <div
                 key={event.id}
-                className="flex flex-col w-full border border-neutral rounded-lg"
+                className="flex flex-col w-full border-2 border-neutral rounded-lg"
               >
                 <SingleComment event={event} />
               </div>

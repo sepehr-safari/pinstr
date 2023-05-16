@@ -31,7 +31,7 @@ const PinsDrawer = ({ main }: PinsDrawerParams) => {
       <Layout
         drawerId="pins-drawer"
         drawer={
-          <ul className="menu menu-compact w-80 bg-base-200 border-r-[1px] border-neutral">
+          <ul className="menu menu-compact w-80 bg-base-200 border-r-2 border-neutral">
             <Header inputId="new-pin-input" header="My Pins" />
 
             <ItemsLoading items={currentBoard.pins} eose={eose} />
