@@ -110,9 +110,18 @@ const BoardCard = ({ boardAuthor, boardName }: BoardCardProps) => {
                               </strong>
                               <span className="break-all">
                                 {item.startsWith('https://' || 'http://') ? (
-                                  <a className="text-primary" href={item}>
+                                  <div
+                                    className="text-primary cursor-pointer hover:opacity-90"
+                                    onClick={() =>
+                                      window.open(
+                                        item,
+                                        '_blank',
+                                        'noopener noreferrer'
+                                      )
+                                    }
+                                  >
                                     {item}
-                                  </a>
+                                  </div>
                                 ) : (
                                   item
                                 )}
