@@ -10,7 +10,7 @@ const Feed = () => {
   const pubkey = usePubkey();
   const { events } = useContacts({ pubkey });
 
-  const { boards, eose } = useBoards({
+  const { boards, eose, loadMore } = useBoards({
     pubkeys:
       events && events.length > 0
         ? events[0].tags.map((tag) => tag[1])
@@ -51,6 +51,10 @@ const Feed = () => {
             }
           })
         : null}
+
+      <button className="btn btn-wide" onClick={loadMore}>
+        Load More
+      </button>
     </>
   );
 };

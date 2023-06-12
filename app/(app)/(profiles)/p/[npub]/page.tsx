@@ -10,7 +10,7 @@ const Profile = () => {
   const { npub } = useCurrentParams();
   const pubkey = npub && nip19.decode(npub).data.toString();
 
-  const { boards, eose } = useBoards({
+  const { boards, eose, loadMore } = useBoards({
     pubkeys: pubkey ? [pubkey] : undefined,
     enabled: !!pubkey,
     autoInvalidate: true,
@@ -48,6 +48,10 @@ const Profile = () => {
             }
           })
         : null}
+
+      <button className="btn btn-wide" onClick={loadMore}>
+        Load More
+      </button>
     </>
   );
 };

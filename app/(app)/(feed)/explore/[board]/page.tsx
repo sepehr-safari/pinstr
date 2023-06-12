@@ -7,7 +7,7 @@ import { BoardCard } from '@/components';
 const ExploreBoard = () => {
   const { boardName } = useCurrentParams();
 
-  const { boards } = useBoards({
+  const { boards, loadMore } = useBoards({
     boardName,
     enabled: !!boardName,
     autoInvalidate: true,
@@ -28,6 +28,10 @@ const ExploreBoard = () => {
             }
           })
         : null}
+
+      <button className="btn btn-wide" onClick={loadMore}>
+        Load More
+      </button>
     </>
   );
 };

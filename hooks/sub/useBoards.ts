@@ -24,7 +24,7 @@ const useBoards = ({ pubkeys, boardName, enabled, autoInvalidate }: Params) => {
     filter['#d'] = [boardName];
   }
 
-  const { events, eose, invalidate } = useSubscribe({
+  const { events, eose, invalidate, loadMore } = useSubscribe({
     relays: ['wss://nos.lol'],
     filters: [filter],
     options: { enabled, batchingInterval: 800, invalidate: autoInvalidate },
@@ -32,7 +32,7 @@ const useBoards = ({ pubkeys, boardName, enabled, autoInvalidate }: Params) => {
 
   const boards = useMemo(() => parseBoardsFromEvents(events), [events]);
 
-  return { boards, eose, events, invalidate };
+  return { boards, eose, events, invalidate, loadMore };
 };
 
 export default useBoards;

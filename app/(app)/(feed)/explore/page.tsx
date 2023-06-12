@@ -5,7 +5,10 @@ import { useBoards } from '@/hooks';
 import { BoardCard } from '@/components';
 
 const FeedExplore = () => {
-  const { boards, eose } = useBoards({ enabled: true, autoInvalidate: true });
+  const { boards, eose, loadMore } = useBoards({
+    enabled: true,
+    autoInvalidate: true,
+  });
 
   if (boards.length === 0) {
     if (eose) {
@@ -39,6 +42,10 @@ const FeedExplore = () => {
             }
           })
         : null}
+
+      <button className="btn btn-wide" onClick={loadMore}>
+        Load More
+      </button>
     </>
   );
 };

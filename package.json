@@ -1,7 +1,7 @@
 {
   "name": "pinstr",
   "description": "A decentralized and open-source social network for curating and sharing your interests with the world",
-  "version": "0.6.4",
+  "version": "0.7.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -19,7 +19,7 @@
     "eslint": "8.39.0",
     "eslint-config-next": "13.3.4",
     "next": "^13.4.1",
-    "nostr-hooks": "^1.6.7",
+    "nostr-hooks": "^1.8.0",
     "nostr-tools": "^1.10.1",
     "postcss": "8.4.23",
     "react": "18.2.0",
