@@ -13,7 +13,7 @@ const Feed = () => {
   const { boards, eose, loadMore } = useBoards({
     pubkeys:
       events && events.length > 0
-        ? events[0].tags.map((tag) => tag[1])
+        ? events[0].tags.filter((tag) => tag[0] === 'p').map((tag) => tag[1])
         : undefined,
     enabled: events && events.length > 0 && events[0].tags.length > 0,
     autoInvalidate: true,
