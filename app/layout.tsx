@@ -1,7 +1,7 @@
 import './globals.css';
 import { Cairo } from 'next/font/google';
 
-import { Navbar } from '@/components';
+import { BottomNavbar, Navbar } from '@/components';
 
 const inter = Cairo({ subsets: ['latin'] });
 
@@ -37,6 +37,8 @@ export default function RootLayout({
         <Navbar />
 
         {children}
+
+        <BottomNavbar />
       </body>
     </html>
   );

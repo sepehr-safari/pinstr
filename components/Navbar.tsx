@@ -26,7 +26,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="navbar fixed top-0 z-30 gap-2 bg-base-200 border-b-2 border-neutral-700">
+      <div className="navbar fixed top-0 z-30 gap-4 bg-base-200 border-b-2 border-neutral-700 items-center">
         {isDashboard && (
           <>
             <div className="flex-none lg:hidden">
@@ -61,52 +61,6 @@ const Navbar = () => {
             />
             Pinstr
           </a>
-        </div>
-
-        <div className="flex-none">
-          {!!pubkey && (
-            <Link
-              prefetch={false}
-              href="/feed"
-              className="btn-ghost btn btn-sm max-md:btn-circle"
-            >
-              <div className="block w-5 md:hidden">
-                <HomeIcon />
-              </div>
-              <div className="hidden md:block">Feed</div>
-            </Link>
-          )}
-          <Link
-            prefetch={false}
-            href="/explore"
-            className="btn-ghost btn btn-sm max-md:btn-circle"
-          >
-            <div className="block w-5 md:hidden">
-              <HashtagIcon />
-            </div>
-            <div className="hidden md:block">Explore</div>
-          </Link>
-          {!!pubkey && (
-            <Link
-              prefetch={false}
-              href="/my"
-              className="btn-ghost btn btn-sm max-md:btn-circle"
-            >
-              <div className="block w-5 md:hidden">
-                <UserIcon />
-              </div>
-              <div className="hidden md:block">My</div>
-            </Link>
-          )}
-          {/* {!pubkey && (
-            <Link
-              prefetch={false}
-              href="/login"
-              className="btn-ghost btn btn-sm max-md:btn-circle"
-            >
-              Login
-            </Link>
-          )} */}
         </div>
 
         {!!pubkey && (

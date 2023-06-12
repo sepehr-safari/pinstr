@@ -1,4 +1,5 @@
 export * from './BoardCard';
+export { default as BottomNavbar } from './BottomNavbar';
 export * from './Drawer';
 export { default as GithubIcon } from './GithubIcon';
 export { default as Hero } from './Hero';
