@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 
 import { parseBoardsFromEvents } from '@/utils';
 
-import { Filter } from 'nostr-hooks/dist/types';
+import { Filter } from 'nostr-tools';
 
 type Params = {
   pubkeys?: string[] | undefined;
@@ -14,6 +14,7 @@ type Params = {
 
 const useBoards = ({ pubkeys, boardName, enabled, autoInvalidate }: Params) => {
   const filter: Filter = {
+    // @ts-ignore
     kinds: [33888],
     limit: 20,
   };
