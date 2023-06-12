@@ -1,7 +1,7 @@
 {
   "name": "pinstr",
   "description": "A decentralized and open-source social network for curating and sharing your interests with the world",
-  "version": "0.7.5",
+  "version": "0.8.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
