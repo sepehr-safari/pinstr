@@ -108,24 +108,22 @@ const BoardCard = ({ boardAuthor, boardName }: BoardCardProps) => {
                               <strong className="break-keep">
                                 {boards[0].headers[index + 1]}:
                               </strong>
-                              <span className="break-all">
-                                {item.startsWith('https://' || 'http://') ? (
-                                  <div
-                                    className="text-primary cursor-pointer hover:opacity-90"
-                                    onClick={() =>
-                                      window.open(
-                                        item,
-                                        '_blank',
-                                        'noopener noreferrer'
-                                      )
-                                    }
-                                  >
-                                    {item}
-                                  </div>
-                                ) : (
-                                  item
-                                )}
-                              </span>
+                              {item.startsWith('https://' || 'http://') ? (
+                                <span
+                                  className="break-all text-primary cursor-pointer hover:opacity-90"
+                                  onClick={() =>
+                                    window.open(
+                                      item,
+                                      '_blank',
+                                      'noopener noreferrer'
+                                    )
+                                  }
+                                >
+                                  {item}
+                                </span>
+                              ) : (
+                                <span className="break-all">item</span>
+                              )}
                             </p>
                           </li>
                         ))}
