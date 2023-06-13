@@ -9,7 +9,11 @@ import { toggleDrawer } from '@/utils';
 
 const My = () => {
   const pubkey = usePubkey();
-  const { boards, eose } = useBoards({ pubkeys: [pubkey], enabled: !!pubkey });
+  const { boards, eose } = useBoards({
+    pubkeys: [pubkey],
+    enabled: !!pubkey,
+    autoInvalidate: true,
+  });
 
   useEffect(() => {
     toggleDrawer('boards-drawer', true);
