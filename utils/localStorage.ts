@@ -12,9 +12,7 @@ export const getKindFromLocalStorage = () => {
 };
 
 export const setKindInLocalStorage = (kind: number) => {
-  if (typeof window === 'undefined') {
-    return null;
+  if (typeof window !== 'undefined') {
+    window.localStorage.setItem('kind', kind.toString());
   }
-
-  window.localStorage.setItem('kind', kind.toString());
 };

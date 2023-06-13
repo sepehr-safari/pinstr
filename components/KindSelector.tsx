@@ -1,14 +1,10 @@
 'use client';
 
 import { getKindFromLocalStorage, setKindInLocalStorage } from '@/utils';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const KindSelector = () => {
-  const [kind, setKind] = useState<number>(33888);
-
-  useEffect(() => {
-    setKind(getKindFromLocalStorage());
-  }, []);
+  const [kind, setKind] = useState<number>(getKindFromLocalStorage() || 33888);
 
   const handleKindChange = (kind: number) => {
     setKind(kind);
