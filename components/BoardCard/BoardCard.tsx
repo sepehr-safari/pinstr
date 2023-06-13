@@ -12,6 +12,7 @@ import Commentor from './Commentor';
 import ReactionsSummary from './ReactionsSummary';
 import Reactions from './Reactions';
 import Comments from './Comments';
+import Preview from './Preview';
 
 type BoardCardProps = {
   boardAuthor: string;
@@ -64,14 +65,15 @@ const BoardCard = ({ boardAuthor, boardName }: BoardCardProps) => {
             <Link
               prefetch={false}
               href={`/p/${npub}/${boardName}`}
-              className="flex gap-2 items-center  hover:text-primary hover:translate-x-1 ease-in-out transition-all duration-200"
+              className="flex gap-2 items-center hover:text-primary hover:translate-x-1 ease-in-out transition-all duration-200"
             >
               <div className="h-6 w-6">
                 <FolderIcon className="h-6 w-6" />
               </div>
-              <h3 className="lg:text-lg font-bold flex items-start gap-2">
-                {boardName}
-              </h3>
+              <h3 className="lg:text-lg font-bold">{boardName}</h3>
+              <span className="text-xs text-neutral-500">
+                (kind: {events.length > 0 && events[0].kind})
+              </span>
             </Link>
 
             <Link
@@ -97,7 +99,11 @@ const BoardCard = ({ boardAuthor, boardName }: BoardCardProps) => {
                     <div className="h-5 w-5">
                       <PaperClipIcon className="h-5 w-5" />
                     </div>
-                    <span className="mr-8">{pin[0]}</span>
+                    {pin[0].startsWith('npub1' || 'note1') ? (
+                      <Preview address={pin[0]} />
+                    ) : (
+                      <span className="mr-8">{pin[0]}</span>
+                    )}
                   </div>
                   {pin.length > 1 && (
                     <div className="collapse-content">
@@ -121,8 +127,10 @@ const BoardCard = ({ boardAuthor, boardName }: BoardCardProps) => {
                                 >
                                   {item}
                                 </span>
+                              ) : item.startsWith('npub1' || 'note1') ? (
+                                <Preview address={item} />
                               ) : (
-                                <span className="break-all">item</span>
+                                <span className="break-all">{item}</span>
                               )}
                             </p>
                           </li>

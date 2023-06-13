@@ -1,12 +1,6 @@
 'use client';
 
-import {
-  FolderIcon,
-  HashtagIcon,
-  HomeIcon,
-  PaperClipIcon,
-  UserIcon,
-} from '@heroicons/react/24/outline';
+import { FolderIcon, PaperClipIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { usePubkey } from 'nostr-hooks';
@@ -14,6 +8,8 @@ import { usePubkey } from 'nostr-hooks';
 import { toggleDrawer } from '@/utils';
 
 import { useCurrentParams, useMetadata } from '@/hooks';
+
+import { KindSelector } from '@/components';
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -62,6 +58,8 @@ const Navbar = () => {
             Pinstr
           </a>
         </div>
+
+        {!!pubkey && <KindSelector />}
 
         {!!pubkey && (
           <div className="flex-none">

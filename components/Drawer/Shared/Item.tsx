@@ -37,7 +37,7 @@ const Item = ({
               toggleDrawer('pins-drawer', false);
             }}
           >
-            {name}
+            {name.length > 50 ? `${name.slice(0, 20)}...` : name}
           </Link>
 
           {showRemoveConfirmation && (

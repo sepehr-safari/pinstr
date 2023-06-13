@@ -1,7 +1,7 @@
 import { useSubscribe } from 'nostr-hooks';
 import { useMemo } from 'react';
 
-import { parseBoardsFromEvents } from '@/utils';
+import { getKindFromLocalStorage, parseBoardsFromEvents } from '@/utils';
 
 import { Filter } from 'nostr-tools';
 
@@ -13,9 +13,11 @@ type Params = {
 };
 
 const useBoards = ({ pubkeys, boardName, enabled, autoInvalidate }: Params) => {
+  const kind = getKindFromLocalStorage();
+
   const filter: Filter = {
     // @ts-ignore
-    kinds: [33888],
+    kinds: kind === -1 ? [33888, 10000, 10001, 30000, 30001] : [kind],
     limit: 20,
   };
   if (!!pubkeys && pubkeys.length > 0) {
