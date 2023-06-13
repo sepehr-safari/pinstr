@@ -78,8 +78,15 @@ const BoardCard = ({ boardAuthor, boardName }: BoardCardProps) => {
 
             <Link
               prefetch={false}
-              href={`/explore/${boardName}`}
+              href={`/frens/${boardName}`}
               className="ml-auto btn btn-xs bg-neutral"
+            >
+              Frens
+            </Link>
+            <Link
+              prefetch={false}
+              href={`/explore/${boardName}`}
+              className="btn btn-xs bg-neutral"
             >
               Explore
             </Link>
