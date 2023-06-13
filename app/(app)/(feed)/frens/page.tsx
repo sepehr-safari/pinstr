@@ -6,7 +6,7 @@ import { useBoards, useContacts } from '@/hooks';
 
 import { BoardCard } from '@/components';
 
-const Feed = () => {
+const Frens = () => {
   const pubkey = usePubkey();
   const { events } = useContacts({ pubkey });
 
@@ -59,4 +59,4 @@ const Feed = () => {
   );
 };
 
-export default Feed;
+export default Frens;

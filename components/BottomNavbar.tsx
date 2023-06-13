@@ -11,18 +11,18 @@ const BottomNavbar = () => {
   const pubkey = usePubkey();
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 h-16 bg-base-200 border-t-2 border-neutral-700">
+    <div className="fixed bottom-0 left-0 right-0 h-16 bg-base-200 border-t-2 border-neutral-700 z-20">
       <div className="btm-nav bg-base-200 max-w-lg mx-auto border-t-2 border-neutral-700">
         {!!pubkey && (
           <Link
             prefetch={false}
-            href="/feed"
-            className={pathname.startsWith('/feed') ? 'active' : ''}
+            href="/frens"
+            className={pathname.startsWith('/frens') ? 'active' : ''}
           >
             <div className="w-5">
               <HomeIcon />
             </div>
-            <div className="btm-nav-label">Feed</div>
+            <div className="btm-nav-label">Frens</div>
           </Link>
         )}
         <Link
