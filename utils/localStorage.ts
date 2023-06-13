@@ -1,13 +1,13 @@
 export const getKindFromLocalStorage = () => {
   if (typeof window === 'undefined') {
-    return null;
+    return -1;
   }
 
   const kind = window.localStorage.getItem('kind');
   if (kind) {
     return +kind;
   } else {
-    return 33888;
+    return -1;
   }
 };
 

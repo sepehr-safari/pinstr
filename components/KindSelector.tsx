@@ -4,7 +4,7 @@ import { getKindFromLocalStorage, setKindInLocalStorage } from '@/utils';
 import { useState } from 'react';
 
 const KindSelector = () => {
-  const [kind, setKind] = useState<number>(getKindFromLocalStorage() || 33888);
+  const [kind, setKind] = useState<number>(getKindFromLocalStorage());
 
   const handleKindChange = (kind: number) => {
     setKind(kind);
