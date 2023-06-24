@@ -4,7 +4,7 @@ import { usePubkey } from 'nostr-hooks';
 
 import { useBoards, useContacts } from '@/hooks';
 
-import { BoardCard } from '@/components';
+import { BoardCard, NoBoards } from '@/components';
 
 const Frens = () => {
   const pubkey = usePubkey();
@@ -21,12 +21,7 @@ const Frens = () => {
 
   if (boards.length === 0) {
     if (eose) {
-      return (
-        <>
-          <p>Hello 👋</p>
-          <p>No boards!</p>
-        </>
-      );
+      return <NoBoards />;
     } else {
       return (
         <>

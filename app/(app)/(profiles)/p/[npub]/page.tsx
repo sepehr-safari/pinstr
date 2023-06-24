@@ -4,7 +4,7 @@ import { nip19 } from 'nostr-tools';
 
 import { useBoards, useCurrentParams } from '@/hooks';
 
-import { BoardCard } from '@/components';
+import { BoardCard, NoBoards } from '@/components';
 
 const Profile = () => {
   const { npub } = useCurrentParams();
@@ -18,12 +18,7 @@ const Profile = () => {
 
   if (boards.length === 0) {
     if (eose) {
-      return (
-        <>
-          <p>Hello 👋</p>
-          <p>No boards!</p>
-        </>
-      );
+      return <NoBoards />;
     } else {
       return (
         <>

@@ -6,4 +6,5 @@ export { default as Hero } from './Hero';
 export { default as KindSelector } from './KindSelector';
 export { default as Navbar } from './Navbar';
 export { default as NewHeaderInput } from './NewHeaderInput';
+export { default as NoBoards } from './NoBoards';
 export { default as PinEditor } from './PinEditor';

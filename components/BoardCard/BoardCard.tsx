@@ -12,7 +12,8 @@ import Commentor from './Commentor';
 import ReactionsSummary from './ReactionsSummary';
 import Reactions from './Reactions';
 import Comments from './Comments';
-import Preview from './Preview';
+import Preview from './LinkView';
+import LinkView from './LinkView';
 
 type BoardCardProps = {
   boardAuthor: string;
@@ -22,6 +23,7 @@ type BoardCardProps = {
 const BoardCard = ({ boardAuthor, boardName }: BoardCardProps) => {
   const [commentorState, setCommentorState] = useState(false);
   const [commentsState, setCommentsState] = useState(false);
+  const [numberOfVisiblePins, setNumberOfVisiblePins] = useState(3);
 
   const { displayName, picture, npub } = useMetadata({ pubkey: boardAuthor });
   const { boards, events } = useBoards({
@@ -94,7 +96,7 @@ const BoardCard = ({ boardAuthor, boardName }: BoardCardProps) => {
           <div className="flex flex-col gap-2 text-sm lg:text-base">
             {boards.length > 0 &&
               boards[0].pins.length > 0 &&
-              boards[0].pins.map((pin) => (
+              boards[0].pins.slice(0, numberOfVisiblePins).map((pin) => (
                 <div
                   key={pin[0]}
                   tabIndex={0}
@@ -107,7 +109,10 @@ const BoardCard = ({ boardAuthor, boardName }: BoardCardProps) => {
                       <PaperClipIcon className="h-5 w-5" />
                     </div>
                     {pin[0].startsWith('npub1' || 'note1') ? (
-                      <Preview address={pin[0]} />
+                      <LinkView
+                        link={'https://nostr.com/' + pin[0]}
+                        view={pin[0]}
+                      />
                     ) : (
                       <span className="mr-8">{pin[0]}</span>
                     )}
@@ -122,20 +127,12 @@ const BoardCard = ({ boardAuthor, boardName }: BoardCardProps) => {
                                 {boards[0].headers[index + 1]}:
                               </strong>
                               {item.startsWith('https://' || 'http://') ? (
-                                <span
-                                  className="break-all text-primary cursor-pointer hover:opacity-90"
-                                  onClick={() =>
-                                    window.open(
-                                      item,
-                                      '_blank',
-                                      'noopener noreferrer'
-                                    )
-                                  }
-                                >
-                                  {item}
-                                </span>
+                                <LinkView link={item} view={item} />
                               ) : item.startsWith('npub1' || 'note1') ? (
-                                <Preview address={item} />
+                                <LinkView
+                                  link={'https://nostr.com/' + item}
+                                  view={item}
+                                />
                               ) : (
                                 <span className="break-all">{item}</span>
                               )}
@@ -147,6 +144,29 @@ const BoardCard = ({ boardAuthor, boardName }: BoardCardProps) => {
                   )}
                 </div>
               ))}
+
+            <div className="flex gap-2">
+              {boards.length > 0 && numberOfVisiblePins > 3 && (
+                <button
+                  className="btn btn-xs bg-neutral"
+                  onClick={() => setNumberOfVisiblePins(3)}
+                >
+                  Show Less
+                </button>
+              )}
+              {boards.length > 0 &&
+                boards[0].pins.length > 3 &&
+                numberOfVisiblePins < boards[0].pins.length && (
+                  <button
+                    className="btn btn-xs bg-neutral"
+                    onClick={() =>
+                      setNumberOfVisiblePins(boards[0].pins.length)
+                    }
+                  >
+                    Show All ({boards[0].pins.length} pins)
+                  </button>
+                )}
+            </div>
           </div>
         </div>
 

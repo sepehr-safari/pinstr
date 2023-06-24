@@ -2,7 +2,7 @@
 
 import { useBoards } from '@/hooks';
 
-import { BoardCard } from '@/components';
+import { BoardCard, NoBoards } from '@/components';
 
 const FeedExplore = () => {
   const { boards, eose, loadMore } = useBoards({
@@ -12,12 +12,7 @@ const FeedExplore = () => {
 
   if (boards.length === 0) {
     if (eose) {
-      return (
-        <>
-          <p>Hello 👋</p>
-          <p>No boards!</p>
-        </>
-      );
+      return <NoBoards />;
     } else {
       return (
         <>
