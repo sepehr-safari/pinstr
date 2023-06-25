@@ -144,7 +144,7 @@ const BoardCard = ({ boardAuthor, boardName }: BoardCardProps) => {
                               {item.startsWith('https://') ||
                               item.startsWith('http://') ? (
                                 <div
-                                  className="text-primary cursor-pointer hover:opacity-80"
+                                  className="text-primary cursor-pointer hover:opacity-80 z-20"
                                   onClick={() =>
                                     window.open(
                                       item,
