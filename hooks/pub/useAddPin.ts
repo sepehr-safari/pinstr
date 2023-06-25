@@ -15,6 +15,7 @@ const useAddPin = () => {
         kind: 33888,
         tags: [
           ['d', board.name],
+          ['avatar', board.avatar],
           ['headers', ...board.headers],
           ...board.pins
             .filter((p) => p[0] !== pin[0])
