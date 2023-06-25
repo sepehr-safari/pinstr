@@ -11,7 +11,7 @@ const ItemsLoading = ({ items, eose }: ItemsParams) => {
   return (
     <>
       {!items.length && !eose ? (
-        <button className="loading btn-xs btn rounded-none" />
+        <span className="loading loading-ball loading-md mx-auto" />
       ) : !items.length && eose ? (
         <Image
           src="/empty.png"

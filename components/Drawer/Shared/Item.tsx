@@ -25,7 +25,13 @@ const Item = ({
   return (
     <>
       <li key={name} className="group">
-        <div className={isActive ? 'active' : 'py-0'}>
+        <div
+          className={
+            isActive
+              ? 'bg-primary text-primary-content hover:bg-primary-focus hover:text-primary-content'
+              : 'py-0'
+          }
+        >
           <div className="w-5 h-5 flex">{icon}</div>
 
           <Link

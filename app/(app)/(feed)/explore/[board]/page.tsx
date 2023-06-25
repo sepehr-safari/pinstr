@@ -29,7 +29,7 @@ const ExploreBoard = () => {
           })
         : null}
 
-      <button className="btn btn-wide" onClick={loadMore}>
+      <button className="btn btn-wide bg-neutral" onClick={loadMore}>
         Load More
       </button>
     </>

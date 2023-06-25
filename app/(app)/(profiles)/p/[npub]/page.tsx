@@ -22,7 +22,7 @@ const Profile = () => {
     } else {
       return (
         <>
-          <button className="loading btn-sm btn btn-wide" />
+          <span className="loading loading-bars loading-lg fixed top-1/2 left-1/2 z-50" />
         </>
       );
     }
@@ -44,7 +44,7 @@ const Profile = () => {
           })
         : null}
 
-      <button className="btn btn-wide" onClick={loadMore}>
+      <button className="btn btn-wide bg-neutral" onClick={loadMore}>
         Load More
       </button>
     </>
