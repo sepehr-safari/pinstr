@@ -30,7 +30,7 @@ const ProfileBoard = () => {
   }
 
   return (
-    <>
+    <div className="grid grid-cols-1 gap-4">
       {boards.length > 0
         ? boards.map((board) => {
             if (board.pins.length > 0) {
@@ -44,7 +44,7 @@ const ProfileBoard = () => {
             }
           })
         : null}
-    </>
+    </div>
   );
 };
 

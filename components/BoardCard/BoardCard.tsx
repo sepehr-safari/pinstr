@@ -41,11 +41,11 @@ const BoardCard = ({ boardAuthor, boardName }: BoardCardProps) => {
 
   return (
     <>
-      <div className="flex flex-col border-neutral-700 border-2 rounded-lg bg-base-200 max-w-screen-lg grid-flow-col">
+      <div className="flex flex-col border-neutral-700 border-2 rounded-lg bg-base-200 grid-flow-col w-full mx-auto max-w-screen-md">
         {boards.length > 0 && !!boards[0].avatar && (
           <img
             src={boards[0].avatar}
-            className="w-full h-full object-cover rounded-t-lg"
+            className="w-full h-full object-cover rounded-t-lg max-h-[60vh]"
           />
         )}
         <div className="p-4 gap-4 flex items-center border-b-2 border-neutral">
