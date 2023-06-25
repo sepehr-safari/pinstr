@@ -4,6 +4,7 @@ type Board = {
   id: string;
   pubkey: string;
   name: string;
+  avatar: string;
   headers: string[];
   pins: Pin[];
 };

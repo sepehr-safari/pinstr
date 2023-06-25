@@ -27,10 +27,13 @@ const parseBoardsFromEvents = (events: Event[]) => {
             );
     if (!pinTags || pinTags.length === 0) continue;
 
+    const avatarTag = tags.find((tag) => tag[0] === 'avatar');
+
     boards.push({
       id: event.id,
       pubkey: event.pubkey,
       name: dTag[1],
+      avatar: avatarTag ? avatarTag[1] : '',
       headers: headersTag.slice(1),
       pins: pinTags.reduce<Pin[]>((pins, pinTag) => {
         return [...pins, pinTag.slice(1)];

@@ -1,19 +1,18 @@
 'use client';
 
-import { FolderIcon, PaperClipIcon } from '@heroicons/react/24/outline';
+import { EllipsisVerticalIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 import { useState } from 'react';
 
-import { useBoards, useMetadata, useReactions } from '@/hooks';
-
 import { formatRelativeTime } from '@/utils';
 
+import { useBoards, useMetadata, useReactions } from '@/hooks';
+
 import Commentor from './Commentor';
-import ReactionsSummary from './ReactionsSummary';
-import Reactions from './Reactions';
 import Comments from './Comments';
-import Preview from './LinkView';
 import LinkView from './LinkView';
+import Reactions from './Reactions';
+import ReactionsSummary from './ReactionsSummary';
 
 type BoardCardProps = {
   boardAuthor: string;
@@ -42,7 +41,13 @@ const BoardCard = ({ boardAuthor, boardName }: BoardCardProps) => {
 
   return (
     <>
-      <div className="flex flex-col border-neutral-700 border-2 rounded-lg bg-base-200 max-w-screen-lg w-full">
+      <div className="flex flex-col border-neutral-700 border-2 rounded-lg bg-base-200 max-w-screen-lg grid-flow-col">
+        {boards.length > 0 && !!boards[0].avatar && (
+          <img
+            src={boards[0].avatar}
+            className="w-full h-full object-cover rounded-t-lg"
+          />
+        )}
         <div className="p-4 gap-4 flex items-center border-b-2 border-neutral">
           <Link
             prefetch={false}
@@ -63,56 +68,66 @@ const BoardCard = ({ boardAuthor, boardName }: BoardCardProps) => {
           </div>
         </div>
         <div className="flex flex-col grow gap-4 p-4">
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-2 items-center justify-between">
             <Link
               prefetch={false}
               href={`/p/${npub}/${boardName}`}
               className="flex gap-2 items-center hover:text-primary hover:translate-x-1 ease-in-out transition-all duration-200"
             >
-              <div className="h-6 w-6">
-                <FolderIcon className="h-6 w-6" />
-              </div>
               <h3 className="lg:text-lg font-bold">{boardName}</h3>
               <span className="text-xs text-neutral-500">
                 (kind: {events.length > 0 && events[0].kind})
               </span>
             </Link>
 
-            <Link
-              prefetch={false}
-              href={`/frens/${boardName}`}
-              className="ml-auto btn btn-xs bg-neutral"
-            >
-              Frens
-            </Link>
-            <Link
-              prefetch={false}
-              href={`/explore/${boardName}`}
-              className="btn btn-xs bg-neutral"
-            >
-              Explore
-            </Link>
+            <div className="dropdown dropdown-end">
+              <label tabIndex={0} className="btn btn-circle btn-ghost btn-xs">
+                <EllipsisVerticalIcon className="w-5 h-5" />
+              </label>
+              <ul
+                tabIndex={0}
+                className="dropdown-content z-30 menu p-2 shadow bg-black rounded-box w-32 text-sm md:w-40"
+              >
+                <li>
+                  <Link
+                    prefetch={false}
+                    href={`/frens/${boardName}`}
+                    className=""
+                  >
+                    Frens
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    prefetch={false}
+                    href={`/explore/${boardName}`}
+                    className=""
+                  >
+                    Explore
+                  </Link>
+                </li>
+              </ul>
+            </div>
           </div>
           <div className="flex flex-col gap-2 text-sm lg:text-base">
             {boards.length > 0 &&
               boards[0].pins.length > 0 &&
-              boards[0].pins.slice(0, numberOfVisiblePins).map((pin) => (
+              boards[0].pins.slice(0, numberOfVisiblePins).map((pin, index) => (
                 <div
                   key={pin[0]}
-                  tabIndex={0}
                   className={`bg-neutral rounded-lg${
                     pin.length > 1 ? ' collapse collapse-arrow' : ''
                   }`}
                 >
-                  <div className="collapse-title px-2 py-1 min-h-0 flex gap-2 items-center">
-                    <div className="h-5 w-5">
-                      <PaperClipIcon className="h-5 w-5" />
-                    </div>
-                    {pin[0].startsWith('npub1' || 'note1') ? (
-                      <LinkView
-                        link={'https://nostr.com/' + pin[0]}
-                        view={pin[0]}
-                      />
+                  <input
+                    type="radio"
+                    name="radioitem"
+                    className="opacity-0 absolute"
+                  />
+                  <div className="collapse-title px-2 py-1 min-h-0 flex gap-2 items-center break-all">
+                    {pin[0].startsWith('npub1') ||
+                    pin[0].startsWith('note1') ? (
+                      <LinkView address={pin[0]} />
                     ) : (
                       <span className="mr-8">{pin[0]}</span>
                     )}
@@ -122,19 +137,29 @@ const BoardCard = ({ boardAuthor, boardName }: BoardCardProps) => {
                       <ul className="flex flex-col gap-2 mt-2">
                         {pin.slice(1).map((item, index) => (
                           <li key={boards[0].headers[index + 1]}>
-                            <p className="flex flex-col md:flex-row md:gap-2">
+                            <p className="flex flex-col md:flex-row md:gap-2 break-all">
                               <strong className="break-keep">
                                 {boards[0].headers[index + 1]}:
                               </strong>
-                              {item.startsWith('https://' || 'http://') ? (
-                                <LinkView link={item} view={item} />
-                              ) : item.startsWith('npub1' || 'note1') ? (
-                                <LinkView
-                                  link={'https://nostr.com/' + item}
-                                  view={item}
-                                />
+                              {item.startsWith('https://') ||
+                              item.startsWith('http://') ? (
+                                <div
+                                  className="text-primary cursor-pointer hover:opacity-80"
+                                  onClick={() =>
+                                    window.open(
+                                      item,
+                                      '_blank',
+                                      'noopener noreferrer'
+                                    )
+                                  }
+                                >
+                                  {item}
+                                </div>
+                              ) : item.startsWith('npub1') ||
+                                item.startsWith('note1') ? (
+                                <LinkView address={item} />
                               ) : (
-                                <span className="break-all">{item}</span>
+                                <span>{item}</span>
                               )}
                             </p>
                           </li>

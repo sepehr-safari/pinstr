@@ -5,9 +5,10 @@ import { usePubkey } from 'nostr-hooks';
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { useAddPin, useBoards, useCurrentParams } from '@/hooks';
+import { useAddPin, useBoards, useCurrentParams, useSetAvatar } from '@/hooks';
 
 import { NewHeaderInput } from '@/components';
+import Upload from './Upload';
 
 const PinEditor = () => {
   const pubkey = usePubkey();
@@ -19,6 +20,7 @@ const PinEditor = () => {
   const currentBoard = boards.find((board) => board.name === boardName);
 
   const { addPin } = useAddPin();
+  const { setAvatar } = useSetAvatar();
 
   const {
     register,
@@ -35,22 +37,62 @@ const PinEditor = () => {
     [addPin, currentBoard, invalidate]
   );
 
+  const handleUploadAvatar = useCallback(
+    (url: string) => {
+      console.log('handleUploadAvatar', currentBoard);
+
+      if (!currentBoard) return;
+
+      console.log('currentBoard', currentBoard);
+
+      setAvatar(url, currentBoard, invalidate);
+    },
+    [setAvatar, currentBoard, invalidate]
+  );
+
   return (
     <>
       <div className="w-full p-4 md:p-10 lg:w-3/4">
         <div className="rounded-lg bg-base-200 border-2 border-neutral p-8 gap-2 flex flex-col">
-          <div className="flex gap-2 items-start">
-            <div className="w-6 h-6">
-              <FolderIcon className="w-6 h-6" />
-            </div>
-            <p className="text-lg font-bold">{boardName}</p>
-          </div>
+          <div className="flex justify-between">
+            <div className="flex flex-col gap-2">
+              <div className="flex gap-2 items-start">
+                <div className="w-6 h-6">
+                  <FolderIcon className="w-6 h-6" />
+                </div>
+                <p className="text-lg font-bold">{boardName}</p>
+              </div>
 
-          {pinName ? (
-            <p className="text-xs">Let's edit this pin!</p>
-          ) : (
-            <p className="text-xs">Let's pin on this board!</p>
-          )}
+              {pinName ? (
+                <>
+                  <div className="flex gap-2 items-start ml-5">
+                    <div className="w-5 h-5">
+                      <PaperClipIcon className="w-5 h-5" />
+                    </div>
+                    <p className="">{pinName}</p>
+                  </div>
+
+                  <p className="text-xs">Let's edit this pin!</p>
+                </>
+              ) : (
+                <p className="text-xs">Let's pin on this board!</p>
+              )}
+            </div>
+
+            <Upload onSuccess={handleUploadAvatar}>
+              <div className="w-14 h-14 border-2 border-neutral text-xs text-center cursor-pointer">
+                {currentBoard && !!currentBoard.avatar ? (
+                  <div className="avatar">
+                    <div className="w-full">
+                      <img src={currentBoard.avatar} />
+                    </div>
+                  </div>
+                ) : (
+                  <>Upload</>
+                )}
+              </div>
+            </Upload>
+          </div>
 
           <hr className="my-4 border-neutral border-2" />
 
@@ -96,6 +138,8 @@ const PinEditor = () => {
               currentBoard={currentBoard}
               invalidate={invalidate}
             />
+
+            <Upload />
 
             <hr className="my-4 border-neutral border-2" />
 

@@ -15,15 +15,15 @@ const KindSelector = () => {
   return (
     <>
       <div className="dropdown dropdown-end">
-        <label tabIndex={0} className="btn btn-sm">
+        <label tabIndex={0} className="btn btn-sm bg-neutral">
           Kinds
         </label>
         <ul
           tabIndex={0}
-          className="dropdown-content menu p-2 shadow bg-base-200 rounded-box w-56 text-sm md:w-64"
+          className="dropdown-content menu p-2 shadow bg-black rounded-box w-56 text-sm md:w-64"
         >
           <li>
-            <a
+            <p
               className={`flex flex-col gap-0${
                 kind === 33888 ? ' active' : ''
               }`}
@@ -31,10 +31,10 @@ const KindSelector = () => {
             >
               <span>Generic Lists</span>
               <span>(kind: 33888)</span>
-            </a>
+            </p>
           </li>
           <li>
-            <a
+            <p
               className={`flex flex-col gap-0${
                 kind === 10000 ? ' active' : ''
               }`}
@@ -42,10 +42,10 @@ const KindSelector = () => {
             >
               <span>Mute Lists</span>
               <span>(kind: 10000)</span>
-            </a>
+            </p>
           </li>
           <li>
-            <a
+            <p
               className={`flex flex-col gap-0${
                 kind === 30000 ? ' active' : ''
               }`}
@@ -53,10 +53,10 @@ const KindSelector = () => {
             >
               <span>Categorized People lists</span>
               <span>(kind: 30000)</span>
-            </a>
+            </p>
           </li>
           <li>
-            <a
+            <p
               className={`flex flex-col gap-0${
                 kind === 30001 ? ' active' : ''
               }`}
@@ -64,15 +64,15 @@ const KindSelector = () => {
             >
               <span>Categorized Bookmark lists</span>
               <span>(kind: 30001)</span>
-            </a>
+            </p>
           </li>
           <li>
-            <a
+            <p
               className={`flex flex-col gap-0${kind === -1 ? ' active' : ''}`}
               onClick={() => handleKindChange(-1)}
             >
               <span>Hybrid</span>
-            </a>
+            </p>
           </li>
         </ul>
       </div>
