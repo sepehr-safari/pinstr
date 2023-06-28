@@ -139,8 +139,6 @@ const PinEditor = () => {
               invalidate={invalidate}
             />
 
-            <Upload />
-
             <hr className="my-4 border-neutral border-2" />
 
             <button className="btn btn-primary ml-auto gap-2" type="submit">
