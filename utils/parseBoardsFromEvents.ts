@@ -25,7 +25,7 @@ const parseBoardsFromEvents = (events: Event[]) => {
                 ? ['p', nip19.npubEncode(tag[1])]
                 : ['e', nip19.noteEncode(tag[1])]
             );
-    if (!pinTags || pinTags.length === 0) continue;
+    // if (!pinTags || pinTags.length === 0) continue;
 
     const avatarTag = tags.find((tag) => tag[0] === 'avatar');
 
