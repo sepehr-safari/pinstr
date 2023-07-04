@@ -18,6 +18,7 @@ const useInsertHeader = () => {
         kind: 33888,
         tags: [
           ['d', board.name],
+          ['avatar', board.avatar],
           newHeaders,
           ...board.pins.map((p) => ['pin', ...p]),
         ],

@@ -71,7 +71,7 @@ const BoardCard = ({ boardAuthor, boardName }: BoardCardProps) => {
           <div className="flex gap-2 items-center justify-between">
             <Link
               prefetch={false}
-              href={`/p/${npub}/${boardName}`}
+              href={`/p/${npub}/${encodeURIComponent(boardName)}`}
               className="flex gap-2 items-center hover:text-primary hover:translate-x-1 ease-in-out transition-all duration-200"
             >
               <h3 className="lg:text-lg font-bold">{boardName}</h3>
@@ -91,7 +91,7 @@ const BoardCard = ({ boardAuthor, boardName }: BoardCardProps) => {
                 <li>
                   <Link
                     prefetch={false}
-                    href={`/frens/${boardName}`}
+                    href={`/frens/${encodeURIComponent(boardName)}`}
                     className=""
                   >
                     Frens
@@ -100,7 +100,7 @@ const BoardCard = ({ boardAuthor, boardName }: BoardCardProps) => {
                 <li>
                   <Link
                     prefetch={false}
-                    href={`/explore/${boardName}`}
+                    href={`/explore/${encodeURIComponent(boardName)}`}
                     className=""
                   >
                     Explore
@@ -112,7 +112,7 @@ const BoardCard = ({ boardAuthor, boardName }: BoardCardProps) => {
           <div className="flex flex-col gap-2 text-sm lg:text-base">
             {boards.length > 0 &&
               boards[0].pins.length > 0 &&
-              boards[0].pins.slice(0, numberOfVisiblePins).map((pin, index) => (
+              boards[0].pins.slice(0, numberOfVisiblePins).map((pin) => (
                 <div
                   key={pin[0]}
                   className={`bg-neutral rounded-lg${

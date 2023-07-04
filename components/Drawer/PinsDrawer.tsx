@@ -1,11 +1,12 @@
 'use client';
 
-import { PaperClipIcon } from '@heroicons/react/24/outline';
+import { PaperClipIcon, PlusIcon } from '@heroicons/react/24/outline';
 
 import { useBoards, useCurrentParams, useRemovePin } from '@/hooks';
 
 import { Header, Item, ItemsLoading, Layout } from './Shared';
 import { usePubkey } from 'nostr-hooks';
+import Link from 'next/link';
 
 type PinsDrawerParams = {
   main: React.ReactNode;
@@ -32,7 +33,15 @@ const PinsDrawer = ({ main }: PinsDrawerParams) => {
         drawerId="pins-drawer"
         drawer={
           <ul className="menu menu-compact w-80 h-full bg-base-200 border-r-2 border-neutral">
-            <Header inputId="new-pin-input" header="My Pins" />
+            <Header>
+              <Link
+                prefetch={false}
+                href={`/my/${encodeURIComponent(currentBoard.name)}`}
+                className="btn btn-xs btn-square btn-ghost"
+              >
+                <PlusIcon className="w-5 h-5" />
+              </Link>
+            </Header>
 
             <ItemsLoading items={currentBoard.pins} eose={eose} />
 
@@ -41,7 +50,9 @@ const PinsDrawer = ({ main }: PinsDrawerParams) => {
                 key={pin[0]}
                 name={pin[0]}
                 icon={<PaperClipIcon />}
-                href={`/my/${currentBoard.name}/${pin[0]}`}
+                href={`/my/${encodeURIComponent(
+                  currentBoard.name
+                )}/${encodeURIComponent(pin[0])}`}
                 isActive={pin[0] === pinName}
                 removeHandler={() => removePin(pin, currentBoard, invalidate)}
               />

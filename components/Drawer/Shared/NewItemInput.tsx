@@ -30,7 +30,7 @@ const NewItemInput = ({ inputId }: NewItemInputParams) => {
       if (e.key === 'Enter') {
         addBoard(newBoardInput, invalidate);
         setNewBoardInput('');
-        router.push(`/my/${newBoardInput}`);
+        router.push(`/my/${encodeURIComponent(newBoardInput)}`);
       }
     },
     [addBoard, newBoardInput]

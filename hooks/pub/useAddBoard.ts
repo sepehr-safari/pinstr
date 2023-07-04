@@ -11,6 +11,7 @@ const useAddBoard = () => {
         kind: 33888,
         tags: [
           ['d', boardName],
+          ['avatar', ''],
           ['headers', 'Name'],
         ],
       }).then(invalidate);

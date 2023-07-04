@@ -1,6 +1,6 @@
 'use client';
 
-import { FolderIcon } from '@heroicons/react/24/outline';
+import { FolderIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { usePubkey } from 'nostr-hooks';
 
 import { useBoards, useCurrentParams, useRemoveBoard } from '@/hooks';
@@ -9,11 +9,11 @@ import { Header, Item, ItemsLoading, Layout, NewItemInput } from './Shared';
 
 import { GithubIcon } from '@/components';
 
-type BoardsDrawerParams = {
+type Props = {
   main: React.ReactNode;
 };
 
-const BoardsDrawer = ({ main }: BoardsDrawerParams) => {
+const BoardsDrawer = ({ main }: Props) => {
   const { boardName } = useCurrentParams();
 
   const pubkey = usePubkey();
@@ -30,7 +30,14 @@ const BoardsDrawer = ({ main }: BoardsDrawerParams) => {
         drawerId="boards-drawer"
         drawer={
           <div className="menu menu-compact w-80 h-full bg-base-200 border-r-2 border-neutral">
-            <Header inputId="new-board-input" header="My Boards" />
+            <Header>
+              <label
+                htmlFor="new-board-input"
+                className="btn btn-xs btn-square btn-ghost"
+              >
+                <PlusIcon className="w-5 h-5" />
+              </label>
+            </Header>
 
             <ItemsLoading items={boards} eose={eose} />
 
@@ -40,7 +47,7 @@ const BoardsDrawer = ({ main }: BoardsDrawerParams) => {
                   key={board.name}
                   name={board.name}
                   icon={<FolderIcon />}
-                  href={`/my/${board.name}`}
+                  href={`/my/${encodeURIComponent(board.name)}`}
                   isActive={board.name === boardName}
                   removeHandler={() => removeBoard(board, invalidate)}
                 />

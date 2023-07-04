@@ -18,6 +18,7 @@ const useRemovePin = () => {
         kind: 33888,
         tags: [
           ['d', board.name],
+          ['avatar', board.avatar],
           ['headers', ...board.headers],
           ...board.pins
             .filter((p) => p[0] !== pin[0])
@@ -27,7 +28,7 @@ const useRemovePin = () => {
         if (!event) return;
 
         invalidate();
-        router.push(`/my/${board.name}`);
+        router.push(`/my/${encodeURIComponent(board.name)}`);
       });
     },
     [publish]
