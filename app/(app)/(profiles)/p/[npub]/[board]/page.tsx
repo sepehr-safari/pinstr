@@ -8,7 +8,7 @@ import { BoardCard, NoBoards } from '@/components';
 
 const ProfileBoard = () => {
   const { npub, boardName } = useCurrentParams();
-  const pubkey = npub && nip19.decode(npub).data.toString();
+  const pubkey = !!npub && nip19.decode(npub).data.toString();
 
   const { boards, eose } = useBoards({
     pubkeys: pubkey ? [pubkey] : undefined,
