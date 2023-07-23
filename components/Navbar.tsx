@@ -59,7 +59,7 @@ const Navbar = () => {
           </a>
         </div>
 
-        {!!pubkey && <KindSelector />}
+        <KindSelector />
 
         {!!pubkey && (
           <div className="flex-none">
