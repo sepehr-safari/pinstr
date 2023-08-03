@@ -1,13 +1,13 @@
 # Pinstr
 
-Pinstr is a decentralized and open-source social network for curating and sharing your interests with the world. With Pinstr, you can easily organize and discover new ideas, inspiration, and recommendations. Whether you're into movies, music, food, Bitcoin, Nostr, or anything else, Pinstr has got you covered. Plus, you can engage with other users by staring, commenting, and Zapping their boards. Start sharing your interests with the world today!
+Pinstr is a decentralized, free, and open-source social network for curating and sharing interests with the world. With Pinstr, you can easily organize and discover new ideas, inspiration, and recommendations. Whether you're into movies, music, food, Bitcoin, Nostr, or anything else, Pinstr has got you covered. Plus, you can engage with other users by staring, commenting, and Zapping their boards. Start sharing your interests with the world today!
 
 ## Features
 
 - Decentralized and censorship-resistant backend with Nostr protocol
-- Open-source and transparent
+- Open-source and free to use
 - Create public boards of pins on almost any topic
-- Star, comment, and Zap other users' boards
+- Like, Comment, and Zap other users' boards
 - Easy-to-use interface
 - User-friendly features
 
