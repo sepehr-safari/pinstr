@@ -1,16 +1,7 @@
-import { useState } from 'react';
-import { Hello } from '@/components';
+import { MainRouter } from '@/routes';
 
 function App() {
-  //
-
-  return (
-    <>
-      <div>
-        <Hello />
-      </div>
-    </>
-  );
+  return <MainRouter />;
 }
 
 export default App;
