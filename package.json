@@ -13,10 +13,12 @@
   "dependencies": {
     "@headlessui/react": "^1.7.16",
     "@heroicons/react": "^2.0.18",
+    "@popperjs/core": "^2.11.8",
     "@tanstack/react-query": "^4.32.1",
     "nostr-tools": "^1.14.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-popper": "^2.3.0",
     "react-router-dom": "^6.14.2"
   },
   "devDependencies": {
