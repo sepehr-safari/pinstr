@@ -23,7 +23,7 @@ const boards = [
     id: 4,
     name: 'Top Rock Bands',
     author: 'Sepehr',
-    imageSrc: 'https://source.unsplash.com/random/?rockband',
+    imageSrc: 'https://source.unsplash.com/random/?rock+band',
   },
   {
     id: 5,
@@ -66,7 +66,7 @@ const boards = [
 export default function BoardsGrid() {
   return (
     <div className="bg-white">
-      <div className="mx-auto max-w-md sm:max-w-none overflow-hidden p-4 sm:px-6 sm:pt-6">
+      <div className="mx-auto max-w-md sm:max-w-none overflow-hidden p-4 sm:px-6 sm:pt-6 mb-12">
         <div className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 sm:gap-x-6 sm:gap-y-10">
           {boards.map((board) => (
             <a key={board.id} href="#" className="group">
