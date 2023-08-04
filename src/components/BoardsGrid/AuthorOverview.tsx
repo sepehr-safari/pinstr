@@ -38,18 +38,27 @@ export default function AuthorOverview() {
             {...attributes.popper}
           >
             <div className="mb-6 w-72 shrink rounded-md bg-white shadow-md ring-1 ring-gray-900/20">
-              <li className="col-span-1 flex flex-col divide-y divide-gray-200 text-center">
-                <div className="flex flex-1 flex-col p-8">
-                  <img
-                    className="mx-auto h-32 w-32 flex-shrink-0 rounded-full"
-                    src="https://source.unsplash.com/random/?avatar"
-                    alt=""
-                  />
-                  <h3 className="mt-6 text-sm font-semibold">fiatjaf</h3>
-                  <dl className="mt-1 flex flex-grow flex-col justify-between">
-                    <dt className="sr-only">Title</dt>
-                    <dd className="text-sm text-gray-500">Description</dd>
-                  </dl>
+              <div className="text-center divide-y divide-gray-200">
+                <div className="relative">
+                  <div className="absolute top-0 left-0 right-0 bottom-0 p-2">
+                    <img
+                      className="w-full h-20 bg-gray-200 rounded"
+                      src="https://source.unsplash.com/random/?background"
+                      alt=""
+                    />
+                  </div>
+                  <div className="flex flex-1 flex-col p-4">
+                    <img
+                      className="mx-auto h-32 w-32 flex-shrink-0 rounded-full bg-gray-200 z-[1]"
+                      src="https://source.unsplash.com/random/?avatar"
+                      alt=""
+                    />
+                    <h3 className="mt-4 text-sm font-semibold">fiatjaf</h3>
+                    <dl className="mt-1 flex flex-grow flex-col justify-between">
+                      <dt className="sr-only">Title</dt>
+                      <dd className="text-xs text-gray-500">Description</dd>
+                    </dl>
+                  </div>
                 </div>
                 <div>
                   <div className="-mt-px flex divide-x divide-gray-200">
@@ -79,7 +88,7 @@ export default function AuthorOverview() {
                     </div>
                   </div>
                 </div>
-              </li>
+              </div>
             </div>
           </Popover.Panel>
         </>
