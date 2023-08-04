@@ -1,5 +1,5 @@
 import { Disclosure, Menu, Transition } from '@headlessui/react';
-import { MagnifyingGlassIcon } from '@heroicons/react/20/solid';
+import { MagnifyingGlassIcon, PlusIcon } from '@heroicons/react/20/solid';
 import { Fragment, useState } from 'react';
 
 import { joinClassNames } from '@/utils';
@@ -33,8 +33,8 @@ export default function Navbar() {
               </div>
             </div>
 
-            <div className="relative z-0 flex flex-1 items-center justify-center px-2 sm:absolute sm:inset-0">
-              <div className="w-full sm:max-w-xs">
+            <div className="relative z-0 flex flex-1 items-center justify-center px-2 md:absolute md:inset-0">
+              <div className="w-full md:max-w-sm">
                 <label htmlFor="search" className="sr-only">
                   Search
                 </label>
@@ -59,7 +59,7 @@ export default function Navbar() {
             <div className="relative z-10 flex items-center">
               {!loggedIn && (
                 <button
-                  className="ml-6 inline-flex items-center rounded-md bg-gray-900 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
+                  className="inline-flex rounded-full bg-gray-900 px-4 py-2 text-xs font-semibold text-white shadow-sm hover:opacity-80"
                   onClick={() => setLoggedIn(true)}
                 >
                   Login
@@ -68,58 +68,68 @@ export default function Navbar() {
 
               {/* Profile dropdown */}
               {loggedIn && (
-                <Menu as="div" className="relative flex-shrink-0">
-                  <div>
-                    <Menu.Button className="relative flex rounded-full bg-white focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
-                      <span className="absolute -inset-1.5" />
-                      <span className="sr-only">Open user menu</span>
-                      <img
-                        className="h-8 w-8 rounded-full"
-                        src={USER.imageUrl}
-                        alt=""
-                      />
-                    </Menu.Button>
-                  </div>
-                  <Transition
-                    as={Fragment}
-                    enter="transition ease-out duration-100"
-                    enterFrom="transform opacity-0 scale-95"
-                    enterTo="transform opacity-100 scale-100"
-                    leave="transition ease-in duration-75"
-                    leaveFrom="transform opacity-100 scale-100"
-                    leaveTo="transform opacity-0 scale-95"
-                  >
-                    <Menu.Items className="absolute right-0 z-10 mt-2 w-64 origin-top-right divide-y divide-gray-100 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      <Menu.Item as="a">
+                <>
+                  <button className="mr-2 inline-flex items-center rounded-full bg-gray-900 px-4 py-2 text-xs font-semibold text-white shadow-sm hover:opacity-80 md:mr-4">
+                    <PlusIcon
+                      className="-ml-1 mr-1 h-4 w-4"
+                      aria-hidden="true"
+                    />
+                    Create
+                  </button>
+
+                  <Menu as="div" className="relative flex-shrink-0">
+                    <div>
+                      <Menu.Button className="relative flex rounded-full bg-white focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                        <span className="absolute -inset-1.5" />
+                        <span className="sr-only">Open user menu</span>
                         <img
-                          className="mt-4 mx-auto h-24 w-24 flex-shrink-0 rounded-full"
+                          className="h-8 w-8 rounded-full bg-gray-200"
                           src={USER.imageUrl}
                           alt=""
                         />
-                        <h3 className="mt-2 mb-4 text-sm font-semibold text-gray-900 text-center">
-                          {USER.name}
-                        </h3>
-                      </Menu.Item>
-                      <div className="py-1">
-                        {USER_NAVIGATION.map((item) => (
-                          <Menu.Item key={item.name}>
-                            {({ active }) => (
-                              <a
-                                href={item.href}
-                                className={joinClassNames(
-                                  active ? 'bg-gray-100' : '',
-                                  'block px-4 py-2 text-sm text-gray-700'
-                                )}
-                              >
-                                {item.name}
-                              </a>
-                            )}
-                          </Menu.Item>
-                        ))}
-                      </div>
-                    </Menu.Items>
-                  </Transition>
-                </Menu>
+                      </Menu.Button>
+                    </div>
+                    <Transition
+                      as={Fragment}
+                      enter="transition ease-out duration-100"
+                      enterFrom="transform opacity-0 scale-95"
+                      enterTo="transform opacity-100 scale-100"
+                      leave="transition ease-in duration-75"
+                      leaveFrom="transform opacity-100 scale-100"
+                      leaveTo="transform opacity-0 scale-95"
+                    >
+                      <Menu.Items className="absolute right-0 z-10 mt-2 w-64 origin-top-right divide-y divide-gray-100 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <Menu.Item as="a">
+                          <img
+                            className="mt-4 mx-auto h-24 w-24 flex-shrink-0 rounded-full"
+                            src={USER.imageUrl}
+                            alt=""
+                          />
+                          <h3 className="mt-2 mb-4 text-sm font-semibold text-gray-900 text-center">
+                            {USER.name}
+                          </h3>
+                        </Menu.Item>
+                        <div className="py-1">
+                          {USER_NAVIGATION.map((item) => (
+                            <Menu.Item key={item.name}>
+                              {({ active }) => (
+                                <a
+                                  href={item.href}
+                                  className={joinClassNames(
+                                    active ? 'bg-gray-100' : '',
+                                    'block px-4 py-2 text-sm text-gray-700'
+                                  )}
+                                >
+                                  {item.name}
+                                </a>
+                              )}
+                            </Menu.Item>
+                          ))}
+                        </div>
+                      </Menu.Items>
+                    </Transition>
+                  </Menu>
+                </>
               )}
             </div>
           </div>
