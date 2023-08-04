@@ -1,4 +1,10 @@
-import { Navbar, KindsMenu, AuthorMenu, BoardsGrid } from '@/components';
+import {
+  Navbar,
+  KindsMenu,
+  AuthorMenu,
+  BoardsGrid,
+  Footer,
+} from '@/components';
 
 const Home = () => {
   return (
@@ -9,6 +15,7 @@ const Home = () => {
         <KindsMenu />
       </div>
       <BoardsGrid />
+      <Footer />
     </>
   );
 };
