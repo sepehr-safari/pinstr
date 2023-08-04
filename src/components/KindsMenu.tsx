@@ -5,7 +5,7 @@ import { Fragment, useState } from 'react';
 import { joinClassNames } from '@/utils';
 
 export default function KindsMenu() {
-  const [state, setState] = useState<string>('People Lists (Kind: 30000)');
+  const [state, setState] = useState<string>('Generic (Kind: 33888)');
 
   return (
     <Menu as="div" className="relative inline-block text-left">
@@ -37,9 +37,9 @@ export default function KindsMenu() {
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                     'block w-full px-4 py-2 text-left text-sm'
                   )}
-                  onClick={() => setState('Generic Lists (Kind: 33888)')}
+                  onClick={() => setState('Generic (Kind: 33888)')}
                 >
-                  Generic Lists (Kind: 33888)
+                  Generic (Kind: 33888)
                 </button>
               )}
             </Menu.Item>
@@ -50,9 +50,9 @@ export default function KindsMenu() {
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                     'block w-full px-4 py-2 text-left text-sm'
                   )}
-                  onClick={() => setState('People Lists (Kind: 30000)')}
+                  onClick={() => setState('People (Kind: 30000)')}
                 >
-                  People Lists (Kind: 30000)
+                  People (Kind: 30000)
                 </button>
               )}
             </Menu.Item>
@@ -63,9 +63,9 @@ export default function KindsMenu() {
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                     'block w-full px-4 py-2 text-left text-sm'
                   )}
-                  onClick={() => setState('Note Lists (Kind: 30001)')}
+                  onClick={() => setState('Notes (Kind: 30001)')}
                 >
-                  Note Lists (Kind: 30001)
+                  Notes (Kind: 30001)
                 </button>
               )}
             </Menu.Item>
