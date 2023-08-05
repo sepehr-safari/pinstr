@@ -1,5 +1,4 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { QuestionMarkCircleIcon } from '@heroicons/react/20/solid';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { Fragment } from 'react';
 
@@ -126,31 +125,10 @@ export default function CreateSlideover({ open, setOpen }: Props) {
                               </div>
                             </div>
                             <div>
-                              <label
-                                htmlFor="board-name"
-                                className="block text-sm font-medium leading-6 text-gray-900"
-                              >
+                              <span className="block text-sm font-medium leading-6 text-gray-900">
                                 Cover Image
-                              </label>
+                              </span>
                               <div className="mt-2"></div>
-                            </div>
-                          </div>
-                          <div className="pb-6 pt-4">
-                            <div className="mt-4 flex text-sm">
-                              <a
-                                href="https://nostr.com"
-                                target="_blank"
-                                rel="noreferrer"
-                                className="group inline-flex items-center text-gray-500 hover:text-gray-900"
-                              >
-                                <QuestionMarkCircleIcon
-                                  className="h-5 w-5 text-gray-400 group-hover:text-gray-500"
-                                  aria-hidden="true"
-                                />
-                                <span className="ml-2">
-                                  Learn more about nostr
-                                </span>
-                              </a>
                             </div>
                           </div>
                         </div>
