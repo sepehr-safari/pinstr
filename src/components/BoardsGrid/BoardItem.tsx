@@ -15,29 +15,29 @@ const BoardItem = ({ board }: { board: any }) => {
         onMouseEnter={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
       >
-        <div className="relative aspect-w-3 aspect-h-4 w-full overflow-hidden rounded-md bg-gray-100">
+        <div className="relative aspect-w-3 aspect-h-4 w-full overflow-hidden rounded-md bg-gray-100 hover:cursor-pointer">
           <Transition show={isHovering}>
             <Transition.Child
               as="div"
               className="z-[2] absolute left-4 top-4"
-              enter="transition opacity transform duration-300 ease-in-out"
-              enterFrom="opacity-0 translate-y-1"
-              enterTo="opacity-100 translate-y-0"
-              leave="transition opacity transform duration-200 ease-in-out"
-              leaveFrom="opacity-100 translate-y-0"
-              leaveTo="opacity-0 -translate-y-1"
+              enter="transition opacity transform duration-300"
+              enterFrom="opacity-0 translate-x-1"
+              enterTo="opacity-100 translate-x-0"
+              leave="transition opacity transform duration-200"
+              leaveFrom="opacity-100 translate-x-0"
+              leaveTo="opacity-0 -translate-x-1"
             >
               <Badge label="Generic" />
             </Transition.Child>
             <Transition.Child
               as="div"
-              className="z-[2] absolute right-4 top-4"
-              enter="transition opacity transform duration-300 delay-100 ease-in-out"
-              enterFrom="opacity-0 translate-y-1"
-              enterTo="opacity-100 translate-y-0"
-              leave="transition opacity transform duration-200 ease-in-out"
-              leaveFrom="opacity-100 translate-y-0"
-              leaveTo="opacity-0 -translate-y-1"
+              className="z-[2] absolute right-4 bottom-4"
+              enter="transition opacity transform duration-300"
+              enterFrom="opacity-0 -translate-x-1"
+              enterTo="opacity-100 translate-x-0"
+              leave="transition opacity transform duration-200"
+              leaveFrom="opacity-100 translate-x-0"
+              leaveTo="opacity-0 translate-x-1"
             >
               <Badge label="Entertainment" />
             </Transition.Child>
