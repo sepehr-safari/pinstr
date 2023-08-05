@@ -43,7 +43,7 @@ export default function AuthorOverview() {
                     />
                   </div>
                   <div className="flex flex-1 flex-col p-4">
-                    <div className="mx-auto aspect-1 w-32 h-32 rounded-full bg-gray-200 z-[1]">
+                    <div className="mx-auto aspect-1 w-32 h-32 rounded-full bg-gray-300 z-[1]">
                       <img
                         className="w-full h-full object-cover object-center rounded-full"
                         src="https://source.unsplash.com/random/?avatar"
