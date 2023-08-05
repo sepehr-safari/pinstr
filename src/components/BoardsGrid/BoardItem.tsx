@@ -1,13 +1,57 @@
+import { Transition } from '@headlessui/react';
 import { BoltIcon, HandThumbUpIcon } from '@heroicons/react/20/solid';
+import { useState } from 'react';
 
 import AuthorOverview from './AuthorOverview';
+import Badge from './Badge';
 
 const BoardItem = ({ board }: { board: any }) => {
+  const [isHovering, setIsHover] = useState<boolean | undefined>(false);
+
   return (
     <>
-      <a className="group">
+      <a
+        className="group"
+        onMouseEnter={() => setIsHover(true)}
+        onMouseLeave={() => setIsHover(false)}
+      >
         <div className="relative aspect-w-3 aspect-h-4 w-full overflow-hidden rounded-md bg-gray-100">
-          <div className="absolute left-0 right-0 top-0 bottom-0 z-[1] bg-black opacity-0 duration-200 group-hover:opacity-20" />
+          <Transition show={isHovering}>
+            <Transition.Child
+              as="div"
+              className="z-[2] absolute left-4 top-4"
+              enter="transition opacity transform duration-700 ease-in-out"
+              enterFrom="opacity-0 translate-y-2"
+              enterTo="opacity-100 translate-y-0"
+              leave="transition opacity transform duration-300 ease-in-out"
+              leaveFrom="opacity-100 translate-y-0"
+              leaveTo="opacity-0 -translate-y-2"
+            >
+              <Badge label="Generic" />
+            </Transition.Child>
+            <Transition.Child
+              as="div"
+              className="z-[2] absolute right-4 top-4"
+              enter="transition opacity transform duration-300 delay-200 ease-in-out"
+              enterFrom="opacity-0 translate-y-2"
+              enterTo="opacity-100 translate-y-0"
+              leave="transition opacity transform duration-300 ease-in-out"
+              leaveFrom="opacity-100 translate-y-0"
+              leaveTo="opacity-0 -translate-y-2"
+            >
+              <Badge label="Entertainment" />
+            </Transition.Child>
+            <Transition.Child
+              as="div"
+              className="z-[1] absolute left-0 right-0 top-0 bottom-0 bg-black"
+              enter="transition-opacity duration-200"
+              enterFrom="opacity-0"
+              enterTo="opacity-20"
+              leave="transition-opacity duration-100"
+              leaveFrom="opacity-20"
+              leaveTo="opacity-0"
+            />
+          </Transition>
           <img
             src={board.imageSrc}
             alt=""

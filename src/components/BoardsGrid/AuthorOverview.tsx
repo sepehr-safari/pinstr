@@ -43,11 +43,13 @@ export default function AuthorOverview() {
                     />
                   </div>
                   <div className="flex flex-1 flex-col p-4">
-                    <img
-                      className="mx-auto h-32 w-32 flex-shrink-0 rounded-full bg-gray-200 z-[1]"
-                      src="https://source.unsplash.com/random/?avatar"
-                      alt=""
-                    />
+                    <div className="mx-auto aspect-1 w-32 h-32 rounded-full bg-gray-200 z-[1]">
+                      <img
+                        className="w-full h-full object-cover object-center rounded-full"
+                        src="https://source.unsplash.com/random/?avatar"
+                        alt=""
+                      />
+                    </div>
                     <h3 className="mt-4 text-sm font-semibold">fiatjaf</h3>
                     <dl className="mt-1 flex flex-grow flex-col justify-between">
                       <dt className="sr-only">Title</dt>
