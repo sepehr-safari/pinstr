@@ -78,56 +78,68 @@ export default function Navbar() {
                   </button>
 
                   <Menu as="div" className="relative flex-shrink-0">
-                    <div>
-                      <Menu.Button className="relative flex rounded-full bg-white focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
-                        <span className="absolute -inset-1.5" />
-                        <span className="sr-only">Open user menu</span>
-                        <img
-                          className="h-8 w-8 rounded-full bg-gray-200"
-                          src={USER.imageUrl}
-                          alt=""
-                        />
-                      </Menu.Button>
-                    </div>
-                    <Transition
-                      as={Fragment}
-                      enter="transition ease-out duration-100"
-                      enterFrom="transform opacity-0 scale-95"
-                      enterTo="transform opacity-100 scale-100"
-                      leave="transition ease-in duration-75"
-                      leaveFrom="transform opacity-100 scale-100"
-                      leaveTo="transform opacity-0 scale-95"
-                    >
-                      <Menu.Items className="absolute right-0 z-10 mt-2 w-64 origin-top-right divide-y divide-gray-100 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                        <Menu.Item as="a">
-                          <img
-                            className="mt-4 mx-auto h-24 w-24 flex-shrink-0 rounded-full"
-                            src={USER.imageUrl}
-                            alt=""
-                          />
-                          <h3 className="mt-2 mb-4 text-sm font-semibold text-gray-900 text-center">
-                            {USER.name}
-                          </h3>
-                        </Menu.Item>
-                        <div className="py-1">
-                          {USER_NAVIGATION.map((item) => (
-                            <Menu.Item key={item.name}>
-                              {({ active }) => (
-                                <a
-                                  href={item.href}
-                                  className={joinClassNames(
-                                    active ? 'bg-gray-100' : '',
-                                    'block px-4 py-2 text-sm text-gray-700'
-                                  )}
-                                >
-                                  {item.name}
-                                </a>
-                              )}
-                            </Menu.Item>
-                          ))}
+                    {({ open, close }) => (
+                      <>
+                        <div>
+                          <Menu.Button
+                            className="relative flex rounded-full bg-white"
+                            onMouseEnter={({ currentTarget }) =>
+                              !open && currentTarget.click()
+                            }
+                          >
+                            <span className="absolute -inset-1.5" />
+                            <span className="sr-only">Open user menu</span>
+                            <img
+                              className="h-8 w-8 rounded-full bg-gray-200"
+                              src={USER.imageUrl}
+                              alt=""
+                            />
+                          </Menu.Button>
                         </div>
-                      </Menu.Items>
-                    </Transition>
+                        <Transition
+                          as={Fragment}
+                          enter="transition ease-out duration-100"
+                          enterFrom="transform opacity-0 scale-95"
+                          enterTo="transform opacity-100 scale-100"
+                          leave="transition ease-in duration-75"
+                          leaveFrom="transform opacity-100 scale-100"
+                          leaveTo="transform opacity-0 scale-95"
+                        >
+                          <Menu.Items
+                            onMouseLeave={close}
+                            className="absolute right-0 z-10 mt-2 w-64 origin-top-right divide-y divide-gray-100 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                          >
+                            <Menu.Item as="a">
+                              <img
+                                className="mt-4 mx-auto h-24 w-24 flex-shrink-0 rounded-full"
+                                src={USER.imageUrl}
+                                alt=""
+                              />
+                              <h3 className="mt-2 mb-4 text-sm font-semibold text-gray-900 text-center">
+                                {USER.name}
+                              </h3>
+                            </Menu.Item>
+                            <div className="py-1">
+                              {USER_NAVIGATION.map((item) => (
+                                <Menu.Item key={item.name}>
+                                  {({ active }) => (
+                                    <a
+                                      href={item.href}
+                                      className={joinClassNames(
+                                        active ? 'bg-gray-100' : '',
+                                        'block px-4 py-2 text-sm text-gray-700'
+                                      )}
+                                    >
+                                      {item.name}
+                                    </a>
+                                  )}
+                                </Menu.Item>
+                              ))}
+                            </div>
+                          </Menu.Items>
+                        </Transition>
+                      </>
+                    )}
                   </Menu>
                 </>
               )}

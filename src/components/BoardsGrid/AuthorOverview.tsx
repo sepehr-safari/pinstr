@@ -1,10 +1,5 @@
 import { Popover } from '@headlessui/react';
-import {
-  EnvelopeIcon,
-  PhoneIcon,
-  PlusIcon,
-  UserIcon,
-} from '@heroicons/react/20/solid';
+import { PlusIcon, UserIcon } from '@heroicons/react/20/solid';
 import { useState } from 'react';
 import { usePopper } from 'react-popper';
 
@@ -43,7 +38,7 @@ export default function AuthorOverview() {
                   <div className="absolute top-0 left-0 right-0 bottom-0 p-2">
                     <img
                       className="w-full h-20 bg-gray-200 rounded"
-                      src="https://source.unsplash.com/random/?background"
+                      src="https://source.unsplash.com/random/?landscape"
                       alt=""
                     />
                   </div>
