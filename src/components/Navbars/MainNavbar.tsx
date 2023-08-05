@@ -4,6 +4,8 @@ import { Fragment, useState } from 'react';
 
 import { joinClassNames } from '@/utils';
 
+import { CreateSlideover } from '@/components';
+
 const USER = {
   name: 'Sepehr',
   imageUrl: 'https://source.unsplash.com/random/?avatar',
@@ -14,8 +16,9 @@ const USER_NAVIGATION = [
   { name: 'Sign out', href: '#' },
 ];
 
-export default function Navbar() {
-  const [loggedIn, setLoggedIn] = useState<Boolean>(false);
+export default function MainNavbar() {
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <Disclosure as="header" className="bg-white shadow">
@@ -59,7 +62,7 @@ export default function Navbar() {
             <div className="relative z-10 flex items-center">
               {!loggedIn && (
                 <button
-                  className="inline-flex rounded-full bg-gray-900 px-4 py-2 text-xs font-semibold text-white shadow-sm hover:opacity-80"
+                  className="inline-flex rounded-full bg-gray-800 px-4 py-2 text-xs font-semibold text-white shadow-sm hover:opacity-80"
                   onClick={() => setLoggedIn(true)}
                 >
                   Login
@@ -69,13 +72,18 @@ export default function Navbar() {
               {/* Profile dropdown */}
               {loggedIn && (
                 <>
-                  <button className="mr-2 inline-flex items-center rounded-full bg-gray-900 px-4 py-2 text-xs font-semibold text-white shadow-sm hover:opacity-80 md:mr-4">
+                  <button
+                    className="mr-2 inline-flex items-center rounded-full bg-gray-800 px-4 py-2 text-xs font-semibold text-white shadow-sm hover:opacity-80 md:mr-4"
+                    onClick={() => setOpen(true)}
+                  >
                     <PlusIcon
                       className="-ml-1 mr-1 h-4 w-4"
                       aria-hidden="true"
                     />
                     Create
                   </button>
+
+                  <CreateSlideover open={open} setOpen={setOpen} />
 
                   <Menu as="div" className="relative flex-shrink-0">
                     {({ open, close }) => (

@@ -1,10 +1,10 @@
-import { Navbar, FiltersNav, BoardsGrid, Footer } from '@/components';
+import { BoardsGrid, FiltersNavbar, Footer, MainNavbar } from '@/components';
 
 const Home = () => {
   return (
     <>
-      <Navbar />
-      <FiltersNav />
+      <MainNavbar />
+      <FiltersNavbar />
       <BoardsGrid />
       <Footer />
     </>
