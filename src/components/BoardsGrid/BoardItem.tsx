@@ -20,24 +20,24 @@ const BoardItem = ({ board }: { board: any }) => {
             <Transition.Child
               as="div"
               className="z-[2] absolute left-4 top-4"
-              enter="transition opacity transform duration-700 ease-in-out"
-              enterFrom="opacity-0 translate-y-2"
+              enter="transition opacity transform duration-300 ease-in-out"
+              enterFrom="opacity-0 translate-y-1"
               enterTo="opacity-100 translate-y-0"
-              leave="transition opacity transform duration-300 ease-in-out"
+              leave="transition opacity transform duration-200 ease-in-out"
               leaveFrom="opacity-100 translate-y-0"
-              leaveTo="opacity-0 -translate-y-2"
+              leaveTo="opacity-0 -translate-y-1"
             >
               <Badge label="Generic" />
             </Transition.Child>
             <Transition.Child
               as="div"
               className="z-[2] absolute right-4 top-4"
-              enter="transition opacity transform duration-300 delay-200 ease-in-out"
-              enterFrom="opacity-0 translate-y-2"
+              enter="transition opacity transform duration-300 delay-100 ease-in-out"
+              enterFrom="opacity-0 translate-y-1"
               enterTo="opacity-100 translate-y-0"
-              leave="transition opacity transform duration-300 ease-in-out"
+              leave="transition opacity transform duration-200 ease-in-out"
               leaveFrom="opacity-100 translate-y-0"
-              leaveTo="opacity-0 -translate-y-2"
+              leaveTo="opacity-0 -translate-y-1"
             >
               <Badge label="Entertainment" />
             </Transition.Child>
@@ -46,9 +46,9 @@ const BoardItem = ({ board }: { board: any }) => {
               className="z-[1] absolute left-0 right-0 top-0 bottom-0 bg-black"
               enter="transition-opacity duration-200"
               enterFrom="opacity-0"
-              enterTo="opacity-20"
+              enterTo="opacity-30"
               leave="transition-opacity duration-100"
-              leaveFrom="opacity-20"
+              leaveFrom="opacity-30"
               leaveTo="opacity-0"
             />
           </Transition>
