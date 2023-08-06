@@ -1,17 +1,14 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { Fragment } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
 
-export default function BoardSlideover({
-  open,
-  setOpen,
-}: {
-  open: boolean;
-  setOpen: (state: boolean) => void;
-}) {
+export default function BottomSlideover() {
+  const navigate = useNavigate();
+
   return (
-    <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={setOpen}>
+    <Transition.Root show={true} as={Fragment}>
+      <Dialog as="div" className="relative z-10" onClose={() => navigate(-1)}>
         <Transition.Child
           as={Fragment}
           enter="ease-in-out duration-500"
@@ -48,7 +45,7 @@ export default function BoardSlideover({
                             type="button"
                             tabIndex={-1}
                             className="relative rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                            onClick={() => setOpen(false)}
+                            onClick={() => navigate(-1)}
                           >
                             <span className="absolute -inset-2.5" />
                             <span className="sr-only">Close</span>
@@ -57,7 +54,9 @@ export default function BoardSlideover({
                         </div>
                       </div>
                     </div>
-                    <div className="relative mt-4 flex-1 px-4 overflow-y-scroll"></div>
+                    <div className="relative mt-4 flex-1 px-4 overflow-y-scroll">
+                      <Outlet />
+                    </div>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

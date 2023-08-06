@@ -1,23 +1,23 @@
 import { Transition } from '@headlessui/react';
 import { BoltIcon, HandThumbUpIcon } from '@heroicons/react/20/solid';
 import { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
-import { BoardSlideover } from '@/components';
 import AuthorOverview from './AuthorOverview';
 import Badge from './Badge';
 
 const BoardItem = ({ board }: { board: any }) => {
   const [isHovering, setIsHover] = useState<boolean | undefined>(false);
-  const [open, setOpen] = useState(false);
+  const location = useLocation();
 
   return (
     <>
-      <BoardSlideover open={open} setOpen={setOpen} />
-      <a
+      <Link
+        to={`/p/npub/${board.name}`}
+        state={{ backgroundLocation: location }}
         className="group"
         onMouseEnter={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
-        onClick={() => setOpen(true)}
       >
         <div className="relative aspect-w-3 aspect-h-4 w-full overflow-hidden rounded-md bg-gray-100 hover:cursor-pointer">
           <Transition show={isHovering}>
@@ -81,7 +81,7 @@ const BoardItem = ({ board }: { board: any }) => {
             </button>
           </div>
         </div>
-      </a>
+      </Link>
     </>
   );
 };

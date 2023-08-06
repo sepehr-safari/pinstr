@@ -1,7 +1,7 @@
-import { MainRouter } from '@/routes';
+import AppRouter from '@/routes';
 
 function App() {
-  return <MainRouter />;
+  return <AppRouter />;
 }
 
 export default App;
