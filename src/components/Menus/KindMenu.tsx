@@ -1,8 +1,10 @@
 import { useState } from 'react';
 
-import { MenuTemplate } from '@/components/Menus';
+import { MenuTemplate } from '@/components';
 
-const kinds = [
+import { MenuItem } from './MenuTemplate.types';
+
+const kinds: MenuItem[] = [
   {
     name: 'Generic Boards (Kind 33888)',
     description:

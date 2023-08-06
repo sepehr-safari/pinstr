@@ -4,18 +4,13 @@ import { Fragment } from 'react';
 
 import { joinClassNames } from '@/utils';
 
-type Item = {
-  name: string;
-  description: string;
-};
+import { MenuProps } from './MenuTemplate.types';
 
-type Props = {
-  items: Item[];
-  selected: string;
-  setSelected: (tabName: string) => void;
-};
-
-export default function ManuTemplate({ items, selected, setSelected }: Props) {
+export default function ManuTemplate({
+  items,
+  selected,
+  setSelected,
+}: MenuProps) {
   return (
     <Menu as="div" className="relative inline-block text-left w-full">
       <div>

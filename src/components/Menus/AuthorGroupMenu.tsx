@@ -1,8 +1,10 @@
 import { useState } from 'react';
 
-import { MenuTemplate } from '@/components/Menus';
+import { MenuTemplate } from '@/components';
 
-const groups = [
+import { MenuItem } from './MenuTemplate.types';
+
+const groups: MenuItem[] = [
   {
     name: 'Explore',
     description: 'Boards from everyone',

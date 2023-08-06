@@ -1,8 +1,10 @@
 import { useState } from 'react';
 
-import { MenuTemplate } from '@/components/Menus';
+import { MenuTemplate } from '@/components';
 
-const categories = [
+import { MenuItem } from './MenuTemplate.types';
+
+const categories: MenuItem[] = [
   {
     name: 'Entertainment',
     description: 'Movies, TV Shows, Music, Books, Sci-fi, and more',
