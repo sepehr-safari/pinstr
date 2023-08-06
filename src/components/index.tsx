@@ -1,3 +1,4 @@
+export { default as BoardSlideover } from './BoardSlideover';
 export { default as BoardsGrid } from './BoardsGrid';
 export { default as CreateSlideover } from './CreateSlideover';
 export { default as Footer } from './Footer';
