@@ -43,7 +43,7 @@ const BoardItem = ({ board }: { board: any }) => {
             </Transition.Child>
             <Transition.Child
               as="div"
-              className="z-[1] absolute left-0 right-0 top-0 bottom-0 bg-black"
+              className="z-[1] absolute inset-0 bg-black"
               enter="transition-opacity duration-200"
               enterFrom="opacity-0"
               enterTo="opacity-30"
