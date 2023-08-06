@@ -1,8 +1,8 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 
-import { CategoryMenu, KindMenu } from '@/components';
+import { CategoryMenu, CoverPhotoMenu, KindMenu } from '@/components';
 
 type Props = {
   open: boolean;
@@ -10,6 +10,8 @@ type Props = {
 };
 
 export default function CreateSlideover({ open, setOpen }: Props) {
+  const [coverPhotoURL, setCoverPhotoURL] = useState('');
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setOpen}>
@@ -126,9 +128,14 @@ export default function CreateSlideover({ open, setOpen }: Props) {
                             </div>
                             <div>
                               <span className="block text-sm font-medium leading-6 text-gray-900">
-                                Cover Image
+                                Cover Photo
                               </span>
-                              <div className="mt-2"></div>
+                              <div className="mt-2">
+                                <CoverPhotoMenu
+                                  coverPhotoURL={coverPhotoURL}
+                                  setCoverPhotoURL={setCoverPhotoURL}
+                                />
+                              </div>
                             </div>
                           </div>
                         </div>
