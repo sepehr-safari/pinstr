@@ -7,18 +7,16 @@ export default function BottomSlideover() {
   const navigate = useNavigate();
 
   return (
-    <Transition.Root show={true} as={Fragment}>
+    <Transition.Root show={true} appear={true} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={() => navigate(-1)}>
         <Transition.Child
           as={Fragment}
-          enter="ease-in-out duration-500"
           enterFrom="opacity-0"
           enterTo="opacity-100"
-          leave="ease-in-out duration-500"
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black bg-opacity-50 transition-opacity" />
+          <div className="fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-200" />
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-hidden">
@@ -26,14 +24,12 @@ export default function BottomSlideover() {
             <div className="pointer-events-none fixed inset-x-0 bottom-0 flex w-full h-full px-0 pt-10 md:px-10 lg:px-20">
               <Transition.Child
                 as={Fragment}
-                enter="transform transition ease-in-out duration-200 sm:duration-500"
                 enterFrom="translate-y-full"
                 enterTo="translate-y-0"
-                leave="transform transition ease-in-out duration-200 sm:duration-500"
                 leaveFrom="translate-y-0"
                 leaveTo="translate-y-full"
               >
-                <Dialog.Panel className="pointer-events-auto w-full">
+                <Dialog.Panel className="pointer-events-auto w-full transition-transform duration-500 ease-out">
                   <div className="flex h-full w-full flex-col bg-white pt-6 shadow-xl rounded-t-md">
                     <div className="px-4 sm:px-6">
                       <div className="flex items-start justify-between">
