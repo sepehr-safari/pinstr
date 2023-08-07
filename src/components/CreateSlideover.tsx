@@ -118,6 +118,12 @@ export default function CreateSlideover({ open, setOpen }: Props) {
                                 <CategoryMenu />
                               </div>
                             </div>
+                            {/* <div>
+                              <span className="block text-sm font-medium leading-6 text-gray-900">
+                                Tags
+                              </span>
+                              <div className="mt-2"></div>
+                            </div> */}
                             <div>
                               <span className="block text-sm font-medium leading-6 text-gray-900">
                                 Kind
