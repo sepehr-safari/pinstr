@@ -1,26 +1,32 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useRef } from 'react';
 
+interface Props {
+  children: React.ReactNode;
+  modalIndex: number;
+  stockPhotoURL: string;
+  showModalIndex: null | number;
+  setShowModalIndex: (state: null | number) => void;
+  setSelectedStockPhotoURL: (state: string) => void;
+}
+
 export default function Modal({
   children,
   modalIndex,
-  modalNumber,
-  setModalNumber,
-}: {
-  children: React.ReactNode;
-  modalIndex: number;
-  modalNumber: null | number;
-  setModalNumber: (state: null | number) => void;
-}) {
+  stockPhotoURL,
+  showModalIndex,
+  setShowModalIndex,
+  setSelectedStockPhotoURL,
+}: Props) {
   const cancelButtonRef = useRef(null);
 
   return (
-    <Transition.Root show={modalIndex === modalNumber} as={Fragment}>
+    <Transition.Root show={modalIndex === showModalIndex} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-10"
         initialFocus={cancelButtonRef}
-        onClose={() => setModalNumber(null)}
+        onClose={() => setShowModalIndex(null)}
       >
         <Transition.Child
           as={Fragment}
@@ -51,14 +57,17 @@ export default function Modal({
                   <button
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2"
-                    onClick={() => setModalNumber(null)}
+                    onClick={() => {
+                      setSelectedStockPhotoURL(stockPhotoURL);
+                      setShowModalIndex(null);
+                    }}
                   >
                     Use This Photo
                   </button>
                   <button
                     type="button"
                     className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
-                    onClick={() => setModalNumber(null)}
+                    onClick={() => setShowModalIndex(null)}
                     ref={cancelButtonRef}
                   >
                     Back

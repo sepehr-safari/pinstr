@@ -9,7 +9,7 @@ import { MenuTemplate, Modal } from '@/components';
 
 import { MenuItem } from './MenuTemplate.types';
 
-interface CoverPhotoMenuProps {
+interface Props {
   coverPhotoURL: string;
   setCoverPhotoURL: (coverPhotoURL: string) => void;
 }
@@ -32,12 +32,15 @@ const coverPhotoMenuItems: MenuItem[] = [
 export default function CoverPhotoMenu({
   coverPhotoURL,
   setCoverPhotoURL,
-}: CoverPhotoMenuProps) {
-  const [selected, setSelected] = useState(coverPhotoMenuItems[0].name);
+}: Props) {
+  const [selectedMenuItem, setSelectedMenuItem] = useState(
+    coverPhotoMenuItems[0].name
+  );
   const [searchKeyword, setSearchKeyword] = useState('');
   const [searchResult, setSearchResult] = useState<string[]>([]);
   const [isSearching, setIsSearching] = useState(false);
-  const [modalNumber, setModalNumber] = useState<null | number>(null);
+  const [showModalIndex, setShowModalIndex] = useState<null | number>(null);
+  const [selectedStockPhotoURL, setSelectedStockPhotoURL] = useState('');
 
   useEffect(() => {
     if (!searchKeyword) {
@@ -89,11 +92,11 @@ export default function CoverPhotoMenu({
     <>
       <MenuTemplate
         items={coverPhotoMenuItems}
-        selected={selected}
-        setSelected={setSelected}
+        selected={selectedMenuItem}
+        setSelected={setSelectedMenuItem}
       />
 
-      {selected === 'Upload' && (
+      {selectedMenuItem === 'Upload' && (
         <div className="mt-4">
           <span className="block text-sm font-medium leading-6 text-gray-900">
             Cover Photo / Upload
@@ -128,7 +131,7 @@ export default function CoverPhotoMenu({
         </div>
       )}
 
-      {selected === 'Stock Photos' && (
+      {!selectedStockPhotoURL && selectedMenuItem === 'Stock Photos' && (
         <>
           <span className="mt-4 block text-sm font-medium leading-6 text-gray-900">
             Cover Photo / Search From Stock Photos
@@ -163,12 +166,14 @@ export default function CoverPhotoMenu({
                     src={url}
                     alt="Cover photo"
                     className="object-cover w-full h-full rounded-md"
-                    onClick={() => setModalNumber(index)}
+                    onClick={() => setShowModalIndex(index)}
                   />
                   <Modal
                     modalIndex={index}
-                    modalNumber={modalNumber}
-                    setModalNumber={setModalNumber}
+                    stockPhotoURL={url}
+                    showModalIndex={showModalIndex}
+                    setShowModalIndex={setShowModalIndex}
+                    setSelectedStockPhotoURL={setSelectedStockPhotoURL}
                   >
                     <img
                       src={url}
@@ -202,7 +207,32 @@ export default function CoverPhotoMenu({
         </>
       )}
 
-      {selected === 'URL' && (
+      {!!selectedStockPhotoURL && selectedMenuItem === 'Stock Photos' && (
+        <div className="mt-4">
+          <span className="block text-sm font-medium leading-6 text-gray-900">
+            Cover Photo / Selected Stock Photo
+          </span>
+
+          <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-4 py-4">
+            <div className="text-center">
+              <img
+                src={selectedStockPhotoURL}
+                alt="Cover photo"
+                className="mx-auto h-40 w-32 object-cover rounded-md"
+              />
+              <button
+                type="button"
+                className="mt-4 rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                onClick={() => setSelectedStockPhotoURL('')}
+              >
+                Change
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {selectedMenuItem === 'URL' && (
         <div className="mt-4">
           <label
             htmlFor="cover-photo-url"
