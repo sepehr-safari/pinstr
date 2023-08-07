@@ -41,6 +41,7 @@ export default function CoverPhotoMenu({
   const [searchResult, setSearchResult] = useState<string[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [showModalIndex, setShowModalIndex] = useState<null | number>(null);
+  const [isUploading, setIsUploading] = useState(false);
 
   const handleLoadMore = useCallback(() => {
     setIsSearching(true);
@@ -61,6 +62,8 @@ export default function CoverPhotoMenu({
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles) {
+      setIsUploading(true);
+
       const formData = new FormData();
       formData.append('fileToUpload', acceptedFiles[0]);
 
@@ -71,6 +74,7 @@ export default function CoverPhotoMenu({
         .then((res) => res.json())
         .then((url) => {
           if (!!url) {
+            setIsUploading(false);
             setCoverPhotoURL(url);
           } else {
             console.error('upload error');
@@ -128,20 +132,18 @@ export default function CoverPhotoMenu({
           </span>
 
           <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-            <div className="text-center">
+            <div className="text-center" {...getRootProps()}>
               <PhotoIcon
                 className="mx-auto h-12 w-12 text-gray-300"
                 aria-hidden="true"
               />
-              <div
-                className="mt-4 flex text-sm leading-6 text-gray-600"
-                {...getRootProps()}
-              >
+
+              <div className="mt-4 flex text-sm leading-6 text-gray-600">
                 <label
                   htmlFor="file-upload"
                   className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
                 >
-                  <span>Upload a file</span>
+                  {!isUploading && <span>Upload a file</span>}
                   <input
                     id="file-upload"
                     name="file-upload"
@@ -150,14 +152,23 @@ export default function CoverPhotoMenu({
                     {...getInputProps()}
                   />
                 </label>
-                <p className="pl-1">or drag and drop</p>
+                {!isUploading && <p className="pl-1">or drag and drop</p>}
               </div>
-              {isDragActive ? (
-                <p className="text-xs leading-5 text-gray-600">Drop here...</p>
-              ) : (
+              {!isDragActive && !isUploading && (
                 <p className="text-xs leading-5 text-gray-600">
                   PNG, JPG, GIF up to 10MB
                 </p>
+              )}
+              {isUploading && (
+                <div className="w-full flex justify-center items-center">
+                  <CogIcon className="h-6 w-6 text-gray-500 animate-spin" />
+                  <span className="ml-1 text-xs text-gray-500">
+                    Uploading...
+                  </span>
+                </div>
+              )}
+              {isDragActive && (
+                <p className="text-xs leading-5 text-gray-600">Drop here...</p>
               )}
             </div>
           </div>
