@@ -21,7 +21,10 @@ export default function MainNavbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <Disclosure as="header" className="bg-white shadow">
+    <Disclosure
+      as="header"
+      className="bg-white shadow fixed top-0 left-0 right-0 bg-opacity-50 z-[5] backdrop-filter backdrop-blur-lg"
+    >
       <>
         <div className="mx-auto px-4 sm:px-6 lg:divide-y lg:divide-gray-200">
           <div className="relative flex h-16 justify-between">
@@ -98,7 +101,7 @@ export default function MainNavbar() {
                             <span className="absolute -inset-1.5" />
                             <span className="sr-only">Open user menu</span>
                             <img
-                              className="h-8 w-8 rounded-full bg-gray-200"
+                              className="h-8 w-8 rounded-full object-cover object-center bg-gray-200"
                               src={USER.imageUrl}
                               alt=""
                             />
@@ -119,7 +122,7 @@ export default function MainNavbar() {
                           >
                             <Menu.Item as="a">
                               <img
-                                className="mt-4 mx-auto h-24 w-24 flex-shrink-0 rounded-full"
+                                className="mt-4 mx-auto h-24 w-24 object-cover object-center flex-shrink-0 rounded-full"
                                 src={USER.imageUrl}
                                 alt=""
                               />
