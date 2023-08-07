@@ -24,7 +24,7 @@ export default function CreateSlideover({ open, setOpen }: Props) {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black bg-opacity-50 transition-opacity" />
+          <div className="fixed inset-0 bg-black bg-opacity-70 transition-opacity" />
         </Transition.Child>
 
         <div className="fixed inset-0" />
