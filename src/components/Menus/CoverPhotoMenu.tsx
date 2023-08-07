@@ -4,6 +4,7 @@ import {
   PhotoIcon,
 } from '@heroicons/react/20/solid';
 import { useCallback, useEffect, useState } from 'react';
+import { useDropzone } from 'react-dropzone';
 
 import { MenuTemplate, Modal } from '@/components';
 
@@ -40,7 +41,48 @@ export default function CoverPhotoMenu({
   const [searchResult, setSearchResult] = useState<string[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [showModalIndex, setShowModalIndex] = useState<null | number>(null);
-  const [selectedStockPhotoURL, setSelectedStockPhotoURL] = useState('');
+
+  const handleLoadMore = useCallback(() => {
+    setIsSearching(true);
+
+    const promises = Array.from({ length: 10 }, (_, index) => {
+      return fetch(
+        `https://source.unsplash.com/random/?${searchKeyword}&sig=${index}`
+      );
+    });
+
+    Promise.all(promises).then((responses) => {
+      const urls = responses.map((response) => response.url.split('?')[0]);
+
+      setIsSearching(false);
+      setSearchResult((prev) => [...prev, ...urls]);
+    });
+  }, [searchKeyword]);
+
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    if (acceptedFiles) {
+      const formData = new FormData();
+      formData.append('fileToUpload', acceptedFiles[0]);
+
+      fetch('https://nostr.build/api/upload/iris.php', {
+        method: 'POST',
+        body: formData,
+      })
+        .then((res) => res.json())
+        .then((url) => {
+          if (!!url) {
+            setCoverPhotoURL(url);
+          } else {
+            console.error('upload error');
+          }
+        })
+        .catch((error) => {
+          console.error('upload error', error);
+        });
+    }
+  }, []);
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   useEffect(() => {
     if (!searchKeyword) {
@@ -69,23 +111,6 @@ export default function CoverPhotoMenu({
     return () => clearTimeout(timer);
   }, [searchKeyword]);
 
-  const handleLoadMore = useCallback(() => {
-    setIsSearching(true);
-
-    const promises = Array.from({ length: 10 }, (_, index) => {
-      return fetch(
-        `https://source.unsplash.com/random/?${searchKeyword}&sig=${index}`
-      );
-    });
-
-    Promise.all(promises).then((responses) => {
-      const urls = responses.map((response) => response.url.split('?')[0]);
-
-      setIsSearching(false);
-      setSearchResult((prev) => [...prev, ...urls]);
-    });
-  }, [searchKeyword]);
-
   console.log(coverPhotoURL, setCoverPhotoURL);
 
   return (
@@ -96,7 +121,7 @@ export default function CoverPhotoMenu({
         setSelected={setSelectedMenuItem}
       />
 
-      {selectedMenuItem === 'Upload' && (
+      {!coverPhotoURL && selectedMenuItem === 'Upload' && (
         <div className="mt-4">
           <span className="block text-sm font-medium leading-6 text-gray-900">
             Cover Photo / Upload
@@ -108,7 +133,10 @@ export default function CoverPhotoMenu({
                 className="mx-auto h-12 w-12 text-gray-300"
                 aria-hidden="true"
               />
-              <div className="mt-4 flex text-sm leading-6 text-gray-600">
+              <div
+                className="mt-4 flex text-sm leading-6 text-gray-600"
+                {...getRootProps()}
+              >
                 <label
                   htmlFor="file-upload"
                   className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
@@ -119,19 +147,24 @@ export default function CoverPhotoMenu({
                     name="file-upload"
                     type="file"
                     className="sr-only"
+                    {...getInputProps()}
                   />
                 </label>
                 <p className="pl-1">or drag and drop</p>
               </div>
-              <p className="text-xs leading-5 text-gray-600">
-                PNG, JPG, GIF, WEBP up to 10MB
-              </p>
+              {isDragActive ? (
+                <p className="text-xs leading-5 text-gray-600">Drop here...</p>
+              ) : (
+                <p className="text-xs leading-5 text-gray-600">
+                  PNG, JPG, GIF up to 10MB
+                </p>
+              )}
             </div>
           </div>
         </div>
       )}
 
-      {!selectedStockPhotoURL && selectedMenuItem === 'Stock Photos' && (
+      {!coverPhotoURL && selectedMenuItem === 'Stock Photos' && (
         <>
           <span className="mt-4 block text-sm font-medium leading-6 text-gray-900">
             Cover Photo / Search From Stock Photos
@@ -173,7 +206,7 @@ export default function CoverPhotoMenu({
                     stockPhotoURL={url}
                     showModalIndex={showModalIndex}
                     setShowModalIndex={setShowModalIndex}
-                    setSelectedStockPhotoURL={setSelectedStockPhotoURL}
+                    setSelectedStockPhotoURL={setCoverPhotoURL}
                   >
                     <img
                       src={url}
@@ -207,31 +240,6 @@ export default function CoverPhotoMenu({
         </>
       )}
 
-      {!!selectedStockPhotoURL && selectedMenuItem === 'Stock Photos' && (
-        <div className="mt-4">
-          <span className="block text-sm font-medium leading-6 text-gray-900">
-            Cover Photo / Selected Stock Photo
-          </span>
-
-          <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-4 py-4">
-            <div className="text-center">
-              <img
-                src={selectedStockPhotoURL}
-                alt="Cover photo"
-                className="mx-auto h-40 w-32 object-cover rounded-md"
-              />
-              <button
-                type="button"
-                className="mt-4 rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                onClick={() => setSelectedStockPhotoURL('')}
-              >
-                Change
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
       {selectedMenuItem === 'URL' && (
         <div className="mt-4">
           <label
@@ -249,9 +257,34 @@ export default function CoverPhotoMenu({
               placeholder="https://"
               autoFocus
               className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
-              value={selectedStockPhotoURL}
-              onChange={(e) => setSelectedStockPhotoURL(e.target.value)}
+              value={coverPhotoURL}
+              onChange={(e) => setCoverPhotoURL(e.target.value)}
             />
+          </div>
+        </div>
+      )}
+
+      {!!coverPhotoURL && (
+        <div className="mt-4">
+          <span className="block text-sm font-medium leading-6 text-gray-900">
+            Cover Photo / Selected Photo
+          </span>
+
+          <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-4 py-4">
+            <div className="text-center">
+              <img
+                src={coverPhotoURL}
+                alt="Cover photo"
+                className="mx-auto h-40 w-32 object-cover rounded-md"
+              />
+              <button
+                type="button"
+                className="mt-4 rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                onClick={() => setCoverPhotoURL('')}
+              >
+                Change
+              </button>
+            </div>
           </div>
         </div>
       )}
