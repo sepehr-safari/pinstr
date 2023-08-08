@@ -65,28 +65,28 @@ export default function Board() {
                   />
                 </div>
               </div>
-              <div className="flex flex-col">
-                <h2 className="mx-auto text-xl font-bold tracking-tight text-gray-900 xl:text-2xl lg:mx-0">
-                  {boardName}
-                </h2>
+              <div className="flex flex-col justify-between items-center lg:items-start">
+                <div>
+                  <h2 className="text-xl font-bold tracking-tight text-gray-900 text-center lg:text-start xl:text-2xl">
+                    {boardName}
+                  </h2>
 
-                <div className="mx-auto mt-2 inline-flex gap-1 text-xs font-light text-black/30 lg:mx-0 lg:gap-2">
-                  <span>Nostr Profiles (Kind: 30000)</span>
-                  <span>|</span>
-                  <span>Technology</span>
-                  <span>|</span>
-                  <span>18 days ago</span>
+                  <div className="mt-2 inline-flex w-full justify-center gap-1 text-xs font-light text-black/30 lg:gap-2 lg:justify-start">
+                    <span>Nostr Profiles (Kind: 30000)</span>
+                    <span>|</span>
+                    <span>Technology</span>
+                    <span>|</span>
+                    <span>18 days ago</span>
+                  </div>
                 </div>
 
-                <div className="mx-auto mt-2 inline-flex gap-2 text-xs font-light text-black/30 lg:mx-0"></div>
-
-                <p className="mt-6 text-sm font-light text-gray-500 text-center max-w-screen-sm mx-auto lg:max-w-none lg:mx-0 lg:text-justify">
+                <p className="mt-4 text-sm font-light text-gray-500 text-center max-w-screen-sm lg:max-w-none lg:text-justify lg:mt-auto">
                   We’re a dynamic group of individuals who are passionate about
                   what we do and dedicated to delivering the best results for
                   our clients.
                 </p>
 
-                <div className="mx-auto mt-6 flex gap-4 lg:mx-0 lg:mt-auto">
+                <div className="mt-4 flex gap-4 lg:mt-auto">
                   <button
                     tabIndex={-1}
                     className="inline-flex justify-center items-center rounded-md bg-gray-100 ring-1 ring-gray-300 px-4 py-2 text-xs font-semibold text-gray-500 hover:shadow-md hover:text-gray-800"
