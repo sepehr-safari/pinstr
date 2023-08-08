@@ -6,7 +6,7 @@ import {
 } from '@heroicons/react/20/solid';
 import { useParams } from 'react-router-dom';
 
-import { InCard, PeopleGrid } from '@/components/Lists';
+import { InCard, PeopleGrid } from '@/components';
 
 export default function Board() {
   const params = useParams();
