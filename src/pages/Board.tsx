@@ -17,20 +17,20 @@ export default function Board() {
           />
         </div>
 
-        <div className="mt-0 overflow-hidden bg-white shadow rounded-none w-full z-[1] xl:ml-10 xl:-mt-20 xl:w-80 xl:absolute xl:rounded-md">
+        <div className="mt-0 overflow-hidden bg-white shadow rounded-none w-full z-[1] xl:ml-12 xl:-mt-20 xl:w-72 xl:absolute xl:rounded-md">
           <div className="px-4 py-5 sm:p-6 flex flex-col items-center">
             <img
-              className="-mt-20 h-32 w-32 object-cover object-center rounded-full absolute z-[2] xl:static xl:mt-0"
+              className="-mt-20 h-28 w-28 object-cover object-center rounded-full absolute z-[2] xl:static xl:mt-0"
               src="https://source.unsplash.com/random/?avatar"
               alt="avatar"
             />
 
-            <span className="mt-4 font-bold">fiatjaf</span>
+            <span className="mt-12 font-bold xl:mt-4">fiatjaf</span>
             <span className="mt-2 text-sm font-light">description</span>
           </div>
         </div>
 
-        <div className="w-full bg-gray-100 p-6 xl:py-6 xl:pl-[25rem] xl:pr-12">
+        <div className="w-full bg-gray-100 p-6 xl:py-14 xl:pl-[24rem] xl:pr-12">
           {boardName?.includes('Geek') ? (
             <PeopleGrid boardName={boardName || ''} />
           ) : boardName?.includes('Encyclopedia') ? (
