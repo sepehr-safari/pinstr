@@ -1,4 +1,9 @@
-import { BoltIcon, HandThumbUpIcon, PlusIcon } from '@heroicons/react/20/solid';
+import {
+  BoltIcon,
+  ChatBubbleLeftIcon,
+  HandThumbUpIcon,
+  PlusIcon,
+} from '@heroicons/react/20/solid';
 import { useParams } from 'react-router-dom';
 
 import { InCard, PeopleGrid } from '@/components/Lists';
@@ -12,7 +17,7 @@ export default function Board() {
       <div className="relative">
         <div className="-mt-16 bg-gray-200 rounded-t-md">
           <img
-            className="h-48 w-full object-cover object-center md:rounded-t-md xl:h-64"
+            className="h-52 w-full object-cover object-center md:rounded-t-md xl:h-64"
             src="https://source.unsplash.com/random/?nature"
             alt="banner nature"
           />
@@ -30,14 +35,14 @@ export default function Board() {
             <span className="mt-1 text-xs font-light text-gray-500">
               _@fiatjaf.com
             </span>
-            <span className="mt-4 text-sm font-light text-gray-500 text-center">
+            <span className="mt-2 text-sm font-light text-gray-500 text-center">
               dynamic group of individuals who are passionate about what we do
               and dedicated
             </span>
 
             <button
               tabIndex={-1}
-              className="mt-4 inline-flex justify-center items-center rounded-md bg-gray-800 px-4 py-2 text-xs font-semibold text-white shadow-sm hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
+              className="mt-4 inline-flex justify-center items-center rounded-full bg-gray-800 px-4 py-2 text-xs font-semibold text-white shadow-sm hover:opacity-80"
             >
               <PlusIcon className="-ml-1 w-4 h-4" />
               <span className="ml-1">Follow</span>
@@ -45,7 +50,7 @@ export default function Board() {
           </div>
         </div>
 
-        <div className="w-full bg-gray-100 p-6 py-14 xl:py-14 xl:pl-[24rem] xl:pr-12">
+        <div className="w-full bg-gray-100 p-6 py-16 xl:pl-[24rem] xl:pr-12">
           <div className="grid grid-cols-1 lg:grid-cols-1">
             <div className="gap-8 flex flex-col lg:flex-row">
               <div className="mx-auto lg:mx-0">
@@ -65,38 +70,49 @@ export default function Board() {
                   {boardName}
                 </h2>
 
-                <div className="mx-auto mt-2 inline-flex gap-2 text-xs font-light text-black/30 lg:mx-0">
+                <div className="mx-auto mt-2 inline-flex gap-1 text-xs font-light text-black/30 lg:mx-0 lg:gap-2">
                   <span>Nostr Profiles (Kind: 30000)</span>
                   <span>|</span>
                   <span>Technology</span>
+                  <span>|</span>
+                  <span>18 days ago</span>
                 </div>
 
-                <p className="mt-6 text-sm font-light text-gray-500 text-justify">
+                <div className="mx-auto mt-2 inline-flex gap-2 text-xs font-light text-black/30 lg:mx-0"></div>
+
+                <p className="mt-6 text-sm font-light text-gray-500 text-center max-w-screen-sm mx-auto lg:max-w-none lg:mx-0 lg:text-justify">
                   We’re a dynamic group of individuals who are passionate about
                   what we do and dedicated to delivering the best results for
                   our clients.
                 </p>
 
-                <div className="mx-auto mt-4 flex gap-8 lg:mx-0 lg:mt-auto">
+                <div className="mx-auto mt-6 flex gap-4 lg:mx-0 lg:mt-auto">
                   <button
                     tabIndex={-1}
-                    className="inline-flex justify-center items-center rounded-md bg-gray-800 px-4 py-2 text-xs font-semibold text-white shadow-sm hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
+                    className="inline-flex justify-center items-center rounded-md bg-gray-100 ring-1 ring-gray-300 px-4 py-2 text-xs font-semibold text-gray-500 hover:shadow-md hover:text-gray-800"
                   >
-                    <span className="">Like</span>
                     <HandThumbUpIcon
-                      className="ml-2 -mr-1 h-4 w-4"
+                      className="mr-2 h-4 w-4"
                       aria-hidden="true"
                     />
+                    <span className="">21</span>
                   </button>
                   <button
                     tabIndex={-1}
-                    className="inline-flex justify-center items-center rounded-md bg-gray-800 px-4 py-2 text-xs font-semibold text-white shadow-sm hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
+                    className="inline-flex justify-center items-center rounded-md bg-gray-100 ring-1 ring-gray-300 px-4 py-2 text-xs font-semibold text-gray-500 hover:shadow-md hover:text-gray-800"
                   >
-                    <span className="">ZAP</span>
-                    <BoltIcon
-                      className="ml-2 -mr-1 h-4 w-4"
+                    <BoltIcon className="mr-2 h-4 w-4" aria-hidden="true" />
+                    <span className="">2100</span>
+                  </button>
+                  <button
+                    tabIndex={-1}
+                    className="inline-flex justify-center items-center rounded-md bg-gray-100 ring-1 ring-gray-300 px-4 py-2 text-xs font-semibold text-gray-500 hover:shadow-md hover:text-gray-800"
+                  >
+                    <ChatBubbleLeftIcon
+                      className="mr-2 h-4 w-4"
                       aria-hidden="true"
                     />
+                    <span className="">4</span>
                   </button>
                 </div>
               </div>

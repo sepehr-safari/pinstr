@@ -1,4 +1,4 @@
-import { BoltIcon, HandThumbUpIcon } from '@heroicons/react/20/solid';
+import { PlusIcon } from '@heroicons/react/20/solid';
 
 const people = [
   {
@@ -73,7 +73,7 @@ export default function PeopleGrid({ boardName }: { boardName: string }) {
     <>
       <ul
         role="list"
-        className="mx-auto mt-14 grid grid-cols-2 gap-x-8 gap-y-14 text-center md:grid-cols-3 lg:mx-0 xl:grid-cols-4 2xl:grid-cols-5"
+        className="mx-auto mt-16 grid grid-cols-2 gap-x-8 gap-y-14 text-center md:grid-cols-3 lg:mx-0 xl:grid-cols-4 2xl:grid-cols-5"
       >
         {people.map((person, index) => (
           <li
@@ -102,12 +102,15 @@ export default function PeopleGrid({ boardName }: { boardName: string }) {
                 {person.name}
               </h3>
               <p className="text-sm leading-6 text-gray-600">{person.role}</p>
-              <button
-                tabIndex={-1}
-                className="mx-auto mt-2 rounded-md w-3/4 py-2 text-xs font-bold bg-gray-100 text-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-              >
-                Follow
-              </button>
+              <div className="mt-4 mx-auto w-full">
+                <button
+                  tabIndex={-1}
+                  className="inline-flex justify-center items-center rounded-full bg-gray-100 px-12 py-2 text-xs font-semibold text-gray-500 ring-1 ring-gray-300 hover:shadow-md hover:text-gray-800"
+                >
+                  <PlusIcon className="-ml-1 w-4 h-4" />
+                  <span className="ml-1">Follow</span>
+                </button>
+              </div>
             </div>
           </li>
         ))}

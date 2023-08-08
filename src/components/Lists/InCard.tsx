@@ -73,7 +73,7 @@ export default function InCard({ boardName }: { boardName: string }) {
     <>
       <ul
         role="list"
-        className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2 2xl:grid-cols-3"
+        className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 2xl:grid-cols-3"
       >
         {people.map((person, index) => (
           <li
