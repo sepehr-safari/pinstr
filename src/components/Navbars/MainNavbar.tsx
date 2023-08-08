@@ -54,7 +54,7 @@ export default function MainNavbar() {
                   <input
                     id="search"
                     name="search"
-                    className="block w-full rounded-md border-0 bg-white py-1.5 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-500 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 bg-opacity-40 bg-white py-1.5 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-500 focus:bg-opacity-60 sm:text-sm sm:leading-6"
                     placeholder="Search"
                     type="search"
                   />
