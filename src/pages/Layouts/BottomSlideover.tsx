@@ -21,7 +21,7 @@ export default function BottomSlideover() {
 
         <div className="fixed inset-0 overflow-hidden">
           <div className="absolute inset-0 overflow-hidden">
-            <div className="pointer-events-none fixed inset-x-0 bottom-0 flex w-full h-full px-0 pt-10 md:px-10 lg:px-20">
+            <div className="pointer-events-none fixed inset-x-0 bottom-0 flex w-full h-full px-0 pt-12 md:px-10 lg:px-20 overflow-y-auto">
               <Transition.Child
                 as={Fragment}
                 enterFrom="translate-y-full"
