@@ -1,5 +1,7 @@
 import { useParams } from 'react-router-dom';
 
+import { InCard, PeopleGrid } from '@/components/Lists';
+
 export default function Board() {
   const params = useParams();
   const boardName = params.boardName;
@@ -7,18 +9,18 @@ export default function Board() {
   return (
     <>
       <div className="relative">
-        <div className="-mt-16">
+        <div className="-mt-16 bg-gray-200 rounded-t-md">
           <img
-            className="h-48 w-full object-cover object-center md:rounded-t-md lg:h-64"
+            className="h-48 w-full object-cover object-center md:rounded-t-md xl:h-64"
             src="https://source.unsplash.com/random/?nature"
             alt="banner nature"
           />
         </div>
 
-        <div className="mt-0 overflow-hidden bg-white shadow rounded-none w-full z-[1] lg:ml-10 lg:-mt-20 lg:w-96 lg:absolute lg:rounded-md">
+        <div className="mt-0 overflow-hidden bg-white shadow rounded-none w-full z-[1] xl:ml-10 xl:-mt-20 xl:w-80 xl:absolute xl:rounded-md">
           <div className="px-4 py-5 sm:p-6 flex flex-col items-center">
             <img
-              className="-mt-20 h-32 w-32 object-cover object-center rounded-full absolute z-[2] lg:static lg:mt-0"
+              className="-mt-20 h-32 w-32 object-cover object-center rounded-full absolute z-[2] xl:static xl:mt-0"
               src="https://source.unsplash.com/random/?avatar"
               alt="avatar"
             />
@@ -28,8 +30,14 @@ export default function Board() {
           </div>
         </div>
 
-        <div className="w-full bg-gray-100 h-screen p-4 lg:p-6 lg:pl-[29rem]">
-          {boardName}
+        <div className="w-full bg-gray-100 p-6 xl:py-6 xl:pl-[25rem] xl:pr-12">
+          {boardName?.includes('Geek') ? (
+            <PeopleGrid boardName={boardName || ''} />
+          ) : boardName?.includes('Encyclopedia') ? (
+            <InCard boardName={boardName || ''} />
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </>
