@@ -35,17 +35,17 @@ export default function AuthorOverview() {
             <div className="mb-6 w-72 shrink rounded-md bg-white shadow-md ring-1 ring-gray-900/20">
               <div className="text-center divide-y divide-gray-200">
                 <div className="relative">
-                  <div className="absolute top-0 left-0 right-0 bottom-0 p-2">
+                  <div className="absolute top-0 w-full p-1">
                     <img
-                      className="w-full h-20 bg-gray-200 rounded"
+                      className="w-full h-20 bg-gray-200 rounded-t object-center object-cover"
                       src="https://source.unsplash.com/random/?landscape"
                       alt=""
                     />
                   </div>
-                  <div className="flex flex-1 flex-col p-4">
-                    <div className="mx-auto aspect-1 w-32 h-32 rounded-full bg-gray-300 z-[1]">
+                  <div className="flex flex-1 flex-col pt-10 pb-4">
+                    <div className="mx-auto rounded-full bg-gray-300 z-[1]">
                       <img
-                        className="w-full h-full object-cover object-center rounded-full"
+                        className="aspect-1 w-24 h-w-24 object-cover object-center rounded-full"
                         src="https://source.unsplash.com/random/?avatar"
                         alt=""
                       />
