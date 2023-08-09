@@ -68,7 +68,7 @@ const people = [
   },
 ];
 
-export default function InCard({ boardName }: { boardName: string }) {
+export default function NoteGrid() {
   return (
     <>
       <ul
@@ -78,7 +78,7 @@ export default function InCard({ boardName }: { boardName: string }) {
         {people.map((person, index) => (
           <li
             key={index}
-            className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow"
+            className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow transition-shadow hover:shadow-md"
           >
             <div className="flex w-full items-center justify-between space-x-6 p-4">
               <div className="flex-1 truncate">
