@@ -6,7 +6,13 @@ import {
 } from '@heroicons/react/20/solid';
 import { useParams } from 'react-router-dom';
 
-import { InCard, PeopleGrid } from '@/components';
+import {
+  LinkGrid,
+  NoteGrid,
+  PeopleGrid,
+  PictureGrid,
+  VideoGrid,
+} from '@/components';
 
 export default function Board() {
   const params = useParams();
@@ -121,9 +127,15 @@ export default function Board() {
           </div>
 
           {boardName?.includes('Geek') ? (
-            <PeopleGrid boardName={boardName || ''} />
+            <PeopleGrid />
           ) : boardName?.includes('Encyclopedia') ? (
-            <InCard boardName={boardName || ''} />
+            <NoteGrid />
+          ) : boardName?.includes('Zap') ? (
+            <LinkGrid />
+          ) : boardName?.includes('Pizza') ? (
+            <PictureGrid />
+          ) : boardName?.includes('Movies') ? (
+            <VideoGrid />
           ) : (
             <></>
           )}
