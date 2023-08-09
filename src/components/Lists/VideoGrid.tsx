@@ -41,9 +41,9 @@ export default function VideoGrid() {
       {files.map((file) => (
         <li
           key={file.source}
-          className="relative rounded-md group transition-all hover:shadow-md hover:bg-gray-50"
+          className="relative p-2 rounded bg-gray-50 transition-all duration-300 shadow hover:shadow-lg"
         >
-          <div className="aspect-h-7 aspect-w-10 block w-full overflow-hidden rounded-md bg-gray-100 group-hover:rounded-b-none">
+          <div className="aspect-h-7 aspect-w-10 block w-full overflow-hidden rounded bg-gray-100">
             {file.isEmbedded ? (
               <iframe className="object-cover" src={file.source} />
             ) : (
@@ -56,13 +56,13 @@ export default function VideoGrid() {
               />
             )}
           </div>
-          <p className="mt-2 block truncate text-sm font-medium text-gray-900 transition-transform group-hover:translate-x-2">
+          <p className="mt-4 block truncate text-sm font-medium text-gray-900">
             {file.title}
           </p>
           <button
             tabIndex={-1}
             type="button"
-            className="mt-2 w-full text-xs text-gray-500 font-light px-4 py-2 bg-gray-200 rounded-b-md opacity-0 transition-all translate-y-1 hover:shadow-md hover:bg-gray-300 hover:text-gray-700 group-hover:opacity-100 group-hover:translate-y-0"
+            className="mt-4 w-full text-xs text-gray-500 font-light px-4 py-2 bg-gray-200 rounded transition-all duration-300 hover:bg-gray-300 hover:text-gray-700 "
           >
             View Details
           </button>
