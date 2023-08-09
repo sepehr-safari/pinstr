@@ -68,7 +68,7 @@ const people = [
   },
 ];
 
-export default function PeopleGrid({ boardName }: { boardName: string }) {
+export default function PeopleGrid() {
   return (
     <>
       <ul
