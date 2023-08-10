@@ -78,11 +78,11 @@ export default function PeopleGrid() {
         {people.map((person, index) => (
           <li
             key={index}
-            className="relative group rounded-md pb-4 transition-all duration-300 hover:shadow-md hover:bg-gray-50"
+            className="relative group rounded-lg pb-4 transition-all duration-500 hover:shadow-md hover:bg-gray-50"
           >
             <div className="absolute top-0 w-full">
               <img
-                className="w-full h-20 bg-gray-200 rounded-md object-center object-cover transition-all duration-300 group-hover:rounded-b-none"
+                className="w-full h-20 bg-gray-200 rounded-lg object-center object-cover transition-all duration-500 group-hover:rounded-b-none"
                 src={
                   'https://source.unsplash.com/random/?landscape&sig=' +
                   Math.random()
@@ -93,7 +93,7 @@ export default function PeopleGrid() {
             <div className="flex flex-1 flex-col pt-10">
               <div className="mx-auto rounded-full bg-gray-300 z-[1]">
                 <img
-                  className="aspect-1 w-20 h-20 rounded-full object-cover object-center transition-all duration-300 group-hover:-translate-y-1 group-hover:scale-110 group-hover:shadow-md"
+                  className="aspect-1 w-20 h-20 rounded-full object-cover object-center transition-all duration-500 group-hover:-translate-y-1 group-hover:scale-110 group-hover:shadow-md"
                   src={person.imageUrl}
                   alt=""
                 />
