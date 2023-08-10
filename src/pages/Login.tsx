@@ -89,7 +89,7 @@ export default function Login() {
                     </span>
                   </a>
                 </div>
-                <p className="mt-2 text-sm leading-6 text-gray-500 font-light">
+                <p className="mt-4 text-sm leading-6 text-gray-500 font-light">
                   Don't have an extension?{' '}
                   <a
                     href="https://getalby.com/"
