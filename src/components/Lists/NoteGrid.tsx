@@ -1,4 +1,6 @@
-import { BoltIcon, HandThumbUpIcon } from '@heroicons/react/20/solid';
+import { useState } from 'react';
+
+import { DetailsSlideover } from '@/components';
 
 const people = [
   {
@@ -69,6 +71,8 @@ const people = [
 ];
 
 export default function NoteGrid() {
+  const [shownDetailsIndex, setShownDetailsIndex] = useState(-1);
+
   return (
     <>
       <ul
@@ -90,9 +94,6 @@ export default function NoteGrid() {
                 <p className="mt-1 truncate text-xs text-gray-500">
                   {person.email}
                 </p>
-                <p className="mt-1 truncate text-xs text-gray-400">
-                  npub1frhbna893gbi2983yfjjabkdfig8ry2083hurbwdfboh
-                </p>
               </div>
               <img
                 className="h-12 w-12 flex-shrink-0 rounded-full object-cover object-center bg-gray-300"
@@ -101,11 +102,41 @@ export default function NoteGrid() {
               />
             </div>
             <div className="p-4 text-justify font-light">
-              <span className="text-xs">
+              <span className="text-xs line-clamp-4">
+                a dynamic group of individuals who are passionate about what we
+                do and dedicated to delivering the best results for our clients
+                a dynamic group of individuals who are passionate about what we
+                do and dedicated to delivering the best results for our clients
                 a dynamic group of individuals who are passionate about what we
                 do and dedicated to delivering the best results for our clients
               </span>
             </div>
+
+            <div className="flex w-full">
+              <a
+                href="https://primal.net/note1"
+                target="_blank"
+                rel="noopener noreferrer"
+                tabIndex={-1}
+                className="flex w-full items-center justify-center py-2 text-xs text-gray-700 font-medium border-r border-gray-200 transition-all duration-300 hover:bg-gray-200 hover:text-gray-900"
+              >
+                Open with Primal
+              </a>
+
+              <button
+                className="flex w-full items-center justify-center py-2 text-xs text-gray-700 font-medium hover:bg-gray-200 transition-all duration-300 hover:text-gray-900"
+                onClick={() => setShownDetailsIndex(index)}
+                tabIndex={-1}
+              >
+                View details
+              </button>
+            </div>
+
+            <DetailsSlideover
+              isShown={shownDetailsIndex === index}
+              onClose={() => setShownDetailsIndex(-1)}
+              details={people}
+            />
           </li>
         ))}
       </ul>
