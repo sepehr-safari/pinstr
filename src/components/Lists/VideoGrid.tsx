@@ -1,3 +1,7 @@
+import { useState } from 'react';
+
+import { DetailsSlideover } from '@/components';
+
 const files = [
   {
     title: 'Embedded Video From Youtube',
@@ -29,18 +33,19 @@ const files = [
     source: 'https://www.youtube.com/embed/-mPd-Eoiu08',
     isEmbedded: true,
   },
-  // More files...
 ];
 
 export default function VideoGrid() {
+  const [shownDetailsIndex, setShownDetailsIndex] = useState(-1);
+
   return (
     <ul
       role="list"
       className="mt-16 grid grid-cols-1 gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 xl:gap-x-8 2xl:grid-cols-3"
     >
-      {files.map((file) => (
+      {files.map((file, index) => (
         <li
-          key={file.source}
+          key={index}
           className="group relative rounded-lg hover:bg-gray-50 transition-all ease-in-out duration-500 hover:shadow-md"
         >
           <div className="transition-transform ease-in-out duration-700 group-hover:scale-95">
@@ -65,13 +70,20 @@ export default function VideoGrid() {
 
           <div className="w-full p-2 pt-0">
             <button
-              tabIndex={-1}
               type="button"
-              className="mt-4 w-full text-xs text-gray-500 font-light px-4 py-2 bg-gray-200 rounded-md transition-all ease-in-out duration-500 opacity-0 translate-y-2 hover:bg-gray-300 hover:text-gray-700 group-hover:opacity-100 group-hover:translate-y-0"
+              tabIndex={-1}
+              className="mt-4 w-full text-xs text-gray-700 font-medium px-4 py-2 bg-gray-200 rounded-md transition-all ease-in-out duration-500 opacity-0 translate-y-2 hover:bg-gray-300 hover:text-gray-900 group-hover:opacity-100 group-hover:translate-y-0"
+              onClick={() => setShownDetailsIndex(index)}
             >
               View Details
             </button>
           </div>
+
+          <DetailsSlideover
+            isShown={shownDetailsIndex === index}
+            onClose={() => setShownDetailsIndex(-1)}
+            details={file}
+          />
         </li>
       ))}
     </ul>
