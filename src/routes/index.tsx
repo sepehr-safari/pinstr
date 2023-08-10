@@ -1,6 +1,6 @@
 import { Location, Route, Routes, useLocation } from 'react-router-dom';
 
-import { Board, Home, NoMatch } from '@/pages';
+import { Board, Home, Login, NoMatch } from '@/pages';
 import { BottomSlideover, MainLayout } from '@/pages/Layouts';
 
 export default function AppRouter() {
@@ -12,9 +12,10 @@ export default function AppRouter() {
       <Routes location={state?.backgroundLocation || location}>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
-          <Route path="/p/npub/:boardName" element={<Board />} />
+          <Route path="p/npub/:boardName" element={<Board />} />
           <Route path="*" element={<NoMatch />} />
         </Route>
+        <Route path="/login" element={<Login />} />
       </Routes>
 
       {state?.backgroundLocation && (
