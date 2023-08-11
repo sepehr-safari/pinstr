@@ -82,7 +82,7 @@ export default function LinkGrid() {
         {urls.map((url, index) => (
           <li
             key={index}
-            className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow transition-shadow hover:shadow-md"
+            className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow ease-in-out duration-200 hover:shadow-md"
           >
             <div className="flex w-full items-center justify-between space-x-4 pr-4 group hover:cursor-pointer">
               <img
@@ -90,18 +90,22 @@ export default function LinkGrid() {
                 src={url.imageUrl}
                 alt=""
               />
-              <div className="flex-1 truncate">
-                <div className="truncate flex items-center justify-between">
-                  <h3 className="w-full leading-10 truncate text-sm font-medium text-gray-900 hover:underline">
+              <div className="flex-1 truncate ">
+                <div className="truncate flex items-center translate-y-3 ease-in-out duration-500 group-hover:translate-y-0">
+                  <h3 className="w-full leading-10 truncate text-sm font-medium text-gray-900">
                     {url.name}
                   </h3>
-
+                </div>
+                <div className="w-full flex justify-end">
                   <button
                     tabIndex={-1}
                     type="button"
-                    className="translate-x-2 transition-all ease-in-out opacity-0 group-hover:opacity-100 group-hover:translate-x-0"
+                    className="inline-flex items-center translate-x-2 opacity-0 ease-in-out duration-500 group-hover:opacity-100 group-hover:translate-x-0"
                   >
-                    <ChevronRightIcon className="ml-1 h-5 w-5 text-gray-500" />
+                    <div className="text-xs font-light text-gray-500">
+                      View Details
+                    </div>
+                    <ChevronRightIcon className="ml-1 h-5 w-5 text-gray-400" />
                   </button>
                 </div>
               </div>

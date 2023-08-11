@@ -82,7 +82,7 @@ export default function NoteGrid() {
         {people.map((person, index) => (
           <li
             key={index}
-            className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow transition-shadow hover:shadow-md"
+            className="group col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow ease-in-out duration-300 hover:shadow-md"
           >
             <div className="flex w-full items-center justify-between space-x-6 p-4">
               <div className="flex-1 truncate">
@@ -102,7 +102,7 @@ export default function NoteGrid() {
               />
             </div>
             <div className="p-4 text-justify font-light">
-              <span className="text-xs line-clamp-4">
+              <span className="text-xs line-clamp-4 translate-y-2 group-hover:translate-y-0 ease-in-out duration-700">
                 a dynamic group of individuals who are passionate about what we
                 do and dedicated to delivering the best results for our clients
                 a dynamic group of individuals who are passionate about what we
@@ -112,19 +112,19 @@ export default function NoteGrid() {
               </span>
             </div>
 
-            <div className="flex w-full">
+            <div className="flex w-full opacity-0 ease-in-out duration-500 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0">
               <a
                 href="https://primal.net/note1"
                 target="_blank"
                 rel="noopener noreferrer"
                 tabIndex={-1}
-                className="flex w-full items-center justify-center py-2 text-xs text-gray-700 font-medium border-r border-gray-200 transition-all duration-300 hover:bg-gray-200 hover:text-gray-900"
+                className="flex w-full items-center justify-center py-2 text-xs text-gray-700 font-medium border-r border-gray-200 ease-in-out duration-300 hover:bg-gray-200 hover:text-gray-900"
               >
                 Open with Primal
               </a>
 
               <button
-                className="flex w-full items-center justify-center py-2 text-xs text-gray-700 font-medium hover:bg-gray-200 transition-all duration-300 hover:text-gray-900"
+                className="flex w-full items-center justify-center py-2 text-xs text-gray-700 font-medium ease-in-out duration-300 hover:bg-gray-200 hover:text-gray-900"
                 onClick={() => setShownDetailsIndex(index)}
                 tabIndex={-1}
               >

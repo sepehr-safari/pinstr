@@ -46,9 +46,9 @@ export default function PictureGrid() {
       {files.map((file, index) => (
         <li
           key={index}
-          className="group relative rounded-lg hover:bg-gray-50 transition-all ease-in-out duration-500 hover:shadow-md"
+          className="p-2 group relative rounded-lg hover:bg-gray-50 ease-in-out duration-500 hover:shadow-md"
         >
-          <div className="transition-transform ease-in-out duration-700 group-hover:scale-95">
+          <div className="ease-in-out duration-700">
             <div className="aspect-h-7 aspect-w-10 block w-full overflow-hidden rounded-md bg-gray-100">
               <img
                 src={file.source}
@@ -58,15 +58,15 @@ export default function PictureGrid() {
             </div>
           </div>
 
-          <p className="mt-2 block truncate text-sm font-medium text-gray-900 transition-all ease-in-out duration-700 group-hover:px-4">
+          <p className="mt-4 block truncate text-sm font-medium text-gray-900 ease-in-out duration-700">
             {file.title}
           </p>
 
-          <div className="w-full p-2 pt-0">
+          <div className="w-full">
             <button
               type="button"
               tabIndex={-1}
-              className="mt-4 w-full text-xs text-gray-700 font-medium px-4 py-2 bg-gray-200 rounded-md transition-all ease-in-out duration-500 opacity-0 translate-y-2 hover:bg-gray-300 hover:text-gray-900 group-hover:opacity-100 group-hover:translate-y-0"
+              className="mt-4 w-full text-xs text-gray-700 font-medium px-4 py-2 bg-gray-200 rounded-md ease-in-out duration-500 opacity-0 translate-y-2 hover:bg-gray-300 hover:text-gray-900 group-hover:opacity-100 group-hover:translate-y-0"
               onClick={() => setShownDetailsIndex(index)}
             >
               View Details
