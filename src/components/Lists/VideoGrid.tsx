@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { DetailsSlideover } from '@/components';
 
-const files = [
+const videos = [
   {
     title: 'Embedded Video From Youtube',
     source: 'https://www.youtube.com/embed/GitxraPZ8dM',
@@ -43,29 +43,29 @@ export default function VideoGrid() {
       role="list"
       className="mt-16 grid grid-cols-1 gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 xl:gap-x-8 2xl:grid-cols-3"
     >
-      {files.map((file, index) => (
+      {videos.map((video, index) => (
         <li
           key={index}
           className="p-2 group relative rounded-lg hover:bg-gray-50 ease-in-out duration-500 hover:shadow-md"
         >
           <div className="ease-in-out duration-700">
             <div className="aspect-h-7 aspect-w-10 block w-full overflow-hidden rounded-md bg-gray-100">
-              {file.isEmbedded ? (
-                <iframe className="object-cover" src={file.source} />
+              {video.isEmbedded ? (
+                <iframe className="object-cover" src={video.source} />
               ) : (
                 <video
                   controls
                   autoPlay={false}
                   preload="off"
                   className="object-cover"
-                  src={file.source}
+                  src={video.source}
                 />
               )}
             </div>
           </div>
 
           <p className="mt-4 block truncate text-sm font-medium text-gray-900 ease-in-out duration-700">
-            {file.title}
+            {video.title}
           </p>
 
           <div className="w-full ">
@@ -82,7 +82,19 @@ export default function VideoGrid() {
           <DetailsSlideover
             isShown={shownDetailsIndex === index}
             onClose={() => setShownDetailsIndex(-1)}
-            details={file}
+            onNext={() =>
+              setShownDetailsIndex((currentIndex) =>
+                videos.length > currentIndex + 1
+                  ? currentIndex + 1
+                  : currentIndex
+              )
+            }
+            onPrevious={() =>
+              setShownDetailsIndex((currentIndex) =>
+                currentIndex > 0 ? currentIndex - 1 : currentIndex
+              )
+            }
+            details={video}
           />
         </li>
       ))}

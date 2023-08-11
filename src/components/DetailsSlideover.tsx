@@ -12,10 +12,14 @@ import { joinClassNames } from '@/utils';
 export default function DetailsSlideover({
   isShown,
   onClose,
+  onNext,
+  onPrevious,
   details,
 }: {
   isShown: boolean;
   onClose: () => void;
+  onNext: () => void;
+  onPrevious: () => void;
   details: any;
 }) {
   return (
@@ -221,6 +225,7 @@ export default function DetailsSlideover({
                         <span className="isolate inline-flex w-full rounded-md shadow-sm">
                           <button
                             type="button"
+                            onClick={onPrevious}
                             className="relative flex justify-center items-center rounded-l-md bg-white w-full py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-100 hover:text-gray-500"
                           >
                             <ChevronLeftIcon
@@ -231,6 +236,7 @@ export default function DetailsSlideover({
                           </button>
                           <button
                             type="button"
+                            onClick={onNext}
                             className="relative -ml-px flex justify-center items-center rounded-r-md bg-white w-full py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-100 hover:text-gray-500"
                           >
                             <span className="text-sm">Next</span>

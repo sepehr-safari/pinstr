@@ -135,7 +135,19 @@ export default function NoteGrid() {
             <DetailsSlideover
               isShown={shownDetailsIndex === index}
               onClose={() => setShownDetailsIndex(-1)}
-              details={people}
+              onNext={() =>
+                setShownDetailsIndex((currentIndex) =>
+                  people.length > currentIndex + 1
+                    ? currentIndex + 1
+                    : currentIndex
+                )
+              }
+              onPrevious={() =>
+                setShownDetailsIndex((currentIndex) =>
+                  currentIndex > 0 ? currentIndex - 1 : currentIndex
+                )
+              }
+              details={person}
             />
           </li>
         ))}

@@ -131,6 +131,18 @@ export default function LinkGrid() {
             <DetailsSlideover
               isShown={shownDetailsIndex === index}
               onClose={() => setShownDetailsIndex(-1)}
+              onNext={() =>
+                setShownDetailsIndex((currentIndex) =>
+                  urls.length > currentIndex + 1
+                    ? currentIndex + 1
+                    : currentIndex
+                )
+              }
+              onPrevious={() =>
+                setShownDetailsIndex((currentIndex) =>
+                  currentIndex > 0 ? currentIndex - 1 : currentIndex
+                )
+              }
               details={url}
             />
           </li>
