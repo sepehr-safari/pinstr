@@ -6,7 +6,7 @@ export default function MainLayout() {
   return (
     <>
       <MainNavbar />
-      <div className="pt-16 mb-9">
+      <div className="py-16 mb-9">
         <Outlet />
       </div>
       <Footer />
