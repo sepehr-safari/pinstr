@@ -6,7 +6,7 @@ import { MenuItem } from './MenuTemplate.types';
 
 const kinds: MenuItem[] = [
   {
-    name: 'Generic Boards (Kind 33888)',
+    name: 'Generic Boards (Kind 33889)',
     description:
       'Boards of everything (e.g. links, images, videos, texts, etc.)',
   },
