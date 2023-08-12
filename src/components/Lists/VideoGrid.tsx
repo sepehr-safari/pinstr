@@ -95,7 +95,30 @@ export default function VideoGrid() {
               )
             }
             details={video}
-          />
+          >
+            <div className="max-w-sm mx-auto">
+              <div className="ease-in-out duration-700">
+                <div className="aspect-h-7 aspect-w-10 block w-full overflow-hidden rounded-md bg-gray-100">
+                  {video.isEmbedded ? (
+                    <iframe
+                      tabIndex={-1}
+                      className="object-cover"
+                      src={video.source}
+                    />
+                  ) : (
+                    <video
+                      tabIndex={-1}
+                      controls
+                      autoPlay={false}
+                      preload="off"
+                      className="object-cover"
+                      src={video.source}
+                    />
+                  )}
+                </div>
+              </div>
+            </div>
+          </DetailsSlideover>
         </li>
       ))}
     </ul>

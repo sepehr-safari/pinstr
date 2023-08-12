@@ -148,7 +148,46 @@ export default function NoteGrid() {
                 )
               }
               details={person}
-            />
+            >
+              <div className="max-w-sm mx-auto">
+                <div className="rounded-lg shadow-md border bg-white">
+                  <div className="p-4">
+                    <div className="flex items-center space-x-3">
+                      <h3 className="text-sm font-medium text-gray-900">
+                        {person.name}
+                      </h3>
+                    </div>
+                    <span className="text-xs text-gray-500">
+                      {person.email}
+                    </span>
+                  </div>
+
+                  <div className="p-4 border-t text-xs text-gray-500">
+                    <p>
+                      a dynamic group of individuals who are passionate about
+                      what we do and dedicated to delivering the best results
+                      for our clients a dynamic group of individuals who are
+                      passionate about what we do and dedicated to delivering
+                      the best results for our clients a dynamic group of
+                      individuals who are passionate about what we do and
+                      dedicated to delivering the best results for our clients
+                    </p>
+                  </div>
+
+                  <div className="border-t flex w-full">
+                    <a
+                      href="https://primal.net/note1"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      tabIndex={-1}
+                      className="flex w-full items-center justify-center py-2 text-xs text-gray-700 font-medium ease-in-out duration-300 hover:bg-gray-200 hover:text-gray-900"
+                    >
+                      Open with Primal
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </DetailsSlideover>
           </li>
         ))}
       </ul>

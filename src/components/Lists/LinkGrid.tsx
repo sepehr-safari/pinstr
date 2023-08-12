@@ -144,7 +144,22 @@ export default function LinkGrid() {
                 )
               }
               details={url}
-            />
+            >
+              <div className="max-w-sm mx-auto">
+                <div className="rounded-lg shadow-md bg-white">
+                  <img
+                    className="w-full object-cover object-center max-h-48 rounded-t-lg"
+                    src={url.imageUrl}
+                    alt=""
+                  />
+                  <div className="p-4">
+                    <p className="text-xs text-gray-500 truncate">
+                      {url.address}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </DetailsSlideover>
           </li>
         ))}
       </ul>
