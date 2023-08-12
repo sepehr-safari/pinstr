@@ -2,7 +2,12 @@ import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { Fragment, useState } from 'react';
 
-import { CategoryMenu, CoverPhotoMenu, KindMenu } from '@/components';
+import {
+  CategoryMenu,
+  CoverPhotoMenu,
+  KindMenu,
+  PinTemplateMenu,
+} from '@/components';
 
 type Props = {
   open: boolean;
@@ -130,6 +135,14 @@ export default function CreateSlideover({ open, setOpen }: Props) {
                               </span>
                               <div className="mt-2">
                                 <KindMenu />
+                              </div>
+                            </div>
+                            <div>
+                              <span className="block text-sm font-medium leading-6 text-gray-900">
+                                Template
+                              </span>
+                              <div className="mt-2">
+                                <PinTemplateMenu />
                               </div>
                             </div>
                             <div>
