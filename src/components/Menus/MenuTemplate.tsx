@@ -34,8 +34,8 @@ export default function ManuTemplate({
       >
         <Menu.Items className="absolute left-0 z-10 mt-2 w-full origin-top-left rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 max-h-80 overflow-y-auto focus:outline-none">
           <div className="py-1">
-            {items.map((item) => (
-              <Menu.Item>
+            {items.map((item, index) => (
+              <Menu.Item key={index}>
                 {({ active }) => (
                   <button
                     className={joinClassNames(
