@@ -1,5 +1,4 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { XMarkIcon } from '@heroicons/react/24/outline';
 import { Fragment } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 
@@ -8,7 +7,12 @@ export default function BottomSlideover() {
 
   return (
     <Transition.Root show={true} appear={true} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={() => navigate(-1)}>
+      <Dialog
+        as="div"
+        className="relative z-10"
+        onClose={() => navigate(-1)}
+        tabIndex={1}
+      >
         <Transition.Child
           as={Fragment}
           enterFrom="opacity-0"
@@ -16,7 +20,7 @@ export default function BottomSlideover() {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black bg-opacity-70 transition-opacity duration-200" />
+          <div className="fixed inset-0 bg-black bg-opacity-70 transition-opacity duration-300" />
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-hidden">

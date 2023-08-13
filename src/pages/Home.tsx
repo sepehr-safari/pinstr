@@ -1,4 +1,5 @@
-import { BoardsGrid, FiltersNavbar } from '@/components';
+import { Boards } from '@/components';
+import { FiltersNavbar } from '@/components/Navbars';
 
 import { useBoards } from '@/queries';
 
@@ -9,7 +10,9 @@ export default function Home() {
   return (
     <>
       <FiltersNavbar />
-      <BoardsGrid />
+      <div className="p-4 sm:p-6">
+        <Boards />
+      </div>
     </>
   );
 }

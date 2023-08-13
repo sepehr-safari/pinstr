@@ -71,7 +71,6 @@ export default function VideoGrid() {
           <div className="w-full ">
             <button
               type="button"
-              tabIndex={-1}
               className="mt-4 w-full text-xs text-gray-700 font-medium px-4 py-2 bg-gray-200 rounded-md ease-in-out duration-500 opacity-0 translate-y-2 hover:bg-gray-300 hover:text-gray-900 group-hover:opacity-100 group-hover:translate-y-0"
               onClick={() => setShownDetailsIndex(index)}
             >
@@ -100,14 +99,9 @@ export default function VideoGrid() {
               <div className="ease-in-out duration-700">
                 <div className="aspect-h-7 aspect-w-10 block w-full overflow-hidden rounded-md bg-gray-100">
                   {video.isEmbedded ? (
-                    <iframe
-                      tabIndex={-1}
-                      className="object-cover"
-                      src={video.source}
-                    />
+                    <iframe className="object-cover" src={video.source} />
                   ) : (
                     <video
-                      tabIndex={-1}
                       controls
                       autoPlay={false}
                       preload="off"

@@ -63,16 +63,16 @@ const boards = [
   },
 ];
 
-export default function BoardsGrid() {
+export default function Boards() {
   return (
-    <div className="bg-white">
-      <div className="mx-auto max-w-md sm:max-w-none overflow-hidden p-4 sm:p-6">
+    <>
+      <div className="mx-auto pb-16 overflow-hidden max-w-md sm:max-w-none">
         <div className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 sm:gap-x-6 sm:gap-y-10">
           {boards.map((board) => (
             <BoardItem board={board} key={board.id} />
           ))}
         </div>
       </div>
-    </div>
+    </>
   );
 }

@@ -2,8 +2,11 @@ import { Popover } from '@headlessui/react';
 import { PlusIcon, UserIcon } from '@heroicons/react/20/solid';
 import { useState } from 'react';
 import { usePopper } from 'react-popper';
+import { Link, useLocation } from 'react-router-dom';
 
 export default function AuthorOverview() {
+  const location = useLocation();
+
   const [referenceElement, setReferenceElement] =
     useState<HTMLButtonElement | null>(null);
   const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(
@@ -60,8 +63,9 @@ export default function AuthorOverview() {
                 <div>
                   <div className="-mt-px flex divide-x divide-gray-200">
                     <div className="flex w-0 flex-1">
-                      <a
-                        href={``}
+                      <Link
+                        to={`/p/npub`}
+                        state={{ backgroundLocation: location }}
                         className="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900 hover:underline"
                       >
                         <UserIcon
@@ -69,7 +73,7 @@ export default function AuthorOverview() {
                           aria-hidden="true"
                         />
                         Open Profile
-                      </a>
+                      </Link>
                     </div>
                     <div className="-ml-px flex w-0 flex-1">
                       <a

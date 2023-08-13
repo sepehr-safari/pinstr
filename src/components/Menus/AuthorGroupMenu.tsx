@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { MenuTemplate } from '@/components';
+import { MenuTemplate } from '@/components/Menus';
 
 import { MenuItem } from './MenuTemplate.types';
 
@@ -16,7 +16,7 @@ const groups: MenuItem[] = [
 ];
 
 const AuthorGroupMenu = () => {
-  const [selected, setSelected] = useState<string>(groups[0].name);
+  const [selected, setSelected] = useState<MenuItem>(groups[0]);
 
   return (
     <>

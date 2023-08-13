@@ -90,7 +90,6 @@ export default function LinkGrid() {
             className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow ease-in-out duration-200 hover:shadow-md"
           >
             <button
-              tabIndex={-1}
               type="button"
               onClick={() => setShownDetailsIndex(index)}
               className="flex w-full items-center group hover:cursor-pointer"
@@ -118,7 +117,6 @@ export default function LinkGrid() {
             </button>
             <div className="p-4 flex flex-1 truncate font-light">
               <a
-                tabIndex={-1}
                 href={url.address}
                 className="truncate flex items-center text-xs w-full text-blue-700 hover:underline hover:text-blue-900"
                 target="_blank"

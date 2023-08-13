@@ -117,7 +117,6 @@ export default function NoteGrid() {
                 href="https://primal.net/note1"
                 target="_blank"
                 rel="noopener noreferrer"
-                tabIndex={-1}
                 className="flex w-full items-center justify-center py-2 text-xs text-gray-700 font-medium border-r border-gray-200 ease-in-out duration-300 hover:bg-gray-200 hover:text-gray-900"
               >
                 Open with Primal
@@ -126,7 +125,6 @@ export default function NoteGrid() {
               <button
                 className="flex w-full items-center justify-center py-2 text-xs text-gray-700 font-medium ease-in-out duration-300 hover:bg-gray-200 hover:text-gray-900"
                 onClick={() => setShownDetailsIndex(index)}
-                tabIndex={-1}
               >
                 View details
               </button>
@@ -179,7 +177,6 @@ export default function NoteGrid() {
                       href="https://primal.net/note1"
                       target="_blank"
                       rel="noopener noreferrer"
-                      tabIndex={-1}
                       className="flex w-full items-center justify-center py-2 text-xs text-gray-700 font-medium ease-in-out duration-300 hover:bg-gray-200 hover:text-gray-900"
                     >
                       Open with Primal

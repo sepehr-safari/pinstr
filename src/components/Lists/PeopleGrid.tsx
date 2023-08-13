@@ -108,10 +108,7 @@ export default function PeopleGrid() {
               </h3>
               <p className="text-sm leading-6 text-gray-600">{person.role}</p>
               <div className="mt-6 mx-auto flex flex-col">
-                <button
-                  tabIndex={-1}
-                  className="flex justify-center items-center rounded-full bg-gray-200 px-10 py-2 text-xs font-semibold text-gray-500 ease-in-out duration-300 hover:shadow hover:text-gray-700 hover:bg-gray-300"
-                >
+                <button className="flex justify-center items-center rounded-full bg-gray-200 px-10 py-2 text-xs font-semibold text-gray-500 ease-in-out duration-300 hover:shadow hover:text-gray-700 hover:bg-gray-300">
                   <PlusIcon className="-ml-1 w-4 h-4" />
                   <span className="ml-1">Follow</span>
                 </button>
@@ -123,7 +120,6 @@ export default function PeopleGrid() {
                 href="https://primal.net/note1"
                 target="_blank"
                 rel="noopener noreferrer"
-                tabIndex={-1}
                 className="flex w-full items-center justify-center py-2 text-xs text-gray-700 font-medium border-r border-gray-200 ease-in-out duration-300 hover:bg-gray-200 hover:text-gray-900"
               >
                 Open with Primal
@@ -132,7 +128,6 @@ export default function PeopleGrid() {
               <button
                 className="flex w-full items-center justify-center py-2 text-xs text-gray-700 font-medium ease-in-out duration-300 hover:bg-gray-200 hover:text-gray-900"
                 onClick={() => setShownDetailsIndex(index)}
-                tabIndex={-1}
               >
                 View details
               </button>
@@ -185,7 +180,6 @@ export default function PeopleGrid() {
 
                   <div className="mt-6 flex w-full border-t">
                     <a
-                      tabIndex={-1}
                       href="https://primal.net/note1"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -195,7 +189,6 @@ export default function PeopleGrid() {
                     </a>
 
                     <button
-                      tabIndex={-1}
                       className="flex w-full items-center justify-center py-2 text-xs text-gray-700 font-medium ease-in-out duration-300 hover:bg-gray-200 hover:text-gray-900"
                       onClick={() => setShownDetailsIndex(index)}
                     >

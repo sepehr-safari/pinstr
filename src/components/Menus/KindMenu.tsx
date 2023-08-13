@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { MenuTemplate } from '@/components';
+import { MenuTemplate } from '@/components/Menus';
 
 import { MenuItem } from './MenuTemplate.types';
 

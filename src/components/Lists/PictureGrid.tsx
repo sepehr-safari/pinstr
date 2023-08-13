@@ -65,7 +65,6 @@ export default function PictureGrid() {
           <div className="w-full">
             <button
               type="button"
-              tabIndex={-1}
               className="mt-4 w-full text-xs text-gray-700 font-medium px-4 py-2 bg-gray-200 rounded-md ease-in-out duration-500 opacity-0 translate-y-2 hover:bg-gray-300 hover:text-gray-900 group-hover:opacity-100 group-hover:translate-y-0"
               onClick={() => setShownDetailsIndex(index)}
             >

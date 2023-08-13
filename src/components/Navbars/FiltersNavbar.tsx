@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
-import { AuthorGroupMenu, CategoryMenu, KindMenu } from '@/components';
+import { AuthorGroupMenu, CategoryMenu, KindMenu } from '@/components/Menus';
+
 import { MenuItem } from '@/components/Menus/MenuTemplate.types';
 
 export default function FiltersNavbar() {

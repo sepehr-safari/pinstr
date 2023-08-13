@@ -1,12 +1,13 @@
 import { Outlet } from 'react-router-dom';
 
-import { Footer, MainNavbar } from '@/components';
+import { Footer } from '@/components';
+import { MainNavbar } from '@/components/Navbars';
 
 export default function MainLayout() {
   return (
     <>
       <MainNavbar />
-      <div className="py-16 mb-9">
+      <div className="pt-16 mb-9">
         <Outlet />
       </div>
       <Footer />

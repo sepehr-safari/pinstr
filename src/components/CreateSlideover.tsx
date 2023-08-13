@@ -7,7 +7,7 @@ import {
   CoverPhotoMenu,
   KindMenu,
   PinTemplateMenu,
-} from '@/components';
+} from '@/components/Menus';
 import { useCreateBoard } from '@/hooks';
 
 type Props = {
@@ -28,7 +28,7 @@ export default function CreateSlideover({ open, setOpen }: Props) {
 
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={setOpen}>
+      <Dialog as="div" className="relative z-10" onClose={setOpen} tabIndex={1}>
         <Transition.Child
           as={Fragment}
           enter="ease-in-out duration-200"
@@ -68,7 +68,6 @@ export default function CreateSlideover({ open, setOpen }: Props) {
                               type="button"
                               className="relative rounded-md bg-gray-800 text-gray-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
                               onClick={() => setOpen(false)}
-                              tabIndex={-1}
                             >
                               <span className="absolute -inset-2.5" />
                               <span className="sr-only">Close panel</span>

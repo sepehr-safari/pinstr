@@ -39,7 +39,7 @@ export default function DetailsSlideover({
 
   return (
     <Transition.Root show={isShown} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={onClose}>
+      <Dialog as="div" className="relative z-10" onClose={onClose} tabIndex={1}>
         <Transition.Child
           as={Fragment}
           enter="ease-in-out duration-500"
@@ -75,7 +75,6 @@ export default function DetailsSlideover({
                         </Dialog.Title>
                         <div className="ml-3 flex h-7 items-center">
                           <button
-                            tabIndex={-1}
                             type="button"
                             className="relative rounded-md bg-white text-gray-400 hover:text-gray-500"
                             onClick={onClose}

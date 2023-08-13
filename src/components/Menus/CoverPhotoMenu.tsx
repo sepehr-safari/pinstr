@@ -6,7 +6,8 @@ import {
 import { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 
-import { MenuTemplate, Modal } from '@/components';
+import { Modal } from '@/components';
+import { MenuTemplate } from '@/components/Menus';
 
 import { MenuItem } from './MenuTemplate.types';
 
