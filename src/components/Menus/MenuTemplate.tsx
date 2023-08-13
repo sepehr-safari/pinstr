@@ -45,7 +45,7 @@ export default function ManuTemplate({
                     onClick={() => setSelected(item.name)}
                   >
                     {item.name}
-                    <span className="block text-xs text-gray-400">
+                    <span className="block text-xs font-light text-gray-400">
                       {item.description}
                     </span>
                   </button>
