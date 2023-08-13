@@ -1,15 +1,18 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { Event, Filter, SimplePool } from 'nostr-tools';
+import { Event, Filter } from 'nostr-tools';
 
 import { parseBoardsFromEvents } from '@/utils';
 
 import { useAuthors } from '@/queries';
+
+import useLocalState from '@/store';
 
 export default function useBoards(variables?: {
   authors?: string[];
   boardName?: string;
 }) {
   const queryClient = useQueryClient();
+  const { kinds, pool, relays } = useLocalState((state) => state);
 
   const {
     isLoading,
@@ -18,15 +21,6 @@ export default function useBoards(variables?: {
   } = useQuery({
     queryKey: ['nostr', 'boards', variables],
     queryFn: async () => {
-      const pool = queryClient.getQueryData(['app', 'pool']) as SimplePool;
-      if (!pool) return;
-
-      const relays = queryClient.getQueryData(['app', 'relays']) as string[];
-      if (!relays) return;
-
-      const kinds = queryClient.getQueryData(['app', 'kinds']) as number[];
-      if (!kinds) return;
-
       const filter = { kinds, limit: 10 } as Filter;
       if (variables && !!variables.authors && variables.authors.length > 0) {
         filter.authors = variables.authors;
@@ -40,6 +34,7 @@ export default function useBoards(variables?: {
       return parseBoardsFromEvents(events);
     },
     refetchOnWindowFocus: false,
+    enabled: !!pool && !!relays && !!kinds,
   });
 
   const { authors, authorsError, isAuthorsLoading } = useAuthors({
