@@ -40,7 +40,6 @@ export default function useBoards(variables?: {
       return parseBoardsFromEvents(events);
     },
     refetchOnWindowFocus: false,
-    refetchOnMount: false,
   });
 
   const { authors, authorsError, isAuthorsLoading } = useAuthors({
