@@ -1,6 +1,19 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
+import { useUser } from '@/queries';
+import { useEffect, useRef } from 'react';
 
 export default function Login() {
+  const { doLoginWithExtension, doLoginWithSeckey, user } = useUser();
+  const navigate = useNavigate();
+  const seckeyRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (!!user) {
+      navigate('/');
+    }
+  }, [user, navigate]);
+
   return (
     <>
       <div className="flex min-h-full flex-1">
@@ -36,15 +49,16 @@ export default function Login() {
                 <form action="#" method="POST" className="space-y-6">
                   <div>
                     <label
-                      htmlFor="nsec"
+                      htmlFor="seckey"
                       className="block text-sm font-medium leading-6 text-gray-900"
                     >
                       Your Secret Key
                     </label>
                     <div className="mt-2">
                       <input
-                        id="nsec"
-                        name="nsec"
+                        ref={seckeyRef}
+                        id="seckey"
+                        name="seckey"
                         type="text"
                         autoComplete="off"
                         required
@@ -55,7 +69,12 @@ export default function Login() {
 
                   <div>
                     <button
-                      type="submit"
+                      type="button"
+                      onClick={() =>
+                        seckeyRef &&
+                        seckeyRef.current &&
+                        doLoginWithSeckey(seckeyRef.current?.value)
+                      }
                       className="flex w-full justify-center rounded-md bg-gray-800 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-800"
                     >
                       Log In
@@ -80,14 +99,15 @@ export default function Login() {
                 </div>
 
                 <div className="mt-6">
-                  <a
-                    href="#"
+                  <button
+                    type="button"
+                    onClick={doLoginWithExtension}
                     className="flex w-full items-center justify-center gap-3 rounded-md bg-purple-800 px-3 py-1.5 text-white"
                   >
                     <span className="text-sm font-semibold leading-6">
                       Browser Extension (Recommended)
                     </span>
-                  </a>
+                  </button>
                 </div>
                 <p className="mt-4 text-sm leading-6 text-gray-500 font-light">
                   Don't have an extension?{' '}

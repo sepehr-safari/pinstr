@@ -1,8 +1,11 @@
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { MagnifyingGlassIcon, PlusIcon } from '@heroicons/react/20/solid';
 import { Fragment, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { joinClassNames } from '@/utils';
+
+import { useUser } from '@/queries';
 
 import { CreateSlideover } from '@/components';
 
@@ -17,7 +20,7 @@ const USER_NAVIGATION = [
 ];
 
 export default function MainNavbar() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const { user } = useUser();
   const [open, setOpen] = useState(false);
 
   return (
@@ -63,17 +66,17 @@ export default function MainNavbar() {
             </div>
 
             <div className="relative z-10 flex items-center">
-              {!loggedIn && (
-                <button
+              {!user && (
+                <Link
+                  to="/login"
                   className="inline-flex rounded-full bg-gray-800 px-4 py-2 text-xs font-semibold text-white shadow-sm hover:opacity-80"
-                  onClick={() => setLoggedIn(true)}
                 >
                   Login
-                </button>
+                </Link>
               )}
 
               {/* Profile dropdown */}
-              {loggedIn && (
+              {user && (
                 <>
                   <button
                     className="mr-2 inline-flex items-center rounded-full bg-gray-800 px-4 py-2 text-xs font-semibold text-white shadow-sm hover:opacity-80 md:mr-4"
