@@ -28,7 +28,6 @@ export default function useAuthors(options?: {
       return parseAuthorsFromEvents(events);
     },
     refetchOnWindowFocus: false,
-    refetchOnMount: false,
     enabled: options?.enabled,
   });
 
