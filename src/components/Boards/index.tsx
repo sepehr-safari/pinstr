@@ -1,3 +1,5 @@
+import { joinClassNames } from '@/utils';
+
 import BoardItem from './BoardItem';
 
 const boards = [
@@ -63,11 +65,18 @@ const boards = [
   },
 ];
 
-export default function Boards() {
+export default function Boards({ fullWidth = false }: { fullWidth?: boolean }) {
   return (
     <>
       <div className="mx-auto pb-16 overflow-hidden max-w-md sm:max-w-none">
-        <div className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 sm:gap-x-6 sm:gap-y-10">
+        <div
+          className={joinClassNames(
+            'grid grid-cols-1 sm:grid-cols-2 sm:gap-y-8 sm:gap-x-6 md:grid-cols-3',
+            fullWidth
+              ? 'xl:grid-cols-4 2xl:grid-cols-5'
+              : 'xl:grid-cols-2 2xl:grid-cols-3'
+          )}
+        >
           {boards.map((board) => (
             <BoardItem board={board} key={board.id} />
           ))}

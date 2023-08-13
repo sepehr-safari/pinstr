@@ -11,7 +11,7 @@ export default function Home() {
     <>
       <FiltersNavbar />
       <div className="p-4 sm:p-6">
-        <Boards />
+        <Boards fullWidth />
       </div>
     </>
   );
