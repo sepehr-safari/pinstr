@@ -35,7 +35,7 @@ export default function CoverPhotoMenu({
   setCoverPhotoURL,
 }: Props) {
   const [selectedMenuItem, setSelectedMenuItem] = useState(
-    coverPhotoMenuItems[0].name
+    coverPhotoMenuItems[0]
   );
   const [searchKeyword, setSearchKeyword] = useState('');
   const [searchResult, setSearchResult] = useState<string[]>([]);
@@ -115,8 +115,6 @@ export default function CoverPhotoMenu({
     return () => clearTimeout(timer);
   }, [searchKeyword]);
 
-  console.log(coverPhotoURL, setCoverPhotoURL);
-
   return (
     <>
       <MenuTemplate
@@ -125,7 +123,7 @@ export default function CoverPhotoMenu({
         setSelected={setSelectedMenuItem}
       />
 
-      {!coverPhotoURL && selectedMenuItem === 'Upload' && (
+      {!coverPhotoURL && selectedMenuItem.name === 'Upload' && (
         <div className="mt-4">
           <span className="block text-sm font-medium leading-6 text-gray-900">
             Cover Photo / Upload
@@ -175,7 +173,7 @@ export default function CoverPhotoMenu({
         </div>
       )}
 
-      {!coverPhotoURL && selectedMenuItem === 'Stock Photos' && (
+      {!coverPhotoURL && selectedMenuItem.name === 'Stock Photos' && (
         <>
           <span className="mt-4 block text-sm font-medium leading-6 text-gray-900">
             Cover Photo / Search From Stock Photos
@@ -204,9 +202,8 @@ export default function CoverPhotoMenu({
           <div className="mt-4 grid grid-cols-2 gap-4 max-h-80 overflow-y-scroll">
             {searchResult.length > 0 &&
               searchResult.map((url, index) => (
-                <>
+                <div key={index}>
                   <img
-                    key={index}
                     src={url}
                     alt="Cover photo"
                     className="object-cover w-full h-full rounded-md"
@@ -225,7 +222,7 @@ export default function CoverPhotoMenu({
                       className="object-cover w-full h-full rounded-md"
                     />
                   </Modal>
-                </>
+                </div>
               ))}
           </div>
 
@@ -251,7 +248,7 @@ export default function CoverPhotoMenu({
         </>
       )}
 
-      {selectedMenuItem === 'URL' && (
+      {selectedMenuItem.name === 'URL' && (
         <div className="mt-4">
           <label
             htmlFor="cover-photo-url"

@@ -1,6 +1,12 @@
-import { CategoryMenu, KindMenu, AuthorGroupMenu } from '@/components';
+import { useState } from 'react';
+
+import { AuthorGroupMenu, CategoryMenu, KindMenu } from '@/components';
+import { MenuItem } from '@/components/Menus/MenuTemplate.types';
 
 export default function FiltersNavbar() {
+  const [category, setCategory] = useState<MenuItem | null>(null);
+  const [kind, setKind] = useState<MenuItem | null>(null);
+
   return (
     <>
       <div className="mb-2 px-4 pt-4 flex flex-wrap gap-4 sm:px-6">
@@ -8,10 +14,10 @@ export default function FiltersNavbar() {
           <AuthorGroupMenu />
         </div>
         <div className="w-full order-last md:w-72 md:order-none lg:w-80">
-          <CategoryMenu />
+          <CategoryMenu category={category} setCategory={setCategory} />
         </div>
         <div className="ml-auto w-64">
-          <KindMenu />
+          <KindMenu kind={kind} setKind={setKind} />
         </div>
       </div>
     </>

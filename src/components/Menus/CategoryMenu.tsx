@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 
 import { MenuTemplate } from '@/components';
 
@@ -72,18 +72,24 @@ const categories: MenuItem[] = [
   },
 ];
 
-const CategoryMenu = () => {
-  const [selected, setSelected] = useState<string>(categories[0].name);
+export default function CategoryMenu({
+  category,
+  setCategory,
+}: {
+  category: MenuItem | null;
+  setCategory: (item: MenuItem) => void;
+}) {
+  useEffect(() => {
+    setCategory(categories[0]);
+  }, []);
 
   return (
     <>
       <MenuTemplate
         items={categories}
-        selected={selected}
-        setSelected={setSelected}
+        selected={category}
+        setSelected={setCategory}
       />
     </>
   );
-};
-
-export default CategoryMenu;
+}

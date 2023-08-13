@@ -1,10 +1,11 @@
 export interface MenuItem {
   name: string;
   description: string;
+  value?: string;
 }
 
 export interface MenuProps {
   items: MenuItem[];
-  selected: string;
-  setSelected: (name: string) => void;
+  selected: MenuItem | null;
+  setSelected: (item: MenuItem) => void;
 }

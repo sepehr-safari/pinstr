@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 
 import { MenuTemplate } from '@/components';
 
@@ -27,15 +27,23 @@ const templates: MenuItem[] = [
   },
 ];
 
-export default function PinTemplateMenu() {
-  const [selected, setSelected] = useState<string>(templates[0].name);
+export default function PinTemplateMenu({
+  template,
+  setTemplate,
+}: {
+  template: MenuItem | null;
+  setTemplate: (item: MenuItem) => void;
+}) {
+  useEffect(() => {
+    setTemplate(templates[0]);
+  }, []);
 
   return (
     <>
       <MenuTemplate
         items={templates}
-        selected={selected}
-        setSelected={setSelected}
+        selected={template}
+        setSelected={setTemplate}
       />
     </>
   );
