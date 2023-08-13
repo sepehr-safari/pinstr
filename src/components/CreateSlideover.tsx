@@ -1,8 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import { Kind, nip19 } from 'nostr-tools';
-import { Fragment, useCallback, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Fragment } from 'react';
 
 import {
   CategoryMenu,
@@ -10,9 +8,7 @@ import {
   KindMenu,
   PinTemplateMenu,
 } from '@/components';
-import { usePublish } from '@/hooks';
-
-import { MenuItem } from './Menus/MenuTemplate.types';
+import { useCreateBoard } from '@/hooks';
 
 type Props = {
   open: boolean;
@@ -20,61 +16,15 @@ type Props = {
 };
 
 export default function CreateSlideover({ open, setOpen }: Props) {
-  const publish = usePublish();
-  const navigate = useNavigate();
-  const boardNameRef = useRef<HTMLInputElement>(null);
-  const boardDescriptionRef = useRef<HTMLInputElement>(null);
-  const [coverPhotoURL, setCoverPhotoURL] = useState('');
-  const [category, setCategory] = useState<MenuItem | null>(null);
-  const [kind, setKind] = useState<MenuItem | null>(null);
-  const [template, setTemplate] = useState<MenuItem | null>(null);
-
-  const createBoard = useCallback(() => {
-    if (
-      !kind?.value ||
-      !category?.name ||
-      !template?.name ||
-      !boardNameRef.current ||
-      !boardNameRef.current.value ||
-      !boardDescriptionRef.current ||
-      !boardDescriptionRef.current.value
-    ) {
-      return;
-    }
-
-    console.log('createBoard', {
-      kind: +kind.value as Kind,
-      tags: [
-        ['d', boardNameRef.current.value],
-        ['description', boardDescriptionRef.current.value],
-        ['category', category.name],
-        ['template', template.name],
-        ['cover', coverPhotoURL],
-        ['headers', 'Content', 'Label'],
-      ],
-    });
-
-    publish({
-      kind: +kind.value as Kind,
-      tags: [
-        ['d', boardNameRef.current.value],
-        ['description', boardDescriptionRef.current.value],
-        ['category', category.name],
-        ['template', template.name],
-        ['cover', coverPhotoURL],
-        ['headers', 'Content', 'Label'],
-      ],
-    }).then((event) => {
-      setOpen(false);
-      setCoverPhotoURL('');
-      navigate(
-        '/p/' +
-          nip19.npubEncode(event.pubkey) +
-          '/' +
-          boardNameRef.current?.value
-      );
-    });
-  }, [publish, navigate, coverPhotoURL, category, kind, template]);
+  const {
+    category,
+    coverPhotoURL,
+    createBoard,
+    descriptionRef,
+    kind,
+    nameRef,
+    template,
+  } = useCreateBoard({ onSuccess: () => setOpen(false) });
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -148,7 +98,7 @@ export default function CreateSlideover({ open, setOpen }: Props) {
                               </label>
                               <div className="mt-2">
                                 <input
-                                  ref={boardNameRef}
+                                  ref={nameRef}
                                   type="text"
                                   name="board-name"
                                   id="board-name"
@@ -167,7 +117,7 @@ export default function CreateSlideover({ open, setOpen }: Props) {
                               </label>
                               <div className="mt-2">
                                 <input
-                                  ref={boardDescriptionRef}
+                                  ref={descriptionRef}
                                   type="text"
                                   name="description"
                                   id="description"
@@ -182,8 +132,8 @@ export default function CreateSlideover({ open, setOpen }: Props) {
                               </span>
                               <div className="mt-2">
                                 <CategoryMenu
-                                  category={category}
-                                  setCategory={setCategory}
+                                  category={category.get}
+                                  setCategory={category.set}
                                 />
                               </div>
                             </div>
@@ -198,7 +148,7 @@ export default function CreateSlideover({ open, setOpen }: Props) {
                                 Kind
                               </span>
                               <div className="mt-2">
-                                <KindMenu kind={kind} setKind={setKind} />
+                                <KindMenu kind={kind.get} setKind={kind.set} />
                               </div>
                             </div>
                             <div>
@@ -207,8 +157,8 @@ export default function CreateSlideover({ open, setOpen }: Props) {
                               </span>
                               <div className="mt-2">
                                 <PinTemplateMenu
-                                  template={template}
-                                  setTemplate={setTemplate}
+                                  template={template.get}
+                                  setTemplate={template.set}
                                 />
                               </div>
                             </div>
@@ -218,8 +168,8 @@ export default function CreateSlideover({ open, setOpen }: Props) {
                               </span>
                               <div className="mt-2">
                                 <CoverPhotoMenu
-                                  coverPhotoURL={coverPhotoURL}
-                                  setCoverPhotoURL={setCoverPhotoURL}
+                                  coverPhotoURL={coverPhotoURL.get}
+                                  setCoverPhotoURL={coverPhotoURL.set}
                                 />
                               </div>
                             </div>
