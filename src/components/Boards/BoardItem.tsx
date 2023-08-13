@@ -22,7 +22,7 @@ const BoardItem = ({ board }: { board: any }) => {
           to={`/p/npub/${board.name}`}
           state={{ backgroundLocation: location }}
         >
-          <div className="relative aspect-w-3 aspect-h-4 w-full overflow-hidden rounded-md bg-gray-100 hover:cursor-pointer">
+          <div className="relative aspect-w-5 aspect-h-4 w-full overflow-hidden rounded-md bg-gray-100 hover:cursor-pointer">
             <Transition show={isHovering}>
               <Transition.Child
                 as="div"
