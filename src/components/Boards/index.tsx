@@ -65,7 +65,13 @@ const boards = [
   },
 ];
 
-export default function Boards({ fullWidth = false }: { fullWidth?: boolean }) {
+export default function Boards({
+  fullWidth = false,
+  noAuthor = false,
+}: {
+  fullWidth?: boolean;
+  noAuthor?: boolean;
+}) {
   return (
     <>
       <div className="mx-auto pb-16 overflow-hidden max-w-md sm:max-w-none">
@@ -78,7 +84,7 @@ export default function Boards({ fullWidth = false }: { fullWidth?: boolean }) {
           )}
         >
           {boards.map((board) => (
-            <BoardItem board={board} key={board.id} />
+            <BoardItem board={board} key={board.id} noAuthor={noAuthor} />
           ))}
         </div>
       </div>

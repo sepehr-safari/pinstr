@@ -16,7 +16,7 @@ export default function AppRouter() {
           <Route path="p/">
             <Route index element={<NoMatch />} />
             <Route path=":npub" element={<Profile />}>
-              <Route index element={<Boards />} />
+              <Route index element={<Boards noAuthor />} />
               <Route path=":boardName" element={<Pins />} />
             </Route>
           </Route>
@@ -31,7 +31,7 @@ export default function AppRouter() {
           <Route path="p/" element={<BottomSlideover />}>
             <Route index element={<NoMatch />} />
             <Route path=":npub" element={<Profile />}>
-              <Route index element={<Boards />} />
+              <Route index element={<Boards noAuthor />} />
               <Route path=":boardName" element={<Pins />} />
             </Route>
           </Route>

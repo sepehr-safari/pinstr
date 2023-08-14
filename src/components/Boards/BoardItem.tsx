@@ -6,7 +6,13 @@ import { Link, useLocation } from 'react-router-dom';
 import AuthorOverview from './AuthorOverview';
 import Badge from './Badge';
 
-const BoardItem = ({ board }: { board: any }) => {
+const BoardItem = ({
+  board,
+  noAuthor = false,
+}: {
+  board: any;
+  noAuthor?: boolean;
+}) => {
   const location = useLocation();
 
   const [isHovering, setIsHover] = useState<boolean | undefined>(false);
@@ -72,7 +78,7 @@ const BoardItem = ({ board }: { board: any }) => {
               {board.name}
             </h3>
 
-            <AuthorOverview />
+            {!noAuthor && <AuthorOverview />}
           </div>
           <div className="ml-4 mt-[2px] flex">
             <button className="flex text-xs font-bold text-gray-500 hover:text-gray-700">
