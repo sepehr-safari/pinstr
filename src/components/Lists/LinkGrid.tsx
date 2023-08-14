@@ -3,79 +3,7 @@ import { useState } from 'react';
 
 import { DetailsSlideover } from '@/components';
 
-const urls = [
-  {
-    name: 'Alby',
-    address: 'https://getalby.com',
-    imageUrl:
-      'https://source.unsplash.com/random/?bitcoin&sig=' + Math.random(),
-  },
-  {
-    name: 'Zebedee',
-    address: 'https://zebedee.io',
-    imageUrl:
-      'https://source.unsplash.com/random/?bitcoin&sig=' + Math.random(),
-  },
-  {
-    name: 'Wallet of Satoshi',
-    address: 'https://www.walletofsatoshi.com/',
-    imageUrl: 'https://source.unsplash.com/random/?crypto&sig=' + Math.random(),
-  },
-  {
-    name: 'BTCPay Server',
-    address: 'https://btcpayserver.org',
-    imageUrl:
-      'https://source.unsplash.com/random/?payment&sig=' + Math.random(),
-  },
-  {
-    name: 'Nostdress',
-    address: 'https://github.com/believethehype/nostdress',
-    imageUrl: 'https://source.unsplash.com/random/?wallet&sig=' + Math.random(),
-  },
-  {
-    name: 'Geyser',
-    address: 'https://geyser.fund',
-    imageUrl:
-      'https://source.unsplash.com/random/?payment&sig=' + Math.random(),
-  },
-  {
-    name: 'Michael Foster',
-    address: 'michael@foster.com',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
-  },
-  {
-    name: 'Michael Foster',
-    address: 'michael@foster.com',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
-  },
-  {
-    name: 'Michael Foster',
-    address: 'michael@foster.com',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
-  },
-  {
-    name: 'Michael Foster',
-    address: 'michael@foster.com',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
-  },
-  {
-    name: 'Michael Foster',
-    address: 'michael@foster.com',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
-  },
-  {
-    name: 'Michael Foster',
-    address: 'michael@foster.com',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
-  },
-  {
-    name: 'Michael Foster',
-    address: 'michael@foster.com',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
-  },
-];
-
-export default function LinkGrid() {
+export default function LinkGrid({ urls }: { urls: any[] }) {
   const [shownDetailsIndex, setShownDetailsIndex] = useState(-1);
 
   return (
@@ -115,14 +43,11 @@ export default function LinkGrid() {
                 </div>
               </div>
             </button>
-            <div className="p-4 flex flex-1 truncate font-light">
-              <a
-                href={url.address}
-                className="truncate flex items-center text-xs w-full text-blue-700 hover:underline hover:text-blue-900"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {url.address}
+            <div className="p-4 ">
+              <a href={url.address} target="_blank" rel="noopener noreferrer">
+                <div className="truncate text-xs font-light text-blue-700 hover:underline hover:text-blue-900">
+                  {url.address}
+                </div>
               </a>
             </div>
 
@@ -151,9 +76,15 @@ export default function LinkGrid() {
                     alt=""
                   />
                   <div className="p-4">
-                    <p className="text-xs text-gray-500 truncate">
-                      {url.address}
-                    </p>
+                    <a
+                      href={url.address}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <div className="truncate text-xs font-light text-blue-700 hover:underline hover:text-blue-900">
+                        {url.address}
+                      </div>
+                    </a>
                   </div>
                 </div>
               </div>

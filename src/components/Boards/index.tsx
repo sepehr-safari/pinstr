@@ -29,9 +29,9 @@ const boards = [
   },
   {
     id: 5,
-    name: 'Race Cars of Yesteryear',
-    author: 'Merdellow',
-    imageSrc: 'https://source.unsplash.com/random/?race+cars',
+    name: 'Best Seller Books',
+    author: 'FISHCAKE',
+    imageSrc: 'https://source.unsplash.com/random/?book',
   },
   {
     id: 6,
