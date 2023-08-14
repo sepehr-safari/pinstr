@@ -42,7 +42,7 @@ export default function useUser() {
       }
     },
     doLogout: () => {
-      queryClient.setQueryData(['app', 'user'], null);
+      queryClient.removeQueries(['app', 'user']);
     },
     user,
   };
