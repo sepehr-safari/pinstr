@@ -1,5 +1,4 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { XMarkIcon } from '@heroicons/react/24/outline';
 import { Fragment } from 'react';
 
 import {
@@ -15,7 +14,7 @@ type Props = {
   setOpen: (state: boolean) => void;
 };
 
-export default function CreateSlideover({ open, setOpen }: Props) {
+export default function BoardSlideover({ open, setOpen }: Props) {
   const {
     category,
     coverPhotoURL,
