@@ -73,7 +73,8 @@ export default function PinSlideover({ open, setOpen }: Props) {
                                   Name
                                 </span>
                                 <span className="text-xs font-light text-gray-500">
-                                  Choose a short, descriptive name for your pin.
+                                  Choose a short and descriptive name for your
+                                  pin.
                                 </span>
                               </label>
                               <div className="mt-2">
