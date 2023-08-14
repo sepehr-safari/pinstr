@@ -65,7 +65,7 @@ export default function BoardSlideover({ open, setOpen }: Props) {
                         </div>
                         <div className="mt-1">
                           <p className="text-sm text-gray-300">
-                            Get started by filling in the information below to
+                            Get started by filling in the details below to
                             create your new board.
                           </p>
                         </div>
@@ -76,9 +76,14 @@ export default function BoardSlideover({ open, setOpen }: Props) {
                             <div>
                               <label
                                 htmlFor="board-name"
-                                className="block text-sm font-medium leading-6 text-gray-900"
+                                className="flex flex-col"
                               >
-                                Board name
+                                <span className="text-sm font-medium leading-6 text-gray-900">
+                                  Board name
+                                </span>
+                                <span className="text-xs font-light text-gray-500">
+                                  Give your board a meaningful name.
+                                </span>
                               </label>
                               <div className="mt-2">
                                 <input
@@ -96,9 +101,14 @@ export default function BoardSlideover({ open, setOpen }: Props) {
                             <div>
                               <label
                                 htmlFor="description"
-                                className="block text-sm font-medium leading-6 text-gray-900"
+                                className="flex flex-col"
                               >
-                                Description
+                                <span className="text-sm font-medium leading-6 text-gray-900">
+                                  Description
+                                </span>
+                                <span className="text-xs font-light text-gray-500">
+                                  Explain what this board is about.
+                                </span>
                               </label>
                               <div className="mt-2">
                                 <input
@@ -112,8 +122,13 @@ export default function BoardSlideover({ open, setOpen }: Props) {
                               </div>
                             </div>
                             <div>
-                              <span className="block text-sm font-medium leading-6 text-gray-900">
-                                Category
+                              <span className="flex flex-col">
+                                <span className="text-sm font-medium leading-6 text-gray-900">
+                                  Category
+                                </span>
+                                <span className="text-xs font-light text-gray-500">
+                                  Choose a suitable category for your board.
+                                </span>
                               </span>
                               <div className="mt-2">
                                 <CategoryMenu
@@ -123,22 +138,34 @@ export default function BoardSlideover({ open, setOpen }: Props) {
                               </div>
                             </div>
                             {/* <div>
-                              <span className="block text-sm font-medium leading-6 text-gray-900">
+                              <span className="flex flex-col">
                                 Tags
                               </span>
                               <div className="mt-2"></div>
                             </div> */}
                             <div>
-                              <span className="block text-sm font-medium leading-6 text-gray-900">
-                                Kind
+                              <span className="flex flex-col">
+                                <span className="text-sm font-medium leading-6 text-gray-900">
+                                  Kind
+                                </span>
+                                <span className="text-xs font-light text-gray-500">
+                                  Select the type of board you want to create.
+                                  It's not possible to change this later!
+                                </span>
                               </span>
                               <div className="mt-2">
                                 <KindMenu kind={kind.get} setKind={kind.set} />
                               </div>
                             </div>
                             <div>
-                              <span className="block text-sm font-medium leading-6 text-gray-900">
-                                Template
+                              <span className="flex flex-col">
+                                <span className="text-sm font-medium leading-6 text-gray-900">
+                                  Template
+                                </span>
+                                <span className="text-xs font-light text-gray-500">
+                                  Choose what best fits your needs. It's not
+                                  possible to change this later!
+                                </span>
                               </span>
                               <div className="mt-2">
                                 <PinTemplateMenu
@@ -148,8 +175,14 @@ export default function BoardSlideover({ open, setOpen }: Props) {
                               </div>
                             </div>
                             <div>
-                              <span className="block text-sm font-medium leading-6 text-gray-900">
-                                Cover Photo
+                              <span className="flex flex-col">
+                                <span className="text-sm font-medium leading-6 text-gray-900">
+                                  Cover Photo
+                                </span>
+                                <span className="text-xs font-light text-gray-500">
+                                  Select an option and choose a high quality
+                                  photo that represents your board.
+                                </span>
                               </span>
                               <div className="mt-2">
                                 <CoverPhotoMenu
