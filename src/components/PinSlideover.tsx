@@ -15,15 +15,7 @@ type Props = {
 };
 
 export default function PinSlideover({ open, setOpen }: Props) {
-  const {
-    category,
-    coverPhotoURL,
-    createBoard,
-    descriptionRef,
-    kind,
-    nameRef,
-    template,
-  } = useAddPin({ onSuccess: () => setOpen(false) });
+  const {} = useAddPin({ onSuccess: () => setOpen(false) });
 
   // TODO
   return (
@@ -66,8 +58,9 @@ export default function PinSlideover({ open, setOpen }: Props) {
                         </div>
                         <div className="mt-1">
                           <p className="text-sm text-gray-300">
-                            Get started by filling in the information below to
-                            create your new board.
+                            Fill out the form below to add a new pin to one of
+                            your existing boards. If you want to create a new
+                            board, you are in the wrong place!
                           </p>
                         </div>
                       </div>
@@ -75,20 +68,21 @@ export default function PinSlideover({ open, setOpen }: Props) {
                         <div className="divide-y divide-gray-200 px-4 sm:px-6">
                           <div className="space-y-6 pb-5 pt-6">
                             <div>
-                              <label
-                                htmlFor="board-name"
-                                className="block text-sm font-medium leading-6 text-gray-900"
-                              >
-                                Board name
+                              <label htmlFor="name" className="flex flex-col">
+                                <span className="text-sm font-medium leading-6 text-gray-900">
+                                  Name
+                                </span>
+                                <span className="text-xs font-light text-gray-500">
+                                  Choose a short, descriptive name for your pin.
+                                </span>
                               </label>
                               <div className="mt-2">
                                 <input
-                                  ref={nameRef}
+                                  // ref={nameRef}
                                   type="text"
-                                  name="board-name"
-                                  id="board-name"
+                                  name="name"
+                                  id="name"
                                   autoComplete="off"
-                                  autoFocus
                                   tabIndex={1}
                                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
                                 />
@@ -96,67 +90,36 @@ export default function PinSlideover({ open, setOpen }: Props) {
                             </div>
                             <div>
                               <label
-                                htmlFor="description"
-                                className="block text-sm font-medium leading-6 text-gray-900"
+                                htmlFor="content"
+                                className="flex flex-col"
                               >
-                                Description
+                                <span className="text-sm font-medium leading-6 text-gray-900">
+                                  Content
+                                </span>
+                                <span className="text-xs font-light text-gray-500">
+                                  Enter the content of your pin (e.g. a link or
+                                  a text).
+                                </span>
                               </label>
                               <div className="mt-2">
                                 <input
-                                  ref={descriptionRef}
+                                  // ref={contentRef}
                                   type="text"
-                                  name="description"
-                                  id="description"
+                                  name="content"
+                                  id="content"
                                   autoComplete="off"
+                                  autoFocus
                                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
                                 />
                               </div>
                             </div>
                             <div>
-                              <span className="block text-sm font-medium leading-6 text-gray-900">
-                                Category
-                              </span>
+                              <span className="flex flex-col">Picture</span>
                               <div className="mt-2">
-                                <CategoryMenu
-                                  category={category.get}
-                                  setCategory={category.set}
-                                />
-                              </div>
-                            </div>
-                            {/* <div>
-                              <span className="block text-sm font-medium leading-6 text-gray-900">
-                                Tags
-                              </span>
-                              <div className="mt-2"></div>
-                            </div> */}
-                            <div>
-                              <span className="block text-sm font-medium leading-6 text-gray-900">
-                                Kind
-                              </span>
-                              <div className="mt-2">
-                                <KindMenu kind={kind.get} setKind={kind.set} />
-                              </div>
-                            </div>
-                            <div>
-                              <span className="block text-sm font-medium leading-6 text-gray-900">
-                                Template
-                              </span>
-                              <div className="mt-2">
-                                <PinTemplateMenu
-                                  template={template.get}
-                                  setTemplate={template.set}
-                                />
-                              </div>
-                            </div>
-                            <div>
-                              <span className="block text-sm font-medium leading-6 text-gray-900">
-                                Cover Photo
-                              </span>
-                              <div className="mt-2">
-                                <CoverPhotoMenu
+                                {/* <CoverPhotoMenu
                                   coverPhotoURL={coverPhotoURL.get}
                                   setCoverPhotoURL={coverPhotoURL.set}
-                                />
+                                /> */}
                               </div>
                             </div>
                           </div>
@@ -173,10 +136,10 @@ export default function PinSlideover({ open, setOpen }: Props) {
                       </button>
                       <button
                         type="button"
-                        onClick={createBoard}
+                        // onClick={addPin}
                         className="ml-4 inline-flex justify-center rounded-md bg-gray-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
                       >
-                        Create Board
+                        Add Pin
                       </button>
                     </div>
                   </div>
