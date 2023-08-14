@@ -1,9 +1,16 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { Fragment } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Fragment, useEffect } from 'react';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 export default function BottomSlideover() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    document
+      .getElementById('bottom-slideover')
+      ?.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [location.pathname]);
 
   return (
     <Transition.Root show={true} appear={true} as={Fragment}>
@@ -20,7 +27,10 @@ export default function BottomSlideover() {
 
         <div className="fixed inset-0 overflow-hidden" tabIndex={0}>
           <div className="absolute inset-0 overflow-hidden">
-            <div className="pointer-events-none fixed inset-x-0 bottom-0 flex w-full h-full px-0 pt-12 overflow-y-auto md:px-10 lg:px-20">
+            <div
+              className="pointer-events-none fixed inset-x-0 bottom-0 flex w-full h-full px-0 pt-12 overflow-y-auto md:px-10 lg:px-20"
+              id="bottom-slideover"
+            >
               <Transition.Child
                 as={Fragment}
                 enterFrom="translate-y-full"
