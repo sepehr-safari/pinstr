@@ -1,27 +1,32 @@
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { MagnifyingGlassIcon, PlusIcon } from '@heroicons/react/20/solid';
-import { Fragment, useState } from 'react';
+import { nip19 } from 'nostr-tools';
+import { Fragment, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { joinClassNames } from '@/utils';
-
-import { useUser } from '@/queries';
-
 import { CreateSlideover } from '@/components';
+import { useUser } from '@/queries';
+import { joinClassNames } from '@/utils';
 
 const USER = {
   name: 'Sepehr',
   imageUrl: 'https://source.unsplash.com/random/?avatar',
 };
 const USER_NAVIGATION = [
-  { name: 'Open Profile', href: '#' },
-  { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' },
+  { name: 'Open Profile', link: '/p/' },
+  { name: 'Settings', link: '#' },
+  { name: 'Sign out', link: '/logout' },
 ];
 
 export default function MainNavbar() {
   const { user } = useUser();
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      USER_NAVIGATION[0].link = `/p/${nip19.npubEncode(user.pubkey)}`;
+    }
+  }, [user]);
 
   return (
     <Disclosure
@@ -137,15 +142,15 @@ export default function MainNavbar() {
                               {USER_NAVIGATION.map((item) => (
                                 <Menu.Item key={item.name}>
                                   {({ active }) => (
-                                    <a
-                                      href={item.href}
+                                    <Link
+                                      to={item.link}
                                       className={joinClassNames(
                                         active ? 'bg-gray-100' : '',
-                                        'block px-4 py-2 text-sm text-gray-700'
+                                        'block px-4 py-2 text-center text-sm font-medium text-gray-900'
                                       )}
                                     >
                                       {item.name}
-                                    </a>
+                                    </Link>
                                   )}
                                 </Menu.Item>
                               ))}
