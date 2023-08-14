@@ -1,8 +1,8 @@
 import { Location, Route, Routes, useLocation } from 'react-router-dom';
 
-import { Home, Login, NoMatch } from '@/pages';
-import { BottomSlideover, MainLayout, Profile } from '@/pages/Layouts';
 import { Boards, Pins } from '@/components';
+import { Home, Login, Logout, NoMatch } from '@/pages';
+import { BottomSlideover, MainLayout, Profile } from '@/pages/Layouts';
 
 export default function AppRouter() {
   const location = useLocation();
@@ -23,6 +23,7 @@ export default function AppRouter() {
           <Route path="*" element={<NoMatch />} />
         </Route>
         <Route path="/login" element={<Login />} />
+        <Route path="/logout" element={<Logout />} />
       </Routes>
 
       {state?.backgroundLocation && (
