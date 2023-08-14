@@ -91,7 +91,7 @@ export default function PictureGrid() {
           >
             <div className="max-w-sm mx-auto">
               <div className="ease-in-out duration-700">
-                <div className="aspect-h-7 aspect-w-10 block w-full overflow-hidden rounded-md bg-gray-100">
+                <div className="aspect-w-5 aspect-h-4 block w-full overflow-hidden rounded-md bg-gray-100">
                   <img
                     src={picture.source}
                     alt=""
