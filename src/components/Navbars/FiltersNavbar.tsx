@@ -11,7 +11,7 @@ export default function FiltersNavbar() {
   return (
     <>
       <div className="mb-2 px-4 pt-4 flex flex-wrap gap-4 sm:px-6">
-        <div className="flex-1 min-w-fit md:w-40 md:flex-none">
+        <div className="flex-1 min-w-fit md:w-56 md:flex-none">
           <AuthorGroupMenu />
         </div>
         <div className="w-full order-last md:w-72 md:order-none lg:w-96">
