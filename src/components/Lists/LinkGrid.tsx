@@ -146,7 +146,7 @@ export default function LinkGrid() {
               <div className="max-w-sm mx-auto">
                 <div className="rounded-lg shadow-md bg-white">
                   <img
-                    className="w-full object-cover object-center max-h-48 rounded-t-lg"
+                    className="w-full object-cover object-center aspect-1 rounded-t-lg"
                     src={url.imageUrl}
                     alt=""
                   />
