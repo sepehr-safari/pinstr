@@ -8,22 +8,22 @@ const templates: MenuItem[] = [
   {
     name: 'Plain Text',
     description:
-      'Use this template to create a board of plain text items (e.g. a board of your favorite books)',
+      'Use this template to create a board of plain text items (e.g. a board of your favorite quotes)',
   },
   {
     name: 'Links',
     description:
-      'Use this template to create a board of links (e.g. a board of your favorite websites)',
+      'Use this template to create a board of links (e.g. a board of your favorite web pages like blog posts)',
   },
   {
     name: 'Pictures',
     description:
-      'Use this template to create a board of pictures (e.g. a board of your favorite pictures)',
+      'Use this template to create a board of pictures (e.g. a board of your favorite pictures like memes)',
   },
   {
     name: 'Videos',
     description:
-      'Use this template to create a board of videos (e.g. a board of your favorite videos)',
+      'Use this template to create a board of videos (e.g. a board of your favorite videos like YouTube videos)',
   },
 ];
 
