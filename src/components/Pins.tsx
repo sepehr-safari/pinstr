@@ -137,7 +137,7 @@ export default function Pins() {
     <>
       <div className="gap-8 flex flex-col lg:flex-row">
         <div className="mx-auto lg:mx-0">
-          <div className="w-64 aspect-w-4 aspect-h-3 rounded-md bg-gray-200">
+          <div className="w-64 aspect-w-5 aspect-h-4 rounded-md bg-gray-200">
             <img
               src={`https://source.unsplash.com/random/?${boardName}&sig=${Math.random()}`}
               alt=""
