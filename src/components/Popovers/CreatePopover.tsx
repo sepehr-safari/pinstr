@@ -1,26 +1,29 @@
 import { PlusIcon } from '@heroicons/react/20/solid';
+import { useMemo, useState } from 'react';
 
-import { CreateSlideover } from '@/components';
+import { BoardSlideover, PinSlideover } from '@/components';
 import { PopoverTemplate } from '@/components/Popovers';
 import { PopoverItem } from './PopoverTemplate.types';
-import { useState } from 'react';
-
-const items: PopoverItem[] = [
-  {
-    name: 'New Board',
-    description: 'Create a new board',
-    onClick: () => {},
-  },
-  {
-    name: 'Add Pin',
-    description: 'Add a new pin to an existing board',
-    onClick: () => {},
-  },
-];
 
 export default function CreatePopover() {
   const [openBoard, setOpenBoard] = useState(false);
   const [openPin, setOpenPin] = useState(false);
+
+  const items: PopoverItem[] = useMemo(
+    () => [
+      {
+        name: 'New Board',
+        description: 'Create a new board',
+        onClick: () => setOpenBoard(true),
+      },
+      {
+        name: 'Add Pin',
+        description: 'Add a new pin to an existing board',
+        onClick: () => setOpenPin(true),
+      },
+    ],
+    [setOpenBoard, setOpenPin]
+  );
 
   return (
     <>
@@ -31,7 +34,8 @@ export default function CreatePopover() {
         </div>
       </PopoverTemplate>
 
-      <CreateSlideover open={openBoard} setOpen={setOpenBoard} />
+      <BoardSlideover open={openBoard} setOpen={setOpenBoard} />
+      <PinSlideover open={openPin} setOpen={setOpenPin} />
     </>
   );
 }
