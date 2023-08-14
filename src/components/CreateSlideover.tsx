@@ -28,7 +28,7 @@ export default function CreateSlideover({ open, setOpen }: Props) {
 
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={setOpen} tabIndex={1}>
+      <Dialog as="div" className="relative z-10" onClose={setOpen}>
         <Transition.Child
           as={Fragment}
           enter="ease-in-out duration-200"
@@ -63,20 +63,6 @@ export default function CreateSlideover({ open, setOpen }: Props) {
                           <Dialog.Title className="text-base font-semibold leading-6 text-white">
                             New Board
                           </Dialog.Title>
-                          <div className="ml-3 flex h-7 items-center">
-                            <button
-                              type="button"
-                              className="relative rounded-md bg-gray-800 text-gray-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
-                              onClick={() => setOpen(false)}
-                            >
-                              <span className="absolute -inset-2.5" />
-                              <span className="sr-only">Close panel</span>
-                              <XMarkIcon
-                                className="h-6 w-6"
-                                aria-hidden="true"
-                              />
-                            </button>
-                          </div>
                         </div>
                         <div className="mt-1">
                           <p className="text-sm text-gray-300">
@@ -103,6 +89,7 @@ export default function CreateSlideover({ open, setOpen }: Props) {
                                   id="board-name"
                                   autoComplete="off"
                                   autoFocus
+                                  tabIndex={1}
                                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
                                 />
                               </div>

@@ -39,7 +39,7 @@ export default function DetailsSlideover({
 
   return (
     <Transition.Root show={isShown} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={onClose} tabIndex={1}>
+      <Dialog as="div" className="relative z-10" onClose={onClose}>
         <Transition.Child
           as={Fragment}
           enter="ease-in-out duration-500"
@@ -54,7 +54,7 @@ export default function DetailsSlideover({
 
         <div className="fixed inset-0" />
 
-        <div className="fixed inset-0 overflow-hidden">
+        <div className="fixed inset-0 overflow-hidden" tabIndex={0}>
           <div className="absolute inset-0 overflow-hidden">
             <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10 sm:pl-16">
               <Transition.Child
