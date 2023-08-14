@@ -1,6 +1,8 @@
 import { PlusIcon } from '@heroicons/react/20/solid';
 import { Outlet } from 'react-router-dom';
 
+import { Breadcrumb } from '@/components/Navbars';
+
 export default function Profile() {
   return (
     <>
@@ -37,7 +39,10 @@ export default function Profile() {
           </div>
         </div>
 
-        <div className="w-full bg-gray-100 p-6 py-16 xl:pl-[24rem] xl:pr-12">
+        <div className="w-full bg-gray-100 px-6 pb-16 pt-8 xl:pl-[24rem] xl:pr-12">
+          <div className="pb-8">
+            <Breadcrumb />
+          </div>
           <Outlet />
         </div>
       </div>
