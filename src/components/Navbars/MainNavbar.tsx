@@ -105,8 +105,8 @@ export default function MainNavbar() {
                         leaveFrom="transform opacity-100"
                         leaveTo="transform opacity-0"
                       >
-                        <Menu.Items className="absolute right-0 z-10 mt-2 w-64 origin-top-right divide-y divide-gray-100 rounded-lg bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                          <Menu.Item as="a">
+                        <Menu.Items className="absolute right-0 z-10 mt-6 w-64 origin-top-right divide-y divide-gray-100 rounded-2xl bg-white py-1 shadow-lg ring-1 ring-gray-900/20 focus:outline-none">
+                          <Menu.Item as="div">
                             <img
                               className="mt-4 mx-auto h-24 w-24 object-cover object-center flex-shrink-0 rounded-full"
                               src={USER.imageUrl}
