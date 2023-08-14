@@ -28,7 +28,7 @@ export default function CreatePopover() {
   return (
     <>
       <PopoverTemplate items={items}>
-        <div className="mr-2 inline-flex items-center rounded-full bg-gray-800 px-4 py-2 text-xs font-semibold text-white shadow-sm hover:opacity-80 md:mr-4">
+        <div className="mr-2 inline-flex items-center rounded-full bg-gray-800 px-4 py-3 text-xs font-semibold text-white shadow-sm hover:opacity-80 md:mr-4">
           <PlusIcon className="-ml-1 mr-1 h-4 w-4" aria-hidden="true" />
           Create
         </div>

@@ -38,11 +38,13 @@ export default function MainNavbar() {
             <div className="relative z-10 flex lg:px-0">
               <Link to="/" className="flex flex-shrink-0 items-center">
                 <img
-                  className="h-8 w-auto"
+                  className="h-10 w-auto"
                   src="/assets/pinstr.png"
                   alt="Pinstr"
                 />
-                <div className="ml-2 hidden md:block font-bold">Pinstr</div>
+                <div className="ml-2 hidden md:block font-bold text-lg">
+                  Pinstr
+                </div>
               </Link>
             </div>
 
@@ -90,7 +92,7 @@ export default function MainNavbar() {
                           <span className="absolute -inset-1.5" />
                           <span className="sr-only">Open user menu</span>
                           <img
-                            className="h-8 w-8 rounded-full object-cover object-center bg-gray-200"
+                            className="h-10 w-10 rounded-full object-cover object-center bg-gray-200"
                             src={USER.imageUrl}
                             alt=""
                           />
