@@ -23,11 +23,12 @@ const coverPhotoMenuItems: MenuItem[] = [
   },
   {
     name: 'Stock Photos',
-    description: 'Select from a library of stock photos provided by Unsplash.',
+    description:
+      'Search and select from a library of stock photos provided by Unsplash.',
   },
   {
     name: 'URL',
-    description: 'Enter a direct URL to an image on the web.',
+    description: 'Enter a direct URL to an existing image on the web.',
   },
 ];
 
