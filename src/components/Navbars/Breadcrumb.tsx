@@ -20,7 +20,7 @@ export default function Breadcrumb() {
         </li>
         {!!npub && (
           <li>
-            <div className="flex items-center">
+            <div className="flex items-center max-w-[12rem] md:max-w-xs">
               <svg
                 className="h-5 w-5 flex-shrink-0 text-gray-300"
                 fill="currentColor"
@@ -31,7 +31,7 @@ export default function Breadcrumb() {
               </svg>
               <Link
                 to={'/p/' + npub}
-                className="ml-2 text-sm font-light text-gray-400 hover:text-gray-700"
+                className="ml-2 truncate text-sm font-light text-gray-400 hover:text-gray-700"
               >
                 {npub}
               </Link>
@@ -40,7 +40,7 @@ export default function Breadcrumb() {
         )}
         {!!boardName && (
           <li>
-            <div className="flex items-center">
+            <div className="flex items-center max-w-[12rem] md:max-w-xs">
               <svg
                 className="h-5 w-5 flex-shrink-0 text-gray-300"
                 fill="currentColor"
@@ -51,7 +51,7 @@ export default function Breadcrumb() {
               </svg>
               <Link
                 to={'/p/' + npub + '/' + boardName}
-                className="ml-2 text-sm font-light text-gray-400 hover:text-gray-700"
+                className="ml-2 truncate text-sm font-light text-gray-400 hover:text-gray-700"
               >
                 {boardName}
               </Link>
