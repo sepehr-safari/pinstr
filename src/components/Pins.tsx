@@ -1,8 +1,11 @@
+import { PencilIcon } from '@heroicons/react/24/outline';
 import {
   BoltIcon,
   ChatBubbleLeftIcon,
   HandThumbUpIcon,
-} from '@heroicons/react/20/solid';
+} from '@heroicons/react/24/solid';
+import { nip19 } from 'nostr-tools';
+import { useParams } from 'react-router-dom';
 
 import {
   LinkGrid,
@@ -11,7 +14,7 @@ import {
   PictureGrid,
   VideoGrid,
 } from '@/components/Lists';
-import { useParams } from 'react-router-dom';
+import { useUser } from '@/queries';
 
 const zapUrls = [
   {
@@ -130,52 +133,94 @@ const bookUrls = [
 ];
 
 export default function Pins() {
-  const params = useParams();
-  const boardName = params.boardName;
+  const { npub, boardName } = useParams();
+  const { user } = useUser();
+  const selfBoard = user ? nip19.npubEncode(user.pubkey) === npub : false;
 
   return (
     <>
       <div className="gap-8 flex flex-col lg:flex-row">
         <div className="mx-auto lg:mx-0">
-          <div className="w-64 aspect-w-5 aspect-h-4 rounded-md bg-gray-200">
+          <div className="relative group w-64 aspect-w-5 aspect-h-4 rounded-md bg-gray-200">
             <img
               src={`https://source.unsplash.com/random/?${boardName}&sig=${Math.random()}`}
               alt=""
               className="w-full h-full object-cover object-center rounded-md"
             />
+            {selfBoard && (
+              <div className="absolute bg-black/70 inset-0 flex justify-center items-center opacity-0 duration-500 group-hover:opacity-100">
+                <button className="ml-2 flex items-center border-b border-b-gray-100 duration-500">
+                  <span className="text-xs font-medium text-gray-100">
+                    Edit
+                  </span>
+                  <div className="ml-1 text-gray-100 -translate-x-6 duration-500 group-hover:translate-x-0">
+                    <PencilIcon className="h-5 w-5" />
+                  </div>
+                </button>
+              </div>
+            )}
           </div>
         </div>
         <div className="flex flex-col justify-between items-center lg:items-start">
           <div>
-            <h2 className="text-xl font-bold tracking-tight text-gray-900 text-center lg:text-start xl:text-2xl">
+            <h2 className="group flex justify-center items-start text-xl font-bold tracking-tight text-gray-900 text-center lg:text-start xl:text-2xl">
               {boardName}
+
+              {selfBoard && (
+                <button className="ml-2 flex items-center border-b border-b-gray-400 opacity-0 duration-500 group-hover:opacity-100 xl:mt-1">
+                  <span className="text-xs font-medium text-gray-500">
+                    Edit
+                  </span>
+                  <div className="ml-1 text-gray-500 -translate-x-6 duration-500 group-hover:translate-x-0">
+                    <PencilIcon className="h-5 w-5" />
+                  </div>
+                </button>
+              )}
             </h2>
 
-            <div className="mt-2 inline-flex w-full justify-center gap-1 text-xs font-light text-black/30 lg:gap-2 lg:justify-start">
-              <span>Nostr Profiles (Kind: 30000)</span>
-              <span>|</span>
-              <span>Technology</span>
-              <span>|</span>
+            <div className="mt-2 inline-flex w-full justify-center items-center gap-1 text-xs font-light text-black/30 lg:gap-2 lg:justify-start">
               <span>18 days ago</span>
+              <span>|</span>
+              <span className="group flex items-center">
+                Technology
+                {selfBoard && (
+                  <button className="ml-2 flex items-center border-b border-b-gray-400 opacity-0 duration-500 group-hover:opacity-100">
+                    <span className="text-xs font-medium text-gray-500">
+                      Edit
+                    </span>
+                    <div className="ml-1 text-gray-500 -translate-x-6 duration-500 group-hover:translate-x-0">
+                      <PencilIcon className="h-5 w-5" />
+                    </div>
+                  </button>
+                )}
+              </span>
             </div>
           </div>
 
-          <p className="mt-4 text-sm font-light text-gray-500 text-center max-w-screen-sm lg:max-w-none lg:text-justify lg:mt-auto">
+          <div className="mt-4 group flex items-start duration-200 text-sm font-light text-gray-500 text-center max-w-screen-sm lg:max-w-none lg:text-justify lg:mt-auto">
             We’re a dynamic group of individuals who are passionate about what
             we do and dedicated to delivering the best results for our clients.
-          </p>
+            {selfBoard && (
+              <button className="ml-2 flex items-center border-b border-b-gray-400 opacity-0 duration-500 group-hover:opacity-100">
+                <span className="text-xs font-medium text-gray-500">Edit</span>
+                <div className="ml-1 text-gray-500 -translate-x-6 duration-500 group-hover:translate-x-0">
+                  <PencilIcon className="h-5 w-5" />
+                </div>
+              </button>
+            )}
+          </div>
 
           <div className="mt-4 flex gap-4 lg:mt-auto">
             <button className="inline-flex justify-center items-center rounded-md bg-gray-100 ring-1 ring-gray-300 px-4 py-2 text-xs font-semibold text-gray-500 hover:shadow-md hover:text-gray-800">
-              <HandThumbUpIcon className="mr-2 h-4 w-4" aria-hidden="true" />
+              <HandThumbUpIcon className="mr-2 h-4 w-4" />
               <span className="">21</span>
             </button>
             <button className="inline-flex justify-center items-center rounded-md bg-gray-100 ring-1 ring-gray-300 px-4 py-2 text-xs font-semibold text-gray-500 hover:shadow-md hover:text-gray-800">
-              <BoltIcon className="mr-2 h-4 w-4" aria-hidden="true" />
+              <BoltIcon className="mr-2 h-4 w-4" />
               <span className="">2100</span>
             </button>
             <button className="inline-flex justify-center items-center rounded-md bg-gray-100 ring-1 ring-gray-300 px-4 py-2 text-xs font-semibold text-gray-500 hover:shadow-md hover:text-gray-800">
-              <ChatBubbleLeftIcon className="mr-2 h-4 w-4" aria-hidden="true" />
+              <ChatBubbleLeftIcon className="mr-2 h-4 w-4" />
               <span className="">4</span>
             </button>
           </div>
