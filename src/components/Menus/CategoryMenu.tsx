@@ -6,6 +6,10 @@ import { MenuItem } from './MenuTemplate.types';
 
 const categories: MenuItem[] = [
   {
+    name: 'All',
+    description: 'All topics',
+  },
+  {
     name: 'Entertainment',
     description: 'Movies, TV Shows, Music, Books, Sci-fi, and more',
   },
@@ -75,18 +79,20 @@ const categories: MenuItem[] = [
 export default function CategoryMenu({
   category,
   setCategory,
+  hideFirstOption,
 }: {
   category: MenuItem | null;
   setCategory: (item: MenuItem) => void;
+  hideFirstOption?: boolean;
 }) {
   useEffect(() => {
-    setCategory(categories[0]);
+    setCategory(!hideFirstOption ? categories[0] : categories[1]);
   }, []);
 
   return (
     <>
       <MenuTemplate
-        items={categories}
+        items={!hideFirstOption ? categories : categories.slice(1)}
         selected={category}
         setSelected={setCategory}
       />
