@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { DetailsSlideover } from '@/components';
 
-const pictures = [
+const images = [
   {
     title: 'Margherita',
     size: '3.9 MB',
@@ -35,7 +35,7 @@ const pictures = [
   },
 ];
 
-export default function PictureGrid() {
+export default function ImageGrid() {
   const [shownDetailsIndex, setShownDetailsIndex] = useState(-1);
 
   return (
@@ -43,7 +43,7 @@ export default function PictureGrid() {
       role="list"
       className="mt-16 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 xl:gap-x-8 2xl:grid-cols-3"
     >
-      {pictures.map((picture, index) => (
+      {images.map((image, index) => (
         <li
           key={index}
           className="p-2 group relative rounded-lg hover:bg-gray-50 ease-in-out duration-500 hover:shadow-md"
@@ -51,7 +51,7 @@ export default function PictureGrid() {
           <div className="ease-in-out duration-700">
             <div className="aspect-w-5 aspect-h-4 block w-full overflow-hidden rounded-md bg-gray-100">
               <img
-                src={picture.source}
+                src={image.source}
                 alt=""
                 className="object-cover object-center hover:opacity-75 hover:cursor-zoom-in"
               />
@@ -59,7 +59,7 @@ export default function PictureGrid() {
           </div>
 
           <p className="mt-4 block truncate text-sm font-medium text-gray-900 ease-in-out duration-700">
-            {picture.title}
+            {image.title}
           </p>
 
           <div className="w-full">
@@ -77,7 +77,7 @@ export default function PictureGrid() {
             onClose={() => setShownDetailsIndex(-1)}
             onNext={() =>
               setShownDetailsIndex((currentIndex) =>
-                pictures.length > currentIndex + 1
+                images.length > currentIndex + 1
                   ? currentIndex + 1
                   : currentIndex
               )
@@ -87,13 +87,13 @@ export default function PictureGrid() {
                 currentIndex > 0 ? currentIndex - 1 : currentIndex
               )
             }
-            details={picture}
+            details={image}
           >
             <div className="max-w-sm mx-auto">
               <div className="ease-in-out duration-700">
                 <div className="aspect-w-5 aspect-h-4 block w-full overflow-hidden rounded-md bg-gray-100">
                   <img
-                    src={picture.source}
+                    src={image.source}
                     alt=""
                     className="object-cover hover:opacity-75 hover:cursor-zoom-in"
                   />

@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { usePublish } from '@/hooks';
 
-import { MenuItem } from '@/components/Menus/MenuTemplate.types';
 import { BoardType } from '@/components';
+import { MenuItem } from '@/components/Menus/MenuTemplate.types';
 
 export default function useCreateBoard({
   onSuccess,
@@ -22,7 +22,7 @@ export default function useCreateBoard({
   const nameRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLInputElement>(null);
 
-  const [coverPhotoURL, setCoverPhotoURL] = useState('');
+  const [coverImageURL, setCoverImageURL] = useState('');
   const [category, setCategory] = useState<MenuItem | null>(null);
 
   const createBoard = useCallback(() => {
@@ -37,30 +37,19 @@ export default function useCreateBoard({
       return;
     }
 
-    const kind: number =
-      selectedBoardType.id === 5
-        ? 30000
-        : selectedBoardType.id === 6
-        ? 30001
-        : 33889;
-
-    const headers: string[] = ['headers', 'Content'];
-    selectedBoardType.id < 5 && headers.push('Label');
-    selectedBoardType.id < 3 && headers.push('Icon');
-
     publish({
-      kind,
+      kind: selectedBoardType.kind,
       tags: [
         ['d', nameRef.current.value],
         ['description', descriptionRef.current.value],
         ['category', category.name],
-        ['type', `${selectedBoardType.id}`],
-        ['cover', coverPhotoURL],
-        [...headers],
+        ['type', selectedBoardType.type],
+        ['cover', coverImageURL],
+        ['headers', ...selectedBoardType.headers],
       ],
     }).then((event) => {
       onSuccess();
-      setCoverPhotoURL('');
+      setCoverImageURL('');
       navigate(
         '/p/' + nip19.npubEncode(event.pubkey) + '/' + nameRef.current?.value
       );
@@ -68,7 +57,7 @@ export default function useCreateBoard({
   }, [
     publish,
     navigate,
-    coverPhotoURL,
+    coverImageURL,
     category,
     selectedBoardType,
     onSuccess,
@@ -79,9 +68,9 @@ export default function useCreateBoard({
     setSelectedBoardType,
     nameRef,
     descriptionRef,
-    coverPhotoURL: {
-      get: coverPhotoURL,
-      set: setCoverPhotoURL,
+    coverImageURL: {
+      get: coverImageURL,
+      set: setCoverImageURL,
     },
     category: {
       get: category,

@@ -2,7 +2,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 
 import { BoardTypes } from '@/components';
-import { CategoryMenu, CoverPhotoMenu } from '@/components/Menus';
+import { CategoryMenu, CoverImageMenu } from '@/components/Menus';
 import { useCreateBoard } from '@/hooks';
 
 type Props = {
@@ -15,7 +15,7 @@ export default function BoardSlideover({ open, setOpen }: Props) {
     selectedBoardType,
     setSelectedBoardType,
     category,
-    coverPhotoURL,
+    coverImageURL,
     createBoard,
     descriptionRef,
     nameRef,
@@ -162,17 +162,17 @@ export default function BoardSlideover({ open, setOpen }: Props) {
                               <div>
                                 <span className="flex flex-col">
                                   <span className="text-sm font-medium leading-6 text-gray-900">
-                                    Cover Photo
+                                    Cover Image
                                   </span>
                                   <span className="text-xs font-light text-gray-500">
                                     Select an option and choose a high quality
-                                    photo that represents your board.
+                                    image that represents your board.
                                   </span>
                                 </span>
                                 <div className="mt-2">
-                                  <CoverPhotoMenu
-                                    coverPhotoURL={coverPhotoURL.get}
-                                    setCoverPhotoURL={coverPhotoURL.set}
+                                  <CoverImageMenu
+                                    coverImageURL={coverImageURL.get}
+                                    setCoverImageURL={coverImageURL.set}
                                   />
                                 </div>
                               </div>

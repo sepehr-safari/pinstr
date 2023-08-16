@@ -3,7 +3,7 @@ import { Fragment } from 'react';
 
 import {
   CategoryMenu,
-  CoverPhotoMenu,
+  CoverImageMenu,
   KindMenu,
   PinTemplateMenu,
 } from '@/components/Menus';
@@ -117,9 +117,9 @@ export default function PinSlideover({ open, setOpen }: Props) {
                             <div>
                               <span className="flex flex-col">Picture</span>
                               <div className="mt-2">
-                                {/* <CoverPhotoMenu
-                                  coverPhotoURL={coverPhotoURL.get}
-                                  setCoverPhotoURL={coverPhotoURL.set}
+                                {/* <CoverImageMenu
+                                  coverImageURL={coverImageURL.get}
+                                  setCoverImageURL={coverImageURL.set}
                                 /> */}
                               </div>
                             </div>

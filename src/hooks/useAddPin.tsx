@@ -15,7 +15,7 @@ export default function useAddPin({ onSuccess }: { onSuccess: () => void }) {
   const nameRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLInputElement>(null);
 
-  const [coverPhotoURL, setCoverPhotoURL] = useState('');
+  const [coverImageURL, setCoverImageURL] = useState('');
   const [category, setCategory] = useState<MenuItem | null>(null);
   const [kind, setKind] = useState<MenuItem | null>(null);
   const [template, setTemplate] = useState<MenuItem | null>(null);
@@ -40,24 +40,24 @@ export default function useAddPin({ onSuccess }: { onSuccess: () => void }) {
         ['description', descriptionRef.current.value],
         ['category', category.name],
         ['template', template.name],
-        ['cover', coverPhotoURL],
+        ['cover', coverImageURL],
         ['headers', 'Content', 'Label'],
       ],
     }).then((event) => {
       onSuccess();
-      setCoverPhotoURL('');
+      setCoverImageURL('');
       navigate(
         '/p/' + nip19.npubEncode(event.pubkey) + '/' + nameRef.current?.value
       );
     });
-  }, [publish, navigate, coverPhotoURL, category, kind, template]);
+  }, [publish, navigate, coverImageURL, category, kind, template]);
 
   return {
     nameRef,
     descriptionRef,
-    coverPhotoURL: {
-      get: coverPhotoURL,
-      set: setCoverPhotoURL,
+    coverImageURL: {
+      get: coverImageURL,
+      set: setCoverImageURL,
     },
     category: {
       get: category,

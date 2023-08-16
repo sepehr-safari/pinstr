@@ -4,19 +4,19 @@ import { Fragment, useRef } from 'react';
 interface Props {
   children: React.ReactNode;
   modalIndex: number;
-  stockPhotoURL: string;
+  stockImageURL: string;
   showModalIndex: null | number;
   setShowModalIndex: (state: null | number) => void;
-  setSelectedStockPhotoURL: (state: string) => void;
+  setSelectedStockImageURL: (state: string) => void;
 }
 
 export default function Modal({
   children,
   modalIndex,
-  stockPhotoURL,
+  stockImageURL,
   showModalIndex,
   setShowModalIndex,
-  setSelectedStockPhotoURL,
+  setSelectedStockImageURL,
 }: Props) {
   const cancelButtonRef = useRef(null);
 
@@ -58,11 +58,11 @@ export default function Modal({
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-gray-900 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 sm:col-start-2"
                     onClick={() => {
-                      setSelectedStockPhotoURL(stockPhotoURL);
+                      setSelectedStockImageURL(stockImageURL);
                       setShowModalIndex(null);
                     }}
                   >
-                    Use This Photo
+                    Use This Image
                   </button>
                   <button
                     type="button"

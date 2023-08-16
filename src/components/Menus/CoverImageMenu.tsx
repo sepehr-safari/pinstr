@@ -12,19 +12,19 @@ import { MenuTemplate } from '@/components/Menus';
 import { MenuItem } from './MenuTemplate.types';
 
 interface Props {
-  coverPhotoURL: string;
-  setCoverPhotoURL: (coverPhotoURL: string) => void;
+  coverImageURL: string;
+  setCoverImageURL: (coverImageURL: string) => void;
 }
 
-const coverPhotoMenuItems: MenuItem[] = [
+const coverImageMenuItems: MenuItem[] = [
   {
     name: 'Upload',
-    description: 'Upload your own cover photo directly to nostr.build cloud.',
+    description: 'Upload your own cover image directly to nostr.build cloud.',
   },
   {
-    name: 'Stock Photos',
+    name: 'Stock Images',
     description:
-      'Search and select from a library of stock photos provided by Unsplash.',
+      'Search and select from a library of stock images provided by Unsplash.',
   },
   {
     name: 'URL',
@@ -32,12 +32,12 @@ const coverPhotoMenuItems: MenuItem[] = [
   },
 ];
 
-export default function CoverPhotoMenu({
-  coverPhotoURL,
-  setCoverPhotoURL,
+export default function CoverImageMenu({
+  coverImageURL,
+  setCoverImageURL,
 }: Props) {
   const [selectedMenuItem, setSelectedMenuItem] = useState(
-    coverPhotoMenuItems[0]
+    coverImageMenuItems[0]
   );
   const [searchKeyword, setSearchKeyword] = useState('');
   const [searchResult, setSearchResult] = useState<string[]>([]);
@@ -77,7 +77,7 @@ export default function CoverPhotoMenu({
         .then((url) => {
           if (!!url) {
             setIsUploading(false);
-            setCoverPhotoURL(url);
+            setCoverImageURL(url);
           } else {
             console.error('upload error');
           }
@@ -120,15 +120,15 @@ export default function CoverPhotoMenu({
   return (
     <>
       <MenuTemplate
-        items={coverPhotoMenuItems}
+        items={coverImageMenuItems}
         selected={selectedMenuItem}
         setSelected={setSelectedMenuItem}
       />
 
-      {!coverPhotoURL && selectedMenuItem.name === 'Upload' && (
+      {!coverImageURL && selectedMenuItem.name === 'Upload' && (
         <div className="mt-4">
           <span className="block text-sm font-medium leading-6 text-gray-900">
-            Cover Photo / Upload
+            Cover Image / Upload
           </span>
 
           <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
@@ -175,10 +175,10 @@ export default function CoverPhotoMenu({
         </div>
       )}
 
-      {!coverPhotoURL && selectedMenuItem.name === 'Stock Photos' && (
+      {!coverImageURL && selectedMenuItem.name === 'Stock Images' && (
         <>
           <span className="mt-4 block text-sm font-medium leading-6 text-gray-900">
-            Cover Photo / Search From Stock Photos
+            Cover Image / Search From Stock Images
           </span>
 
           <div className="mt-2 relative">
@@ -208,22 +208,22 @@ export default function CoverPhotoMenu({
                   <div className="aspect-h-4 aspect-w-5">
                     <img
                       src={url}
-                      alt="Cover photo"
+                      alt="Cover Image"
                       className="object-cover object-center w-full h-full rounded-md"
                       onClick={() => setShowModalIndex(index)}
                     />
                   </div>
                   <Modal
                     modalIndex={index}
-                    stockPhotoURL={url}
+                    stockImageURL={url}
                     showModalIndex={showModalIndex}
                     setShowModalIndex={setShowModalIndex}
-                    setSelectedStockPhotoURL={setCoverPhotoURL}
+                    setSelectedStockImageURL={setCoverImageURL}
                   >
                     <div className="aspect-h-4 aspect-w-5">
                       <img
                         src={url}
-                        alt="Cover photo"
+                        alt="Cover Image"
                         className="object-cover object-center w-full h-full rounded-md"
                       />
                     </div>
@@ -247,7 +247,7 @@ export default function CoverPhotoMenu({
                 onClick={handleLoadMore}
                 className="rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
               >
-                Load More Stock Photos...
+                Load More Stock Images...
               </button>
             </div>
           )}
@@ -257,44 +257,44 @@ export default function CoverPhotoMenu({
       {selectedMenuItem.name === 'URL' && (
         <div className="mt-4">
           <label
-            htmlFor="cover-photo-url"
+            htmlFor="cover-image-url"
             className="block text-sm font-medium leading-6 text-gray-900"
           >
-            Cover Photo / URL
+            Cover Image / URL
           </label>
           <div className="mt-2">
             <input
               type="text"
-              name="cover-photo-url"
-              id="cover-photo-url"
+              name="cover-image-url"
+              id="cover-image-url"
               autoComplete="off"
               placeholder="https://"
               autoFocus
               className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
-              value={coverPhotoURL}
-              onChange={(e) => setCoverPhotoURL(e.target.value)}
+              value={coverImageURL}
+              onChange={(e) => setCoverImageURL(e.target.value)}
             />
           </div>
         </div>
       )}
 
-      {!!coverPhotoURL && (
+      {!!coverImageURL && (
         <div className="mt-4">
           <span className="block text-sm font-medium leading-6 text-gray-900">
-            Cover Photo / Selected Photo
+            Cover Image / Selected Image
           </span>
 
           <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-4 py-4">
             <div className="text-center">
               <img
-                src={coverPhotoURL}
-                alt="Cover photo"
+                src={coverImageURL}
+                alt="Cover image"
                 className="mx-auto h-40 w-52 object-cover rounded-md"
               />
               <button
                 type="button"
                 className="mt-4 rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                onClick={() => setCoverPhotoURL('')}
+                onClick={() => setCoverImageURL('')}
               >
                 Change
               </button>
