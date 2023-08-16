@@ -205,12 +205,14 @@ export default function CoverPhotoMenu({
             {searchResult.length > 0 &&
               searchResult.map((url, index) => (
                 <div key={index}>
-                  <img
-                    src={url}
-                    alt="Cover photo"
-                    className="object-cover w-full h-full rounded-md"
-                    onClick={() => setShowModalIndex(index)}
-                  />
+                  <div className="aspect-h-4 aspect-w-5">
+                    <img
+                      src={url}
+                      alt="Cover photo"
+                      className="object-cover object-center w-full h-full rounded-md"
+                      onClick={() => setShowModalIndex(index)}
+                    />
+                  </div>
                   <Modal
                     modalIndex={index}
                     stockPhotoURL={url}
@@ -218,11 +220,13 @@ export default function CoverPhotoMenu({
                     setShowModalIndex={setShowModalIndex}
                     setSelectedStockPhotoURL={setCoverPhotoURL}
                   >
-                    <img
-                      src={url}
-                      alt="Cover photo"
-                      className="object-cover w-full h-full rounded-md"
-                    />
+                    <div className="aspect-h-4 aspect-w-5">
+                      <img
+                        src={url}
+                        alt="Cover photo"
+                        className="object-cover object-center w-full h-full rounded-md"
+                      />
+                    </div>
                   </Modal>
                 </div>
               ))}
@@ -285,7 +289,7 @@ export default function CoverPhotoMenu({
               <img
                 src={coverPhotoURL}
                 alt="Cover photo"
-                className="mx-auto h-40 w-32 object-cover rounded-md"
+                className="mx-auto h-40 w-52 object-cover rounded-md"
               />
               <button
                 type="button"
