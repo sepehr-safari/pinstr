@@ -45,9 +45,11 @@ export default function ManuTemplate({
                     onClick={() => setSelected(item)}
                   >
                     {item.name}
-                    <span className="block text-xs font-light text-gray-400">
-                      {item.description}
-                    </span>
+                    {item.description && (
+                      <span className="block text-xs font-light text-gray-400">
+                        {item.description}
+                      </span>
+                    )}
                   </button>
                 )}
               </Menu.Item>

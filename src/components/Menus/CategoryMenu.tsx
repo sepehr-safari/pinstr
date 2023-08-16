@@ -6,8 +6,7 @@ import { MenuItem } from './MenuTemplate.types';
 
 const categories: MenuItem[] = [
   {
-    name: 'All',
-    description: 'All topics',
+    name: 'All Categories',
   },
   {
     name: 'Entertainment',
@@ -77,24 +76,24 @@ const categories: MenuItem[] = [
 ];
 
 export default function CategoryMenu({
-  category,
-  setCategory,
+  selected,
+  setSelected,
   hideFirstOption,
 }: {
-  category: MenuItem | null;
-  setCategory: (item: MenuItem) => void;
+  selected: MenuItem | null;
+  setSelected: (item: MenuItem) => void;
   hideFirstOption?: boolean;
 }) {
   useEffect(() => {
-    setCategory(!hideFirstOption ? categories[0] : categories[1]);
+    setSelected(!hideFirstOption ? categories[0] : categories[1]);
   }, []);
 
   return (
     <>
       <MenuTemplate
         items={!hideFirstOption ? categories : categories.slice(1)}
-        selected={category}
-        setSelected={setCategory}
+        selected={selected}
+        setSelected={setSelected}
       />
     </>
   );

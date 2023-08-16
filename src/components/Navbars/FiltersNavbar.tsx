@@ -1,12 +1,20 @@
 import { useState } from 'react';
 
-import { AuthorGroupMenu, CategoryMenu, KindMenu } from '@/components/Menus';
+import {
+  AuthorGroupMenu,
+  BoardTypeMenu,
+  CategoryMenu,
+} from '@/components/Menus';
 
 import { MenuItem } from '@/components/Menus/MenuTemplate.types';
 
 export default function FiltersNavbar() {
-  const [category, setCategory] = useState<MenuItem | null>(null);
-  const [kind, setKind] = useState<MenuItem | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<MenuItem | null>(
+    null
+  );
+  const [selectedBoardType, setSelectedBoardType] = useState<MenuItem | null>(
+    null
+  );
 
   return (
     <>
@@ -15,10 +23,16 @@ export default function FiltersNavbar() {
           <AuthorGroupMenu />
         </div>
         <div className="w-full order-last md:w-72 md:order-none lg:w-96">
-          <CategoryMenu category={category} setCategory={setCategory} />
+          <CategoryMenu
+            selected={selectedCategory}
+            setSelected={setSelectedCategory}
+          />
         </div>
         <div className="ml-auto flex-1 min-w-fit md:w-72 md:flex-none">
-          <KindMenu kind={kind} setKind={setKind} />
+          <BoardTypeMenu
+            selected={selectedBoardType}
+            setSelected={setSelectedBoardType}
+          />
         </div>
       </div>
     </>

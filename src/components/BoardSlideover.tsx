@@ -121,7 +121,8 @@ export default function BoardSlideover({ open, setOpen }: Props) {
                                     Description
                                   </span>
                                   <span className="text-xs font-light text-gray-500">
-                                    Explain what this board is about.
+                                    Explain what this board is about in a few
+                                    words.
                                   </span>
                                 </label>
                                 <div className="mt-2">
@@ -146,8 +147,8 @@ export default function BoardSlideover({ open, setOpen }: Props) {
                                 </span>
                                 <div className="mt-2">
                                   <CategoryMenu
-                                    category={category.get}
-                                    setCategory={category.set}
+                                    selected={category.get}
+                                    setSelected={category.set}
                                     hideFirstOption
                                   />
                                 </div>
