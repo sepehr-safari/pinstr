@@ -1,12 +1,8 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 
-import {
-  CategoryMenu,
-  CoverPhotoMenu,
-  KindMenu,
-  PinTemplateMenu,
-} from '@/components/Menus';
+import { BoardTypes } from '@/components';
+import { CategoryMenu, CoverPhotoMenu } from '@/components/Menus';
 import { useCreateBoard } from '@/hooks';
 
 type Props = {
@@ -16,13 +12,13 @@ type Props = {
 
 export default function BoardSlideover({ open, setOpen }: Props) {
   const {
+    selectedBoardType,
+    setSelectedBoardType,
     category,
     coverPhotoURL,
     createBoard,
     descriptionRef,
-    kind,
     nameRef,
-    template,
   } = useCreateBoard({ onSuccess: () => setOpen(false) });
 
   return (
@@ -60,156 +56,161 @@ export default function BoardSlideover({ open, setOpen }: Props) {
                       <div className="bg-gray-800 px-4 py-6 sm:px-6">
                         <div className="flex items-center justify-between">
                           <Dialog.Title className="text-base font-semibold leading-6 text-white">
-                            New Board
+                            {!selectedBoardType ? (
+                              <span>Create a new board</span>
+                            ) : (
+                              <span>{selectedBoardType.title}</span>
+                            )}
                           </Dialog.Title>
                         </div>
                         <div className="mt-1">
-                          <p className="text-sm text-gray-300">
-                            Get started by filling in the details below to
-                            create your new board.
+                          <p className="text-sm font-light text-gray-300">
+                            {!selectedBoardType ? (
+                              <span>Get started by choosing a board type.</span>
+                            ) : (
+                              <span>
+                                Fill in the details below to create your desired
+                                board.
+                              </span>
+                            )}
                           </p>
                         </div>
                       </div>
-                      <div className="flex flex-1 flex-col justify-between">
-                        <div className="divide-y divide-gray-200 px-4 sm:px-6">
-                          <div className="space-y-6 pb-5 pt-6">
-                            <div>
-                              <label
-                                htmlFor="board-name"
-                                className="flex flex-col"
-                              >
-                                <span className="text-sm font-medium leading-6 text-gray-900">
-                                  Board name
-                                </span>
-                                <span className="text-xs font-light text-gray-500">
-                                  Give your board a meaningful name.
-                                </span>
-                              </label>
-                              <div className="mt-2">
-                                <input
-                                  ref={nameRef}
-                                  type="text"
-                                  name="board-name"
-                                  id="board-name"
-                                  autoComplete="off"
-                                  autoFocus
-                                  tabIndex={1}
-                                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
-                                />
+
+                      {!selectedBoardType ? (
+                        <div className="p-6">
+                          <BoardTypes
+                            setSelectedBoardType={setSelectedBoardType}
+                          />
+                        </div>
+                      ) : (
+                        <div className="flex flex-1 flex-col justify-between">
+                          <div className="divide-y divide-gray-200 px-4 sm:px-6">
+                            <div className="space-y-6 pb-5 pt-6">
+                              <div>
+                                <label
+                                  htmlFor="board-name"
+                                  className="flex flex-col"
+                                >
+                                  <span className="text-sm font-medium leading-6 text-gray-900">
+                                    Board name
+                                  </span>
+                                  <span className="text-xs font-light text-gray-500">
+                                    Give your board a meaningful name.
+                                  </span>
+                                </label>
+                                <div className="mt-2">
+                                  <input
+                                    ref={nameRef}
+                                    type="text"
+                                    name="board-name"
+                                    id="board-name"
+                                    autoComplete="off"
+                                    autoFocus
+                                    tabIndex={1}
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
+                                  />
+                                </div>
                               </div>
-                            </div>
-                            <div>
-                              <label
-                                htmlFor="description"
-                                className="flex flex-col"
-                              >
-                                <span className="text-sm font-medium leading-6 text-gray-900">
-                                  Description
-                                </span>
-                                <span className="text-xs font-light text-gray-500">
-                                  Explain what this board is about.
-                                </span>
-                              </label>
-                              <div className="mt-2">
-                                <input
-                                  ref={descriptionRef}
-                                  type="text"
-                                  name="description"
-                                  id="description"
-                                  autoComplete="off"
-                                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
-                                />
+                              <div>
+                                <label
+                                  htmlFor="description"
+                                  className="flex flex-col"
+                                >
+                                  <span className="text-sm font-medium leading-6 text-gray-900">
+                                    Description
+                                  </span>
+                                  <span className="text-xs font-light text-gray-500">
+                                    Explain what this board is about.
+                                  </span>
+                                </label>
+                                <div className="mt-2">
+                                  <input
+                                    ref={descriptionRef}
+                                    type="text"
+                                    name="description"
+                                    id="description"
+                                    autoComplete="off"
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
+                                  />
+                                </div>
                               </div>
-                            </div>
-                            <div>
-                              <span className="flex flex-col">
-                                <span className="text-sm font-medium leading-6 text-gray-900">
-                                  Category
+                              <div>
+                                <span className="flex flex-col">
+                                  <span className="text-sm font-medium leading-6 text-gray-900">
+                                    Category
+                                  </span>
+                                  <span className="text-xs font-light text-gray-500">
+                                    Choose a suitable category for your board.
+                                  </span>
                                 </span>
-                                <span className="text-xs font-light text-gray-500">
-                                  Choose a suitable category for your board.
-                                </span>
-                              </span>
-                              <div className="mt-2">
-                                <CategoryMenu
-                                  category={category.get}
-                                  setCategory={category.set}
-                                />
+                                <div className="mt-2">
+                                  <CategoryMenu
+                                    category={category.get}
+                                    setCategory={category.set}
+                                    hideFirstOption
+                                  />
+                                </div>
                               </div>
-                            </div>
-                            {/* <div>
+                              {/* <div>
                               <span className="flex flex-col">
                                 Tags
                               </span>
                               <div className="mt-2"></div>
                             </div> */}
-                            <div>
-                              <span className="flex flex-col">
-                                <span className="text-sm font-medium leading-6 text-gray-900">
-                                  Kind
+
+                              <div>
+                                <span className="flex flex-col">
+                                  <span className="text-sm font-medium leading-6 text-gray-900">
+                                    Cover Photo
+                                  </span>
+                                  <span className="text-xs font-light text-gray-500">
+                                    Select an option and choose a high quality
+                                    photo that represents your board.
+                                  </span>
                                 </span>
-                                <span className="text-xs font-light text-gray-500">
-                                  Select the type of board you want to create.
-                                  It's not possible to change this later!
-                                </span>
-                              </span>
-                              <div className="mt-2">
-                                <KindMenu kind={kind.get} setKind={kind.set} />
-                              </div>
-                            </div>
-                            <div>
-                              <span className="flex flex-col">
-                                <span className="text-sm font-medium leading-6 text-gray-900">
-                                  Template
-                                </span>
-                                <span className="text-xs font-light text-gray-500">
-                                  Choose what best fits your needs. It's not
-                                  possible to change this later!
-                                </span>
-                              </span>
-                              <div className="mt-2">
-                                <PinTemplateMenu
-                                  template={template.get}
-                                  setTemplate={template.set}
-                                />
-                              </div>
-                            </div>
-                            <div>
-                              <span className="flex flex-col">
-                                <span className="text-sm font-medium leading-6 text-gray-900">
-                                  Cover Photo
-                                </span>
-                                <span className="text-xs font-light text-gray-500">
-                                  Select an option and choose a high quality
-                                  photo that represents your board.
-                                </span>
-                              </span>
-                              <div className="mt-2">
-                                <CoverPhotoMenu
-                                  coverPhotoURL={coverPhotoURL.get}
-                                  setCoverPhotoURL={coverPhotoURL.set}
-                                />
+                                <div className="mt-2">
+                                  <CoverPhotoMenu
+                                    coverPhotoURL={coverPhotoURL.get}
+                                    setCoverPhotoURL={coverPhotoURL.set}
+                                  />
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
+                      )}
                     </div>
-                    <div className="flex flex-shrink-0 justify-end px-4 py-4">
-                      <button
-                        type="button"
-                        className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                        onClick={() => setOpen(false)}
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        type="button"
-                        onClick={createBoard}
-                        className="ml-4 inline-flex justify-center rounded-md bg-gray-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
-                      >
-                        Create Board
-                      </button>
+                    <div className="flex flex-shrink-0 justify-between px-4 py-4">
+                      <div>
+                        <button
+                          type="button"
+                          className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                          onClick={() => setOpen(false)}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+
+                      {selectedBoardType && (
+                        <div className="flex">
+                          <button
+                            type="button"
+                            onClick={() => setSelectedBoardType(null)}
+                            className="flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                          >
+                            <span aria-hidden="true">&larr;</span>
+                            <span className="ml-2">Back</span>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={createBoard}
+                            className="ml-4 inline-flex justify-center rounded-md bg-gray-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
+                          >
+                            Create Board
+                          </button>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </Dialog.Panel>
