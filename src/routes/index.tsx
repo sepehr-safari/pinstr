@@ -13,7 +13,7 @@ export default function AppRouter() {
       <Routes location={state?.backgroundLocation || location}>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
-          <Route path="p/">
+          <Route path="p">
             <Route index element={<NoMatch />} />
             <Route path=":npub" element={<Profile />}>
               <Route index element={<Boards noAuthor />} />
@@ -22,13 +22,13 @@ export default function AppRouter() {
           </Route>
           <Route path="*" element={<NoMatch />} />
         </Route>
-        <Route path="/login" element={<Login />} />
-        <Route path="/logout" element={<Logout />} />
+        <Route path="login" element={<Login />} />
+        <Route path="logout" element={<Logout />} />
       </Routes>
 
       {state?.backgroundLocation && (
         <Routes>
-          <Route path="p/" element={<BottomSlideover />}>
+          <Route path="p" element={<BottomSlideover />}>
             <Route index element={<NoMatch />} />
             <Route path=":npub" element={<Profile />}>
               <Route index element={<Boards noAuthor />} />
