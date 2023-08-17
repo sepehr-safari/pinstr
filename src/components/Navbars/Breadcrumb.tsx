@@ -9,7 +9,7 @@ export default function Breadcrumb() {
       className="flex justify-center lg:justify-start"
       aria-label="Breadcrumb"
     >
-      <ol role="list" className="flex items-center space-x-2">
+      <ol role="list" className="flex items-center space-x-1">
         <li>
           <div>
             <Link to="/" className="text-gray-300 hover:text-gray-500">
@@ -31,7 +31,7 @@ export default function Breadcrumb() {
               </svg>
               <Link
                 to={'/p/' + npub}
-                className="ml-2 truncate text-sm font-light text-gray-400 hover:text-gray-700"
+                className="ml-1 truncate text-xs font-light text-gray-400 hover:text-gray-700"
               >
                 {npub}
               </Link>
@@ -51,7 +51,7 @@ export default function Breadcrumb() {
               </svg>
               <Link
                 to={'/p/' + npub + '/' + boardName}
-                className="ml-2 truncate text-sm font-light text-gray-400 hover:text-gray-700"
+                className="ml-1 truncate text-xs font-light text-gray-400 hover:text-gray-700"
               >
                 {boardName}
               </Link>
