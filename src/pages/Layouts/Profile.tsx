@@ -32,10 +32,19 @@ export default function Profile() {
               and dedicated
             </span>
 
-            <button className="mt-4 inline-flex justify-center items-center rounded-full bg-gray-800 px-4 py-2 text-xs font-semibold text-white shadow-sm hover:opacity-80">
+            <button className="mt-4 inline-flex justify-center items-center rounded-full bg-gray-800 px-8 py-3 text-xs font-semibold text-white shadow-sm hover:opacity-80">
               <PlusIcon className="-ml-1 w-4 h-4" />
               <span className="ml-1">Follow</span>
             </button>
+
+            <a
+              href={`https://primal.net/${undefined}`}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-4 text-xs font-bold text-gray-400 hover:text-gray-600 hover:underline"
+            >
+              Open with Primal
+            </a>
           </div>
         </div>
 
