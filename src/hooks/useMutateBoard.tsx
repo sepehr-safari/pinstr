@@ -92,7 +92,7 @@ export default function useMutateBoard({
   }, [initialState.id, publish]);
 
   const updateBoard = useCallback(() => {
-    if (initialState.name == name) {
+    if (initialState.name != name) {
       deleteBoard();
     }
 
