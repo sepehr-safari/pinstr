@@ -15,7 +15,6 @@ export interface BoardType {
   description: string;
   icon: any;
   background: string;
-  kind: number;
   type: string;
   headers: string[];
 }
@@ -31,7 +30,6 @@ export const boardTypes: BoardType[] = [
     description: 'e.g. a board of your favorite quotes',
     icon: DocumentTextIcon,
     background: 'bg-pink-600',
-    kind: 33889,
     type: 'text',
     headers: ['Content', 'Label', 'Image'],
   },
@@ -41,7 +39,6 @@ export const boardTypes: BoardType[] = [
     description: 'e.g. a board of your favorite blog posts',
     icon: LinkIcon,
     background: 'bg-indigo-600',
-    kind: 33889,
     type: 'link',
     headers: ['Content', 'Label', 'Image'],
   },
@@ -51,7 +48,6 @@ export const boardTypes: BoardType[] = [
     description: 'e.g. a board of your favorite memes or gifs',
     icon: PhotoIcon,
     background: 'bg-green-600',
-    kind: 33889,
     type: 'image',
     headers: ['Content', 'Label'],
   },
@@ -61,7 +57,6 @@ export const boardTypes: BoardType[] = [
     description: 'e.g. a board of your favorite YouTube videos',
     icon: VideoCameraIcon,
     background: 'bg-blue-600',
-    kind: 33889,
     type: 'video',
     headers: ['Content', 'Label'],
   },
@@ -71,7 +66,6 @@ export const boardTypes: BoardType[] = [
     description: 'e.g. a board of nostr developers you admire',
     icon: UserIcon,
     background: 'bg-yellow-600',
-    kind: 30000,
     type: 'profile',
     headers: ['Content'],
   },
@@ -81,7 +75,6 @@ export const boardTypes: BoardType[] = [
     description: 'e.g. a board of your favorite notes about bitcoin',
     icon: ChatBubbleLeftIcon,
     background: 'bg-purple-600',
-    kind: 30001,
     type: 'note',
     headers: ['Content'],
   },

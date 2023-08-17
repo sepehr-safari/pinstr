@@ -12,7 +12,7 @@ export default function useBoards(variables?: {
   boardName?: string;
 }) {
   const queryClient = useQueryClient();
-  const { kinds, pool, relays } = useLocalState((state) => state);
+  const { pool, relays } = useLocalState((state) => state);
 
   const {
     isLoading,
@@ -21,7 +21,7 @@ export default function useBoards(variables?: {
   } = useQuery({
     queryKey: ['nostr', 'boards', variables],
     queryFn: async () => {
-      const filter = { kinds, limit: 10 } as Filter;
+      const filter = { kinds: [33889 as number], limit: 10 } as Filter;
       if (variables && !!variables.authors && variables.authors.length > 0) {
         filter.authors = variables.authors;
       }
@@ -34,7 +34,7 @@ export default function useBoards(variables?: {
       return parseBoardsFromEvents(events);
     },
     refetchOnWindowFocus: false,
-    enabled: !!pool && !!relays && !!kinds,
+    enabled: !!pool && !!relays,
   });
 
   const { authors, authorsError, isAuthorsLoading } = useAuthors({

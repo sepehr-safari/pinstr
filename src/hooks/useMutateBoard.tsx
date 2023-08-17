@@ -52,7 +52,7 @@ export default function useMutateBoard({
     }
 
     publish({
-      kind: selectedBoardType.kind,
+      kind: 33889 as number,
       tags: [
         ['d', name],
         ['description', description],
