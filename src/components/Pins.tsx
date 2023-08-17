@@ -5,7 +5,7 @@ import {
   HandThumbUpIcon,
 } from '@heroicons/react/24/solid';
 import { nip19 } from 'nostr-tools';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import {
   LinkGrid,
@@ -131,6 +131,7 @@ const bookUrls = [
       'https://images-na.ssl-images-amazon.com/images/I/8144Vic9C5L._AC_UL210_SR195,210_.jpg',
   },
 ];
+const tags = ['Movies', 'Cinema', 'Film'];
 
 export default function Pins() {
   const { npub, boardName } = useParams();
@@ -178,11 +179,13 @@ export default function Pins() {
               )}
             </h2>
 
-            <div className="mt-2 inline-flex w-full justify-center items-center gap-1 text-xs font-light text-black/30 lg:gap-2 lg:justify-start">
+            <div className="mt-2 inline-flex w-full justify-center items-center gap-1 text-xs font-light text-gray-400 translate-x-6 lg:translate-x-0 lg:gap-2 lg:justify-start">
               <span>18 days ago</span>
               <span>|</span>
               <span className="group flex items-center">
-                Technology
+                <Link to={`/c/${undefined}`} className="hover:underline">
+                  Technology
+                </Link>
                 {selfBoard && (
                   <button className="ml-2 flex items-center border-b border-b-gray-400 opacity-0 duration-500 group-hover:opacity-100">
                     <span className="text-xs font-medium text-gray-500">
@@ -195,6 +198,20 @@ export default function Pins() {
                 )}
               </span>
             </div>
+
+            {tags.length > 0 && (
+              <div className="mt-2 flex justify-center gap-4 flex-wrap lg:justify-start">
+                {tags.map((tag, index) => (
+                  <Link
+                    to={`/t/${tag}`}
+                    key={index}
+                    className="text-xs font-light text-gray-400 hover:underline"
+                  >
+                    {tag}
+                  </Link>
+                ))}
+              </div>
+            )}
           </div>
 
           <div className="mt-4 group flex items-start duration-200 text-sm font-light text-gray-500 text-center max-w-screen-sm lg:max-w-none lg:text-justify lg:mt-auto">
