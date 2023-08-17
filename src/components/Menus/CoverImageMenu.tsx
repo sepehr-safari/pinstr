@@ -131,7 +131,7 @@ export default function CoverImageMenu({
             Cover Image / Upload
           </span>
 
-          <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-4 py-6">
+          <div className="mt-2 flex justify-center rounded-lg border border-gray-300 px-4 py-6">
             <div className="text-center" {...getRootProps()}>
               <PhotoIcon
                 className="mx-auto h-12 w-12 text-gray-300"
@@ -284,7 +284,7 @@ export default function CoverImageMenu({
             Cover Image / Selected Image
           </span>
 
-          <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-4 py-4">
+          <div className="mt-2 flex justify-center rounded-lg border border-gray-300 px-4 py-4">
             <div className="text-center">
               <img
                 src={coverImageURL}

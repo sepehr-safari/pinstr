@@ -29,6 +29,8 @@ export default function BoardSlideover({ open, setOpen, initialState }: Props) {
     tags,
     coverImageURL,
     createBoard,
+    updateBoard,
+    deleteBoard,
   } = useMutateBoard({ onSuccess: () => setOpen(false), initialState });
 
   return (
@@ -240,6 +242,31 @@ export default function BoardSlideover({ open, setOpen, initialState }: Props) {
                                   />
                                 </div>
                               </div>
+
+                              {initialState && (
+                                <div className="py-6">
+                                  <div className="flex flex-col rounded-md border border-dashed border-red-300">
+                                    <div className="w-full bg-red-50 shadow-inner px-4 py-2 border-b border-red-100 rounded-t-md">
+                                      <span className="text-sm font-bold text-red-400">
+                                        Danger Zone
+                                      </span>
+                                    </div>
+                                    <div className="p-4 flex items-center">
+                                      <div className="text-xs">
+                                        Deleting a board is permanent and cannot
+                                        be undone.
+                                      </div>
+                                      <button
+                                        type="button"
+                                        className="ml-auto rounded-md border border-red-200 px-4 py-1 text-sm font-bold leading-6 text-red-400 hover:text-red-500 hover:border-red-300"
+                                        onClick={deleteBoard}
+                                      >
+                                        Delete Board
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
                             </div>
                           </div>
                         </div>
@@ -279,7 +306,7 @@ export default function BoardSlideover({ open, setOpen, initialState }: Props) {
                           ) : (
                             <button
                               type="button"
-                              onClick={createBoard}
+                              onClick={updateBoard}
                               className="ml-4 inline-flex justify-center rounded-md bg-gray-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
                             >
                               Update Board

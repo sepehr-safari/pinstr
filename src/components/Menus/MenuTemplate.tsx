@@ -32,7 +32,7 @@ export default function ManuTemplate({
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute left-0 z-10 mt-2 w-full origin-top-left rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 max-h-80 overflow-y-auto focus:outline-none">
+        <Menu.Items className="absolute left-0 z-10 mt-2 w-full origin-top-left rounded-md bg-white shadow-lg ring-1 ring-gray-900/10 max-h-80 overflow-y-auto focus:outline-none">
           <div className="py-1">
             {items.map((item, index) => (
               <Menu.Item key={index}>

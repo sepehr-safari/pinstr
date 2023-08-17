@@ -126,5 +126,6 @@ export default function useMutateBoard({
     },
     createBoard,
     updateBoard,
+    deleteBoard,
   };
 }
