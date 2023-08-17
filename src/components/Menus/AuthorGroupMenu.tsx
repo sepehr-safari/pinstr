@@ -6,11 +6,11 @@ import { MenuItem } from './MenuTemplate.types';
 
 const groups: MenuItem[] = [
   {
-    name: 'Explore',
+    title: 'Explore',
     description: 'Boards from everyone',
   },
   {
-    name: 'Following',
+    title: 'Following',
     description: 'Boards from your following',
   },
 ];

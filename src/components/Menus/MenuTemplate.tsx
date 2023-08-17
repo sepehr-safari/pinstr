@@ -15,7 +15,7 @@ export default function ManuTemplate({
     <Menu as="div" className="relative inline-block text-left w-full">
       <div>
         <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-          {selected?.name}
+          {selected?.title}
           <ChevronDownIcon
             className="-mr-1 h-5 w-5 text-gray-400"
             aria-hidden="true"
@@ -44,7 +44,7 @@ export default function ManuTemplate({
                     )}
                     onClick={() => setSelected(item)}
                   >
-                    {item.name}
+                    {item.title}
                     {item.description && (
                       <span className="block text-xs font-light text-gray-400">
                         {item.description}

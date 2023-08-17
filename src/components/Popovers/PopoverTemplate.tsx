@@ -41,7 +41,7 @@ export default function PopoverTemplate({ children, items }: PopoverProps) {
                 onClick={item.onClick}
               >
                 <div className="font-semibold text-gray-900">
-                  {item.name}
+                  {item.title}
                   <span className="absolute inset-0" />
                 </div>
                 <p className="mt-1 text-gray-600">{item.description}</p>

@@ -18,16 +18,16 @@ interface Props {
 
 const coverImageMenuItems: MenuItem[] = [
   {
-    name: 'Upload',
+    title: 'Upload',
     description: 'Upload your own cover image directly to nostr.build cloud.',
   },
   {
-    name: 'Stock Images',
+    title: 'Stock Images',
     description:
       'Search and select from a library of stock images provided by Unsplash.',
   },
   {
-    name: 'URL',
+    title: 'URL',
     description: 'Enter a direct URL to an existing image on the web.',
   },
 ];
@@ -125,7 +125,7 @@ export default function CoverImageMenu({
         setSelected={setSelectedMenuItem}
       />
 
-      {!coverImageURL && selectedMenuItem.name === 'Upload' && (
+      {!coverImageURL && selectedMenuItem.title === 'Upload' && (
         <div className="mt-4">
           <span className="block text-sm font-medium leading-6 text-gray-900">
             Cover Image / Upload
@@ -175,7 +175,7 @@ export default function CoverImageMenu({
         </div>
       )}
 
-      {!coverImageURL && selectedMenuItem.name === 'Stock Images' && (
+      {!coverImageURL && selectedMenuItem.title === 'Stock Images' && (
         <>
           <span className="mt-4 block text-sm font-medium leading-6 text-gray-900">
             Cover Image / Search From Stock Images
@@ -254,7 +254,7 @@ export default function CoverImageMenu({
         </>
       )}
 
-      {selectedMenuItem.name === 'URL' && (
+      {selectedMenuItem.title === 'URL' && (
         <div className="mt-4">
           <label
             htmlFor="cover-image-url"

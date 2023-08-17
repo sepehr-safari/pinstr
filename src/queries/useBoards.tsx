@@ -9,7 +9,7 @@ import useLocalState from '@/store';
 
 export default function useBoards(variables?: {
   authors?: string[];
-  boardName?: string;
+  title?: string;
 }) {
   const queryClient = useQueryClient();
   const { pool, relays } = useLocalState((state) => state);
@@ -25,8 +25,8 @@ export default function useBoards(variables?: {
       if (variables && !!variables.authors && variables.authors.length > 0) {
         filter.authors = variables.authors;
       }
-      if (variables && !!variables.boardName) {
-        filter['#d'] = [variables.boardName];
+      if (variables && !!variables.title) {
+        filter['#d'] = [variables.title];
       }
 
       const events = (await pool.list(relays, [filter])) as Event<number>[];

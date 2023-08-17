@@ -6,22 +6,22 @@ import { MenuItem } from './MenuTemplate.types';
 
 const templates: MenuItem[] = [
   {
-    name: 'Plain Text',
+    title: 'Plain Text',
     description:
       'Use this template to create a board of plain text items (e.g. a board of your favorite quotes)',
   },
   {
-    name: 'Links',
+    title: 'Links',
     description:
       'Use this template to create a board of links (e.g. a board of your favorite web pages like blog posts)',
   },
   {
-    name: 'Pictures',
+    title: 'Pictures',
     description:
       'Use this template to create a board of pictures (e.g. a board of your favorite pictures like memes)',
   },
   {
-    name: 'Videos',
+    title: 'Videos',
     description:
       'Use this template to create a board of videos (e.g. a board of your favorite videos like YouTube videos)',
   },

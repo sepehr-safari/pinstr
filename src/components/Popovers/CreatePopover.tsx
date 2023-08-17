@@ -12,12 +12,12 @@ export default function CreatePopover() {
   const items: PopoverItem[] = useMemo(
     () => [
       {
-        name: 'New Board',
+        title: 'New Board',
         description: 'Create a new board',
         onClick: () => setOpenBoard(true),
       },
       {
-        name: 'Add Pin',
+        title: 'Add Pin',
         description: 'Add a new pin to an existing board',
         onClick: () => setOpenPin(true),
       },

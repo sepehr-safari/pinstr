@@ -17,7 +17,7 @@ export default function AppRouter() {
             <Route index element={<NoMatch />} />
             <Route path=":npub" element={<Profile />}>
               <Route index element={<Boards noAuthor />} />
-              <Route path=":boardName" element={<Pins />} />
+              <Route path=":title" element={<Pins />} />
             </Route>
           </Route>
           <Route path="*" element={<NoMatch />} />
@@ -32,7 +32,7 @@ export default function AppRouter() {
             <Route index element={<NoMatch />} />
             <Route path=":npub" element={<Profile />}>
               <Route index element={<Boards noAuthor />} />
-              <Route path=":boardName" element={<Pins />} />
+              <Route path=":title" element={<Pins />} />
             </Route>
           </Route>
         </Routes>

@@ -10,7 +10,7 @@ type Props = {
   setOpen: (state: boolean) => void;
   initialState?: {
     id?: string;
-    name?: string;
+    title?: string;
     description?: string;
     coverImageURL?: string;
     category?: string;
@@ -22,7 +22,7 @@ type Props = {
 
 export default function BoardSlideover({ open, setOpen, initialState }: Props) {
   const {
-    name,
+    title,
     description,
     boardType,
     category,
@@ -111,27 +111,27 @@ export default function BoardSlideover({ open, setOpen, initialState }: Props) {
                             <div className="space-y-4 pb-4 pt-4">
                               <div>
                                 <label
-                                  htmlFor="board-name"
+                                  htmlFor="title"
                                   className="flex flex-col"
                                 >
                                   <span className="text-sm font-medium leading-6 text-gray-900">
-                                    Board name
+                                    Title
                                   </span>
                                   <span className="text-xs font-light text-gray-500">
-                                    Give your board a meaningful name.
+                                    Choose a fancy title for your board.
                                   </span>
                                 </label>
                                 <div className="mt-2">
                                   <input
                                     type="text"
-                                    name="board-name"
-                                    id="board-name"
+                                    name="title"
+                                    id="title"
                                     autoComplete="off"
                                     autoFocus
                                     tabIndex={1}
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
-                                    value={name.value}
-                                    onChange={(e) => name.set(e.target.value)}
+                                    value={title.value}
+                                    onChange={(e) => title.set(e.target.value)}
                                   />
                                 </div>
                               </div>

@@ -30,7 +30,7 @@ export default function LinkGrid({ urls }: { urls: any[] }) {
               <div className="flex-1 truncate px-4">
                 <div className="truncate flex items-center translate-y-3 ease-in-out duration-500 group-hover:translate-y-0">
                   <h3 className="leading-10 truncate text-sm font-medium text-gray-900">
-                    {url.name}
+                    {url.title}
                   </h3>
                 </div>
                 <div className="w-full flex justify-end">

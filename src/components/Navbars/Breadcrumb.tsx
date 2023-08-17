@@ -2,7 +2,7 @@ import { HomeIcon } from '@heroicons/react/20/solid';
 import { Link, useParams } from 'react-router-dom';
 
 export default function Breadcrumb() {
-  const { npub, boardName } = useParams();
+  const { npub, title } = useParams();
 
   return (
     <nav
@@ -38,7 +38,7 @@ export default function Breadcrumb() {
             </div>
           </li>
         )}
-        {!!boardName && (
+        {!!title && (
           <li>
             <div className="flex items-center max-w-[12rem] md:max-w-xs">
               <svg
@@ -50,10 +50,10 @@ export default function Breadcrumb() {
                 <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" />
               </svg>
               <Link
-                to={'/p/' + npub + '/' + boardName}
+                to={'/p/' + npub + '/' + title}
                 className="ml-1 truncate text-xs font-light text-gray-400 hover:text-gray-700"
               >
-                {boardName}
+                {title}
               </Link>
             </div>
           </li>

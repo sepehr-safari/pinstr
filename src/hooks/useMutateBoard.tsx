@@ -15,7 +15,7 @@ export default function useMutateBoard({
   onSuccess: () => void;
   initialState?: {
     id?: string;
-    name?: string;
+    title?: string;
     description?: string;
     coverImageURL?: string;
     category?: string;
@@ -27,7 +27,7 @@ export default function useMutateBoard({
   const publish = usePublish();
   const navigate = useNavigate();
 
-  const [name, setName] = useState<string>(initialState.name || '');
+  const [title, setTitle] = useState<string>(initialState.title || '');
   const [description, setDescription] = useState<string>(
     initialState.description || ''
   );
@@ -36,7 +36,7 @@ export default function useMutateBoard({
   );
   const [category, setCategory] = useState<MenuItem | null>(
     initialState.category
-      ? categories.find((c) => c.name === initialState.category) || null
+      ? categories.find((c) => c.title === initialState.category) || null
       : null
   );
   const [selectedBoardType, setSelectedBoardType] = useState<BoardType | null>(
@@ -47,16 +47,16 @@ export default function useMutateBoard({
   const [tags, setTags] = useState<string[]>(initialState.tags || []);
 
   const createBoard = useCallback(() => {
-    if (!selectedBoardType || !category || !name || !description) {
+    if (!selectedBoardType || !category || !title || !description) {
       return;
     }
 
     publish({
       kind: 33889 as number,
       tags: [
-        ['d', name],
+        ['d', title],
         ['description', description],
-        ['category', category.name],
+        ['category', category.title],
         ['type', selectedBoardType.type],
         ['cover', coverImageURL],
         ['headers', ...selectedBoardType.headers],
@@ -68,12 +68,12 @@ export default function useMutateBoard({
     }).then((event) => {
       onSuccess();
       setCoverImageURL('');
-      navigate('/p/' + nip19.npubEncode(event.pubkey) + '/' + name);
+      navigate('/p/' + nip19.npubEncode(event.pubkey) + '/' + title);
     });
   }, [
     publish,
     navigate,
-    name,
+    title,
     description,
     coverImageURL,
     category,
@@ -92,21 +92,21 @@ export default function useMutateBoard({
   }, [initialState.id, publish]);
 
   const updateBoard = useCallback(() => {
-    if (initialState.name != name) {
+    if (initialState.title != title) {
       deleteBoard();
     }
 
     createBoard();
-  }, [createBoard, deleteBoard, name, initialState.name]);
+  }, [createBoard, deleteBoard, title, initialState.title]);
 
   return {
     boardType: {
       value: selectedBoardType,
       set: setSelectedBoardType,
     },
-    name: {
-      value: name,
-      set: setName,
+    title: {
+      value: title,
+      set: setTitle,
     },
     description: {
       value: description,

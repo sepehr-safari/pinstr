@@ -6,25 +6,25 @@ import { MenuItem } from './MenuTemplate.types';
 
 const boardTypeItems: MenuItem[] = [
   {
-    name: 'All Board Types',
+    title: 'All Board Types',
   },
   {
-    name: 'Plain Texts',
+    title: 'Plain Texts',
   },
   {
-    name: 'Links',
+    title: 'Links',
   },
   {
-    name: 'Images',
+    title: 'Images',
   },
   {
-    name: 'Videos',
+    title: 'Videos',
   },
   {
-    name: 'NOSTR Profiles',
+    title: 'NOSTR Profiles',
   },
   {
-    name: 'NOSTR Notes',
+    title: 'NOSTR Notes',
   },
 ];
 

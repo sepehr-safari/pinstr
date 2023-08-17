@@ -13,9 +13,9 @@ const USER = {
   imageUrl: 'https://source.unsplash.com/random/?avatar',
 };
 const USER_NAVIGATION = [
-  { name: 'Open Profile', link: '/p/' },
-  { name: 'Settings', link: '#' },
-  { name: 'Sign out', link: '/logout' },
+  { title: 'Open Profile', link: '/p/' },
+  { title: 'Settings', link: '#' },
+  { title: 'Sign out', link: '/logout' },
 ];
 
 export default function MainNavbar() {
@@ -119,8 +119,8 @@ export default function MainNavbar() {
                             </h3>
                           </Menu.Item>
                           <div className="py-1">
-                            {USER_NAVIGATION.map((item) => (
-                              <Menu.Item key={item.name}>
+                            {USER_NAVIGATION.map((item, index) => (
+                              <Menu.Item key={index}>
                                 {({ active }) => (
                                   <Link
                                     to={item.link}
@@ -129,7 +129,7 @@ export default function MainNavbar() {
                                       'block px-4 py-2 text-center text-sm font-medium text-gray-900'
                                     )}
                                   >
-                                    {item.name}
+                                    {item.title}
                                   </Link>
                                 )}
                               </Menu.Item>

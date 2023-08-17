@@ -6,71 +6,71 @@ import { MenuItem } from './MenuTemplate.types';
 
 export const categories: MenuItem[] = [
   {
-    name: 'All Categories',
+    title: 'All Categories',
   },
   {
-    name: 'Entertainment',
+    title: 'Entertainment',
     description: 'Movies, TV Shows, Music, Books, Sci-fi, and more',
   },
   {
-    name: 'Technology',
+    title: 'Technology',
     description:
       'Computers, Softwares, Mobiles, Gadgets, Programming, and more',
   },
   {
-    name: 'FOSS',
+    title: 'FOSS',
     description: 'Free and Open Source Software, Bitcoin, Nostr, and more',
   },
   {
-    name: 'Global Perspectives',
+    title: 'Global Perspectives',
     description:
       'Economics, Politics, Environment, Society, Governance, and more',
   },
   {
-    name: 'Fashion & Style',
+    title: 'Fashion & Style',
     description: 'Fashion Trends, Outfits, Accessories, and more',
   },
   {
-    name: 'Food & Cooking',
+    title: 'Food & Cooking',
     description: 'Recipes, Cooking Tips, Foodie Culture, and more',
   },
   {
-    name: 'Arts & Creativity',
+    title: 'Arts & Creativity',
     description:
       'Visual Arts, Graphic Design, Photography, Crafts, DIY Projects, and more',
   },
   {
-    name: 'Sports & Fitness',
+    title: 'Sports & Fitness',
     description: 'Fitness Routines, Sports, and more',
   },
   {
-    name: 'Home & Decor',
+    title: 'Home & Decor',
     description: 'Home Decor Ideas, Interior Design, and more',
   },
   {
-    name: 'Travel & Nature',
+    title: 'Travel & Nature',
     description: 'Travel Destinations, Nature, Outdoor Adventures, and more',
   },
   {
-    name: 'Science & Education',
+    title: 'Science & Education',
     description: 'Science, Education, Engineering, Medicine, and more',
   },
   {
-    name: 'Business & Entrepreneurship',
+    title: 'Business & Entrepreneurship',
     description: 'Business, Entrepreneurship, Startups, and more',
   },
   {
-    name: 'Jobs & Career',
+    title: 'Jobs & Career',
     description:
       'Job Opportunities, Career Tips, Industry Insights, Professional Development, and more',
   },
   {
-    name: 'Family & Mindfulness',
+    title: 'Family & Mindfulness',
     description:
       'Parenting Tips, Family Life, Relationships, Mindfulness, Wellness, and more',
   },
   {
-    name: 'History & Culture',
+    title: 'History & Culture',
     description: 'Historical Events, Culture Trends, and more',
   },
 ];

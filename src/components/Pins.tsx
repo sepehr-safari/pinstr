@@ -20,113 +20,113 @@ import { useUser } from '@/queries';
 // TODO: Replace with real data
 const zapUrls = [
   {
-    name: 'Alby',
+    title: 'Alby',
     address: 'https://getalby.com',
     imageUrl:
       'https://source.unsplash.com/random/?bitcoin&sig=' + Math.random(),
   },
   {
-    name: 'Zebedee',
+    title: 'Zebedee',
     address: 'https://zebedee.io',
     imageUrl:
       'https://source.unsplash.com/random/?bitcoin&sig=' + Math.random(),
   },
   {
-    name: 'Wallet of Satoshi',
+    title: 'Wallet of Satoshi',
     address: 'https://www.walletofsatoshi.com/',
     imageUrl: 'https://source.unsplash.com/random/?crypto&sig=' + Math.random(),
   },
   {
-    name: 'BTCPay Server',
+    title: 'BTCPay Server',
     address: 'https://btcpayserver.org',
     imageUrl:
       'https://source.unsplash.com/random/?payment&sig=' + Math.random(),
   },
   {
-    name: 'Nostdress',
+    title: 'Nostdress',
     address: 'https://github.com/believethehype/nostdress',
     imageUrl: 'https://source.unsplash.com/random/?wallet&sig=' + Math.random(),
   },
   {
-    name: 'Geyser',
+    title: 'Geyser',
     address: 'https://geyser.fund',
     imageUrl:
       'https://source.unsplash.com/random/?payment&sig=' + Math.random(),
   },
   {
-    name: 'Michael Foster',
+    title: 'Michael Foster',
     address: 'michael@foster.com',
     imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
   {
-    name: 'Michael Foster',
+    title: 'Michael Foster',
     address: 'michael@foster.com',
     imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
   {
-    name: 'Michael Foster',
+    title: 'Michael Foster',
     address: 'michael@foster.com',
     imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
   {
-    name: 'Michael Foster',
+    title: 'Michael Foster',
     address: 'michael@foster.com',
     imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
   {
-    name: 'Michael Foster',
+    title: 'Michael Foster',
     address: 'michael@foster.com',
     imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
   {
-    name: 'Michael Foster',
+    title: 'Michael Foster',
     address: 'michael@foster.com',
     imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
   {
-    name: 'Michael Foster',
+    title: 'Michael Foster',
     address: 'michael@foster.com',
     imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
 ];
 const bookUrls = [
   {
-    name: 'Fourth Wing (The Empyrean, 1)',
+    title: 'Fourth Wing (The Empyrean, 1)',
     address:
       'https://www.amazon.com/Fourth-Wing-Empyrean-Rebecca-Yarros/dp/1649374046/ref=zg_sccl_2/146-8413031-0428543?pd_rd_w=obxQl&content-id=amzn1.sym.193afb92-0c19-4833-86f8-850b5ba40291&pf_rd_p=193afb92-0c19-4833-86f8-850b5ba40291&pf_rd_r=X5R3Y0QYG30VPMTFSJKG&pd_rd_wg=kk2UW&pd_rd_r=30a32f58-2e34-41fd-bc00-eb7914b0345d&pd_rd_i=1649374046&psc=1',
     imageUrl:
       'https://images-na.ssl-images-amazon.com/images/I/91n7p-j5aqL._AC_UL381_SR381,381_.jpg',
   },
   {
-    name: 'The 48 Laws of Power',
+    title: 'The 48 Laws of Power',
     address:
       'https://www.amazon.com/48-Laws-Power-Robert-Greene/dp/0140280197/ref=zg_sccl_2/146-8413031-0428543?pd_rd_w=obxQl&content-id=amzn1.sym.193afb92-0c19-4833-86f8-850b5ba40291&pf_rd_p=193afb92-0c19-4833-86f8-850b5ba40291&pf_rd_r=X5R3Y0QYG30VPMTFSJKG&pd_rd_wg=kk2UW&pd_rd_r=30a32f58-2e34-41fd-bc00-eb7914b0345d&pd_rd_i=0140280197&psc=1',
     imageUrl:
       'https://images-na.ssl-images-amazon.com/images/I/71aG+xDKSYL._AC_UL210_SR195,210_.jpg',
   },
   {
-    name: 'The Housemaid',
+    title: 'The Housemaid',
     address:
       'https://www.amazon.com/Housemaid-Freida-McFadden/dp/1538742578/ref=zg_sccl_2/146-8413031-0428543?pd_rd_w=obxQl&content-id=amzn1.sym.193afb92-0c19-4833-86f8-850b5ba40291&pf_rd_p=193afb92-0c19-4833-86f8-850b5ba40291&pf_rd_r=X5R3Y0QYG30VPMTFSJKG&pd_rd_wg=kk2UW&pd_rd_r=30a32f58-2e34-41fd-bc00-eb7914b0345d&pd_rd_i=1538742578&psc=1',
     imageUrl:
       'https://images-na.ssl-images-amazon.com/images/I/81WduXjuKwL._AC_UL210_SR195,210_.jpg',
   },
   {
-    name: 'A Little Life',
+    title: 'A Little Life',
     address:
       'https://www.amazon.com/Little-Life-Hanya-Yanagihara/dp/0804172706/ref=zg_sccl_2/146-8413031-0428543?pd_rd_w=obxQl&content-id=amzn1.sym.193afb92-0c19-4833-86f8-850b5ba40291&pf_rd_p=193afb92-0c19-4833-86f8-850b5ba40291&pf_rd_r=X5R3Y0QYG30VPMTFSJKG&pd_rd_wg=kk2UW&pd_rd_r=30a32f58-2e34-41fd-bc00-eb7914b0345d&pd_rd_i=0804172706&psc=1',
     imageUrl:
       'https://images-na.ssl-images-amazon.com/images/I/91fRT+cJNzL._AC_UL210_SR195,210_.jpg',
   },
   {
-    name: 'It Starts with Us: A Novel (2) (It Ends with Us)',
+    title: 'It Starts with Us: A Novel (2) (It Ends with Us)',
     address:
       'https://www.amazon.com/Starts-Us-Novel-Ends/dp/1668001225/ref=zg_sccl_2/146-8413031-0428543?pd_rd_w=obxQl&content-id=amzn1.sym.193afb92-0c19-4833-86f8-850b5ba40291&pf_rd_p=193afb92-0c19-4833-86f8-850b5ba40291&pf_rd_r=X5R3Y0QYG30VPMTFSJKG&pd_rd_wg=kk2UW&pd_rd_r=30a32f58-2e34-41fd-bc00-eb7914b0345d&pd_rd_i=1668001225&psc=1',
     imageUrl:
       'https://images-na.ssl-images-amazon.com/images/I/71PNGYHykrL._AC_UL210_SR195,210_.jpg',
   },
   {
-    name: 'I Love You to the Moon and Back',
+    title: 'I Love You to the Moon and Back',
     address:
       'https://www.amazon.com/I-Love-You-Moon-Back/dp/1589255518/ref=zg_sccl_2/146-8413031-0428543?pd_rd_w=obxQl&content-id=amzn1.sym.193afb92-0c19-4833-86f8-850b5ba40291&pf_rd_p=193afb92-0c19-4833-86f8-850b5ba40291&pf_rd_r=X5R3Y0QYG30VPMTFSJKG&pd_rd_wg=kk2UW&pd_rd_r=30a32f58-2e34-41fd-bc00-eb7914b0345d&pd_rd_i=1589255518&psc=1',
     imageUrl:
@@ -143,7 +143,7 @@ const boardType = 'link';
 
 export default function Pins() {
   const [open, setOpen] = useState(false);
-  const { npub, boardName } = useParams();
+  const { npub, title } = useParams();
   const { user } = useUser();
   const selfBoard = user ? nip19.npubEncode(user.pubkey) === npub : false;
 
@@ -153,7 +153,7 @@ export default function Pins() {
         <div className="mx-auto lg:mx-0">
           <div className="w-64 aspect-w-5 aspect-h-4 rounded-md bg-gray-200">
             <img
-              src={`https://source.unsplash.com/random/?${boardName}&sig=${Math.random()}`}
+              src={`https://source.unsplash.com/random/?${title}&sig=${Math.random()}`}
               alt=""
               className="w-full h-full object-cover object-center rounded-md"
             />
@@ -162,7 +162,7 @@ export default function Pins() {
         <div className="w-full flex flex-col justify-between items-center lg:items-start">
           <div className="w-full">
             <h2 className="flex gap-4 flex-col lg:flex-row w-full items-center text-xl font-bold tracking-tight text-gray-900 text-center lg:text-start lg:items-start xl:text-2xl">
-              <span className="w-8/12 ">{boardName}</span>
+              <span className="w-8/12 ">{title}</span>
 
               {selfBoard && (
                 <>
@@ -178,7 +178,7 @@ export default function Pins() {
                     open={open}
                     setOpen={setOpen}
                     initialState={{
-                      name: boardName,
+                      title,
                       tags,
                       description,
                       coverImageURL,
@@ -237,17 +237,17 @@ export default function Pins() {
         </div>
       </div>
 
-      {boardName?.includes('Geek') ? (
+      {title?.includes('Geek') ? (
         <PeopleGrid />
-      ) : boardName?.includes('Encyclopedia') ? (
+      ) : title?.includes('Encyclopedia') ? (
         <NoteGrid />
-      ) : boardName?.includes('Zap') ? (
+      ) : title?.includes('Zap') ? (
         <LinkGrid urls={zapUrls} />
-      ) : boardName?.includes('Pizza') ? (
+      ) : title?.includes('Pizza') ? (
         <PictureGrid />
-      ) : boardName?.includes('Movies') ? (
+      ) : title?.includes('Movies') ? (
         <VideoGrid />
-      ) : boardName?.includes('Books') ? (
+      ) : title?.includes('Books') ? (
         <LinkGrid urls={bookUrls} />
       ) : (
         <></>

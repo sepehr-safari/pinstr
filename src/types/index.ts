@@ -2,7 +2,7 @@ export type Pin = string[];
 
 export interface Board {
   id: string;
-  name: string;
+  title: string;
   author: {
     pubkey: string;
     details?: Author | undefined;

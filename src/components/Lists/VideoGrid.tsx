@@ -14,22 +14,22 @@ const videos = [
     isEmbedded: false,
   },
   {
-    title: 'Video Name Here',
+    title: 'Video Title 1',
     source: 'https://www.youtube.com/embed/Zwd_8Jy7b-c',
     isEmbedded: true,
   },
   {
-    title: 'Video Name Here',
+    title: 'Video Title 2',
     source: 'https://www.youtube.com/embed/Z2_OJWthxbA',
     isEmbedded: true,
   },
   {
-    title: 'Video Name Here',
+    title: 'Video Title 3',
     source: 'https://www.youtube.com/embed/G0cfysoyOU4',
     isEmbedded: true,
   },
   {
-    title: 'Video Name Here',
+    title: 'Video Title 4',
     source: 'https://www.youtube.com/embed/-mPd-Eoiu08',
     isEmbedded: true,
   },

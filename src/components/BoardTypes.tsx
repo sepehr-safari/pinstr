@@ -31,7 +31,7 @@ export const boardTypes: BoardType[] = [
     icon: DocumentTextIcon,
     background: 'bg-pink-600',
     type: 'text',
-    headers: ['Content', 'Label', 'Image'],
+    headers: ['Content', 'Title', 'Image'],
   },
   {
     id: 2,
@@ -40,7 +40,7 @@ export const boardTypes: BoardType[] = [
     icon: LinkIcon,
     background: 'bg-indigo-600',
     type: 'link',
-    headers: ['Content', 'Label', 'Image'],
+    headers: ['Content', 'Title', 'Image'],
   },
   {
     id: 3,
@@ -49,7 +49,7 @@ export const boardTypes: BoardType[] = [
     icon: PhotoIcon,
     background: 'bg-green-600',
     type: 'image',
-    headers: ['Content', 'Label'],
+    headers: ['Content', 'Title'],
   },
   {
     id: 4,
@@ -58,7 +58,7 @@ export const boardTypes: BoardType[] = [
     icon: VideoCameraIcon,
     background: 'bg-blue-600',
     type: 'video',
-    headers: ['Content', 'Label'],
+    headers: ['Content', 'Title'],
   },
   {
     id: 5,

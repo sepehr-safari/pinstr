@@ -22,7 +22,7 @@ const parseBoardsFromEvents = (events: Event[]) => {
     boards.push({
       id: event.id,
       author: { pubkey: event.pubkey },
-      name: dTag[1],
+      title: dTag[1],
       template: templateTag ? templateTag[1] : 'text',
       cover: CoverTag ? CoverTag[1] : '',
       headers: headersTag ? headersTag.slice(1) : ['Content'],

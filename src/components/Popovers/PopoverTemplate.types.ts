@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 export interface PopoverItem {
-  name: string;
+  title: string;
   description: string;
   onClick: () => void;
 }
