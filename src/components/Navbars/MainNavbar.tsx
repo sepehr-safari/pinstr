@@ -63,7 +63,7 @@ export default function MainNavbar() {
                   <input
                     id="search"
                     name="search"
-                    className="block w-full rounded-md border-0 bg-opacity-30 bg-white py-3 pl-10 pr-3 text-xs text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-gray-500 focus:bg-opacity-50"
+                    className="block w-full rounded-md border-0 bg-opacity-30 bg-white py-3 pl-10 pr-3 text-xs text-gray-900 ring-1 ring-inset ring-gray-900/20 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-gray-500 focus:bg-opacity-50"
                     placeholder="Search boards, tags, and people"
                     type="search"
                   />
