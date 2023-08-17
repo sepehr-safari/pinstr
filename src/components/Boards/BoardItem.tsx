@@ -5,12 +5,13 @@ import { Link, useLocation } from 'react-router-dom';
 
 import AuthorOverview from './AuthorOverview';
 import Badge from './Badge';
+import { Board } from '@/types';
 
 const BoardItem = ({
   board,
   noAuthor = false,
 }: {
-  board: any;
+  board: Board;
   noAuthor?: boolean;
 }) => {
   const location = useLocation();
@@ -66,7 +67,7 @@ const BoardItem = ({
               />
             </Transition>
             <img
-              src={board.imageSrc}
+              src={board.image}
               alt=""
               className="h-full w-full object-cover object-center"
             />

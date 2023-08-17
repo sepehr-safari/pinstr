@@ -7,8 +7,11 @@ export interface Board {
     pubkey: string;
     details?: Author | undefined;
   };
-  template: string;
-  cover: string;
+  description: string;
+  category: string;
+  tags: string[];
+  type: string;
+  image: string;
   headers: string[];
   pins: Pin[];
 }

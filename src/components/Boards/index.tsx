@@ -1,67 +1,149 @@
 import { joinClassNames } from '@/utils';
 
 import BoardItem from './BoardItem';
+import { Board } from '@/types';
 
-const boards = [
+export const boards: Board[] = [
   {
-    id: 1,
+    id: '1',
     title: 'Favorite Movies',
-    author: 'sepehr',
-    imageSrc: 'https://source.unsplash.com/random/?cinema',
+    author: {
+      pubkey: 'Sepehr', // not actually a pubkey!
+    },
+    image: 'https://source.unsplash.com/random/?cinema',
+    description: 'This is a board of my favorite movies',
+    category: 'Entertainment',
+    type: 'video',
+    headers: ['Content', 'Title'],
+    pins: [],
+    tags: ['Movies', 'Cinema', 'Film'],
   },
   {
-    id: 2,
+    id: '2',
     title: 'Best Pizza Flavors',
-    author: 'fiatjaf',
-    imageSrc: 'https://source.unsplash.com/random/?pizza',
+    author: {
+      pubkey: 'fiatjaf', // not actually a pubkey!
+    },
+    image: 'https://source.unsplash.com/random/?pizza',
+    description: 'This is a board of my favorite pizza flavors',
+    category: 'Food & Cooking',
+    type: 'image',
+    headers: ['Content', 'Title'],
+    pins: [],
+    tags: ['Pizza', 'Food', 'Flavors', 'Taste', 'Yummy', 'Delicious', 'Tasty'],
   },
   {
-    id: 3,
+    id: '3',
     title: 'Encyclopedia of Rare and Special Edition Cars',
-    author: 'Merdellow',
-    imageSrc: 'https://source.unsplash.com/random/?rare+cars',
+    author: {
+      pubkey: 'Merdellow', // not actually a pubkey!
+    },
+    image: 'https://source.unsplash.com/random/?rare+cars',
+    description: 'This is a board of my favorite rare and special edition cars',
+    category: 'Sports & Fitness',
+    type: 'note',
+    headers: ['Content'],
+    pins: [],
+    tags: ['Cars', 'Rare', 'Special', 'Edition', 'Automobiles'],
   },
   {
-    id: 4,
+    id: '4',
     title: 'Top Rock Bands',
-    author: 'Sepehr',
-    imageSrc: 'https://source.unsplash.com/random/?rock+band',
+    author: {
+      pubkey: 'Sepehr', // not actually a pubkey!
+    },
+    image: 'https://source.unsplash.com/random/?rock+band',
+    description: 'This is a board of my favorite rock bands',
+    category: 'Entertainment',
+    type: 'image',
+    headers: ['Content', 'Title'],
+    pins: [],
+    tags: ['Rock', 'Band', 'Music', 'Guitar', 'Drums', 'Bass', 'Vocals'],
   },
   {
-    id: 5,
+    id: '5',
     title: 'Best Seller Books',
-    author: 'FISHCAKE',
-    imageSrc: 'https://source.unsplash.com/random/?book',
+    author: {
+      pubkey: 'FISHCAKE', // not actually a pubkey!
+    },
+    image: 'https://source.unsplash.com/random/?book',
+    description: 'This is a board of my favorite books',
+    category: 'Science & Education',
+    type: 'link',
+    headers: ['Content', 'Title', 'Image'],
+    pins: [],
+    tags: ['Books', 'Reading', 'Literature', 'Novels', 'Fiction'],
   },
   {
-    id: 6,
+    id: '6',
     title: 'NIP-57 Zap supported Lightning Wallets',
-    author: 'Derek Ross',
-    imageSrc: 'https://source.unsplash.com/random/?bitcoin',
+    author: {
+      pubkey: 'Derek Ross', // not actually a pubkey!
+    },
+    image: 'https://source.unsplash.com/random/?bitcoin',
+    description:
+      'This is a board of my favorite NIP-57 Zap supported Lightning Wallets',
+    category: 'FOSS',
+    type: 'link',
+    headers: ['Content', 'Title', 'Image'],
+    pins: [],
+    tags: ['Bitcoin', 'Lightning', 'Wallets', 'Zap', 'NIP-57'],
   },
   {
-    id: 7,
+    id: '7',
     title: 'Top 10 Python Libraries',
-    author: 'Sepehr',
-    imageSrc: 'https://source.unsplash.com/random/?python',
+    author: {
+      pubkey: 'Sepehr', // not actually a pubkey!
+    },
+    image: 'https://source.unsplash.com/random/?python',
+    description: 'This is a board of my favorite Python libraries',
+    category: 'Technology',
+    type: 'link',
+    headers: ['Content', 'Title', 'Image'],
+    pins: [],
+    tags: ['Python', 'Programming', 'Libraries', 'Code', 'Software'],
   },
   {
-    id: 8,
+    id: '8',
     title: 'Grammy Winners of 2010',
-    author: 'Merdellow',
-    imageSrc: 'https://source.unsplash.com/random/?grammy',
+    author: {
+      pubkey: 'Merdellow', // not actually a pubkey!
+    },
+    image: 'https://source.unsplash.com/random/?grammy',
+    description: 'This is a board of my favorite Grammy winners of 2010',
+    category: 'Entertainment',
+    type: 'link',
+    headers: ['Content', 'Title', 'Image'],
+    pins: [],
+    tags: ['Grammy', 'Music', 'Awards', 'Winners', '2010'],
   },
   {
-    id: 9,
+    id: '9',
     title: 'Nostr Geek Developers',
-    author: 'Pablo',
-    imageSrc: 'https://source.unsplash.com/random/?developer',
+    author: {
+      pubkey: 'Pablo', // not actually a pubkey!
+    },
+    image: 'https://source.unsplash.com/random/?developer',
+    description: 'This is a board of my favorite Nostr geek developers',
+    category: 'FOSS',
+    type: 'profile',
+    headers: ['Content'],
+    pins: [],
+    tags: ['Nostr', 'Developers', 'Geek'],
   },
   {
-    id: 10,
+    id: '10',
     title: 'Top Nostr Designers',
-    author: 'Gigi',
-    imageSrc: 'https://source.unsplash.com/random/?designer',
+    author: {
+      pubkey: 'Karnage', // not actually a pubkey!
+    },
+    image: 'https://source.unsplash.com/random/?designer',
+    description: 'This is a board of my favorite Nostr designers',
+    category: 'FOSS',
+    type: 'profile',
+    headers: ['Content'],
+    pins: [],
+    tags: ['Nostr', 'Designers'],
   },
 ];
 

@@ -16,77 +16,74 @@ import {
   VideoGrid,
 } from '@/components/Lists';
 import { useUser } from '@/queries';
+import { boards } from './Boards';
 
 // TODO: Replace with real data
 const zapUrls = [
   {
     title: 'Alby',
     address: 'https://getalby.com',
-    imageUrl:
-      'https://source.unsplash.com/random/?bitcoin&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?bitcoin&sig=' + Math.random(),
   },
   {
     title: 'Zebedee',
     address: 'https://zebedee.io',
-    imageUrl:
-      'https://source.unsplash.com/random/?bitcoin&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?bitcoin&sig=' + Math.random(),
   },
   {
     title: 'Wallet of Satoshi',
     address: 'https://www.walletofsatoshi.com/',
-    imageUrl: 'https://source.unsplash.com/random/?crypto&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?crypto&sig=' + Math.random(),
   },
   {
     title: 'BTCPay Server',
     address: 'https://btcpayserver.org',
-    imageUrl:
-      'https://source.unsplash.com/random/?payment&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?payment&sig=' + Math.random(),
   },
   {
     title: 'Nostdress',
     address: 'https://github.com/believethehype/nostdress',
-    imageUrl: 'https://source.unsplash.com/random/?wallet&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?wallet&sig=' + Math.random(),
   },
   {
     title: 'Geyser',
     address: 'https://geyser.fund',
-    imageUrl:
-      'https://source.unsplash.com/random/?payment&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?payment&sig=' + Math.random(),
   },
   {
     title: 'Michael Foster',
     address: 'michael@foster.com',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
   {
     title: 'Michael Foster',
     address: 'michael@foster.com',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
   {
     title: 'Michael Foster',
     address: 'michael@foster.com',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
   {
     title: 'Michael Foster',
     address: 'michael@foster.com',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
   {
     title: 'Michael Foster',
     address: 'michael@foster.com',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
   {
     title: 'Michael Foster',
     address: 'michael@foster.com',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
   {
     title: 'Michael Foster',
     address: 'michael@foster.com',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
 ];
 const bookUrls = [
@@ -94,58 +91,53 @@ const bookUrls = [
     title: 'Fourth Wing (The Empyrean, 1)',
     address:
       'https://www.amazon.com/Fourth-Wing-Empyrean-Rebecca-Yarros/dp/1649374046/ref=zg_sccl_2/146-8413031-0428543?pd_rd_w=obxQl&content-id=amzn1.sym.193afb92-0c19-4833-86f8-850b5ba40291&pf_rd_p=193afb92-0c19-4833-86f8-850b5ba40291&pf_rd_r=X5R3Y0QYG30VPMTFSJKG&pd_rd_wg=kk2UW&pd_rd_r=30a32f58-2e34-41fd-bc00-eb7914b0345d&pd_rd_i=1649374046&psc=1',
-    imageUrl:
+    image:
       'https://images-na.ssl-images-amazon.com/images/I/91n7p-j5aqL._AC_UL381_SR381,381_.jpg',
   },
   {
     title: 'The 48 Laws of Power',
     address:
       'https://www.amazon.com/48-Laws-Power-Robert-Greene/dp/0140280197/ref=zg_sccl_2/146-8413031-0428543?pd_rd_w=obxQl&content-id=amzn1.sym.193afb92-0c19-4833-86f8-850b5ba40291&pf_rd_p=193afb92-0c19-4833-86f8-850b5ba40291&pf_rd_r=X5R3Y0QYG30VPMTFSJKG&pd_rd_wg=kk2UW&pd_rd_r=30a32f58-2e34-41fd-bc00-eb7914b0345d&pd_rd_i=0140280197&psc=1',
-    imageUrl:
+    image:
       'https://images-na.ssl-images-amazon.com/images/I/71aG+xDKSYL._AC_UL210_SR195,210_.jpg',
   },
   {
     title: 'The Housemaid',
     address:
       'https://www.amazon.com/Housemaid-Freida-McFadden/dp/1538742578/ref=zg_sccl_2/146-8413031-0428543?pd_rd_w=obxQl&content-id=amzn1.sym.193afb92-0c19-4833-86f8-850b5ba40291&pf_rd_p=193afb92-0c19-4833-86f8-850b5ba40291&pf_rd_r=X5R3Y0QYG30VPMTFSJKG&pd_rd_wg=kk2UW&pd_rd_r=30a32f58-2e34-41fd-bc00-eb7914b0345d&pd_rd_i=1538742578&psc=1',
-    imageUrl:
+    image:
       'https://images-na.ssl-images-amazon.com/images/I/81WduXjuKwL._AC_UL210_SR195,210_.jpg',
   },
   {
     title: 'A Little Life',
     address:
       'https://www.amazon.com/Little-Life-Hanya-Yanagihara/dp/0804172706/ref=zg_sccl_2/146-8413031-0428543?pd_rd_w=obxQl&content-id=amzn1.sym.193afb92-0c19-4833-86f8-850b5ba40291&pf_rd_p=193afb92-0c19-4833-86f8-850b5ba40291&pf_rd_r=X5R3Y0QYG30VPMTFSJKG&pd_rd_wg=kk2UW&pd_rd_r=30a32f58-2e34-41fd-bc00-eb7914b0345d&pd_rd_i=0804172706&psc=1',
-    imageUrl:
+    image:
       'https://images-na.ssl-images-amazon.com/images/I/91fRT+cJNzL._AC_UL210_SR195,210_.jpg',
   },
   {
     title: 'It Starts with Us: A Novel (2) (It Ends with Us)',
     address:
       'https://www.amazon.com/Starts-Us-Novel-Ends/dp/1668001225/ref=zg_sccl_2/146-8413031-0428543?pd_rd_w=obxQl&content-id=amzn1.sym.193afb92-0c19-4833-86f8-850b5ba40291&pf_rd_p=193afb92-0c19-4833-86f8-850b5ba40291&pf_rd_r=X5R3Y0QYG30VPMTFSJKG&pd_rd_wg=kk2UW&pd_rd_r=30a32f58-2e34-41fd-bc00-eb7914b0345d&pd_rd_i=1668001225&psc=1',
-    imageUrl:
+    image:
       'https://images-na.ssl-images-amazon.com/images/I/71PNGYHykrL._AC_UL210_SR195,210_.jpg',
   },
   {
     title: 'I Love You to the Moon and Back',
     address:
       'https://www.amazon.com/I-Love-You-Moon-Back/dp/1589255518/ref=zg_sccl_2/146-8413031-0428543?pd_rd_w=obxQl&content-id=amzn1.sym.193afb92-0c19-4833-86f8-850b5ba40291&pf_rd_p=193afb92-0c19-4833-86f8-850b5ba40291&pf_rd_r=X5R3Y0QYG30VPMTFSJKG&pd_rd_wg=kk2UW&pd_rd_r=30a32f58-2e34-41fd-bc00-eb7914b0345d&pd_rd_i=1589255518&psc=1',
-    imageUrl:
+    image:
       'https://images-na.ssl-images-amazon.com/images/I/8144Vic9C5L._AC_UL210_SR195,210_.jpg',
   },
 ];
-const tags = ['Movies', 'Cinema', 'Film'];
-const description =
-  'We’re a dynamic group of individuals who are passionate about what we do and dedicated to delivering the best results for our clients.';
-const coverImageURL =
-  'https://source.unsplash.com/random/?cinema&sig=' + Math.random();
-const category = 'Entertainment';
-const boardType = 'link';
 
 export default function Pins() {
   const [open, setOpen] = useState(false);
   const { npub, title } = useParams();
   const { user } = useUser();
   const selfBoard = user ? nip19.npubEncode(user.pubkey) === npub : false;
+
+  const board = boards.find((board) => board.title === title) || boards[0]; // TODO: replace with real data
 
   return (
     <>
@@ -179,11 +171,11 @@ export default function Pins() {
                     setOpen={setOpen}
                     initialState={{
                       title,
-                      tags,
-                      description,
-                      coverImageURL,
-                      category,
-                      boardType,
+                      tags: board.tags,
+                      description: board.description,
+                      coverImageURL: board.image,
+                      category: board.category,
+                      boardType: board.type,
                       pins: [], // TODO: Replace with real data
                     }}
                   />
@@ -196,14 +188,14 @@ export default function Pins() {
               <span>|</span>
               <span className="flex items-center">
                 <Link to={`/c/${undefined}`} className="hover:underline">
-                  {category}
+                  {board.category}
                 </Link>
               </span>
             </div>
 
-            {tags.length > 0 && (
+            {board.tags.length > 0 && (
               <div className="mt-2 flex justify-center gap-4 flex-wrap lg:justify-start">
-                {tags.map((tag, index) => (
+                {board.tags.map((tag, index) => (
                   <Link
                     to={`/t/${tag}`}
                     key={index}
@@ -217,7 +209,7 @@ export default function Pins() {
           </div>
 
           <div className="mt-4 flex duration-200 text-sm font-light text-gray-500 text-center max-w-screen-sm lg:max-w-none lg:text-justify lg:mt-auto">
-            {description}
+            {board.description}
           </div>
 
           <div className="mt-4 flex gap-4 lg:mt-auto">
