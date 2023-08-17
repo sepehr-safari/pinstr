@@ -15,15 +15,15 @@ export default function useCreateBoard({
   const publish = usePublish();
   const navigate = useNavigate();
 
-  const [selectedBoardType, setSelectedBoardType] = useState<BoardType | null>(
-    null
-  );
-
   const nameRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLInputElement>(null);
 
   const [coverImageURL, setCoverImageURL] = useState('');
   const [category, setCategory] = useState<MenuItem | null>(null);
+  const [selectedBoardType, setSelectedBoardType] = useState<BoardType | null>(
+    null
+  );
+  const [tags, setTags] = useState<string[]>([]);
 
   const createBoard = useCallback(() => {
     if (
@@ -46,6 +46,7 @@ export default function useCreateBoard({
         ['type', selectedBoardType.type],
         ['cover', coverImageURL],
         ['headers', ...selectedBoardType.headers],
+        ...tags.map((tag) => ['t', tag]),
       ],
     }).then((event) => {
       onSuccess();
@@ -69,12 +70,16 @@ export default function useCreateBoard({
     nameRef,
     descriptionRef,
     coverImageURL: {
-      get: coverImageURL,
+      value: coverImageURL,
       set: setCoverImageURL,
     },
     category: {
-      get: category,
+      value: category,
       set: setCategory,
+    },
+    tags: {
+      value: tags,
+      set: setTags,
     },
     createBoard,
   };

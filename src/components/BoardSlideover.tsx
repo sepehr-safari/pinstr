@@ -15,6 +15,7 @@ export default function BoardSlideover({ open, setOpen }: Props) {
     selectedBoardType,
     setSelectedBoardType,
     category,
+    tags,
     coverImageURL,
     createBoard,
     descriptionRef,
@@ -86,7 +87,7 @@ export default function BoardSlideover({ open, setOpen }: Props) {
                       ) : (
                         <div className="flex flex-1 flex-col justify-between">
                           <div className="divide-y divide-gray-200 px-4 sm:px-6">
-                            <div className="space-y-6 pb-5 pt-6">
+                            <div className="space-y-4 pb-4 pt-4">
                               <div>
                                 <label
                                   htmlFor="board-name"
@@ -108,7 +109,7 @@ export default function BoardSlideover({ open, setOpen }: Props) {
                                     autoComplete="off"
                                     autoFocus
                                     tabIndex={1}
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
                                   />
                                 </div>
                               </div>
@@ -132,7 +133,7 @@ export default function BoardSlideover({ open, setOpen }: Props) {
                                     name="description"
                                     id="description"
                                     autoComplete="off"
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
                                   />
                                 </div>
                               </div>
@@ -147,18 +148,58 @@ export default function BoardSlideover({ open, setOpen }: Props) {
                                 </span>
                                 <div className="mt-2">
                                   <CategoryMenu
-                                    selected={category.get}
+                                    selected={category.value}
                                     setSelected={category.set}
                                     hideFirstOption
                                   />
                                 </div>
                               </div>
-                              {/* <div>
-                              <span className="flex flex-col">
-                                Tags
-                              </span>
-                              <div className="mt-2"></div>
-                            </div> */}
+                              <div>
+                                <label htmlFor="tags" className="flex flex-col">
+                                  <span className="text-sm font-medium leading-6 text-gray-900">
+                                    Tags
+                                  </span>
+                                  <span className="text-xs font-light text-gray-500">
+                                    Add a few space separated tags to help
+                                    people find your board easier.
+                                  </span>
+                                </label>
+                                <div className="mt-2">
+                                  <input
+                                    type="text"
+                                    name="tags"
+                                    id="tags"
+                                    autoComplete="off"
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
+                                    onChange={(event) =>
+                                      tags.set(
+                                        event.target.value
+                                          ? event.target.value
+                                              .split(' ')
+                                              .filter(
+                                                (tag, index, arr) =>
+                                                  tag.length > 0 &&
+                                                  arr.indexOf(tag) === index
+                                              )
+                                          : []
+                                      )
+                                    }
+                                  />
+                                </div>
+
+                                {tags.value.length > 0 && (
+                                  <div className="mt-2 flex gap-2 flex-wrap">
+                                    {tags.value.map((tag, index) => (
+                                      <span
+                                        key={index}
+                                        className="inline-flex items-center gap-x-0.5 rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10"
+                                      >
+                                        {tag}
+                                      </span>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
 
                               <div>
                                 <span className="flex flex-col">
@@ -172,7 +213,7 @@ export default function BoardSlideover({ open, setOpen }: Props) {
                                 </span>
                                 <div className="mt-2">
                                   <CoverImageMenu
-                                    coverImageURL={coverImageURL.get}
+                                    coverImageURL={coverImageURL.value}
                                     setCoverImageURL={coverImageURL.set}
                                   />
                                 </div>
@@ -186,7 +227,7 @@ export default function BoardSlideover({ open, setOpen }: Props) {
                       <div>
                         <button
                           type="button"
-                          className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                          className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                           onClick={() => setOpen(false)}
                         >
                           Cancel
@@ -198,7 +239,7 @@ export default function BoardSlideover({ open, setOpen }: Props) {
                           <button
                             type="button"
                             onClick={() => setSelectedBoardType(null)}
-                            className="flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                            className="flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                           >
                             <span aria-hidden="true">&larr;</span>
                             <span className="ml-2">Back</span>
