@@ -45,8 +45,9 @@ export default function useMutateBoard({
       : null
   );
   const [tags, setTags] = useState<string[]>(initialState.tags || []);
+  const [pins, setPins] = useState<string[][]>(initialState.pins || []);
 
-  const createBoard = useCallback(() => {
+  const publishBoard = useCallback(() => {
     if (!selectedBoardType || !category || !title || !description) {
       return;
     }
@@ -63,7 +64,7 @@ export default function useMutateBoard({
         ...tags
           .filter((t, i, a) => t.length > 0 && a.indexOf(t) === i)
           .map((t) => ['tag', t]),
-        ...(initialState.pins || []).map((p) => ['pin', ...p]),
+        ...pins.map((p) => ['pin', ...p]),
       ],
     }).then((event) => {
       onSuccess();
@@ -80,7 +81,7 @@ export default function useMutateBoard({
     selectedBoardType,
     onSuccess,
     tags,
-    initialState.pins,
+    pins,
   ]);
 
   const deleteBoard = useCallback(() => {
@@ -96,8 +97,8 @@ export default function useMutateBoard({
       deleteBoard();
     }
 
-    createBoard();
-  }, [createBoard, deleteBoard, title, initialState.title]);
+    publishBoard();
+  }, [publishBoard, deleteBoard, title, initialState.title]);
 
   return {
     boardType: {
@@ -124,7 +125,11 @@ export default function useMutateBoard({
       value: tags,
       set: setTags,
     },
-    createBoard,
+    pins: {
+      value: pins,
+      set: setPins,
+    },
+    publishBoard,
     updateBoard,
     deleteBoard,
   };

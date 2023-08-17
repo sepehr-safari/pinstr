@@ -28,7 +28,7 @@ export default function BoardSlideover({ open, setOpen, initialState }: Props) {
     category,
     tags,
     coverImageURL,
-    createBoard,
+    publishBoard,
     updateBoard,
     deleteBoard,
   } = useMutateBoard({ onSuccess: () => setOpen(false), initialState });
@@ -297,7 +297,7 @@ export default function BoardSlideover({ open, setOpen, initialState }: Props) {
                               </button>
                               <button
                                 type="button"
-                                onClick={createBoard}
+                                onClick={publishBoard}
                                 className="ml-4 inline-flex justify-center rounded-md bg-gray-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
                               >
                                 Create Board
