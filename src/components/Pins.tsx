@@ -1,12 +1,13 @@
-import { PencilIcon } from '@heroicons/react/24/outline';
 import {
   BoltIcon,
   ChatBubbleLeftIcon,
   HandThumbUpIcon,
 } from '@heroicons/react/24/solid';
 import { nip19 } from 'nostr-tools';
+import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
+import { BoardSlideover } from '@/components';
 import {
   LinkGrid,
   NoteGrid,
@@ -16,6 +17,7 @@ import {
 } from '@/components/Lists';
 import { useUser } from '@/queries';
 
+// TODO: Replace with real data
 const zapUrls = [
   {
     name: 'Alby',
@@ -132,8 +134,15 @@ const bookUrls = [
   },
 ];
 const tags = ['Movies', 'Cinema', 'Film'];
+const description =
+  'We’re a dynamic group of individuals who are passionate about what we do and dedicated to delivering the best results for our clients.';
+const coverImageURL =
+  'https://source.unsplash.com/random/?cinema&sig=' + Math.random();
+const category = 'Entertainment';
+const boardType = 'link';
 
 export default function Pins() {
+  const [open, setOpen] = useState(false);
   const { npub, boardName } = useParams();
   const { user } = useUser();
   const selfBoard = user ? nip19.npubEncode(user.pubkey) === npub : false;
@@ -142,60 +151,53 @@ export default function Pins() {
     <>
       <div className="gap-8 flex flex-col lg:flex-row">
         <div className="mx-auto lg:mx-0">
-          <div className="relative group w-64 aspect-w-5 aspect-h-4 rounded-md bg-gray-200">
+          <div className="w-64 aspect-w-5 aspect-h-4 rounded-md bg-gray-200">
             <img
               src={`https://source.unsplash.com/random/?${boardName}&sig=${Math.random()}`}
               alt=""
               className="w-full h-full object-cover object-center rounded-md"
             />
-            {selfBoard && (
-              <div className="absolute bg-black/70 inset-0 flex justify-center items-center opacity-0 duration-500 group-hover:opacity-100">
-                <button className="ml-2 flex items-center border-b border-b-gray-100 duration-500">
-                  <span className="text-xs font-medium text-gray-100">
-                    Edit
-                  </span>
-                  <div className="ml-1 text-gray-100 -translate-x-6 duration-500 group-hover:translate-x-0">
-                    <PencilIcon className="h-5 w-5" />
-                  </div>
-                </button>
-              </div>
-            )}
           </div>
         </div>
-        <div className="flex flex-col justify-between items-center lg:items-start">
-          <div>
-            <h2 className="group flex justify-center items-start text-xl font-bold tracking-tight text-gray-900 text-center lg:text-start xl:text-2xl">
-              {boardName}
+        <div className="w-full flex flex-col justify-between items-center lg:items-start">
+          <div className="w-full">
+            <h2 className="flex gap-4 flex-col lg:flex-row w-full items-center text-xl font-bold tracking-tight text-gray-900 text-center lg:text-start lg:items-start xl:text-2xl">
+              <span className="w-8/12 ">{boardName}</span>
 
               {selfBoard && (
-                <button className="ml-2 flex items-center border-b border-b-gray-400 opacity-0 duration-500 group-hover:opacity-100 xl:mt-1">
-                  <span className="text-xs font-medium text-gray-500">
-                    Edit
-                  </span>
-                  <div className="ml-1 text-gray-500 -translate-x-6 duration-500 group-hover:translate-x-0">
-                    <PencilIcon className="h-5 w-5" />
-                  </div>
-                </button>
+                <>
+                  <button
+                    type="button"
+                    className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 lg:ml-auto"
+                    onClick={() => setOpen(true)}
+                  >
+                    Edit Board
+                  </button>
+
+                  <BoardSlideover
+                    open={open}
+                    setOpen={setOpen}
+                    initialState={{
+                      name: boardName,
+                      tags,
+                      description,
+                      coverImageURL,
+                      category,
+                      boardType,
+                      pins: [], // TODO: Replace with real data
+                    }}
+                  />
+                </>
               )}
             </h2>
 
-            <div className="mt-2 inline-flex w-full justify-center items-center gap-1 text-xs font-light text-gray-400 translate-x-6 lg:translate-x-0 lg:gap-2 lg:justify-start">
+            <div className="mt-4 inline-flex w-full justify-center items-center gap-1 text-xs font-light text-gray-400 lg:gap-2 lg:justify-start lg:mt-2">
               <span>18 days ago</span>
               <span>|</span>
-              <span className="group flex items-center">
+              <span className="flex items-center">
                 <Link to={`/c/${undefined}`} className="hover:underline">
-                  Technology
+                  {category}
                 </Link>
-                {selfBoard && (
-                  <button className="ml-2 flex items-center border-b border-b-gray-400 opacity-0 duration-500 group-hover:opacity-100">
-                    <span className="text-xs font-medium text-gray-500">
-                      Edit
-                    </span>
-                    <div className="ml-1 text-gray-500 -translate-x-6 duration-500 group-hover:translate-x-0">
-                      <PencilIcon className="h-5 w-5" />
-                    </div>
-                  </button>
-                )}
               </span>
             </div>
 
@@ -214,17 +216,8 @@ export default function Pins() {
             )}
           </div>
 
-          <div className="mt-4 group flex items-start duration-200 text-sm font-light text-gray-500 text-center max-w-screen-sm lg:max-w-none lg:text-justify lg:mt-auto">
-            We’re a dynamic group of individuals who are passionate about what
-            we do and dedicated to delivering the best results for our clients.
-            {selfBoard && (
-              <button className="ml-2 flex items-center border-b border-b-gray-400 opacity-0 duration-500 group-hover:opacity-100">
-                <span className="text-xs font-medium text-gray-500">Edit</span>
-                <div className="ml-1 text-gray-500 -translate-x-6 duration-500 group-hover:translate-x-0">
-                  <PencilIcon className="h-5 w-5" />
-                </div>
-              </button>
-            )}
+          <div className="mt-4 flex duration-200 text-sm font-light text-gray-500 text-center max-w-screen-sm lg:max-w-none lg:text-justify lg:mt-auto">
+            {description}
           </div>
 
           <div className="mt-4 flex gap-4 lg:mt-auto">

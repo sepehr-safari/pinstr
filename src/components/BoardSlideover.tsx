@@ -3,24 +3,33 @@ import { Fragment } from 'react';
 
 import { BoardTypes } from '@/components';
 import { CategoryMenu, CoverImageMenu } from '@/components/Menus';
-import { useCreateBoard } from '@/hooks';
+import { useMutateBoard } from '@/hooks';
 
 type Props = {
   open: boolean;
   setOpen: (state: boolean) => void;
+  initialState?: {
+    id?: string;
+    name?: string;
+    description?: string;
+    coverImageURL?: string;
+    category?: string;
+    boardType?: string;
+    tags?: string[];
+    pins?: string[][];
+  };
 };
 
-export default function BoardSlideover({ open, setOpen }: Props) {
+export default function BoardSlideover({ open, setOpen, initialState }: Props) {
   const {
-    selectedBoardType,
-    setSelectedBoardType,
+    name,
+    description,
+    boardType,
     category,
     tags,
     coverImageURL,
     createBoard,
-    descriptionRef,
-    nameRef,
-  } = useCreateBoard({ onSuccess: () => setOpen(false) });
+  } = useMutateBoard({ onSuccess: () => setOpen(false), initialState });
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -57,32 +66,42 @@ export default function BoardSlideover({ open, setOpen }: Props) {
                       <div className="bg-gray-800 px-4 py-6 sm:px-6">
                         <div className="flex items-center justify-between">
                           <Dialog.Title className="text-base font-semibold leading-6 text-white">
-                            {!selectedBoardType ? (
-                              <span>Create a new board</span>
+                            {!initialState ? (
+                              !boardType.value ? (
+                                <span>Create a new board</span>
+                              ) : (
+                                <span>{boardType.value.title}</span>
+                              )
                             ) : (
-                              <span>{selectedBoardType.title}</span>
+                              <span>Edit your board</span>
                             )}
                           </Dialog.Title>
                         </div>
                         <div className="mt-1">
                           <p className="text-sm font-light text-gray-300">
-                            {!selectedBoardType ? (
-                              <span>Get started by choosing a board type.</span>
+                            {!initialState ? (
+                              !boardType.value ? (
+                                <span>
+                                  Get started by choosing a board type.
+                                </span>
+                              ) : (
+                                <span>
+                                  Fill in the details below to create your
+                                  desired board.
+                                </span>
+                              )
                             ) : (
                               <span>
-                                Fill in the details below to create your desired
-                                board.
+                                Edit the details below to update your board.
                               </span>
                             )}
                           </p>
                         </div>
                       </div>
 
-                      {!selectedBoardType ? (
+                      {!boardType.value ? (
                         <div className="p-6">
-                          <BoardTypes
-                            setSelectedBoardType={setSelectedBoardType}
-                          />
+                          <BoardTypes setSelectedBoardType={boardType.set} />
                         </div>
                       ) : (
                         <div className="flex flex-1 flex-col justify-between">
@@ -102,7 +121,6 @@ export default function BoardSlideover({ open, setOpen }: Props) {
                                 </label>
                                 <div className="mt-2">
                                   <input
-                                    ref={nameRef}
                                     type="text"
                                     name="board-name"
                                     id="board-name"
@@ -110,6 +128,9 @@ export default function BoardSlideover({ open, setOpen }: Props) {
                                     autoFocus
                                     tabIndex={1}
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
+                                    value={name.value}
+                                    onChange={(e) => name.set(e.target.value)}
+                                    disabled={!!initialState}
                                   />
                                 </div>
                               </div>
@@ -128,12 +149,15 @@ export default function BoardSlideover({ open, setOpen }: Props) {
                                 </label>
                                 <div className="mt-2">
                                   <input
-                                    ref={descriptionRef}
                                     type="text"
                                     name="description"
                                     id="description"
                                     autoComplete="off"
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
+                                    value={description.value}
+                                    onChange={(e) =>
+                                      description.set(e.target.value)
+                                    }
                                   />
                                 </div>
                               </div>
@@ -171,15 +195,14 @@ export default function BoardSlideover({ open, setOpen }: Props) {
                                     id="tags"
                                     autoComplete="off"
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
+                                    value={tags.value.join(' ')}
                                     onChange={(event) =>
                                       tags.set(
                                         event.target.value
                                           ? event.target.value
                                               .split(' ')
                                               .filter(
-                                                (tag, index, arr) =>
-                                                  tag.length > 0 &&
-                                                  arr.indexOf(tag) === index
+                                                (t, i, a) => a.indexOf(t) === i
                                               )
                                           : []
                                       )
@@ -234,23 +257,35 @@ export default function BoardSlideover({ open, setOpen }: Props) {
                         </button>
                       </div>
 
-                      {selectedBoardType && (
+                      {boardType.value && (
                         <div className="flex">
-                          <button
-                            type="button"
-                            onClick={() => setSelectedBoardType(null)}
-                            className="flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                          >
-                            <span aria-hidden="true">&larr;</span>
-                            <span className="ml-2">Back</span>
-                          </button>
-                          <button
-                            type="button"
-                            onClick={createBoard}
-                            className="ml-4 inline-flex justify-center rounded-md bg-gray-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
-                          >
-                            Create Board
-                          </button>
+                          {!initialState ? (
+                            <>
+                              <button
+                                type="button"
+                                onClick={() => boardType.set(null)}
+                                className="flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                              >
+                                <span aria-hidden="true">&larr;</span>
+                                <span className="ml-2">Back</span>
+                              </button>
+                              <button
+                                type="button"
+                                onClick={createBoard}
+                                className="ml-4 inline-flex justify-center rounded-md bg-gray-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
+                              >
+                                Create Board
+                              </button>
+                            </>
+                          ) : (
+                            <button
+                              type="button"
+                              onClick={createBoard}
+                              className="ml-4 inline-flex justify-center rounded-md bg-gray-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
+                            >
+                              Update Board
+                            </button>
+                          )}
                         </div>
                       )}
                     </div>

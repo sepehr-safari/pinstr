@@ -4,7 +4,7 @@ import { MenuTemplate } from '@/components/Menus';
 
 import { MenuItem } from './MenuTemplate.types';
 
-const categories: MenuItem[] = [
+export const categories: MenuItem[] = [
   {
     name: 'All Categories',
   },

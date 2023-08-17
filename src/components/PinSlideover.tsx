@@ -1,22 +1,12 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 
-import {
-  CategoryMenu,
-  CoverImageMenu,
-  KindMenu,
-  PinTemplateMenu,
-} from '@/components/Menus';
-import { useAddPin } from '@/hooks';
-
 type Props = {
   open: boolean;
   setOpen: (state: boolean) => void;
 };
 
 export default function PinSlideover({ open, setOpen }: Props) {
-  const {} = useAddPin({ onSuccess: () => setOpen(false) });
-
   // TODO
   return (
     <Transition.Root show={open} as={Fragment}>
