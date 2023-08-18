@@ -10,7 +10,7 @@ import { joinClassNames } from '@/utils';
 
 const USER = {
   name: 'Sepehr',
-  imageUrl: 'https://source.unsplash.com/random/?avatar',
+  image: 'https://source.unsplash.com/random/?avatar',
 };
 const USER_NAVIGATION = [
   { title: 'Open Profile', link: '/p/' },
@@ -93,7 +93,7 @@ export default function MainNavbar() {
                           <span className="sr-only">Open user menu</span>
                           <img
                             className="h-10 w-10 rounded-full object-cover object-center bg-gray-200"
-                            src={USER.imageUrl}
+                            src={USER.image}
                             alt=""
                           />
                         </Menu.Button>
@@ -111,7 +111,7 @@ export default function MainNavbar() {
                           <Menu.Item as="div">
                             <img
                               className="mt-4 mx-auto h-24 w-24 object-cover object-center flex-shrink-0 rounded-full"
-                              src={USER.imageUrl}
+                              src={USER.image}
                               alt=""
                             />
                             <h3 className="mt-2 mb-4 text-sm font-semibold text-gray-900 text-center">

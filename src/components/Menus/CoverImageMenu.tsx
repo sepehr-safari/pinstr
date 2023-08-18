@@ -12,8 +12,8 @@ import { MenuTemplate } from '@/components/Menus';
 import { MenuItem } from './MenuTemplate.types';
 
 interface Props {
-  coverImageURL: string;
-  setCoverImageURL: (coverImageURL: string) => void;
+  image: string;
+  setImage: (image: string) => void;
 }
 
 const coverImageMenuItems: MenuItem[] = [
@@ -32,10 +32,7 @@ const coverImageMenuItems: MenuItem[] = [
   },
 ];
 
-export default function CoverImageMenu({
-  coverImageURL,
-  setCoverImageURL,
-}: Props) {
+export default function CoverImageMenu({ image, setImage }: Props) {
   const [selectedMenuItem, setSelectedMenuItem] = useState(
     coverImageMenuItems[0]
   );
@@ -77,7 +74,7 @@ export default function CoverImageMenu({
         .then((url) => {
           if (!!url) {
             setIsUploading(false);
-            setCoverImageURL(url);
+            setImage(url);
           } else {
             console.error('upload error');
           }
@@ -125,7 +122,7 @@ export default function CoverImageMenu({
         setSelected={setSelectedMenuItem}
       />
 
-      {!coverImageURL && selectedMenuItem.title === 'Upload' && (
+      {!image && selectedMenuItem.title === 'Upload' && (
         <div className="mt-4">
           <span className="block text-sm font-medium leading-6 text-gray-900">
             Cover Image / Upload
@@ -175,7 +172,7 @@ export default function CoverImageMenu({
         </div>
       )}
 
-      {!coverImageURL && selectedMenuItem.title === 'Stock Images' && (
+      {!image && selectedMenuItem.title === 'Stock Images' && (
         <>
           <span className="mt-4 block text-sm font-medium leading-6 text-gray-900">
             Cover Image / Search From Stock Images
@@ -218,7 +215,7 @@ export default function CoverImageMenu({
                     stockImageURL={url}
                     showModalIndex={showModalIndex}
                     setShowModalIndex={setShowModalIndex}
-                    setSelectedStockImageURL={setCoverImageURL}
+                    setSelectedStockImageURL={setImage}
                   >
                     <div className="aspect-h-4 aspect-w-5">
                       <img
@@ -271,14 +268,14 @@ export default function CoverImageMenu({
               placeholder="https://"
               autoFocus
               className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
-              value={coverImageURL}
-              onChange={(e) => setCoverImageURL(e.target.value)}
+              value={image}
+              onChange={(e) => setImage(e.target.value)}
             />
           </div>
         </div>
       )}
 
-      {!!coverImageURL && (
+      {!!image && (
         <div className="mt-4">
           <span className="block text-sm font-medium leading-6 text-gray-900">
             Cover Image / Selected Image
@@ -287,14 +284,14 @@ export default function CoverImageMenu({
           <div className="mt-2 flex justify-center rounded-lg border border-gray-300 px-4 py-4">
             <div className="text-center">
               <img
-                src={coverImageURL}
+                src={image}
                 alt="Cover image"
                 className="mx-auto h-40 w-52 object-cover rounded-md"
               />
               <button
                 type="button"
                 className="mt-4 rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                onClick={() => setCoverImageURL('')}
+                onClick={() => setImage('')}
               >
                 Change
               </button>

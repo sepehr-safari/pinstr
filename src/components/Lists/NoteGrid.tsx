@@ -6,67 +6,67 @@ const people = [
   {
     name: 'Michael Foster',
     email: 'michael@foster.com',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
   {
     name: 'Michael Foster',
     email: 'michael@foster.com',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
   {
     name: 'Michael Foster',
     email: 'michael@foster.com',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
   {
     name: 'Michael Foster',
     email: 'michael@foster.com',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
   {
     name: 'Michael Foster',
     email: 'michael@foster.com',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
   {
     name: 'Michael Foster',
     email: 'michael@foster.com',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
   {
     name: 'Michael Foster',
     email: 'michael@foster.com',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
   {
     name: 'Michael Foster',
     email: 'michael@foster.com',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
   {
     name: 'Michael Foster',
     email: 'michael@foster.com',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
   {
     name: 'Michael Foster',
     email: 'michael@foster.com',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
   {
     name: 'Michael Foster',
     email: 'michael@foster.com',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
   {
     name: 'Michael Foster',
     email: 'michael@foster.com',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
   {
     name: 'Michael Foster',
     email: 'michael@foster.com',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
 ];
 
@@ -97,7 +97,7 @@ export default function NoteGrid() {
               </div>
               <img
                 className="h-12 w-12 flex-shrink-0 rounded-full object-cover object-center bg-gray-300"
-                src={person.imageUrl}
+                src={person.image}
                 alt=""
               />
             </div>

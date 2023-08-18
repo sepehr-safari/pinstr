@@ -7,67 +7,67 @@ const people = [
   {
     name: 'Michael Foster',
     role: 'Co-Founder / CTO',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
   {
     name: 'Michael Foster',
     role: 'Co-Founder / CTO',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
   {
     name: 'Michael Foster',
     role: 'Co-Founder / CTO',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
   {
     name: 'Michael Foster',
     role: 'Co-Founder / CTO',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
   {
     name: 'Michael Foster',
     role: 'Co-Founder / CTO',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
   {
     name: 'Michael Foster',
     role: 'Co-Founder / CTO',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
   {
     name: 'Michael Foster',
     role: 'Co-Founder / CTO',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
   {
     name: 'Michael Foster',
     role: 'Co-Founder / CTO',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
   {
     name: 'Michael Foster',
     role: 'Co-Founder / CTO',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
   {
     name: 'Michael Foster',
     role: 'Co-Founder / CTO',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
   {
     name: 'Michael Foster',
     role: 'Co-Founder / CTO',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
   {
     name: 'Michael Foster',
     role: 'Co-Founder / CTO',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
   {
     name: 'Michael Foster',
     role: 'Co-Founder / CTO',
-    imageUrl: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
+    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
   },
 ];
 
@@ -99,7 +99,7 @@ export default function PeopleGrid() {
               <div className="mx-auto rounded-full bg-gray-300 z-[1]">
                 <img
                   className="aspect-1 w-24 h-24 rounded-full object-cover object-center ease-in-out duration-500 group-hover:-translate-y-1 group-hover:scale-110 group-hover:shadow-md"
-                  src={person.imageUrl}
+                  src={person.image}
                   alt=""
                 />
               </div>
@@ -166,7 +166,7 @@ export default function PeopleGrid() {
                     <div className="mx-auto rounded-full bg-gray-300 z-[1]">
                       <img
                         className="aspect-1 w-24 h-24 rounded-full object-cover object-center"
-                        src={person.imageUrl}
+                        src={person.image}
                         alt=""
                       />
                     </div>

@@ -24,7 +24,7 @@ export default function LinkGrid({ urls }: { urls: any[] }) {
             >
               <img
                 className="h-20 w-20 flex-shrink-0 rounded-ss-md object-cover object-center bg-gray-300"
-                src={url.imageUrl}
+                src={url.image}
                 alt=""
               />
               <div className="flex-1 truncate px-4">
@@ -72,7 +72,7 @@ export default function LinkGrid({ urls }: { urls: any[] }) {
                 <div className="rounded-lg shadow-md bg-white">
                   <img
                     className="w-full object-cover object-center aspect-1 rounded-t-lg"
-                    src={url.imageUrl}
+                    src={url.image}
                     alt=""
                   />
                   <div className="p-4">
