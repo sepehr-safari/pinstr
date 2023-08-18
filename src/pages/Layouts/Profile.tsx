@@ -32,7 +32,7 @@ export default function Profile() {
               and dedicated
             </span>
 
-            <button className="mt-4 inline-flex justify-center items-center rounded-full bg-gray-800 px-8 py-3 text-xs font-semibold text-white shadow-sm hover:opacity-80">
+            <button className="mt-4 inline-flex justify-center items-center rounded-full bg-gray-900 px-8 py-3 text-xs font-semibold text-gray-50 shadow-sm hover:bg-gray-700">
               <PlusIcon className="-ml-1 w-4 h-4" />
               <span className="ml-1">Follow</span>
             </button>
