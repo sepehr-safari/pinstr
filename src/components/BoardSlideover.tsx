@@ -1,8 +1,8 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 
-import { BoardTypes } from '@/components';
 import { CategoryMenu, CoverImageMenu } from '@/components/Menus';
+import { SelectableBoardTypes } from '@/components/SelectableBoardTypes';
 import { useMutateBoard } from '@/hooks';
 
 type Props = {
@@ -14,7 +14,7 @@ type Props = {
     description?: string;
     coverImageURL?: string;
     category?: string;
-    boardType?: string;
+    type?: string;
     tags?: string[];
     pins?: string[][];
   };
@@ -24,7 +24,7 @@ export default function BoardSlideover({ open, setOpen, initialState }: Props) {
   const {
     title,
     description,
-    boardType,
+    type,
     category,
     tags,
     coverImageURL,
@@ -69,10 +69,10 @@ export default function BoardSlideover({ open, setOpen, initialState }: Props) {
                         <div className="flex items-center justify-between">
                           <Dialog.Title className="text-base font-semibold leading-6 text-white">
                             {!initialState ? (
-                              !boardType.value ? (
+                              !type.value ? (
                                 <span>Create a new board</span>
                               ) : (
-                                <span>{boardType.value.title}</span>
+                                <span>{type.value.title}</span>
                               )
                             ) : (
                               <span>Edit your board</span>
@@ -82,7 +82,7 @@ export default function BoardSlideover({ open, setOpen, initialState }: Props) {
                         <div className="mt-1">
                           <p className="text-sm font-light text-gray-300">
                             {!initialState ? (
-                              !boardType.value ? (
+                              !type.value ? (
                                 <span>
                                   Get started by choosing a board type.
                                 </span>
@@ -101,9 +101,11 @@ export default function BoardSlideover({ open, setOpen, initialState }: Props) {
                         </div>
                       </div>
 
-                      {!boardType.value ? (
+                      {!type.value ? (
                         <div className="p-6">
-                          <BoardTypes setSelectedBoardType={boardType.set} />
+                          <SelectableBoardTypes
+                            setSelectedBoardType={type.set}
+                          />
                         </div>
                       ) : (
                         <div className="flex flex-1 flex-col justify-between">
@@ -283,13 +285,13 @@ export default function BoardSlideover({ open, setOpen, initialState }: Props) {
                         </button>
                       </div>
 
-                      {boardType.value && (
+                      {type.value && (
                         <div className="flex">
                           {!initialState ? (
                             <>
                               <button
                                 type="button"
-                                onClick={() => boardType.set(null)}
+                                onClick={() => type.set(null)}
                                 className="flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                               >
                                 <span aria-hidden="true">&larr;</span>

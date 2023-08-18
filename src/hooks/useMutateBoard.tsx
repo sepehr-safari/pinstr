@@ -4,9 +4,12 @@ import { useNavigate } from 'react-router-dom';
 
 import { usePublish } from '@/hooks';
 
-import { BoardType, boardTypes } from '@/components';
 import { categories } from '@/components/Menus/CategoryMenu';
 import { MenuItem } from '@/components/Menus/MenuTemplate.types';
+import {
+  SelectableBoardTypeItem,
+  selectableBoardTypeItems,
+} from '@/components/SelectableBoardTypes';
 
 export default function useMutateBoard({
   onSuccess,
@@ -19,7 +22,7 @@ export default function useMutateBoard({
     description?: string;
     coverImageURL?: string;
     category?: string;
-    boardType?: string;
+    type?: string;
     tags?: string[];
     pins?: string[][];
   };
@@ -39,11 +42,13 @@ export default function useMutateBoard({
       ? categories.find((c) => c.title === initialState.category) || null
       : null
   );
-  const [selectedBoardType, setSelectedBoardType] = useState<BoardType | null>(
-    initialState.boardType
-      ? boardTypes.find((b) => b.type === initialState.boardType) || null
-      : null
-  );
+  const [selectedBoardType, setSelectedBoardType] =
+    useState<SelectableBoardTypeItem | null>(
+      initialState.type
+        ? selectableBoardTypeItems.find((b) => b.type === initialState.type) ||
+            null
+        : null
+    );
   const [tags, setTags] = useState<string[]>(initialState.tags || []);
   const [pins, setPins] = useState<string[][]>(initialState.pins || []);
 
@@ -101,7 +106,7 @@ export default function useMutateBoard({
   }, [publishBoard, deleteBoard, title, initialState.title]);
 
   return {
-    boardType: {
+    type: {
       value: selectedBoardType,
       set: setSelectedBoardType,
     },

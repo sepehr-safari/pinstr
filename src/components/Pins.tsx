@@ -175,7 +175,7 @@ export default function Pins() {
                       description: board.description,
                       coverImageURL: board.image,
                       category: board.category,
-                      boardType: board.type,
+                      type: board.type,
                       pins: [], // TODO: Replace with real data
                     }}
                   />

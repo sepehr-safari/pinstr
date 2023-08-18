@@ -9,7 +9,7 @@ import {
 
 import { joinClassNames } from '@/utils';
 
-export interface BoardType {
+export interface SelectableBoardTypeItem {
   id: number;
   title: string;
   description: string;
@@ -20,10 +20,10 @@ export interface BoardType {
 }
 
 type Props = {
-  setSelectedBoardType: (boardType: BoardType) => void;
+  setSelectedBoardType: (boardTypeMenuItem: SelectableBoardTypeItem) => void;
 };
 
-export const boardTypes: BoardType[] = [
+export const selectableBoardTypeItems: SelectableBoardTypeItem[] = [
   {
     id: 1,
     title: 'Create a new board of plain texts',
@@ -80,33 +80,35 @@ export const boardTypes: BoardType[] = [
   },
 ];
 
-export function BoardTypes({ setSelectedBoardType }: Props) {
+export function SelectableBoardTypes({ setSelectedBoardType }: Props) {
   return (
     <ul role="list" className="grid grid-cols-1 gap-6">
-      {boardTypes.map((boardType) => (
-        <li key={boardType.id} className="flow-root">
+      {selectableBoardTypeItems.map((selectableBoardTypeItem) => (
+        <li key={selectableBoardTypeItem.id} className="flow-root">
           <div className="relative -m-2 flex items-center space-x-4 rounded-xl p-2 focus-within:ring-2 focus-within:ring-gray-500 hover:bg-gray-100 hover:cursor-pointer">
             <div
               className={joinClassNames(
-                boardType.background,
+                selectableBoardTypeItem.background,
                 'flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-lg'
               )}
             >
-              <boardType.icon
+              <selectableBoardTypeItem.icon
                 className="h-8 w-8 text-white"
                 aria-hidden="true"
               />
             </div>
             <div>
               <h3 className="text-sm font-medium text-gray-900">
-                <div onClick={() => setSelectedBoardType(boardType)}>
+                <div
+                  onClick={() => setSelectedBoardType(selectableBoardTypeItem)}
+                >
                   <span className="absolute inset-0" aria-hidden="true" />
-                  <span>{boardType.title}</span>
+                  <span>{selectableBoardTypeItem.title}</span>
                   <span aria-hidden="true"> &rarr;</span>
                 </div>
               </h3>
               <p className="mt-1 text-sm text-gray-500">
-                {boardType.description}
+                {selectableBoardTypeItem.description}
               </p>
             </div>
           </div>

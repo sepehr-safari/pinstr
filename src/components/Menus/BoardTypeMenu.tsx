@@ -4,7 +4,7 @@ import { MenuTemplate } from '@/components/Menus';
 
 import { MenuItem } from './MenuTemplate.types';
 
-const boardTypeItems: MenuItem[] = [
+const boardTypeMenuItems: MenuItem[] = [
   {
     title: 'All Board Types',
   },
@@ -36,13 +36,13 @@ export default function BoardTypeMenu({
   setSelected: (item: MenuItem) => void;
 }) {
   useEffect(() => {
-    setSelected(boardTypeItems[0]);
+    setSelected(boardTypeMenuItems[0]);
   }, []);
 
   return (
     <>
       <MenuTemplate
-        items={boardTypeItems}
+        items={boardTypeMenuItems}
         selected={selected}
         setSelected={setSelected}
       />
