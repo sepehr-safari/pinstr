@@ -9,9 +9,11 @@ export default function Home() {
 
   return (
     <>
-      <FiltersNavbar />
-      <div className="p-4 sm:p-6">
-        <Boards fullWidth />
+      <div className="mx-auto max-w-screen-4xl">
+        <FiltersNavbar />
+        <div className="p-4 sm:p-6">
+          <Boards fullWidth />
+        </div>
       </div>
     </>
   );

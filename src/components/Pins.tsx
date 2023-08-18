@@ -142,8 +142,8 @@ export default function Pins() {
 
   return (
     <>
-      <div className="gap-8 flex flex-col lg:flex-row">
-        <div className="mx-auto lg:mx-0">
+      <div className="gap-8 flex flex-col xl:flex-row">
+        <div className="mx-auto xl:mx-0">
           <div className="w-64 aspect-w-5 aspect-h-4 rounded-md bg-gray-200">
             <img
               src={`https://source.unsplash.com/random/?${title}&sig=${Math.random()}`}
@@ -152,14 +152,14 @@ export default function Pins() {
             />
           </div>
         </div>
-        <div className="w-full flex flex-col justify-between items-center lg:items-start">
+        <div className="w-full flex flex-col justify-between items-center xl:items-start">
           <div className="w-full">
-            <div className="flex gap-4 flex-col lg:flex-row w-full items-center text-xl font-bold tracking-tight text-gray-900 text-center lg:text-start lg:items-start xl:text-2xl">
+            <div className="flex gap-4 flex-col xl:flex-row w-full items-center text-xl font-bold tracking-tight text-gray-900 text-center xl:text-start xl:items-start xl:text-2xl">
               <h2 className="w-2/3">{title}</h2>
 
               {selfBoard && (
                 <>
-                  <div className="lg:ml-auto">
+                  <div className="xl:ml-auto">
                     <button
                       type="button"
                       className="rounded-md bg-gray-900 px-3 py-2 text-xs font-semibold text-gray-50 ring-1 ring-inset ring-gray-900 hover:bg-gray-700 hover:text-gray-50"
@@ -190,7 +190,7 @@ export default function Pins() {
               )}
             </div>
 
-            <div className="mt-4 inline-flex w-full justify-center items-center gap-1 text-xs font-light text-gray-400 lg:gap-2 lg:justify-start lg:mt-2">
+            <div className="mt-4 inline-flex w-full justify-center items-center gap-1 text-xs font-light text-gray-400 xl:gap-2 xl:justify-start xl:mt-2">
               <span>18 days ago</span>
               <span>|</span>
               <span className="flex items-center">
@@ -201,7 +201,7 @@ export default function Pins() {
             </div>
 
             {board.tags.length > 0 && (
-              <div className="mt-2 flex justify-center gap-4 flex-wrap lg:justify-start">
+              <div className="mt-2 flex justify-center gap-4 flex-wrap xl:justify-start">
                 {board.tags.map((tag, index) => (
                   <Link
                     to={`/t/${tag}`}
@@ -215,11 +215,11 @@ export default function Pins() {
             )}
           </div>
 
-          <div className="mt-4 flex duration-200 text-sm font-light text-gray-500 text-center max-w-screen-sm lg:max-w-none lg:text-justify lg:mt-auto">
+          <div className="mt-4 flex duration-200 text-sm font-light text-gray-500 text-center max-w-screen-sm xl:max-w-none xl:text-justify xl:mt-auto">
             {board.description}
           </div>
 
-          <div className="mt-4 flex gap-4 lg:mt-auto">
+          <div className="mt-4 flex gap-4 xl:mt-auto">
             <button className="inline-flex justify-center items-center rounded-md bg-gray-100 ring-1 ring-gray-300 px-4 py-2 text-xs font-semibold text-gray-500 hover:shadow-md hover:text-gray-800">
               <HandThumbUpIcon className="mr-2 h-4 w-4" />
               <span className="">21</span>

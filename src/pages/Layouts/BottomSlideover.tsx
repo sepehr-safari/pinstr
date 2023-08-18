@@ -40,7 +40,7 @@ export default function BottomSlideover() {
               >
                 <Dialog.Panel className="pointer-events-auto w-full transition-transform duration-500 ease-out">
                   <div className="flex h-full w-full flex-col bg-white pt-6 shadow-xl rounded-t-md">
-                    <div className="-mt-6 pt-16">
+                    <div className="-mt-6 pt-16 min-h-full">
                       <Outlet />
                     </div>
                   </div>
