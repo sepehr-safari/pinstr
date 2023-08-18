@@ -162,14 +162,14 @@ export default function Pins() {
                   <div className="lg:ml-auto">
                     <button
                       type="button"
-                      className="rounded-md bg-gray-900 px-3 py-1.5 text-xs font-semibold text-gray-50 ring-1 ring-inset ring-gray-900 hover:bg-gray-700 hover:text-gray-50"
+                      className="rounded-md bg-gray-900 px-3 py-2 text-xs font-semibold text-gray-50 ring-1 ring-inset ring-gray-900 hover:bg-gray-700 hover:text-gray-50"
                       onClick={() => setOpenBoardSlideover(true)}
                     >
                       Edit Board
                     </button>
                     <button
                       type="button"
-                      className="ml-2 rounded-md bg-gray-900 px-3 py-1.5 text-xs font-semibold text-gray-50 ring-1 ring-inset ring-gray-900 hover:bg-gray-700 hover:text-gray-50"
+                      className="ml-2 rounded-md bg-gray-900 px-3 py-2 text-xs font-semibold text-gray-50 ring-1 ring-inset ring-gray-900 hover:bg-gray-700 hover:text-gray-50"
                       onClick={() => setOpenPinSlideover(true)}
                     >
                       Add Pin

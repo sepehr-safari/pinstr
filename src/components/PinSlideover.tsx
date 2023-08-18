@@ -316,7 +316,7 @@ export default function PinSlideover({ open, setOpen, initialBoard }: Props) {
                       <div>
                         <button
                           type="button"
-                          className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                          className="rounded-md bg-white px-3 py-2 text-xs font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                           onClick={() => setOpen(false)}
                         >
                           Cancel
@@ -340,7 +340,7 @@ export default function PinSlideover({ open, setOpen, initialBoard }: Props) {
                                   pins.set([]);
                                   headers.set([]);
                                 }}
-                                className="flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                className="flex items-center rounded-md bg-white px-3 py-2 text-xs font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                               >
                                 <span aria-hidden="true">&larr;</span>
                                 <span className="ml-2">Back</span>
@@ -348,7 +348,7 @@ export default function PinSlideover({ open, setOpen, initialBoard }: Props) {
                               <button
                                 type="button"
                                 onClick={publishBoard}
-                                className="ml-4 inline-flex justify-center rounded-md bg-gray-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
+                                className="ml-4 inline-flex justify-center rounded-md bg-gray-800 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
                               >
                                 Add Pin
                               </button>
@@ -357,7 +357,7 @@ export default function PinSlideover({ open, setOpen, initialBoard }: Props) {
                             <button
                               type="button"
                               onClick={updateBoard}
-                              className="ml-4 inline-flex justify-center rounded-md bg-gray-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
+                              className="ml-4 inline-flex justify-center rounded-md bg-gray-800 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
                             >
                               Update Pin
                             </button>
