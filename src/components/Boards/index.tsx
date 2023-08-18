@@ -165,8 +165,8 @@ export default function Boards({
               : 'xl:grid-cols-2 2xl:grid-cols-3'
           )}
         >
-          {boards.concat(boards).map((board) => (
-            <BoardItem board={board} key={board.id} noAuthor={noAuthor} />
+          {boards.concat(boards).map((board, index) => (
+            <BoardItem board={board} key={index} noAuthor={noAuthor} />
           ))}
         </div>
       </div>
