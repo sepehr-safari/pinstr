@@ -1,11 +1,32 @@
 const Footer = () => {
   return (
-    <footer className="fixed z-10 bottom-0 left-0 right-0 flex items-center px-4 py-2 text-xs font-semibold border-t-[1px] border-gray-300 bg-white">
-      <span>
-        Made with <span className="text-red-500">♥</span> by Sepehr
-      </span>
+    <footer className="fixed z-10 bottom-0 left-0 right-0 flex items-center px-4 py-1 text-gray-500 text-[0.66rem] font-semibold border-t-[1px] border-gray-300 bg-white md:text-xs">
+      <div className="flex flex-col gap-1 items-center md:flex-row">
+        <a
+          href="https://primal.net/profile/npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7"
+          target="_blank"
+          rel="noreferrer"
+          className="hover:underline hover:text-gray-900"
+        >
+          Made with <span className="text-red-500">♥️</span> by Sepehr
+        </a>
 
-      <div className="ml-auto flex items-center text-gray-500">
+        <span className="text-gray-200 mx-2 cursor-default hidden md:block">
+          |
+        </span>
+
+        <a
+          href="https://opensats.org/blog/nostr-grants-july-2023"
+          target="_blank"
+          rel="noreferrer"
+          className="hover:underline hover:text-gray-900"
+        >
+          Supported with <span className="text-yellow-500">⚡️</span> by
+          OpenSats
+        </a>
+      </div>
+
+      <div className="ml-auto flex flex-col gap-1 items-center md:flex-row">
         <a
           href="https://nostr.com"
           target="_blank"
@@ -15,13 +36,15 @@ const Footer = () => {
           What is nostr?
         </a>
 
-        <span className="text-gray-200 ml-4 cursor-default">|</span>
+        <span className="text-gray-200 mx-2 cursor-default hidden md:block">
+          |
+        </span>
 
         <a
           href="https://github.com/sepehr-safari/pinstr"
           target="_blank"
           rel="noreferrer"
-          className="ml-4 flex items-center hover:text-gray-900 hover:underline"
+          className="flex items-center hover:text-gray-900 hover:underline"
         >
           Github
           <svg
