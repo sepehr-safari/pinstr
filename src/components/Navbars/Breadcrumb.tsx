@@ -6,7 +6,7 @@ export default function Breadcrumb() {
 
   return (
     <nav
-      className="flex justify-center lg:justify-start"
+      className="flex justify-center xl:justify-start"
       aria-label="Breadcrumb"
     >
       <ol role="list" className="flex items-center space-x-1">
