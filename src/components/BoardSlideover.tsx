@@ -4,34 +4,26 @@ import { Fragment } from 'react';
 import { CategoryMenu, CoverImageMenu } from '@/components/Menus';
 import { SelectableBoardTypes } from '@/components/SelectableBoardTypes';
 import { useMutateBoard } from '@/hooks';
+import { Board } from '@/types';
 
 type Props = {
   open: boolean;
   setOpen: (state: boolean) => void;
-  initialState?: {
-    id?: string;
-    title?: string;
-    description?: string;
-    coverImageURL?: string;
-    category?: string;
-    type?: string;
-    tags?: string[];
-    pins?: string[][];
-  };
+  initialBoard?: Board;
 };
 
-export default function BoardSlideover({ open, setOpen, initialState }: Props) {
+export default function BoardSlideover({ open, setOpen, initialBoard }: Props) {
   const {
     title,
     description,
     type,
     category,
     tags,
-    coverImageURL,
+    image,
     publishBoard,
     updateBoard,
     deleteBoard,
-  } = useMutateBoard({ onSuccess: () => setOpen(false), initialState });
+  } = useMutateBoard({ onSuccess: () => setOpen(false), initialBoard });
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -68,7 +60,7 @@ export default function BoardSlideover({ open, setOpen, initialState }: Props) {
                       <div className="bg-gray-800 px-4 py-6 sm:px-6">
                         <div className="flex items-center justify-between">
                           <Dialog.Title className="text-base font-semibold leading-6 text-white">
-                            {!initialState ? (
+                            {!initialBoard ? (
                               !type.value ? (
                                 <span>Create a new board</span>
                               ) : (
@@ -81,7 +73,7 @@ export default function BoardSlideover({ open, setOpen, initialState }: Props) {
                         </div>
                         <div className="mt-1">
                           <p className="text-sm font-light text-gray-300">
-                            {!initialState ? (
+                            {!initialBoard ? (
                               !type.value ? (
                                 <span>
                                   Get started by choosing a board type.
@@ -239,13 +231,13 @@ export default function BoardSlideover({ open, setOpen, initialState }: Props) {
                                 </span>
                                 <div className="mt-2">
                                   <CoverImageMenu
-                                    coverImageURL={coverImageURL.value}
-                                    setCoverImageURL={coverImageURL.set}
+                                    image={image.value}
+                                    setImage={image.set}
                                   />
                                 </div>
                               </div>
 
-                              {initialState && (
+                              {initialBoard && (
                                 <div className="py-6">
                                   <div className="flex flex-col rounded-md border border-dashed border-red-300">
                                     <div className="w-full bg-red-50 shadow-inner px-4 py-2 border-b border-red-100 rounded-t-md">
@@ -287,7 +279,7 @@ export default function BoardSlideover({ open, setOpen, initialState }: Props) {
 
                       {type.value && (
                         <div className="flex">
-                          {!initialState ? (
+                          {!initialBoard ? (
                             <>
                               <button
                                 type="button"

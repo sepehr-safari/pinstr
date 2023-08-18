@@ -7,7 +7,7 @@ import { nip19 } from 'nostr-tools';
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
-import { BoardSlideover } from '@/components';
+import { BoardSlideover, PinSlideover } from '@/components';
 import {
   LinkGrid,
   NoteGrid,
@@ -132,7 +132,8 @@ const bookUrls = [
 ];
 
 export default function Pins() {
-  const [open, setOpen] = useState(false);
+  const [openBoardSlideover, setOpenBoardSlideover] = useState(false);
+  const [openPinSlideover, setOpenPinSlideover] = useState(false);
   const { npub, title } = useParams();
   const { user } = useUser();
   const selfBoard = user ? nip19.npubEncode(user.pubkey) === npub : false;
@@ -153,35 +154,41 @@ export default function Pins() {
         </div>
         <div className="w-full flex flex-col justify-between items-center lg:items-start">
           <div className="w-full">
-            <h2 className="flex gap-4 flex-col lg:flex-row w-full items-center text-xl font-bold tracking-tight text-gray-900 text-center lg:text-start lg:items-start xl:text-2xl">
-              <span className="w-8/12 ">{title}</span>
+            <div className="flex gap-4 flex-col lg:flex-row w-full items-center text-xl font-bold tracking-tight text-gray-900 text-center lg:text-start lg:items-start xl:text-2xl">
+              <h2 className="w-2/3">{title}</h2>
 
               {selfBoard && (
                 <>
-                  <button
-                    type="button"
-                    className="rounded-md bg-white px-3 py-2 text-xs font-semibold text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 hover:text-gray-800 lg:ml-auto"
-                    onClick={() => setOpen(true)}
-                  >
-                    Edit Board
-                  </button>
+                  <div className="lg:ml-auto">
+                    <button
+                      type="button"
+                      className="rounded-md bg-gray-900 px-3 py-1.5 text-xs font-semibold text-gray-50 ring-1 ring-inset ring-gray-900 hover:bg-gray-700 hover:text-gray-50"
+                      onClick={() => setOpenBoardSlideover(true)}
+                    >
+                      Edit Board
+                    </button>
+                    <button
+                      type="button"
+                      className="ml-2 rounded-md bg-gray-900 px-3 py-1.5 text-xs font-semibold text-gray-50 ring-1 ring-inset ring-gray-900 hover:bg-gray-700 hover:text-gray-50"
+                      onClick={() => setOpenPinSlideover(true)}
+                    >
+                      Add Pin
+                    </button>
+                  </div>
 
                   <BoardSlideover
-                    open={open}
-                    setOpen={setOpen}
-                    initialState={{
-                      title,
-                      tags: board.tags,
-                      description: board.description,
-                      coverImageURL: board.image,
-                      category: board.category,
-                      type: board.type,
-                      pins: [], // TODO: Replace with real data
-                    }}
+                    open={openBoardSlideover}
+                    setOpen={setOpenBoardSlideover}
+                    initialBoard={board}
+                  />
+                  <PinSlideover
+                    open={openPinSlideover}
+                    setOpen={setOpenPinSlideover}
+                    initialBoard={board}
                   />
                 </>
               )}
-            </h2>
+            </div>
 
             <div className="mt-4 inline-flex w-full justify-center items-center gap-1 text-xs font-light text-gray-400 lg:gap-2 lg:justify-start lg:mt-2">
               <span>18 days ago</span>
