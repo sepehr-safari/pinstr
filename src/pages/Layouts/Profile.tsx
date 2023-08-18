@@ -15,7 +15,7 @@ export default function Profile() {
           />
         </div>
 
-        <div className="mt-0 overflow-hidden bg-white shadow rounded-none w-full z-[1] xl:ml-12 xl:-mt-20 xl:w-72 xl:absolute xl:rounded-md">
+        <div className="mt-0 overflow-hidden bg-white shadow rounded-none w-full z-[1] xl:ml-12 xl:-mt-20 xl:w-80 xl:absolute xl:rounded-md">
           <div className="px-6 py-10 flex flex-col items-center">
             <img
               className="-mt-20 h-28 w-28 object-cover object-center rounded-full absolute z-[2] xl:static xl:mt-0"
@@ -48,7 +48,7 @@ export default function Profile() {
           </div>
         </div>
 
-        <div className="w-full bg-gray-100 px-6 pb-16 pt-8 xl:pl-[24rem] xl:pr-12">
+        <div className="w-full bg-gray-100 px-6 pb-16 pt-8 xl:pl-[26rem] xl:pr-12">
           <div className="pb-8">
             <Breadcrumb />
           </div>
