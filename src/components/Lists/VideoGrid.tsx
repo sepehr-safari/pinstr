@@ -41,7 +41,7 @@ export default function VideoGrid() {
   return (
     <ul
       role="list"
-      className="mt-16 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 xl:gap-x-8 2xl:grid-cols-3 3xl:grid-cols-4"
+      className="mt-14 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 xl:gap-x-8 2xl:grid-cols-3 3xl:grid-cols-4"
     >
       {videos.map((video, index) => (
         <li
@@ -49,7 +49,7 @@ export default function VideoGrid() {
           className="p-2 group relative rounded-lg hover:bg-gray-50 ease-in-out duration-500 hover:shadow-md"
         >
           <div className="ease-in-out duration-700">
-            <div className="aspect-h-7 aspect-w-10 block w-full overflow-hidden rounded-md bg-gray-100">
+            <div className="aspect-h-7 aspect-w-10 block w-full overflow-hidden rounded-md bg-gray-200">
               {video.isEmbedded ? (
                 <iframe className="object-cover" src={video.source} />
               ) : (

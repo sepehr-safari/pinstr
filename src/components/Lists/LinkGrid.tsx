@@ -10,7 +10,7 @@ export default function LinkGrid({ urls }: { urls: any[] }) {
     <>
       <ul
         role="list"
-        className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4"
+        className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4"
       >
         {urls.map((url, index) => (
           <li
