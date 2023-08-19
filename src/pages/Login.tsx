@@ -22,7 +22,7 @@ export const Login = () => {
             <div>
               <Link to="/" className="inline-flex items-center group">
                 <img
-                  className="h-10 w-auto bg-gray-100 text-gray-100"
+                  className="h-10 rounded-md w-auto bg-gray-100 text-gray-100"
                   src="/assets/pinstr.png"
                   alt="Pinstr Logo"
                 />
@@ -113,9 +113,12 @@ export const Login = () => {
                   Don't have an extension?{' '}
                   <a
                     href="https://getalby.com/"
-                    className="font-light text-blue-600 hover:text-blue-500 hover:underline"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="group font-light text-blue-600 hover:text-blue-500 hover:underline"
                   >
-                    get yours from Alby
+                    Get yours from Alby
+                    <span> &rarr;</span>
                   </a>
                 </p>
               </div>
