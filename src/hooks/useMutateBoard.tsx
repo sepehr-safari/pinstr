@@ -60,7 +60,7 @@ export const useMutateBoard = ({
           : ['headers', ...type.headers],
         ...tags
           .filter((t, i, a) => t.length > 0 && a.indexOf(t) === i)
-          .map((t) => ['tag', t]),
+          .map((t) => ['t', t]),
         ...pins.map((p) => ['pin', ...p]),
       ],
     }).then((event) => {
