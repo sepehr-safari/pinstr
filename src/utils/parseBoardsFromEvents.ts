@@ -59,6 +59,7 @@ export const parseBoardsFromEvents = (events: Event[]) => {
 
     boards.push({
       id: event.id,
+      timestamp: event.created_at,
       author: { pubkey: event.pubkey },
       title,
       image,

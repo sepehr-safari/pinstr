@@ -2,6 +2,7 @@ export type Pin = string[];
 
 export interface Board {
   id: string;
+  timestamp: number;
   title: string;
   author: {
     pubkey: string;
