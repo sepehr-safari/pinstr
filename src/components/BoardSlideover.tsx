@@ -5,6 +5,7 @@ import { CategoryMenu, CoverImageMenu } from '@/components/Menus';
 import { SelectableBoardTypes } from '@/components/SelectableBoardTypes';
 import { useMutateBoard } from '@/hooks';
 import { Board } from '@/types';
+import { capitalizeFirstLetter } from '@/utils';
 
 type Props = {
   open: boolean;
@@ -199,6 +200,7 @@ export default function BoardSlideover({ open, setOpen, initialBoard }: Props) {
                                               .filter(
                                                 (t, i, a) => a.indexOf(t) === i
                                               )
+                                              .map(capitalizeFirstLetter)
                                           : []
                                       )
                                     }

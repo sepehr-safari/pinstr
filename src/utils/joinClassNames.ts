@@ -1,3 +1,1 @@
-const joinClassNames = (...classes: string[]) => classes.join(' ');
-
-export default joinClassNames;
+export const joinClassNames = (...classes: string[]) => classes.join(' ');
