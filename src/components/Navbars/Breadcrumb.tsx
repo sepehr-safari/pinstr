@@ -1,8 +1,14 @@
 import { HomeIcon } from '@heroicons/react/20/solid';
+import { nip19 } from 'nostr-tools';
 import { Link, useParams } from 'react-router-dom';
+
+import { useAuthors } from '@/queries';
 
 export default function Breadcrumb() {
   const { npub, title } = useParams();
+  const hex = npub ? nip19.decode(npub).data.toString() : null;
+  const { authors } = useAuthors({ authors: [hex!], enabled: !!hex });
+  const hasAuthor = !!authors && !!authors.length;
 
   return (
     <nav
@@ -18,7 +24,7 @@ export default function Breadcrumb() {
             </Link>
           </div>
         </li>
-        {!!npub && (
+        {hasAuthor && (
           <li>
             <div className="flex items-center max-w-[12rem] md:max-w-xs">
               <svg
@@ -33,7 +39,7 @@ export default function Breadcrumb() {
                 to={'/p/' + npub}
                 className="ml-1 truncate text-xs font-light text-gray-400 hover:text-gray-700"
               >
-                {npub}
+                {authors[0].displayName}
               </Link>
             </div>
           </li>
