@@ -25,6 +25,7 @@ export interface Author {
   about: string;
   banner: string;
   lud06: string;
+  lud16: string;
   website: string;
   npub: string;
 }

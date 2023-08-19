@@ -12,6 +12,7 @@ const parseAuthorsFromEvents = (events: Event[]) => {
       banner: eventContent.banner || '',
       hexPubkey: event.pubkey || '',
       lud06: eventContent.lud06 || '',
+      lud16: eventContent.lud16 || '',
       name: eventContent.name || '',
       nip05: eventContent.nip05 || '',
       picture: eventContent.picture || '',
