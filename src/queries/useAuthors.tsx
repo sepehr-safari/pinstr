@@ -25,7 +25,6 @@ export default function useAuthors(options?: {
     },
     refetchOnWindowFocus: false,
     enabled: options?.enabled && !!pool && !!relays,
-    refetchOnMount: false,
   });
 
   return { isAuthorsLoading: isLoading, authorsError: error, authors: data };
