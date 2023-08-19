@@ -4,7 +4,7 @@ import { FiltersNavbar } from '@/components/Navbars';
 import { useBoards } from '@/queries';
 
 export const Home = () => {
-  const { data } = useBoards();
+  const { data } = useBoards({});
   console.log(data);
 
   return (

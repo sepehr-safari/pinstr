@@ -5,9 +5,14 @@ import { useAuthors } from '@/queries';
 import { useLocalState } from '@/store';
 import { parseBoardsFromEvents } from '@/utils';
 
-export const useBoards = (variables?: {
-  authors?: string[];
-  title?: string;
+export const useBoards = ({
+  authors = null,
+  title = null,
+  enabled = true,
+}: {
+  authors?: string[] | null;
+  title?: string | null;
+  enabled?: boolean;
 }) => {
   const queryClient = useQueryClient();
   const { pool, relays } = useLocalState((state) => state);
@@ -17,14 +22,14 @@ export const useBoards = (variables?: {
     error,
     data: boards,
   } = useQuery({
-    queryKey: ['nostr', 'boards', variables],
+    queryKey: ['nostr', 'boards', { authors, title }],
     queryFn: async () => {
       const filter = { kinds: [33889 as number], limit: 10 } as Filter;
-      if (variables && !!variables.authors && variables.authors.length > 0) {
-        filter.authors = variables.authors;
+      if (authors && authors.length > 0) {
+        filter.authors = authors;
       }
-      if (variables && !!variables.title) {
-        filter['#d'] = [variables.title];
+      if (!!title) {
+        filter['#d'] = [title];
       }
 
       const events = (await pool.list(relays, [filter])) as Event<number>[];
@@ -32,23 +37,32 @@ export const useBoards = (variables?: {
       return parseBoardsFromEvents(events);
     },
     refetchOnWindowFocus: false,
-    enabled: !!pool && !!relays,
+    enabled: !!pool && !!relays && enabled,
   });
 
-  const { authors, authorsError, isAuthorsLoading } = useAuthors({
+  const {
+    authors: authorsDetails,
+    authorsError,
+    isAuthorsLoading,
+  } = useAuthors({
     authors: boards?.map((board) => board.author.pubkey),
     enabled: !!boards && boards.length > 0,
   });
 
-  if (!!authors && authors.length > 0 && !!boards && boards.length > 0) {
+  if (
+    !!authorsDetails &&
+    authorsDetails.length > 0 &&
+    !!boards &&
+    boards.length > 0
+  ) {
     queryClient.setQueryData(
-      ['nostr', 'boards', variables],
+      ['nostr', 'boards', { authors, title }],
       boards.map((board) => ({
         ...board,
         author: {
           ...board.author,
           details:
-            authors.find(
+            authorsDetails.find(
               (author) => author.hexPubkey === board.author.pubkey
             ) || undefined,
         },
