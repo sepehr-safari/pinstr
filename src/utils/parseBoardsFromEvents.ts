@@ -5,30 +5,69 @@ import { Board, Pin } from '@/types';
 const parseBoardsFromEvents = (events: Event[]) => {
   const boards: Board[] = [];
   for (const event of events) {
-    const tags = event.tags;
-    const dTag = tags.find((tag) => tag[0] === 'd');
-    if (!dTag) continue;
+    const eventTags = event.tags;
 
-    const headersTag = tags.find((tag) => tag[0] === 'headers');
+    let title: string = '';
+    let image: string = '';
+    let description: string = '';
+    let type: string = '';
+    let category: string = '';
+    let headers: string[] = [];
+    let tags: string[] = [];
+    let pins: Pin[] = [];
 
-    const pinTags = tags.filter(
-      (tag) => tag[0] === 'pin' || tag[0] === 'p' || tag[0] === 'e'
-    );
+    for (const t of eventTags) {
+      const first = t[0];
+      switch (first) {
+        case 'd':
+          title = t[1];
+          continue;
+        case 'image':
+          image = t[1];
+          continue;
+        case 'description':
+          description = t[1];
+          continue;
+        case 'type':
+          type = t[1];
+          continue;
+        case 'category':
+          category = t[1];
+          continue;
+        case 'headers':
+          headers = t.slice(1);
+          continue;
+        case 't':
+          tags.push(t[1]);
+          continue;
+        case 'pin':
+          pins.push(t.slice(1));
+          continue;
+      }
+    }
 
-    const templateTag = tags.find((tag) => tag[0] === 'template');
-
-    const CoverTag = tags.find((tag) => tag[0] === 'cover');
+    if (
+      !title ||
+      !image ||
+      !description ||
+      !type ||
+      !category ||
+      headers.length == 0
+    ) {
+      continue;
+    }
 
     boards.push({
       id: event.id,
       author: { pubkey: event.pubkey },
-      title: dTag[1],
-      template: templateTag ? templateTag[1] : 'text',
-      cover: CoverTag ? CoverTag[1] : '',
-      headers: headersTag ? headersTag.slice(1) : ['Content'],
-      pins: pinTags.reduce<Pin[]>((pins, pinTag) => {
-        return [...pins, pinTag.slice(1)];
-      }, []),
+      title,
+      image,
+      description,
+      type,
+      category,
+      headers,
+      tags,
+      pins,
     });
   }
 
