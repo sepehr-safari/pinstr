@@ -7,9 +7,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 
 import { Modal } from '@/components';
-import { MenuTemplate } from '@/components/Menus';
-
-import { MenuItem } from './MenuTemplate.types';
+import { MenuItem, MenuTemplate } from '@/components/Menus';
 
 interface Props {
   image: string;

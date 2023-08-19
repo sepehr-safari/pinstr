@@ -3,7 +3,18 @@ import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { Fragment } from 'react';
 
 import { joinClassNames } from '@/utils';
-import { MenuProps } from './MenuTemplate.types';
+
+export interface MenuItem {
+  title: string;
+  description?: string;
+  value?: string;
+}
+
+export interface MenuProps {
+  items: MenuItem[];
+  selected: MenuItem | null;
+  setSelected: (item: MenuItem) => void;
+}
 
 export const MenuTemplate = ({ items, selected, setSelected }: MenuProps) => {
   return (

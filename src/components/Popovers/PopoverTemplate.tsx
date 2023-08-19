@@ -1,7 +1,17 @@
 import { Popover, Transition } from '@headlessui/react';
 import { useState } from 'react';
 import { usePopper } from 'react-popper';
-import { PopoverProps } from './PopoverTemplate.types';
+
+export interface PopoverItem {
+  title: string;
+  description: string;
+  onClick: () => void;
+}
+
+export interface PopoverProps {
+  items: PopoverItem[];
+  children: React.ReactNode;
+}
 
 export const PopoverTemplate = ({ children, items }: PopoverProps) => {
   const [referenceElement, setReferenceElement] =

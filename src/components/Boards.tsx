@@ -1,6 +1,6 @@
 import { joinClassNames } from '@/utils';
 
-import { BoardItem } from './BoardItem';
+import { BoardItem } from '@/components';
 import { Board } from '@/types';
 
 export const boards: Board[] = [

@@ -1,8 +1,8 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 
+import { SelectableBoardTypes } from '@/components';
 import { CategoryMenu, CoverImageMenu } from '@/components/Menus';
-import { SelectableBoardTypes } from '@/components/SelectableBoardTypes';
 import { useMutateBoard } from '@/hooks';
 import { Board } from '@/types';
 import { capitalizeFirstLetter } from '@/utils';

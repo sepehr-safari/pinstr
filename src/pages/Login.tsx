@@ -1,7 +1,7 @@
+import { useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { useUser } from '@/queries';
-import { useEffect, useRef } from 'react';
 
 export const Login = () => {
   const { doLoginWithExtension, doLoginWithSeckey, user } = useUser();

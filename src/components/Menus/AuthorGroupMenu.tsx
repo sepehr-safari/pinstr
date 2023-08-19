@@ -1,8 +1,6 @@
 import { useState } from 'react';
 
-import { MenuTemplate } from '@/components/Menus';
-
-import { MenuItem } from './MenuTemplate.types';
+import { MenuItem, MenuTemplate } from '@/components/Menus';
 
 const groups: MenuItem[] = [
   {

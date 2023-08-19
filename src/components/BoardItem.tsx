@@ -3,8 +3,7 @@ import { BoltIcon, HandThumbUpIcon } from '@heroicons/react/20/solid';
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-import { AuthorOverview } from './AuthorOverview';
-import { Badge } from './Badge';
+import { AuthorOverview } from '@/components';
 import { Board } from '@/types';
 
 export const BoardItem = ({
@@ -41,7 +40,9 @@ export const BoardItem = ({
                 leaveFrom="opacity-100 translate-x-0"
                 leaveTo="opacity-0 -translate-x-1"
               >
-                <Badge label="Generic" />
+                <span className="inline-flex items-center gap-x-1.5 rounded-full bg-gray-200 px-1.5 py-0.5 text-xs font-medium text-gray-600 hover:bg-gray-300">
+                  Generic
+                </span>
               </Transition.Child>
               <Transition.Child
                 as="div"
@@ -53,7 +54,9 @@ export const BoardItem = ({
                 leaveFrom="opacity-100 translate-x-0"
                 leaveTo="opacity-0 translate-x-1"
               >
-                <Badge label="Entertainment" />
+                <span className="inline-flex items-center gap-x-1.5 rounded-full bg-gray-200 px-1.5 py-0.5 text-xs font-medium text-gray-600 hover:bg-gray-300">
+                  Entertainment
+                </span>
               </Transition.Child>
               <Transition.Child
                 as="div"

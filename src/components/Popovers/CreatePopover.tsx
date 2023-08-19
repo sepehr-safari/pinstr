@@ -2,8 +2,7 @@ import { PlusIcon } from '@heroicons/react/20/solid';
 import { useMemo, useState } from 'react';
 
 import { BoardSlideover, PinSlideover } from '@/components';
-import { PopoverTemplate } from '@/components/Popovers';
-import { PopoverItem } from './PopoverTemplate.types';
+import { PopoverItem, PopoverTemplate } from '@/components/Popovers';
 
 export const CreatePopover = () => {
   const [openBoard, setOpenBoard] = useState(false);

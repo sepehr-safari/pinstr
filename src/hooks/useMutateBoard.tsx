@@ -4,12 +4,11 @@ import { useNavigate } from 'react-router-dom';
 
 import { usePublish } from '@/hooks';
 
-import { categories } from '@/components/Menus/CategoryMenu';
-import { MenuItem } from '@/components/Menus/MenuTemplate.types';
+import { categories, MenuItem } from '@/components/Menus';
 import {
   SelectableBoardTypeItem,
   selectableBoardTypeItems,
-} from '@/components/SelectableBoardTypes';
+} from '@/components';
 import { Board } from '@/types';
 
 export const useMutateBoard = ({

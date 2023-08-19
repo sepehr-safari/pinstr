@@ -4,9 +4,8 @@ import {
   AuthorGroupMenu,
   BoardTypeMenu,
   CategoryMenu,
+  MenuItem,
 } from '@/components/Menus';
-
-import { MenuItem } from '@/components/Menus/MenuTemplate.types';
 
 export const FiltersNavbar = () => {
   const [selectedCategory, setSelectedCategory] = useState<MenuItem | null>(

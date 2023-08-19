@@ -2,11 +2,10 @@ import { Dialog, Transition } from '@headlessui/react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 import { Fragment, useState } from 'react';
 
-import { CoverImageMenu } from '@/components/Menus';
+import { selectableBoardTypeItems } from '@/components';
+import { CoverImageMenu, categories } from '@/components/Menus';
 import { useMutateBoard } from '@/hooks';
 import { Board } from '@/types';
-import { categories } from './Menus/CategoryMenu';
-import { selectableBoardTypeItems } from './SelectableBoardTypes';
 
 import { boards as mockBoards } from './Boards'; // TODO: Replace with real data
 
