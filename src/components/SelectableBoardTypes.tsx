@@ -85,7 +85,7 @@ export function SelectableBoardTypes({ setSelectedBoardType }: Props) {
     <ul role="list" className="grid grid-cols-1 gap-6">
       {selectableBoardTypeItems.map((selectableBoardTypeItem) => (
         <li key={selectableBoardTypeItem.id} className="flow-root">
-          <div className="relative -m-2 flex items-center space-x-4 rounded-xl p-2 focus-within:ring-2 focus-within:ring-gray-500 hover:bg-gray-100 hover:cursor-pointer">
+          <div className="relative group -m-2 flex items-center space-x-4 rounded-xl p-2 focus-within:ring-2 focus-within:ring-gray-500 hover:bg-gray-100 hover:cursor-pointer">
             <div
               className={joinClassNames(
                 selectableBoardTypeItem.background,
@@ -93,7 +93,7 @@ export function SelectableBoardTypes({ setSelectedBoardType }: Props) {
               )}
             >
               <selectableBoardTypeItem.icon
-                className="h-8 w-8 text-white"
+                className="h-6 w-6 text-white duration-300 ease-in-out group-hover:w-8 group-hover:h-8"
                 aria-hidden="true"
               />
             </div>

@@ -146,10 +146,10 @@ export default function PinSlideover({ open, setOpen, initialBoard }: Props) {
                           >
                             {boards.map((board, index) => (
                               <li key={index} className="flow-root">
-                                <div className="relative flex items-center gap-2 pr-2 rounded-xl focus-within:ring-2 focus-within:ring-gray-500 hover:bg-gray-100 hover:cursor-pointer">
+                                <div className="relative group flex items-center gap-2 pr-2 rounded-xl focus-within:ring-2 focus-within:ring-gray-500 hover:bg-gray-100 hover:cursor-pointer">
                                   <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-lg bg-gray-200 text-gray-200">
                                     <img
-                                      className="h-12 w-12 rounded-lg"
+                                      className="h-12 w-12 rounded-lg duration-300 ease-in-out group-hover:h-14 group-hover:w-14"
                                       src={board.image}
                                       alt={board.title}
                                     />
