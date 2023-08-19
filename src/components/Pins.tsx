@@ -154,12 +154,14 @@ export default function Pins() {
         </div>
         <div className="w-full flex flex-col justify-between items-center xl:items-start">
           <div className="w-full">
-            <div className="flex gap-4 flex-col xl:flex-row w-full items-center text-xl font-bold tracking-tight text-gray-900 text-center xl:text-start xl:items-start xl:text-2xl">
-              <h2 className="w-2/3">{title}</h2>
+            <div className="flex gap-4 flex-col xl:flex-row w-full items-center text-center xl:text-start xl:items-start">
+              <h2 className="text-lg font-bold tracking-tight text-gray-900 xl:text-xl 2xl:text-2xl">
+                {title}
+              </h2>
 
               {selfBoard && (
                 <>
-                  <div className="xl:ml-auto">
+                  <div className="flex gap-2 shrink-0 xl:ml-auto">
                     <button
                       type="button"
                       className="rounded-md bg-gray-900 px-3 py-2 text-xs font-semibold text-gray-50 ring-1 ring-inset ring-gray-900 hover:bg-gray-700 hover:text-gray-50"
@@ -169,7 +171,7 @@ export default function Pins() {
                     </button>
                     <button
                       type="button"
-                      className="ml-2 rounded-md bg-gray-900 px-3 py-2 text-xs font-semibold text-gray-50 ring-1 ring-inset ring-gray-900 hover:bg-gray-700 hover:text-gray-50"
+                      className="rounded-md bg-gray-900 px-3 py-2 text-xs font-semibold text-gray-50 ring-1 ring-inset ring-gray-900 hover:bg-gray-700 hover:text-gray-50"
                       onClick={() => setOpenPinSlideover(true)}
                     >
                       Add Pin
@@ -215,7 +217,7 @@ export default function Pins() {
             )}
           </div>
 
-          <div className="mt-4 flex duration-200 text-sm font-light text-gray-500 text-center max-w-screen-sm xl:max-w-none xl:text-justify xl:mt-auto">
+          <div className="mt-4 flex duration-200 text-xs font-light text-gray-500 text-center max-w-screen-sm xl:max-w-none xl:text-justify xl:mt-auto">
             {board.description}
           </div>
 
