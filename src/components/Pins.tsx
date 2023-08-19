@@ -15,8 +15,9 @@ import {
   PeopleGrid,
   VideoGrid,
 } from '@/components/Lists';
-import { useUser } from '@/queries';
-import { boards } from './Boards';
+import { useBoards, useUser } from '@/queries';
+import { formatRelativeTime } from '@/utils';
+// import { boards } from './Boards';
 
 // TODO: Replace with real data
 const zapUrls = [
@@ -134,11 +135,21 @@ const bookUrls = [
 export const Pins = () => {
   const [openBoardSlideover, setOpenBoardSlideover] = useState(false);
   const [openPinSlideover, setOpenPinSlideover] = useState(false);
+
   const { npub, title } = useParams();
+  const hex = npub ? nip19.decode(npub).data.toString() : null;
+
   const { user } = useUser();
   const selfBoard = user ? nip19.npubEncode(user.pubkey) === npub : false;
 
-  const board = boards.find((board) => board.title === title) || boards[0]; // TODO: replace with real data
+  // const board = boards.find((board) => board.title === title) || boards[0]; // TODO: replace with real data
+  const { data } = useBoards({
+    authors: !!hex ? [hex] : [],
+    title,
+    enabled: !!hex,
+  });
+  const board =
+    !!data && !!data.boards && data.boards.length > 0 ? data.boards[0] : null;
 
   return (
     <>
@@ -146,7 +157,7 @@ export const Pins = () => {
         <div className="mx-auto xl:mx-0">
           <div className="w-64 aspect-w-5 aspect-h-4 rounded-md bg-gray-200 text-gray-200">
             <img
-              src={`https://source.unsplash.com/random/?${title}&sig=${Math.random()}`}
+              src={board?.image}
               alt={title}
               className="w-full h-full object-cover object-center rounded-md"
             />
@@ -178,31 +189,35 @@ export const Pins = () => {
                     </button>
                   </div>
 
-                  <BoardSlideover
-                    open={openBoardSlideover}
-                    setOpen={setOpenBoardSlideover}
-                    initialBoard={board}
-                  />
-                  <PinSlideover
-                    open={openPinSlideover}
-                    setOpen={setOpenPinSlideover}
-                    initialBoard={board}
-                  />
+                  {board && (
+                    <>
+                      <BoardSlideover
+                        open={openBoardSlideover}
+                        setOpen={setOpenBoardSlideover}
+                        initialBoard={board}
+                      />
+                      <PinSlideover
+                        open={openPinSlideover}
+                        setOpen={setOpenPinSlideover}
+                        initialBoard={board}
+                      />
+                    </>
+                  )}
                 </>
               )}
             </div>
 
             <div className="mt-4 inline-flex w-full justify-center items-center gap-1 text-xs font-light text-gray-400 xl:gap-2 xl:justify-start xl:mt-2">
-              <span>18 days ago</span>
+              <span>{board && formatRelativeTime(board.timestamp)}</span>
               <span>|</span>
               <span className="flex items-center">
                 <Link to={`/c/${undefined}`} className="hover:underline">
-                  {board.category}
+                  {board?.category}
                 </Link>
               </span>
             </div>
 
-            {board.tags.length > 0 && (
+            {board && board.tags.length > 0 && (
               <div className="mt-2 flex justify-center gap-4 flex-wrap xl:justify-start">
                 {board.tags.map((tag, index) => (
                   <Link
@@ -218,7 +233,7 @@ export const Pins = () => {
           </div>
 
           <div className="mt-4 flex duration-200 text-xs font-light text-gray-500 text-center max-w-screen-sm xl:max-w-none xl:text-justify xl:mt-auto">
-            {board.description}
+            {board?.description}
           </div>
 
           <div className="mt-4 flex gap-4 xl:mt-auto">
