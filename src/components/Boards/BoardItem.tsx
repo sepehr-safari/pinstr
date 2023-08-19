@@ -26,7 +26,7 @@ const BoardItem = ({
         onMouseLeave={() => setIsHover(false)}
       >
         <Link
-          to={`/p/npub/${board.title}`}
+          to={`/p/${board.author.pubkey}/${board.title}`}
           state={{ backgroundLocation: location }}
         >
           <div className="relative aspect-w-5 aspect-h-4 w-full overflow-hidden rounded-md bg-gray-100 hover:cursor-pointer">
@@ -79,7 +79,9 @@ const BoardItem = ({
               {board.title}
             </h3>
 
-            {!noAuthor && <AuthorOverview />}
+            {!noAuthor && board.author.details && (
+              <AuthorOverview author={board.author.details} />
+            )}
           </div>
           <div className="ml-4 mt-[2px] flex">
             <button className="flex text-xs font-bold text-gray-500 hover:text-gray-700">
