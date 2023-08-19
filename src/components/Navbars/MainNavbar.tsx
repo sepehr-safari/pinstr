@@ -38,7 +38,7 @@ export default function MainNavbar() {
             <div className="relative z-10 flex lg:px-0">
               <Link to="/" className="flex flex-shrink-0 items-center">
                 <img
-                  className="h-10 w-auto"
+                  className="h-10 w-auto rounded-md"
                   src="/assets/pinstr.png"
                   alt="Pinstr"
                 />
