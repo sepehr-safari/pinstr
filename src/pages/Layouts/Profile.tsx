@@ -26,7 +26,7 @@ export default function Profile() {
           <div className="mt-0 overflow-hidden bg-white shadow-lg rounded-none w-full z-[1] xl:ml-12 xl:-mt-20 xl:w-80 xl:absolute xl:rounded-lg">
             <div className="px-6 py-10 flex flex-col items-center">
               <img
-                className="-mt-20 h-28 w-28 bg-gray-200 text-gray-200 object-cover object-center rounded-full absolute z-[2] xl:static xl:mt-0"
+                className="-mt-20 h-28 w-28 bg-gray-200 text-gray-200 object-cover object-center shadow-lg rounded-full absolute z-[2] xl:static xl:mt-0"
                 src={hasAuthor ? authors[0].picture : ''}
                 alt={hasAuthor ? authors[0].displayName : ' avatar'}
               />
