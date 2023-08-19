@@ -104,7 +104,6 @@ export function SelectableBoardTypes({ setSelectedBoardType }: Props) {
                 >
                   <span className="absolute inset-0" aria-hidden="true" />
                   <span>{selectableBoardTypeItem.title}</span>
-                  <span aria-hidden="true"> &rarr;</span>
                 </div>
               </h3>
               <p className="mt-1 text-sm text-gray-500">
