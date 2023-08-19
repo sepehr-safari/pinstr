@@ -75,7 +75,7 @@ export default function MainNavbar() {
               {!user && (
                 <Link
                   to="/login"
-                  className="inline-flex rounded-full bg-gray-800 px-4 py-2 text-xs font-semibold text-white shadow-sm hover:opacity-80"
+                  className="inline-flex rounded-full bg-gray-900 px-4 py-2.5 text-xs font-semibold text-white shadow-sm hover:bg-gray-700"
                 >
                   Login
                 </Link>
