@@ -23,9 +23,9 @@ export default function LinkGrid({ urls }: { urls: any[] }) {
               className="flex w-full items-center group hover:cursor-pointer"
             >
               <img
-                className="h-20 w-20 flex-shrink-0 rounded-ss-md object-cover object-center bg-gray-300"
+                className="h-20 w-20 flex-shrink-0 rounded-ss-md object-cover object-center bg-gray-200 text-gray-200"
                 src={url.image}
-                alt=""
+                alt={url.title}
               />
               <div className="flex-1 truncate px-4">
                 <div className="truncate flex items-center translate-y-3 ease-in-out duration-500 group-hover:translate-y-0">
@@ -71,9 +71,9 @@ export default function LinkGrid({ urls }: { urls: any[] }) {
               <div className="max-w-sm mx-auto">
                 <div className="rounded-lg shadow-md bg-white">
                   <img
-                    className="w-full object-cover object-center aspect-1 rounded-t-lg"
+                    className="w-full object-cover object-center aspect-1 rounded-t-lg bg-gray-200 text-gray-200"
                     src={url.image}
-                    alt=""
+                    alt={url.title}
                   />
                   <div className="p-4">
                     <a

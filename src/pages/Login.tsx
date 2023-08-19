@@ -22,9 +22,9 @@ export default function Login() {
             <div>
               <Link to="/" className="inline-flex items-center group">
                 <img
-                  className="h-10 w-auto"
+                  className="h-10 w-auto bg-gray-100 text-gray-100"
                   src="/assets/pinstr.png"
-                  alt="Pinstr"
+                  alt="Pinstr Logo"
                 />
                 <span className="ml-2 text-lg font-bold transition-transform duration-500 group-hover:translate-x-1">
                   Pinstr
@@ -124,9 +124,9 @@ export default function Login() {
         </div>
         <div className="relative hidden w-0 flex-1 lg:block">
           <img
-            className="absolute inset-0 h-full w-full object-cover"
+            className="absolute inset-0 h-full w-full object-cover bg-gray-100 text-gray-100"
             src="/assets/jack_nostr.png"
-            alt=""
+            alt="Jack Nostr"
           />
         </div>
       </div>

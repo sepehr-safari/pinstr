@@ -38,9 +38,9 @@ export default function MainNavbar() {
             <div className="relative z-10 flex lg:px-0">
               <Link to="/" className="flex flex-shrink-0 items-center">
                 <img
-                  className="h-10 w-auto rounded-md"
+                  className="h-10 w-auto rounded-md bg-gray-100 text-gray-100"
                   src="/assets/pinstr.png"
-                  alt="Pinstr"
+                  alt="Pinstr Logo"
                 />
                 <div className="ml-2 hidden md:block font-bold text-lg">
                   Pinstr
@@ -92,9 +92,9 @@ export default function MainNavbar() {
                           <span className="absolute -inset-1.5" />
                           <span className="sr-only">Open user menu</span>
                           <img
-                            className="h-10 w-10 rounded-full object-cover object-center bg-gray-200"
+                            className="h-10 w-10 rounded-full object-cover object-center bg-gray-200 text-gray-200"
                             src={USER.image}
-                            alt=""
+                            alt={USER.name + ' avatar'}
                           />
                         </Menu.Button>
                       </div>
@@ -110,9 +110,9 @@ export default function MainNavbar() {
                         <Menu.Items className="absolute right-0 z-10 mt-6 w-64 origin-top-right divide-y divide-gray-100 rounded-2xl bg-white py-1 shadow-lg ring-1 ring-gray-900/20 focus:outline-none">
                           <Menu.Item as="div">
                             <img
-                              className="mt-4 mx-auto h-24 w-24 object-cover object-center flex-shrink-0 rounded-full"
+                              className="mt-4 mx-auto h-24 w-24 object-cover object-center flex-shrink-0 rounded-full bg-gray-100 text-gray-100"
                               src={USER.image}
-                              alt=""
+                              alt={USER.name + ' avatar'}
                             />
                             <h3 className="mt-2 mb-4 text-sm font-semibold text-gray-900 text-center">
                               {USER.name}

@@ -49,10 +49,10 @@ export default function ImageGrid() {
           className="p-2 group relative rounded-lg hover:bg-gray-50 ease-in-out duration-500 hover:shadow-md"
         >
           <div className="ease-in-out duration-700">
-            <div className="aspect-w-5 aspect-h-4 block w-full overflow-hidden rounded-md bg-gray-100">
+            <div className="aspect-w-5 aspect-h-4 block w-full overflow-hidden rounded-md bg-gray-200 text-gray-200">
               <img
                 src={image.source}
-                alt=""
+                alt={image.title}
                 className="object-cover object-center hover:opacity-75 hover:cursor-zoom-in"
               />
             </div>
@@ -91,10 +91,10 @@ export default function ImageGrid() {
           >
             <div className="max-w-sm mx-auto">
               <div className="ease-in-out duration-700">
-                <div className="aspect-w-5 aspect-h-4 block w-full overflow-hidden rounded-md bg-gray-100">
+                <div className="aspect-w-5 aspect-h-4 block w-full overflow-hidden rounded-md bg-gray-200 text-gray-200">
                   <img
                     src={image.source}
-                    alt=""
+                    alt={image.title}
                     className="object-cover hover:opacity-75 hover:cursor-zoom-in"
                   />
                 </div>

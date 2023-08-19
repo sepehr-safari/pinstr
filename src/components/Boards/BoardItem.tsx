@@ -68,8 +68,8 @@ const BoardItem = ({
             </Transition>
             <img
               src={board.image}
-              alt=""
-              className="h-full w-full object-cover object-center"
+              alt={board.title}
+              className="h-full w-full object-cover object-center text-gray-100"
             />
           </div>
         </Link>

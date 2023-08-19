@@ -42,13 +42,13 @@ export default function AuthorOverview({ author }: { author: Author }) {
                 <div className="relative">
                   <div className="absolute top-0 w-full p-1">
                     <img
-                      className="w-full h-20 bg-gray-200 rounded-t object-center object-cover"
+                      className="w-full h-20 bg-gray-200 text-gray-200 rounded-t object-center object-cover"
                       src={author.banner}
                       alt={author.displayName + ' banner'}
                     />
                   </div>
                   <div className="flex flex-1 flex-col pt-10 pb-4">
-                    <div className="mx-auto rounded-full bg-gray-300 z-[1]">
+                    <div className="mx-auto rounded-full bg-gray-300 text-gray-300 z-[1]">
                       <img
                         className="aspect-1 w-24 h-w-24 object-cover object-center rounded-full"
                         src={author.picture}
@@ -60,7 +60,9 @@ export default function AuthorOverview({ author }: { author: Author }) {
                     </h3>
                     <dl className="mt-1 flex flex-grow flex-col justify-between">
                       <dt className="sr-only">Title</dt>
-                      <dd className="text-xs text-gray-500">{author.about}</dd>
+                      <dd className="text-xs font-light text-gray-500">
+                        {author.about}
+                      </dd>
                     </dl>
                   </div>
                 </div>

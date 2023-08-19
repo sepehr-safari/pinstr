@@ -87,20 +87,20 @@ export default function PeopleGrid() {
           >
             <div className="absolute top-0 w-full">
               <img
-                className="w-full h-24 bg-gray-200 rounded-lg object-center object-cover ease-in-out duration-500 group-hover:rounded-b-none"
+                className="w-full h-24 bg-gray-200 text-gray-200 rounded-lg object-center object-cover ease-in-out duration-500 group-hover:rounded-b-none"
                 src={
                   'https://source.unsplash.com/random/?landscape&sig=' +
                   Math.random()
                 }
-                alt=""
+                alt={person.name + ' banner'}
               />
             </div>
             <div className="flex flex-1 flex-col pt-16">
-              <div className="mx-auto rounded-full bg-gray-300 z-[1]">
+              <div className="mx-auto rounded-full bg-gray-300 text-gray-300 z-[1]">
                 <img
                   className="aspect-1 w-24 h-24 rounded-full object-cover object-center ease-in-out duration-500 group-hover:-translate-y-1 group-hover:scale-110 group-hover:shadow-md"
                   src={person.image}
-                  alt=""
+                  alt={person.name + ' avatar'}
                 />
               </div>
               <h3 className="mt-6 text-base font-semibold leading-7 tracking-tight text-gray-900">
@@ -108,7 +108,7 @@ export default function PeopleGrid() {
               </h3>
               <p className="text-sm leading-6 text-gray-600">{person.role}</p>
               <div className="mt-6 mx-auto flex flex-col">
-                <button className="flex justify-center items-center rounded-full bg-gray-200 px-10 py-2 text-xs font-semibold text-gray-500 ease-in-out duration-300 hover:shadow hover:text-gray-700 hover:bg-gray-300">
+                <button className="flex justify-center items-center rounded-full bg-gray-200 px-6 py-2.5 text-xs font-semibold text-gray-500 ease-in-out duration-300 hover:shadow hover:text-gray-700 hover:bg-gray-300">
                   <PlusIcon className="-ml-1 w-4 h-4" />
                   <span className="ml-1">Follow</span>
                 </button>
@@ -154,20 +154,20 @@ export default function PeopleGrid() {
                 <div className="relative group rounded-lg shadow-md bg-white">
                   <div className="absolute top-0 w-full">
                     <img
-                      className="w-full h-24 bg-gray-200 rounded-lg object-center object-cover rounded-b-none"
+                      className="w-full h-24 bg-gray-200 text-gray-200 rounded-lg object-center object-cover rounded-b-none"
                       src={
                         'https://source.unsplash.com/random/?landscape&sig=' +
                         Math.random()
                       }
-                      alt=""
+                      alt={person.name + ' banner'}
                     />
                   </div>
                   <div className="flex flex-1 flex-col pt-16">
-                    <div className="mx-auto rounded-full bg-gray-300 z-[1]">
+                    <div className="mx-auto rounded-full bg-gray-300 text-gray-300 z-[1]">
                       <img
                         className="aspect-1 w-24 h-24 rounded-full object-cover object-center"
                         src={person.image}
-                        alt=""
+                        alt={person.name + ' avatar'}
                       />
                     </div>
                     <h3 className="mt-4 text-center text-base font-semibold leading-7 tracking-tight text-gray-900">

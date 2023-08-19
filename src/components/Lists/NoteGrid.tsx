@@ -96,9 +96,9 @@ export default function NoteGrid() {
                 </p>
               </div>
               <img
-                className="h-12 w-12 flex-shrink-0 rounded-full object-cover object-center bg-gray-300"
+                className="h-12 w-12 flex-shrink-0 rounded-full object-cover object-center bg-gray-200 text-gray-200"
                 src={person.image}
-                alt=""
+                alt={person.name}
               />
             </div>
             <div className="p-4 text-justify font-light">
