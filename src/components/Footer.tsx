@@ -1,7 +1,7 @@
 const Footer = () => {
   return (
     <footer className="fixed z-10 bottom-0 left-0 right-0 flex items-center px-4 py-1 text-gray-500 text-[0.66rem] font-semibold border-t-[1px] border-gray-300 bg-gradient-to-t from-gray-100 to-white md:text-xs">
-      <div className="flex flex-col gap-1 items-center md:flex-row">
+      <div className="flex flex-col gap-1 items-start md:items-center md:flex-row">
         <a
           href="https://primal.net/profile/npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7"
           target="_blank"
@@ -26,7 +26,7 @@ const Footer = () => {
         </a>
       </div>
 
-      <div className="ml-auto flex flex-col gap-1 items-center md:flex-row">
+      <div className="ml-auto flex flex-col gap-1 items-end md:items-center md:flex-row">
         <a
           href="https://nostr.com"
           target="_blank"
@@ -50,7 +50,7 @@ const Footer = () => {
           <svg
             fill="currentColor"
             viewBox="0 0 24 24"
-            className="ml-1 h-5 w-5"
+            className="ml-1 h-5 w-5 hidden md:block"
             aria-hidden="true"
           >
             <path
