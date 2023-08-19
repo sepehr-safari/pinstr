@@ -1,6 +1,6 @@
 import { joinClassNames } from '@/utils';
 
-import BoardItem from './BoardItem';
+import { BoardItem } from './BoardItem';
 import { Board } from '@/types';
 
 export const boards: Board[] = [
@@ -297,29 +297,27 @@ export const boards: Board[] = [
   },
 ];
 
-export default function Boards({
+export const Boards = ({
   fullWidth = false,
   noAuthor = false,
 }: {
   fullWidth?: boolean;
   noAuthor?: boolean;
-}) {
+}) => {
   return (
-    <>
-      <div className="mx-auto pb-16 overflow-hidden max-w-md sm:max-w-none">
-        <div
-          className={joinClassNames(
-            'grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3',
-            fullWidth
-              ? 'xl:grid-cols-4 2xl:grid-cols-5'
-              : 'xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4'
-          )}
-        >
-          {boards.concat(boards).map((board, index) => (
-            <BoardItem board={board} key={index} noAuthor={noAuthor} />
-          ))}
-        </div>
+    <div className="mx-auto pb-16 overflow-hidden max-w-md sm:max-w-none">
+      <div
+        className={joinClassNames(
+          'grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3',
+          fullWidth
+            ? 'xl:grid-cols-4 2xl:grid-cols-5'
+            : 'xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4'
+        )}
+      >
+        {boards.concat(boards).map((board, index) => (
+          <BoardItem board={board} key={index} noAuthor={noAuthor} />
+        ))}
       </div>
-    </>
+    </div>
   );
-}
+};

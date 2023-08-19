@@ -2,7 +2,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useEffect } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
-export default function BottomSlideover() {
+export const BottomSlideover = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -52,4 +52,4 @@ export default function BottomSlideover() {
       </Dialog>
     </Transition.Root>
   );
-}
+};

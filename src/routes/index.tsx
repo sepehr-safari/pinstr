@@ -4,7 +4,7 @@ import { Boards, Pins } from '@/components';
 import { Home, Login, Logout, NoMatch } from '@/pages';
 import { BottomSlideover, MainLayout, Profile } from '@/pages/Layouts';
 
-export default function AppRouter() {
+export const AppRouter = () => {
   const location = useLocation();
   const state = location.state as { backgroundLocation?: Location };
 
@@ -39,4 +39,4 @@ export default function AppRouter() {
       )}
     </>
   );
-}
+};

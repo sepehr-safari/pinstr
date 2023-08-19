@@ -3,11 +3,11 @@ import { BoltIcon, HandThumbUpIcon } from '@heroicons/react/20/solid';
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-import AuthorOverview from './AuthorOverview';
-import Badge from './Badge';
+import { AuthorOverview } from './AuthorOverview';
+import { Badge } from './Badge';
 import { Board } from '@/types';
 
-const BoardItem = ({
+export const BoardItem = ({
   board,
   noAuthor = false,
 }: {
@@ -98,5 +98,3 @@ const BoardItem = ({
     </>
   );
 };
-
-export default BoardItem;

@@ -9,10 +9,10 @@ import { Link, useParams } from 'react-router-dom';
 
 import { BoardSlideover, PinSlideover } from '@/components';
 import {
+  ImageGrid,
   LinkGrid,
   NoteGrid,
   PeopleGrid,
-  PictureGrid,
   VideoGrid,
 } from '@/components/Lists';
 import { useUser } from '@/queries';
@@ -131,7 +131,7 @@ const bookUrls = [
   },
 ];
 
-export default function Pins() {
+export const Pins = () => {
   const [openBoardSlideover, setOpenBoardSlideover] = useState(false);
   const [openPinSlideover, setOpenPinSlideover] = useState(false);
   const { npub, title } = useParams();
@@ -245,7 +245,7 @@ export default function Pins() {
       ) : title?.includes('Zap') ? (
         <LinkGrid urls={zapUrls} />
       ) : title?.includes('Pizza') ? (
-        <PictureGrid />
+        <ImageGrid />
       ) : title?.includes('Movies') ? (
         <VideoGrid />
       ) : title?.includes('Books') ? (
@@ -255,4 +255,4 @@ export default function Pins() {
       )}
     </>
   );
-}
+};

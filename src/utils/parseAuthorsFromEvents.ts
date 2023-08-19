@@ -2,7 +2,7 @@ import { Event, nip19 } from 'nostr-tools';
 
 import { Author } from '@/types';
 
-export function parseAuthorsFromEvents(events: Event[]) {
+export const parseAuthorsFromEvents = (events: Event[]) => {
   const authors: Author[] = [];
   for (const event of events) {
     const eventContent = JSON.parse(event.content || '{}');
@@ -23,4 +23,4 @@ export function parseAuthorsFromEvents(events: Event[]) {
   }
 
   return authors;
-}
+};

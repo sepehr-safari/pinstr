@@ -18,7 +18,7 @@ const USER_NAVIGATION = [
   { title: 'Sign out', link: '/logout' },
 ];
 
-export default function MainNavbar() {
+export const MainNavbar = () => {
   const { user } = useUser();
 
   useEffect(() => {
@@ -147,4 +147,4 @@ export default function MainNavbar() {
       </>
     </Disclosure>
   );
-}
+};

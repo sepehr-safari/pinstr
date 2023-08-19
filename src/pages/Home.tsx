@@ -3,7 +3,7 @@ import { FiltersNavbar } from '@/components/Navbars';
 
 import { useBoards } from '@/queries';
 
-export default function Home() {
+export const Home = () => {
   const { data } = useBoards();
   console.log(data);
 
@@ -17,4 +17,4 @@ export default function Home() {
       </div>
     </>
   );
-}
+};

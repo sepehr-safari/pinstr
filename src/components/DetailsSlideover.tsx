@@ -3,7 +3,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { Fragment, useCallback, useEffect } from 'react';
 
-export default function DetailsSlideover({
+export const DetailsSlideover = ({
   isShown,
   onClose,
   onNext,
@@ -17,7 +17,7 @@ export default function DetailsSlideover({
   onPrevious: () => void;
   details: any;
   children: React.ReactNode;
-}) {
+}) => {
   const handleKeyUp = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft') {
@@ -167,4 +167,4 @@ export default function DetailsSlideover({
       </Dialog>
     </Transition.Root>
   );
-}
+};

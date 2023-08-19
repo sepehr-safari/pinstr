@@ -35,7 +35,7 @@ const videos = [
   },
 ];
 
-export default function VideoGrid() {
+export const VideoGrid = () => {
   const [shownDetailsIndex, setShownDetailsIndex] = useState(-1);
 
   return (
@@ -117,4 +117,4 @@ export default function VideoGrid() {
       ))}
     </ul>
   );
-}
+};

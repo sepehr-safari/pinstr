@@ -4,7 +4,7 @@ import { Fragment, useState } from 'react';
 
 import { CoverImageMenu } from '@/components/Menus';
 import { useMutateBoard } from '@/hooks';
-import { Board, Pin } from '@/types';
+import { Board } from '@/types';
 import { categories } from './Menus/CategoryMenu';
 import { selectableBoardTypeItems } from './SelectableBoardTypes';
 
@@ -16,7 +16,7 @@ type Props = {
   initialBoard?: Board;
 };
 
-export default function PinSlideover({ open, setOpen, initialBoard }: Props) {
+export const PinSlideover = ({ open, setOpen, initialBoard }: Props) => {
   const [boards, setBoards] = useState<Board[]>(mockBoards); // TODO: replace with useBoards query - only enable when no initialBoard
 
   const {
@@ -374,4 +374,4 @@ export default function PinSlideover({ open, setOpen, initialBoard }: Props) {
       </Dialog>
     </Transition.Root>
   );
-}
+};

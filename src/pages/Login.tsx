@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '@/queries';
 import { useEffect, useRef } from 'react';
 
-export default function Login() {
+export const Login = () => {
   const { doLoginWithExtension, doLoginWithSeckey, user } = useUser();
   const navigate = useNavigate();
   const seckeyRef = useRef<HTMLInputElement>(null);
@@ -132,4 +132,4 @@ export default function Login() {
       </div>
     </>
   );
-}
+};

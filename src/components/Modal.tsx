@@ -10,14 +10,14 @@ interface Props {
   setSelectedStockImageURL: (state: string) => void;
 }
 
-export default function Modal({
+export const Modal = ({
   children,
   modalIndex,
   stockImageURL,
   showModalIndex,
   setShowModalIndex,
   setSelectedStockImageURL,
-}: Props) {
+}: Props) => {
   const cancelButtonRef = useRef(null);
 
   return (
@@ -80,4 +80,4 @@ export default function Modal({
       </Dialog>
     </Transition.Root>
   );
-}
+};

@@ -35,7 +35,7 @@ const images = [
   },
 ];
 
-export default function ImageGrid() {
+export const ImageGrid = () => {
   const [shownDetailsIndex, setShownDetailsIndex] = useState(-1);
 
   return (
@@ -105,4 +105,4 @@ export default function ImageGrid() {
       ))}
     </ul>
   );
-}
+};

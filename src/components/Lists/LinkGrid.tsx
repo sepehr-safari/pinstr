@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import { DetailsSlideover } from '@/components';
 
-export default function LinkGrid({ urls }: { urls: any[] }) {
+export const LinkGrid = ({ urls }: { urls: any[] }) => {
   const [shownDetailsIndex, setShownDetailsIndex] = useState(-1);
 
   return (
@@ -94,4 +94,4 @@ export default function LinkGrid({ urls }: { urls: any[] }) {
       </ul>
     </>
   );
-}
+};

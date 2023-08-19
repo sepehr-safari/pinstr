@@ -3,14 +3,9 @@ import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { Fragment } from 'react';
 
 import { joinClassNames } from '@/utils';
-
 import { MenuProps } from './MenuTemplate.types';
 
-export default function ManuTemplate({
-  items,
-  selected,
-  setSelected,
-}: MenuProps) {
+export const MenuTemplate = ({ items, selected, setSelected }: MenuProps) => {
   return (
     <Menu as="div" className="relative inline-block text-left w-full">
       <div>
@@ -59,4 +54,4 @@ export default function ManuTemplate({
       </Transition>
     </Menu>
   );
-}
+};

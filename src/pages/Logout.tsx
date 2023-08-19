@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useUser } from '@/queries';
 
-export default function Logout() {
+export const Logout = () => {
   const { user, doLogout } = useUser();
   const navigate = useNavigate();
 
@@ -16,4 +16,4 @@ export default function Logout() {
   }, [user, navigate, doLogout]);
 
   return <div></div>;
-}
+};

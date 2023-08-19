@@ -70,7 +70,7 @@ const people = [
   },
 ];
 
-export default function NoteGrid() {
+export const NoteGrid = () => {
   const [shownDetailsIndex, setShownDetailsIndex] = useState(-1);
 
   return (
@@ -190,4 +190,4 @@ export default function NoteGrid() {
       </ul>
     </>
   );
-}
+};

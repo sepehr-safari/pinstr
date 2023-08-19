@@ -6,7 +6,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 import { Author } from '@/types';
 
-export default function AuthorOverview({ author }: { author: Author }) {
+export const AuthorOverview = ({ author }: { author: Author }) => {
   const location = useLocation();
 
   const [referenceElement, setReferenceElement] =
@@ -102,4 +102,4 @@ export default function AuthorOverview({ author }: { author: Author }) {
       )}
     </Popover>
   );
-}
+};

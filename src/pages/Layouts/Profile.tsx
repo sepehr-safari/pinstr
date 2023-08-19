@@ -5,7 +5,7 @@ import { Outlet, useParams } from 'react-router-dom';
 import { Breadcrumb } from '@/components/Navbars';
 import { useAuthors } from '@/queries';
 
-export default function Profile() {
+export const Profile = () => {
   const { npub } = useParams();
   const hex = npub ? nip19.decode(npub).data.toString() : null;
   const { authors } = useAuthors({ authors: [hex!], enabled: !!hex });
@@ -67,4 +67,4 @@ export default function Profile() {
       </div>
     </>
   );
-}
+};

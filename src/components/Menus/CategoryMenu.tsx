@@ -75,7 +75,7 @@ export const categories: MenuItem[] = [
   },
 ];
 
-export default function CategoryMenu({
+export const CategoryMenu = ({
   selected,
   setSelected,
   hideFirstOption,
@@ -83,7 +83,7 @@ export default function CategoryMenu({
   selected: MenuItem | null;
   setSelected: (item: MenuItem) => void;
   hideFirstOption?: boolean;
-}) {
+}) => {
   useEffect(() => {
     setSelected(!hideFirstOption ? categories[0] : categories[1]);
   }, []);
@@ -97,4 +97,4 @@ export default function CategoryMenu({
       />
     </>
   );
-}
+};

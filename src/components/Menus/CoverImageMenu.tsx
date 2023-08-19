@@ -32,7 +32,7 @@ const coverImageMenuItems: MenuItem[] = [
   },
 ];
 
-export default function CoverImageMenu({ image, setImage }: Props) {
+export const CoverImageMenu = ({ image, setImage }: Props) => {
   const [selectedMenuItem, setSelectedMenuItem] = useState(
     coverImageMenuItems[0]
   );
@@ -301,4 +301,4 @@ export default function CoverImageMenu({ image, setImage }: Props) {
       )}
     </>
   );
-}
+};

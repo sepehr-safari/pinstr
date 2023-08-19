@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { usePopper } from 'react-popper';
 import { PopoverProps } from './PopoverTemplate.types';
 
-export default function PopoverTemplate({ children, items }: PopoverProps) {
+export const PopoverTemplate = ({ children, items }: PopoverProps) => {
   const [referenceElement, setReferenceElement] =
     useState<HTMLButtonElement | null>(null);
   const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(
@@ -52,4 +52,4 @@ export default function PopoverTemplate({ children, items }: PopoverProps) {
       </Transition>
     </Popover>
   );
-}
+};

@@ -2,7 +2,7 @@ import { Event } from 'nostr-tools';
 
 import { Board, Pin } from '@/types';
 
-export function parseBoardsFromEvents(events: Event[]) {
+export const parseBoardsFromEvents = (events: Event[]) => {
   const boards: Board[] = [];
   for (const event of events) {
     const eventTags = event.tags;
@@ -72,4 +72,4 @@ export function parseBoardsFromEvents(events: Event[]) {
   }
 
   return boards;
-}
+};

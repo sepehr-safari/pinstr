@@ -80,7 +80,7 @@ export const selectableBoardTypeItems: SelectableBoardTypeItem[] = [
   },
 ];
 
-export function SelectableBoardTypes({ setSelectedBoardType }: Props) {
+export const SelectableBoardTypes = ({ setSelectedBoardType }: Props) => {
   return (
     <ul role="list" className="grid grid-cols-1 gap-6">
       {selectableBoardTypeItems.map((selectableBoardTypeItem) => (
@@ -115,4 +115,4 @@ export function SelectableBoardTypes({ setSelectedBoardType }: Props) {
       ))}
     </ul>
   );
-}
+};

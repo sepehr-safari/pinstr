@@ -13,7 +13,7 @@ type Props = {
   initialBoard?: Board;
 };
 
-export default function BoardSlideover({ open, setOpen, initialBoard }: Props) {
+export const BoardSlideover = ({ open, setOpen, initialBoard }: Props) => {
   const {
     title,
     description,
@@ -320,4 +320,4 @@ export default function BoardSlideover({ open, setOpen, initialBoard }: Props) {
       </Dialog>
     </Transition.Root>
   );
-}
+};

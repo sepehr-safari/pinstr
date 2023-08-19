@@ -6,7 +6,7 @@ type User = {
   seckey?: string;
 };
 
-export default function useUser() {
+export const useUser = () => {
   const queryClient = useQueryClient();
   const { data: user } = useQuery({
     queryKey: ['app', 'user'],
@@ -46,4 +46,4 @@ export default function useUser() {
     },
     user,
   };
-}
+};

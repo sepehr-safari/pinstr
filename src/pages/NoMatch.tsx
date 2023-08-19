@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-export default function NoMatch() {
+export const NoMatch = () => {
   return (
     <main className="relative isolate h-full">
       <img
@@ -24,4 +24,4 @@ export default function NoMatch() {
       </div>
     </main>
   );
-}
+};

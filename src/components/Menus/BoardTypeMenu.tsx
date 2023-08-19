@@ -28,13 +28,13 @@ const boardTypeMenuItems: MenuItem[] = [
   },
 ];
 
-export default function BoardTypeMenu({
+export const BoardTypeMenu = ({
   selected,
   setSelected,
 }: {
   selected: MenuItem | null;
   setSelected: (item: MenuItem) => void;
-}) {
+}) => {
   useEffect(() => {
     setSelected(boardTypeMenuItems[0]);
   }, []);
@@ -48,4 +48,4 @@ export default function BoardTypeMenu({
       />
     </>
   );
-}
+};

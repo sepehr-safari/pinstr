@@ -2,10 +2,10 @@ import { Event, EventTemplate } from 'nostr-tools';
 import { useCallback } from 'react';
 
 import { useUser } from '@/queries';
-import useLocalState from '@/store';
+import { useLocalState } from '@/store';
 import { signEventWithNip07, signEventWithSeckey } from '@/utils';
 
-const usePublish = () => {
+export const usePublish = () => {
   const { pool, relays } = useLocalState((state) => state);
   const { user } = useUser();
 
@@ -44,5 +44,3 @@ const usePublish = () => {
 
   return publish;
 };
-
-export default usePublish;

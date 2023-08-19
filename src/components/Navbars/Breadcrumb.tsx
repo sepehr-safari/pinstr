@@ -4,7 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 
 import { useAuthors } from '@/queries';
 
-export default function Breadcrumb() {
+export const Breadcrumb = () => {
   const { npub, title } = useParams();
   const hex = npub ? nip19.decode(npub).data.toString() : null;
   const { authors } = useAuthors({ authors: [hex!], enabled: !!hex });
@@ -67,4 +67,4 @@ export default function Breadcrumb() {
       </ol>
     </nav>
   );
-}
+};

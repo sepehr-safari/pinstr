@@ -1,4 +1,4 @@
-export function formatRelativeTime(timestamp: number) {
+export const formatRelativeTime = (timestamp: number) => {
   const now = Date.now();
   const delta = now - timestamp * 1000;
 
@@ -18,4 +18,4 @@ export function formatRelativeTime(timestamp: number) {
   const year = date.getFullYear();
 
   return `${month} ${day}, ${year}`;
-}
+};

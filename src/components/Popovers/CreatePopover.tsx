@@ -5,7 +5,7 @@ import { BoardSlideover, PinSlideover } from '@/components';
 import { PopoverTemplate } from '@/components/Popovers';
 import { PopoverItem } from './PopoverTemplate.types';
 
-export default function CreatePopover() {
+export const CreatePopover = () => {
   const [openBoard, setOpenBoard] = useState(false);
   const [openPin, setOpenPin] = useState(false);
 
@@ -38,4 +38,4 @@ export default function CreatePopover() {
       <PinSlideover open={openPin} setOpen={setOpenPin} />
     </>
   );
-}
+};

@@ -12,13 +12,13 @@ import {
 } from '@/components/SelectableBoardTypes';
 import { Board } from '@/types';
 
-export default function useMutateBoard({
+export const useMutateBoard = ({
   onSuccess,
   initialBoard,
 }: {
   onSuccess: () => void;
   initialBoard?: Board;
-}) {
+}) => {
   const publish = usePublish();
   const navigate = useNavigate();
 
@@ -140,4 +140,4 @@ export default function useMutateBoard({
     updateBoard,
     deleteBoard,
   };
-}
+};

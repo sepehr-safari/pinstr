@@ -8,7 +8,7 @@ import {
 
 import { MenuItem } from '@/components/Menus/MenuTemplate.types';
 
-export default function FiltersNavbar() {
+export const FiltersNavbar = () => {
   const [selectedCategory, setSelectedCategory] = useState<MenuItem | null>(
     null
   );
@@ -37,4 +37,4 @@ export default function FiltersNavbar() {
       </div>
     </>
   );
-}
+};

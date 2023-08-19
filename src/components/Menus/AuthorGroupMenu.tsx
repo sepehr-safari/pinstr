@@ -15,7 +15,7 @@ const groups: MenuItem[] = [
   },
 ];
 
-const AuthorGroupMenu = () => {
+export const AuthorGroupMenu = () => {
   const [selected, setSelected] = useState<MenuItem>(groups[0]);
 
   return (
@@ -28,5 +28,3 @@ const AuthorGroupMenu = () => {
     </>
   );
 };
-
-export default AuthorGroupMenu;

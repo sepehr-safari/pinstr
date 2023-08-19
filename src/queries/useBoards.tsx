@@ -1,16 +1,14 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Event, Filter } from 'nostr-tools';
 
+import { useAuthors } from '@/queries';
+import { useLocalState } from '@/store';
 import { parseBoardsFromEvents } from '@/utils';
 
-import { useAuthors } from '@/queries';
-
-import useLocalState from '@/store';
-
-export default function useBoards(variables?: {
+export const useBoards = (variables?: {
   authors?: string[];
   title?: string;
-}) {
+}) => {
   const queryClient = useQueryClient();
   const { pool, relays } = useLocalState((state) => state);
 
@@ -63,4 +61,4 @@ export default function useBoards(variables?: {
     error: { boards: error, authors: authorsError },
     data: { boards },
   };
-}
+};
