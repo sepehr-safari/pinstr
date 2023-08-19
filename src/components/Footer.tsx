@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer className="fixed z-10 bottom-0 left-0 right-0 flex items-center px-4 py-1 text-gray-500 text-[0.66rem] font-semibold border-t-[1px] border-gray-300 bg-white md:text-xs">
+    <footer className="fixed z-10 bottom-0 left-0 right-0 flex items-center px-4 py-1 text-gray-500 text-[0.66rem] font-semibold border-t-[1px] border-gray-300 bg-gradient-to-t from-gray-100 to-white md:text-xs">
       <div className="flex flex-col gap-1 items-center md:flex-row">
         <a
           href="https://primal.net/profile/npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7"
