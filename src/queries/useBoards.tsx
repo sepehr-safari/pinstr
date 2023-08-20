@@ -2,7 +2,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Event, Filter } from 'nostr-tools';
 
 import { useAuthors } from '@/queries';
-import { useLocalState } from '@/store';
+import { useLocalStore } from '@/store';
 import { parseBoardsFromEvents } from '@/utils';
 
 export const useBoards = ({
@@ -15,7 +15,7 @@ export const useBoards = ({
   enabled?: boolean;
 }) => {
   const queryClient = useQueryClient();
-  const { pool, relays } = useLocalState((state) => state);
+  const { pool, relays } = useLocalStore();
 
   const {
     isLoading,

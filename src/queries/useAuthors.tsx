@@ -1,14 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 import { Event, Filter } from 'nostr-tools';
 
-import { useLocalState } from '@/store';
+import { useLocalStore } from '@/store';
 import { parseAuthorsFromEvents } from '@/utils';
 
 export const useAuthors = (options?: {
   authors?: string[];
   enabled?: boolean;
 }) => {
-  const { pool, relays } = useLocalState((state) => state);
+  const { pool, relays } = useLocalStore((state) => state);
 
   const { isLoading, error, data } = useQuery({
     queryKey: ['nostr', 'authors', { authors: options?.authors }],
