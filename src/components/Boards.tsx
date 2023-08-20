@@ -7,6 +7,7 @@ export const boards: Board[] = [
   {
     id: '1',
     title: 'Favorite Movies',
+    timestamp: 1,
     author: {
       pubkey: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
       details: {
@@ -36,6 +37,7 @@ export const boards: Board[] = [
   {
     id: '2',
     title: 'Best Pizza Flavors',
+    timestamp: 1,
     author: {
       pubkey: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
       details: {
@@ -65,6 +67,7 @@ export const boards: Board[] = [
   {
     id: '3',
     title: 'Encyclopedia of Rare and Special Edition Cars',
+    timestamp: 2,
     author: {
       pubkey: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
       details: {
@@ -94,6 +97,7 @@ export const boards: Board[] = [
   {
     id: '4',
     title: 'Top Rock Bands',
+    timestamp: 2,
     author: {
       pubkey: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
       details: {
@@ -123,6 +127,7 @@ export const boards: Board[] = [
   {
     id: '5',
     title: 'Best Seller Books',
+    timestamp: 2,
     author: {
       pubkey: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
       details: {
@@ -152,6 +157,7 @@ export const boards: Board[] = [
   {
     id: '6',
     title: 'NIP-57 Zap supported Lightning Wallets',
+    timestamp: 3,
     author: {
       pubkey: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
       details: {
@@ -182,6 +188,7 @@ export const boards: Board[] = [
   {
     id: '7',
     title: 'Top 10 Python Libraries',
+    timestamp: 5,
     author: {
       pubkey: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
       details: {
@@ -211,6 +218,7 @@ export const boards: Board[] = [
   {
     id: '8',
     title: 'Grammy Winners of 2010',
+    timestamp: 8,
     author: {
       pubkey: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
       details: {
@@ -240,6 +248,7 @@ export const boards: Board[] = [
   {
     id: '9',
     title: 'Nostr Geek Developers',
+    timestamp: 6,
     author: {
       pubkey: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
       details: {
@@ -269,6 +278,7 @@ export const boards: Board[] = [
   {
     id: '10',
     title: 'Top Nostr Designers',
+    timestamp: 3,
     author: {
       pubkey: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
       details: {
