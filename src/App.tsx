@@ -8,8 +8,10 @@ const persister = createIDBPersister();
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      cacheTime: 1000 * 60 * 60 * 48, // 48 hours
-      staleTime: 1000 * 60 * 5, // 5 minutes
+      // cacheTime: 1000 * 60 * 60 * 48, // 48 hours
+      // staleTime: 1000 * 60 * 1, // 1 minute
+      cacheTime: Infinity,
+      staleTime: Infinity,
     },
   },
 });
