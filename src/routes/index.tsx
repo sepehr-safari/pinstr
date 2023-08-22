@@ -13,10 +13,11 @@ export const AppRouter = () => {
       <Routes location={state?.backgroundLocation || location}>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
+
           <Route path="p">
             <Route index element={<NoMatch />} />
             <Route path=":npub" element={<Profile />}>
-              <Route index element={<Boards noAuthor />} />
+              <Route index element={<Boards hideAuthor />} />
               <Route path=":title" element={<Pins />} />
             </Route>
           </Route>
@@ -31,7 +32,7 @@ export const AppRouter = () => {
           <Route path="p" element={<BottomSlideover />}>
             <Route index element={<NoMatch />} />
             <Route path=":npub" element={<Profile />}>
-              <Route index element={<Boards noAuthor />} />
+              <Route index element={<Boards hideAuthor />} />
               <Route path=":title" element={<Pins />} />
             </Route>
           </Route>
