@@ -15,9 +15,8 @@ import {
   PeopleGrid,
   VideoGrid,
 } from '@/components/Lists';
-import { useBoards, useUser } from '@/queries';
+import { useBoardReactions, useBoards, useUser } from '@/queries';
 import { formatRelativeTime } from '@/utils';
-// import { boards } from './Boards';
 
 // TODO: Replace with real data
 const zapUrls = [
@@ -137,19 +136,19 @@ export const Pins = () => {
   const [openPinSlideover, setOpenPinSlideover] = useState(false);
 
   const { npub, title } = useParams();
-  const hex = npub ? nip19.decode(npub).data.toString() : null;
+  const hex = npub ? nip19.decode(npub).data.toString() : undefined;
+
+  const { data: boards } = useBoards({
+    author: hex,
+    title,
+    enabled: !!hex && !!title,
+  });
+  const board = boards ? boards[0] : undefined;
+
+  const { data: reactions } = useBoardReactions(board);
 
   const { user } = useUser();
-  const selfBoard = user ? nip19.npubEncode(user.pubkey) === npub : false;
-
-  // const board = boards.find((board) => board.title === title) || boards[0]; // TODO: replace with real data
-  const { data } = useBoards({
-    authors: !!hex ? [hex] : [],
-    title,
-    enabled: !!hex,
-  });
-  const board =
-    !!data && !!data.boards && data.boards.length > 0 ? data.boards[0] : null;
+  const selfBoard = user ? user.pubkey == hex : false;
 
   return (
     <>
@@ -239,15 +238,17 @@ export const Pins = () => {
           <div className="mt-4 flex gap-4 xl:mt-auto">
             <button className="inline-flex justify-center items-center rounded-md bg-gray-100 ring-1 ring-gray-300 px-4 py-2 text-xs font-semibold text-gray-500 hover:shadow-md hover:text-gray-800">
               <HandThumbUpIcon className="mr-2 h-4 w-4" />
-              <span className="">21</span>
+              <span className="">{reactions ? reactions.likes.length : 0}</span>
             </button>
             <button className="inline-flex justify-center items-center rounded-md bg-gray-100 ring-1 ring-gray-300 px-4 py-2 text-xs font-semibold text-gray-500 hover:shadow-md hover:text-gray-800">
               <BoltIcon className="mr-2 h-4 w-4" />
-              <span className="">2100</span>
+              <span className="">{reactions ? reactions.zaps.length : 0}</span>
             </button>
             <button className="inline-flex justify-center items-center rounded-md bg-gray-100 ring-1 ring-gray-300 px-4 py-2 text-xs font-semibold text-gray-500 hover:shadow-md hover:text-gray-800">
               <ChatBubbleLeftIcon className="mr-2 h-4 w-4" />
-              <span className="">4</span>
+              <span className="">
+                {reactions ? reactions.comments.length : 0}
+              </span>
             </button>
           </div>
         </div>
