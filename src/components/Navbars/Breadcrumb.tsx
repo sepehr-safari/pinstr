@@ -2,13 +2,12 @@ import { HomeIcon } from '@heroicons/react/20/solid';
 import { nip19 } from 'nostr-tools';
 import { Link, useParams } from 'react-router-dom';
 
-import { useAuthors } from '@/queries';
+import { useAuthor } from '@/queries';
 
 export const Breadcrumb = () => {
   const { npub, title } = useParams();
-  const hex = npub ? nip19.decode(npub).data.toString() : null;
-  const { authors } = useAuthors({ authors: [hex!], enabled: !!hex });
-  const hasAuthor = !!authors && !!authors.length;
+  const hex = npub ? nip19.decode(npub).data.toString() : undefined;
+  const { data: author } = useAuthor(hex);
 
   return (
     <nav
@@ -24,7 +23,7 @@ export const Breadcrumb = () => {
             </Link>
           </div>
         </li>
-        {hasAuthor && (
+        {author && (
           <li>
             <div className="flex items-center max-w-[12rem] md:max-w-xs">
               <svg
@@ -39,7 +38,7 @@ export const Breadcrumb = () => {
                 to={'/p/' + npub}
                 className="ml-1 truncate text-xs font-light text-gray-400 hover:text-gray-700"
               >
-                {authors[0].displayName}
+                {author.displayName}
               </Link>
             </div>
           </li>
