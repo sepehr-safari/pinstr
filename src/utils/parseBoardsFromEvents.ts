@@ -43,6 +43,8 @@ export const parseBoardsFromEvents = (events: Event[]) => {
         case 'pin':
           pins.push(t.slice(1));
           continue;
+        default:
+          continue;
       }
     }
 
@@ -60,7 +62,7 @@ export const parseBoardsFromEvents = (events: Event[]) => {
     boards.push({
       id: event.id,
       timestamp: event.created_at,
-      author: { pubkey: event.pubkey },
+      author: event.pubkey,
       title,
       image,
       description,

@@ -1,13 +1,12 @@
+import { Event } from 'nostr-tools';
+
 export type Pin = string[];
 
 export interface Board {
   id: string;
   timestamp: number;
   title: string;
-  author: {
-    pubkey: string;
-    details?: Author | undefined;
-  };
+  author: string;
   description: string;
   category: string;
   tags: string[];
@@ -29,4 +28,10 @@ export interface Author {
   lud16: string;
   website: string;
   npub: string;
+}
+
+export interface Reactions {
+  likes: Event<7>[];
+  zaps: Event<9735>[];
+  comments: Event<1>[];
 }

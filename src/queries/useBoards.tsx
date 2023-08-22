@@ -1,78 +1,69 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { Event, Filter } from 'nostr-tools';
+import { Filter } from 'nostr-tools';
+import { useCallback } from 'react';
 
-import { useAuthors } from '@/queries';
 import { useLocalStore } from '@/store';
+import { Board } from '@/types';
 import { parseBoardsFromEvents } from '@/utils';
 
 export const useBoards = ({
-  authors = null,
-  title = null,
-  enabled = true,
+  author = undefined,
+  title = undefined,
+  enabled,
 }: {
-  authors?: string[] | null;
-  title?: string | null;
-  enabled?: boolean;
+  author?: string | undefined;
+  title?: string | undefined;
+  enabled: boolean;
 }) => {
+  const pool = useLocalStore((state) => state.pool);
+  const relays = useLocalStore((state) => state.relays);
+
   const queryClient = useQueryClient();
-  const { pool, relays } = useLocalStore();
 
-  const {
-    isLoading,
-    error,
-    data: boards,
-  } = useQuery({
-    queryKey: ['nostr', 'boards', { authors, title }],
-    queryFn: async () => {
-      const filter = { kinds: [33889 as number], limit: 10 } as Filter;
-      if (authors && authors.length > 0) {
-        filter.authors = authors;
+  const fetchBoards = useCallback(async () => {
+    if (enabled && (!pool || !relays))
+      throw new Error('Missing dependencies in fetching boards');
+
+    const filter: Filter = { kinds: [33889 as number], limit: 10 };
+    if (author) filter.authors = [author];
+    if (title) filter['#d'] = [title];
+
+    try {
+      const events = await pool.list(relays, [filter]);
+      const parsedBoards = parseBoardsFromEvents(events);
+
+      if (parsedBoards.length == 0) return null;
+
+      return parsedBoards;
+    } catch (error) {
+      throw new Error('Error in fetching boards');
+    }
+  }, [pool, relays, author, title]);
+
+  return useQuery({
+    queryKey: ['nostr', 'boards', author || 'all', title || 'all'],
+    queryFn: fetchBoards,
+    placeholderData: () => {
+      const allBoards = queryClient.getQueryData<Board[]>(['nostr', 'boards'], {
+        exact: false,
+      });
+      if (allBoards) {
+        return allBoards.filter((board) => {
+          if (author && title) {
+            return board.author == author && board.title == title;
+          } else if (author) {
+            return board.author == author;
+          } else if (title) {
+            return board.title == title;
+          } else {
+            return true;
+          }
+        });
+      } else {
+        return undefined;
       }
-      if (!!title) {
-        filter['#d'] = [title];
-      }
-
-      const events = (await pool.list(relays, [filter])) as Event<number>[];
-
-      return parseBoardsFromEvents(events);
     },
     refetchOnWindowFocus: false,
-    enabled: !!pool && !!relays && enabled,
+    enabled: enabled && !!pool && !!relays,
   });
-
-  const {
-    authors: authorsDetails,
-    authorsError,
-    isAuthorsLoading,
-  } = useAuthors({
-    authors: boards?.map((board) => board.author.pubkey),
-    enabled: !!boards && boards.length > 0,
-  });
-
-  if (
-    !!authorsDetails &&
-    authorsDetails.length > 0 &&
-    !!boards &&
-    boards.length > 0
-  ) {
-    queryClient.setQueryData(
-      ['nostr', 'boards', { authors, title }],
-      boards.map((board) => ({
-        ...board,
-        author: {
-          ...board.author,
-          details:
-            authorsDetails.find(
-              (author) => author.hexPubkey === board.author.pubkey
-            ) || undefined,
-        },
-      }))
-    );
-  }
-
-  return {
-    loadingState: { boards: isLoading, authors: isAuthorsLoading },
-    error: { boards: error, authors: authorsError },
-    data: { boards },
-  };
 };
