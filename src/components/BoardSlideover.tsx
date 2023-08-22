@@ -3,7 +3,7 @@ import { Fragment } from 'react';
 
 import { SelectableBoardTypes } from '@/components';
 import { CategoryMenu, CoverImageMenu } from '@/components/Menus';
-import { useMutateBoard } from '@/hooks';
+import { useMutateBoard } from '@/mutations';
 import { Board } from '@/types';
 import { capitalizeFirstLetter } from '@/utils';
 
@@ -24,7 +24,7 @@ export const BoardSlideover = ({ open, setOpen, initialBoard }: Props) => {
     publishBoard,
     updateBoard,
     deleteBoard,
-  } = useMutateBoard({ onSuccess: () => setOpen(false), initialBoard });
+  } = useMutateBoard({ setOpen, initialBoard });
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -255,7 +255,7 @@ export const BoardSlideover = ({ open, setOpen, initialBoard }: Props) => {
                                       <button
                                         type="button"
                                         className="ml-auto rounded-md border border-red-200 px-4 py-1 text-sm font-bold leading-6 text-red-400 hover:text-red-500 hover:border-red-300"
-                                        onClick={deleteBoard}
+                                        onClick={() => deleteBoard.mutate()}
                                       >
                                         Delete Board
                                       </button>
@@ -293,7 +293,7 @@ export const BoardSlideover = ({ open, setOpen, initialBoard }: Props) => {
                               </button>
                               <button
                                 type="button"
-                                onClick={publishBoard}
+                                onClick={() => publishBoard.mutate()}
                                 className="ml-4 inline-flex justify-center rounded-md bg-gray-800 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
                               >
                                 Create Board
@@ -302,7 +302,7 @@ export const BoardSlideover = ({ open, setOpen, initialBoard }: Props) => {
                           ) : (
                             <button
                               type="button"
-                              onClick={updateBoard}
+                              onClick={() => updateBoard.mutate()}
                               className="ml-4 inline-flex justify-center rounded-md bg-gray-800 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
                             >
                               Update Board

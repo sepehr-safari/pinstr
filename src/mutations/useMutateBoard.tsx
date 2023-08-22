@@ -2,7 +2,7 @@ import { nip19 } from 'nostr-tools';
 import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { usePublish } from '@/hooks';
+import { usePublish } from '@/mutations';
 
 import { categories, MenuItem } from '@/components/Menus';
 import {
@@ -10,16 +10,20 @@ import {
   selectableBoardTypeItems,
 } from '@/components';
 import { Board } from '@/types';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export const useMutateBoard = ({
-  onSuccess,
+  setOpen,
   initialBoard,
 }: {
-  onSuccess: () => void;
+  setOpen: (state: boolean) => void;
   initialBoard?: Board;
 }) => {
-  const publish = usePublish();
+  const queryClient = useQueryClient();
+
   const navigate = useNavigate();
+
+  const publish = usePublish();
 
   const [id, setId] = useState<string>(initialBoard?.id || '');
   const [title, setTitle] = useState<string>(initialBoard?.title || '');
@@ -42,12 +46,12 @@ export const useMutateBoard = ({
   const [tags, setTags] = useState<string[]>(initialBoard?.tags || []);
   const [pins, setPins] = useState<string[][]>(initialBoard?.pins || []);
 
-  const publishBoard = useCallback(() => {
+  const publishBoardFn = useCallback(() => {
     if (!type || !category || !title || !description || !image) {
-      return;
+      throw new Error('Missing required fields');
     }
 
-    publish({
+    return publish({
       kind: 33889 as number,
       tags: [
         ['d', title],
@@ -63,40 +67,24 @@ export const useMutateBoard = ({
           .map((t) => ['t', t]),
         ...pins.map((p) => ['pin', ...p]),
       ],
-    }).then((event) => {
-      onSuccess();
-      setImage('');
-      navigate('/p/' + nip19.npubEncode(event.pubkey) + '/' + title);
     });
-  }, [
-    publish,
-    navigate,
-    title,
-    description,
-    image,
-    category,
-    type,
-    onSuccess,
-    tags,
-    pins,
-    headers,
-  ]);
+  }, [publish, title, description, image, category, type, tags, pins, headers]);
 
-  const deleteBoard = useCallback(() => {
+  const deleteBoardFn = useCallback(() => {
     if (!initialBoard) {
-      return;
+      throw new Error('Missing initial board');
     }
 
-    publish({ kind: 5, tags: [['e', initialBoard.id]] });
+    return publish({ kind: 5, tags: [['e', initialBoard.id]] });
   }, [initialBoard?.id, publish]);
 
-  const updateBoard = useCallback(() => {
+  const updateBoardFn = useCallback(async () => {
     if (initialBoard && initialBoard.title != title) {
-      deleteBoard();
+      await deleteBoardFn();
     }
 
-    publishBoard();
-  }, [publishBoard, deleteBoard, title, initialBoard?.title]);
+    return publishBoardFn();
+  }, [publishBoardFn, deleteBoardFn, title, initialBoard?.title]);
 
   return {
     id: {
@@ -135,8 +123,39 @@ export const useMutateBoard = ({
       value: headers,
       set: setHeaders,
     },
-    publishBoard,
-    updateBoard,
-    deleteBoard,
+    publishBoard: useMutation({
+      mutationFn: publishBoardFn,
+      onSuccess: (event) => {
+        queryClient.invalidateQueries({
+          queryKey: ['nostr', 'boards', event.pubkey, title],
+        });
+
+        setImage('');
+        setOpen(false);
+        navigate('/p/' + nip19.npubEncode(event.pubkey) + '/' + title);
+      },
+    }),
+    updateBoard: useMutation({
+      mutationFn: updateBoardFn,
+      onSuccess: (event) => {
+        queryClient.invalidateQueries({
+          queryKey: ['nostr', 'boards', event.pubkey, title],
+        });
+
+        setOpen(false);
+      },
+    }),
+    deleteBoard: useMutation({
+      mutationFn: deleteBoardFn,
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ['nostr', 'boards', initialBoard?.author, title],
+        });
+
+        setImage('');
+        setOpen(false);
+        navigate('/p/' + initialBoard?.author);
+      },
+    }),
   };
 };
