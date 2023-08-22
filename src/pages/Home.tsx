@@ -1,12 +1,7 @@
 import { Boards } from '@/components';
 import { FiltersNavbar } from '@/components/Navbars';
 
-import { useBoards } from '@/queries';
-
 export const Home = () => {
-  const { data } = useBoards({});
-  console.log(data);
-
   return (
     <>
       <div className="mx-auto max-w-screen-4xl">
