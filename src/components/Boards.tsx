@@ -1,31 +1,17 @@
-import { joinClassNames } from '@/utils';
+import { nip19 } from 'nostr-tools';
+import { useParams } from 'react-router-dom';
 
 import { BoardItem } from '@/components';
+import { useBoards } from '@/queries';
 import { Board } from '@/types';
+import { joinClassNames } from '@/utils';
 
 export const boards: Board[] = [
   {
     id: '1',
     title: 'Favorite Movies',
     timestamp: 1,
-    author: {
-      pubkey: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
-      details: {
-        banner:
-          'https://raw.githubusercontent.com/sepehr-safari/nostribe-web-client/main/public/nostribe.png',
-        website: 'https://pinstr.app',
-        nip05: 'sepehr@pinstr.app',
-        picture:
-          'https://cdn.nostr.build/i/p/ded3166777975cce846c2abf1b653d9479b076aa93152e33f75f3db5f75079e5.gif',
-        lud16: 'sepehr@getalby.com',
-        displayName: 'Sepehr',
-        about: 'Creator of Nostr-Hooks & Nostribe.com & Pinstr.app',
-        name: 'Sepehr',
-        hexPubkey: '',
-        lud06: '',
-        npub: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
-      },
-    },
+    author: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
     image: 'https://source.unsplash.com/random/?cinema',
     description: 'This is a board of my favorite movies',
     category: 'Entertainment',
@@ -38,24 +24,7 @@ export const boards: Board[] = [
     id: '2',
     title: 'Best Pizza Flavors',
     timestamp: 1,
-    author: {
-      pubkey: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
-      details: {
-        banner:
-          'https://raw.githubusercontent.com/sepehr-safari/nostribe-web-client/main/public/nostribe.png',
-        website: 'https://pinstr.app',
-        nip05: 'sepehr@pinstr.app',
-        picture:
-          'https://cdn.nostr.build/i/p/ded3166777975cce846c2abf1b653d9479b076aa93152e33f75f3db5f75079e5.gif',
-        lud16: 'sepehr@getalby.com',
-        displayName: 'Sepehr',
-        about: 'Creator of Nostr-Hooks & Nostribe.com & Pinstr.app',
-        name: 'Sepehr',
-        hexPubkey: '',
-        lud06: '',
-        npub: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
-      },
-    },
+    author: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
     image: 'https://source.unsplash.com/random/?pizza',
     description: 'This is a board of my favorite pizza flavors',
     category: 'Food & Cooking',
@@ -68,24 +37,7 @@ export const boards: Board[] = [
     id: '3',
     title: 'Encyclopedia of Rare and Special Edition Cars',
     timestamp: 2,
-    author: {
-      pubkey: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
-      details: {
-        banner:
-          'https://raw.githubusercontent.com/sepehr-safari/nostribe-web-client/main/public/nostribe.png',
-        website: 'https://pinstr.app',
-        nip05: 'sepehr@pinstr.app',
-        picture:
-          'https://cdn.nostr.build/i/p/ded3166777975cce846c2abf1b653d9479b076aa93152e33f75f3db5f75079e5.gif',
-        lud16: 'sepehr@getalby.com',
-        displayName: 'Sepehr',
-        about: 'Creator of Nostr-Hooks & Nostribe.com & Pinstr.app',
-        name: 'Sepehr',
-        hexPubkey: '',
-        lud06: '',
-        npub: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
-      },
-    },
+    author: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
     image: 'https://source.unsplash.com/random/?rare+cars',
     description: 'This is a board of my favorite rare and special edition cars',
     category: 'Sports & Fitness',
@@ -98,24 +50,7 @@ export const boards: Board[] = [
     id: '4',
     title: 'Top Rock Bands',
     timestamp: 2,
-    author: {
-      pubkey: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
-      details: {
-        banner:
-          'https://raw.githubusercontent.com/sepehr-safari/nostribe-web-client/main/public/nostribe.png',
-        website: 'https://pinstr.app',
-        nip05: 'sepehr@pinstr.app',
-        picture:
-          'https://cdn.nostr.build/i/p/ded3166777975cce846c2abf1b653d9479b076aa93152e33f75f3db5f75079e5.gif',
-        lud16: 'sepehr@getalby.com',
-        displayName: 'Sepehr',
-        about: 'Creator of Nostr-Hooks & Nostribe.com & Pinstr.app',
-        name: 'Sepehr',
-        hexPubkey: '',
-        lud06: '',
-        npub: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
-      },
-    },
+    author: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
     image: 'https://source.unsplash.com/random/?rock+band',
     description: 'This is a board of my favorite rock bands',
     category: 'Entertainment',
@@ -128,24 +63,7 @@ export const boards: Board[] = [
     id: '5',
     title: 'Best Seller Books',
     timestamp: 2,
-    author: {
-      pubkey: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
-      details: {
-        banner:
-          'https://raw.githubusercontent.com/sepehr-safari/nostribe-web-client/main/public/nostribe.png',
-        website: 'https://pinstr.app',
-        nip05: 'sepehr@pinstr.app',
-        picture:
-          'https://cdn.nostr.build/i/p/ded3166777975cce846c2abf1b653d9479b076aa93152e33f75f3db5f75079e5.gif',
-        lud16: 'sepehr@getalby.com',
-        displayName: 'Sepehr',
-        about: 'Creator of Nostr-Hooks & Nostribe.com & Pinstr.app',
-        name: 'Sepehr',
-        hexPubkey: '',
-        lud06: '',
-        npub: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
-      },
-    },
+    author: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
     image: 'https://source.unsplash.com/random/?book',
     description: 'This is a board of my favorite books',
     category: 'Science & Education',
@@ -158,24 +76,7 @@ export const boards: Board[] = [
     id: '6',
     title: 'NIP-57 Zap supported Lightning Wallets',
     timestamp: 3,
-    author: {
-      pubkey: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
-      details: {
-        banner:
-          'https://raw.githubusercontent.com/sepehr-safari/nostribe-web-client/main/public/nostribe.png',
-        website: 'https://pinstr.app',
-        nip05: 'sepehr@pinstr.app',
-        picture:
-          'https://cdn.nostr.build/i/p/ded3166777975cce846c2abf1b653d9479b076aa93152e33f75f3db5f75079e5.gif',
-        lud16: 'sepehr@getalby.com',
-        displayName: 'Sepehr',
-        about: 'Creator of Nostr-Hooks & Nostribe.com & Pinstr.app',
-        name: 'Sepehr',
-        hexPubkey: '',
-        lud06: '',
-        npub: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
-      },
-    },
+    author: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
     image: 'https://source.unsplash.com/random/?bitcoin',
     description:
       'This is a board of my favorite NIP-57 Zap supported Lightning Wallets',
@@ -189,24 +90,7 @@ export const boards: Board[] = [
     id: '7',
     title: 'Top 10 Python Libraries',
     timestamp: 5,
-    author: {
-      pubkey: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
-      details: {
-        banner:
-          'https://raw.githubusercontent.com/sepehr-safari/nostribe-web-client/main/public/nostribe.png',
-        website: 'https://pinstr.app',
-        nip05: 'sepehr@pinstr.app',
-        picture:
-          'https://cdn.nostr.build/i/p/ded3166777975cce846c2abf1b653d9479b076aa93152e33f75f3db5f75079e5.gif',
-        lud16: 'sepehr@getalby.com',
-        displayName: 'Sepehr',
-        about: 'Creator of Nostr-Hooks & Nostribe.com & Pinstr.app',
-        name: 'Sepehr',
-        hexPubkey: '',
-        lud06: '',
-        npub: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
-      },
-    },
+    author: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
     image: 'https://source.unsplash.com/random/?python',
     description: 'This is a board of my favorite Python libraries',
     category: 'Technology',
@@ -219,24 +103,7 @@ export const boards: Board[] = [
     id: '8',
     title: 'Grammy Winners of 2010',
     timestamp: 8,
-    author: {
-      pubkey: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
-      details: {
-        banner:
-          'https://raw.githubusercontent.com/sepehr-safari/nostribe-web-client/main/public/nostribe.png',
-        website: 'https://pinstr.app',
-        nip05: 'sepehr@pinstr.app',
-        picture:
-          'https://cdn.nostr.build/i/p/ded3166777975cce846c2abf1b653d9479b076aa93152e33f75f3db5f75079e5.gif',
-        lud16: 'sepehr@getalby.com',
-        displayName: 'Sepehr',
-        about: 'Creator of Nostr-Hooks & Nostribe.com & Pinstr.app',
-        name: 'Sepehr',
-        hexPubkey: '',
-        lud06: '',
-        npub: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
-      },
-    },
+    author: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
     image: 'https://source.unsplash.com/random/?grammy',
     description: 'This is a board of my favorite Grammy winners of 2010',
     category: 'Entertainment',
@@ -249,24 +116,7 @@ export const boards: Board[] = [
     id: '9',
     title: 'Nostr Geek Developers',
     timestamp: 6,
-    author: {
-      pubkey: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
-      details: {
-        banner:
-          'https://raw.githubusercontent.com/sepehr-safari/nostribe-web-client/main/public/nostribe.png',
-        website: 'https://pinstr.app',
-        nip05: 'sepehr@pinstr.app',
-        picture:
-          'https://cdn.nostr.build/i/p/ded3166777975cce846c2abf1b653d9479b076aa93152e33f75f3db5f75079e5.gif',
-        lud16: 'sepehr@getalby.com',
-        displayName: 'Sepehr',
-        about: 'Creator of Nostr-Hooks & Nostribe.com & Pinstr.app',
-        name: 'Sepehr',
-        hexPubkey: '',
-        lud06: '',
-        npub: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
-      },
-    },
+    author: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
     image: 'https://source.unsplash.com/random/?developer',
     description: 'This is a board of my favorite Nostr geek developers',
     category: 'FOSS',
@@ -279,24 +129,7 @@ export const boards: Board[] = [
     id: '10',
     title: 'Top Nostr Designers',
     timestamp: 3,
-    author: {
-      pubkey: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
-      details: {
-        banner:
-          'https://raw.githubusercontent.com/sepehr-safari/nostribe-web-client/main/public/nostribe.png',
-        website: 'https://pinstr.app',
-        nip05: 'sepehr@pinstr.app',
-        picture:
-          'https://cdn.nostr.build/i/p/ded3166777975cce846c2abf1b653d9479b076aa93152e33f75f3db5f75079e5.gif',
-        lud16: 'sepehr@getalby.com',
-        displayName: 'Sepehr',
-        about: 'Creator of Nostr-Hooks & Nostribe.com & Pinstr.app',
-        name: 'Sepehr',
-        hexPubkey: '',
-        lud06: '',
-        npub: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
-      },
-    },
+    author: 'npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7',
     image: 'https://source.unsplash.com/random/?designer',
     description: 'This is a board of my favorite Nostr designers',
     category: 'FOSS',
@@ -309,11 +142,16 @@ export const boards: Board[] = [
 
 export const Boards = ({
   fullWidth = false,
-  noAuthor = false,
+  hideAuthor = false,
 }: {
   fullWidth?: boolean;
-  noAuthor?: boolean;
+  hideAuthor?: boolean;
 }) => {
+  const { npub } = useParams();
+  const hex = npub ? nip19.decode(npub).data.toString() : undefined;
+
+  const { data: boards } = useBoards({ author: hex, enabled: !!hex });
+
   return (
     <div className="mx-auto pb-16 overflow-hidden max-w-md sm:max-w-none">
       <div
@@ -324,8 +162,8 @@ export const Boards = ({
             : 'xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4'
         )}
       >
-        {boards.concat(boards).map((board, index) => (
-          <BoardItem board={board} key={index} noAuthor={noAuthor} />
+        {(boards || []).map((board, index) => (
+          <BoardItem board={board} key={index} hideAuthor={hideAuthor} />
         ))}
       </div>
     </div>
