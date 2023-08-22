@@ -1,18 +1,24 @@
 import { Transition } from '@headlessui/react';
 import { BoltIcon, HandThumbUpIcon } from '@heroicons/react/20/solid';
+import { nip19 } from 'nostr-tools';
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import { AuthorOverview } from '@/components';
+import { useAuthor, useBoardReactions } from '@/queries';
 import { Board } from '@/types';
+import { capitalizeFirstLetter } from '@/utils';
 
 export const BoardItem = ({
   board,
-  noAuthor = false,
+  hideAuthor = false,
 }: {
   board: Board;
-  noAuthor?: boolean;
+  hideAuthor?: boolean;
 }) => {
+  const { data: author } = useAuthor(board.author);
+  const { data: reactions } = useBoardReactions(board);
+
   const location = useLocation();
 
   const [isHovering, setIsHover] = useState<boolean | undefined>(false);
@@ -25,7 +31,7 @@ export const BoardItem = ({
         onMouseLeave={() => setIsHover(false)}
       >
         <Link
-          to={`/p/${board.author.pubkey}/${board.title}`}
+          to={`/p/${nip19.npubEncode(board.author)}/${board.title}`}
           state={{ backgroundLocation: location }}
         >
           <div className="relative aspect-w-5 aspect-h-4 w-full overflow-hidden rounded-md bg-gray-100 hover:cursor-pointer">
@@ -41,7 +47,7 @@ export const BoardItem = ({
                 leaveTo="opacity-0 -translate-x-1"
               >
                 <span className="inline-flex items-center gap-x-1.5 rounded-full bg-gray-200 px-1.5 py-0.5 text-xs font-medium text-gray-600 hover:bg-gray-300">
-                  Generic
+                  {capitalizeFirstLetter(board.type)}
                 </span>
               </Transition.Child>
               <Transition.Child
@@ -55,7 +61,7 @@ export const BoardItem = ({
                 leaveTo="opacity-0 translate-x-1"
               >
                 <span className="inline-flex items-center gap-x-1.5 rounded-full bg-gray-200 px-1.5 py-0.5 text-xs font-medium text-gray-600 hover:bg-gray-300">
-                  Entertainment
+                  {board.category}
                 </span>
               </Transition.Child>
               <Transition.Child
@@ -82,18 +88,24 @@ export const BoardItem = ({
               {board.title}
             </h3>
 
-            {!noAuthor && board.author.details && (
-              <AuthorOverview author={board.author.details} />
-            )}
+            {!hideAuthor && author && <AuthorOverview author={author} />}
           </div>
           <div className="ml-4 mt-[2px] flex">
             <button className="flex text-xs font-bold text-gray-500 hover:text-gray-700">
               <HandThumbUpIcon className="h-4 w-4" aria-hidden="true" />
-              <span className="ml-1">17</span>
+              <span className="ml-1">
+                {reactions && reactions.likes.length > 0
+                  ? reactions.likes.length
+                  : 0}
+              </span>
             </button>
             <button className="ml-4 flex text-xs font-bold text-gray-500 hover:text-gray-700">
               <BoltIcon className="h-4 w-4" aria-hidden="true" />
-              <span className="ml-1">9.4k</span>
+              <span className="ml-1">
+                {reactions && reactions.zaps.length > 0
+                  ? reactions.zaps.length
+                  : 0}
+              </span>
             </button>
           </div>
         </div>
