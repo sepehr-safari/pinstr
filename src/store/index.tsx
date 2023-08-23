@@ -12,6 +12,6 @@ interface Actions {
 
 export const useLocalStore = create<State & Actions>((set) => ({
   pool: new SimplePool(),
-  relays: ['wss://relay.nostr.band', 'wss://nos.lol'],
+  relays: ['wss://nos.lol'],
   setRelays: (relays) => set({ relays }),
 }));
