@@ -2,6 +2,8 @@ import { Event } from 'nostr-tools';
 
 export type Pin = string[];
 
+export type ParsedPin = { [key: string]: string };
+
 export interface Board {
   id: string;
   timestamp: number;
