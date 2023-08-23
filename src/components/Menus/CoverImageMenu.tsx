@@ -43,7 +43,7 @@ export const CoverImageMenu = ({ image, setImage }: Props) => {
   const handleLoadMore = useCallback(() => {
     setIsSearching(true);
 
-    const promises = Array.from({ length: 10 }, () => {
+    const promises = Array.from({ length: 5 }, () => {
       return fetch(
         `https://source.unsplash.com/random/?${searchKeyword}&sig=${Math.random()}`
       );
@@ -95,7 +95,7 @@ export const CoverImageMenu = ({ image, setImage }: Props) => {
     const timer = setTimeout(() => {
       setIsSearching(true);
 
-      const promises = Array.from({ length: 10 }, () => {
+      const promises = Array.from({ length: 5 }, () => {
         return fetch(
           `https://source.unsplash.com/random/?${searchKeyword}&sig=${Math.random()}`
         );
@@ -107,7 +107,7 @@ export const CoverImageMenu = ({ image, setImage }: Props) => {
         setIsSearching(false);
         setSearchResult(urls);
       });
-    }, 400);
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, [searchKeyword]);
@@ -199,7 +199,7 @@ export const CoverImageMenu = ({ image, setImage }: Props) => {
           <div className="mt-4 grid grid-cols-2 gap-4 max-h-80 overflow-y-scroll">
             {searchResult.length > 0 &&
               searchResult.map((url, index) => (
-                <div key={url}>
+                <div key={url + index}>
                   <div className="aspect-h-4 aspect-w-5">
                     <img
                       src={url}
