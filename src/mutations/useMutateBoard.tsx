@@ -1,23 +1,24 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { nip19 } from 'nostr-tools';
 import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { usePublish } from '@/mutations';
-
-import { categories, MenuItem } from '@/components/Menus';
 import {
   SelectableBoardTypeItem,
   selectableBoardTypeItems,
 } from '@/components';
-import { Board } from '@/types';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { categories, MenuItem } from '@/components/Menus';
+import { usePublish } from '@/mutations';
+import { Board, ParsedPin } from '@/types';
 
 export const useMutateBoard = ({
   setOpen,
   initialBoard,
+  initialPinIndex,
 }: {
   setOpen: (state: boolean) => void;
   initialBoard?: Board;
+  initialPinIndex?: number;
 }) => {
   const queryClient = useQueryClient();
 
@@ -45,6 +46,15 @@ export const useMutateBoard = ({
   const [headers, setHeaders] = useState<string[]>(initialBoard?.headers || []);
   const [tags, setTags] = useState<string[]>(initialBoard?.tags || []);
   const [pins, setPins] = useState<string[][]>(initialBoard?.pins || []);
+
+  const initialCurrentPin: ParsedPin = {};
+  headers.forEach((header, index) => {
+    initialCurrentPin[header] = initialPinIndex
+      ? pins[initialPinIndex][index]
+      : '';
+  });
+
+  const [currentPin, setCurrentPin] = useState(initialCurrentPin);
 
   const publishBoardFn = useCallback(() => {
     if (!type || !category || !title || !description || !image) {
@@ -123,12 +133,26 @@ export const useMutateBoard = ({
       value: headers,
       set: setHeaders,
     },
+    currentPin: {
+      value: currentPin,
+      set: setCurrentPin,
+    },
+    refreshPins: () => {
+      if (!initialPinIndex) {
+        setPins((pins) => [...pins, Object.values(currentPin)]);
+      } else {
+        const newPins = [...pins];
+        newPins[initialPinIndex] = Object.values(currentPin);
+        setPins(newPins);
+      }
+    },
     publishBoard: useMutation({
       mutationFn: publishBoardFn,
       onSuccess: (event) => {
         queryClient.invalidateQueries({ queryKey: ['nostr', 'boards'] });
 
         setImage('');
+        setCurrentPin(initialCurrentPin);
         setOpen(false);
         navigate('/p/' + nip19.npubEncode(event.pubkey) + '/' + title);
       },
@@ -148,7 +172,7 @@ export const useMutateBoard = ({
 
         setImage('');
         setOpen(false);
-        navigate('/p/' + initialBoard?.author);
+        navigate('/p/' + nip19.npubEncode(initialBoard!.author));
       },
     }),
   };
