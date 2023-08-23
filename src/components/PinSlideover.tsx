@@ -3,20 +3,31 @@ import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 import { Fragment, useState } from 'react';
 
 import { selectableBoardTypeItems } from '@/components';
-import { CoverImageMenu, categories } from '@/components/Menus';
+import { categories } from '@/components/Menus';
 import { useMutateBoard } from '@/mutations';
-import { Board } from '@/types';
+import { Board, ParsedPin } from '@/types';
 
-import { boards as mockBoards } from './BoardsExplorer'; // TODO: Replace with real data
+import { useBoardsByAuthor, useUser } from '@/queries';
+import { EditImagePin } from './EditPinComponents';
 
 type Props = {
   open: boolean;
   setOpen: (state: boolean) => void;
   initialBoard?: Board;
+  initialPinIndex?: number;
 };
 
-export const PinSlideover = ({ open, setOpen, initialBoard }: Props) => {
-  const [boards, setBoards] = useState<Board[]>(mockBoards); // TODO: replace with useBoards query - only enable when no initialBoard
+export const PinSlideover = ({
+  open,
+  setOpen,
+  initialBoard,
+  initialPinIndex,
+}: Props) => {
+  const [searchInput, setSearchInput] = useState('');
+
+  const { user } = useUser();
+
+  const { data: boards } = useBoardsByAuthor({ author: user!.pubkey });
 
   const {
     id,
@@ -28,9 +39,10 @@ export const PinSlideover = ({ open, setOpen, initialBoard }: Props) => {
     image,
     pins,
     headers,
+    currentPin,
+    refreshPins,
     publishBoard,
-    updateBoard,
-  } = useMutateBoard({ setOpen, initialBoard });
+  } = useMutateBoard({ setOpen, initialBoard, initialPinIndex });
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -67,7 +79,7 @@ export const PinSlideover = ({ open, setOpen, initialBoard }: Props) => {
                       <div className="bg-gray-800 px-4 py-6 sm:px-6">
                         <div className="flex items-center justify-between">
                           <Dialog.Title className="text-base font-semibold leading-6 text-white">
-                            {!initialBoard ? (
+                            {!initialPinIndex ? (
                               !id.value ? (
                                 <span>Add a new pin</span>
                               ) : (
@@ -80,15 +92,13 @@ export const PinSlideover = ({ open, setOpen, initialBoard }: Props) => {
                         </div>
                         <div className="mt-1">
                           <p className="text-sm font-light text-gray-300">
-                            {!initialBoard ? (
-                              !title.value ? (
-                                <span>Get started by choosing a board.</span>
-                              ) : (
-                                <span>
-                                  Fill in the details below to add a new pin to
-                                  your board.
-                                </span>
-                              )
+                            {!title.value ? (
+                              <span>Get started by choosing a board.</span>
+                            ) : !initialPinIndex ? (
+                              <span>
+                                Fill in the details below to add a new pin to
+                                your board.
+                              </span>
                             ) : (
                               <span>
                                 Edit the details below to update your pin.
@@ -119,19 +129,10 @@ export const PinSlideover = ({ open, setOpen, initialBoard }: Props) => {
                                   autoComplete="off"
                                   className="block w-full rounded-md border-0 bg-opacity-30 bg-white py-2 pl-10 pr-3 text-xs text-gray-900 ring-1 ring-inset ring-gray-900/20 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-gray-500 focus:bg-opacity-50"
                                   placeholder="Search in your boards"
-                                  onChange={(e) => {
-                                    setBoards(() =>
-                                      e.target.value
-                                        ? mockBoards.filter((board) =>
-                                            board.title
-                                              .toLowerCase()
-                                              .includes(
-                                                e.target.value.toLowerCase()
-                                              )
-                                          )
-                                        : mockBoards
-                                    );
-                                  }}
+                                  onChange={(e) =>
+                                    setSearchInput(e.target.value)
+                                  }
+                                  value={searchInput}
                                 />
                               </div>
                             </div>
@@ -140,169 +141,117 @@ export const PinSlideover = ({ open, setOpen, initialBoard }: Props) => {
                             role="list"
                             className="mt-4 px-6 grid grid-cols-2 gap-4"
                           >
-                            {boards.map((board, index) => (
-                              <li key={index} className="flow-root">
-                                <div className="relative group flex items-center gap-2 pr-2 rounded-xl focus-within:ring-2 focus-within:ring-gray-500 hover:bg-gray-100 hover:cursor-pointer">
-                                  <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-lg bg-gray-200 text-gray-200">
-                                    <img
-                                      className="h-12 w-12 rounded-lg duration-300 ease-in-out group-hover:h-14 group-hover:w-14"
-                                      src={board.image}
-                                      alt={board.title}
-                                    />
-                                  </div>
-                                  <div>
-                                    <h3 className="text-sm font-medium text-gray-900">
-                                      <div
-                                        onClick={() => {
-                                          const selectedBoard =
-                                            boards.find(
-                                              (b) => b.id == board.id
-                                            ) || null;
+                            {(boards || [])
+                              .filter((board) =>
+                                board.title
+                                  .toLowerCase()
+                                  .includes(searchInput.toLowerCase())
+                              )
+                              .map((board, index) => (
+                                <li key={index} className="flow-root">
+                                  <div className="relative group flex items-center gap-2 pr-2 rounded-xl focus-within:ring-2 focus-within:ring-gray-500 hover:bg-gray-100 hover:cursor-pointer">
+                                    <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-lg bg-gray-200 text-gray-200">
+                                      <img
+                                        className="h-12 w-12 rounded-lg duration-300 ease-in-out group-hover:h-14 group-hover:w-14"
+                                        src={board.image}
+                                        alt={board.title}
+                                      />
+                                    </div>
+                                    <div>
+                                      <h3 className="text-sm font-medium text-gray-900">
+                                        <div
+                                          onClick={() => {
+                                            const selectedBoard =
+                                              (boards || []).find(
+                                                (b) => b.id == board.id
+                                              ) || null;
 
-                                          if (!!selectedBoard) {
-                                            id.set(selectedBoard.id);
-                                            title.set(selectedBoard.title);
-                                            description.set(
-                                              selectedBoard.description
-                                            );
-                                            image.set(selectedBoard.image);
-                                            category.set(
-                                              categories.find(
-                                                (c) =>
-                                                  c.title ===
-                                                  selectedBoard.category
-                                              ) || null
-                                            );
-                                            type.set(
-                                              selectableBoardTypeItems.find(
-                                                (b) =>
-                                                  b.type == selectedBoard.type
-                                              ) || null
-                                            );
-                                            tags.set(selectedBoard.tags);
-                                            pins.set(selectedBoard.pins);
-                                            headers.set(selectedBoard.headers);
-                                          }
-                                        }}
-                                      >
-                                        <span
-                                          className="absolute inset-0"
-                                          aria-hidden="true"
-                                        />
-                                        <span>{board.title}</span>
-                                      </div>
-                                    </h3>
+                                            if (!!selectedBoard) {
+                                              id.set(selectedBoard.id);
+                                              title.set(selectedBoard.title);
+                                              description.set(
+                                                selectedBoard.description
+                                              );
+                                              image.set(selectedBoard.image);
+                                              category.set(
+                                                categories.find(
+                                                  (c) =>
+                                                    c.title ===
+                                                    selectedBoard.category
+                                                ) || null
+                                              );
+                                              type.set(
+                                                selectableBoardTypeItems.find(
+                                                  (b) =>
+                                                    b.type == selectedBoard.type
+                                                ) || null
+                                              );
+                                              tags.set(selectedBoard.tags);
+                                              pins.set(selectedBoard.pins);
+                                              headers.set(
+                                                selectedBoard.headers
+                                              );
+                                              const initialCurrentPin: ParsedPin =
+                                                {};
+                                              selectedBoard.headers.forEach(
+                                                (header, index) => {
+                                                  initialCurrentPin[header] =
+                                                    initialPinIndex
+                                                      ? selectedBoard.pins[
+                                                          initialPinIndex
+                                                        ][index]
+                                                      : '';
+                                                }
+                                              );
+                                              currentPin.set(initialCurrentPin);
+                                            }
+                                          }}
+                                        >
+                                          <span
+                                            className="absolute inset-0"
+                                            aria-hidden="true"
+                                          />
+                                          <span>{board.title}</span>
+                                        </div>
+                                      </h3>
+                                    </div>
                                   </div>
-                                </div>
-                              </li>
-                            ))}
+                                </li>
+                              ))}
                           </ul>
                         </div>
                       ) : (
                         <div className="flex flex-1 flex-col justify-between">
                           <div className="divide-y divide-gray-200 px-4 sm:px-6">
                             <div className="space-y-4 pb-4 pt-4">
-                              <div>
-                                <label
-                                  htmlFor="title"
-                                  className="flex flex-col"
-                                >
-                                  <span className="text-sm font-medium leading-6 text-gray-900">
-                                    Title
-                                  </span>
-                                  <span className="text-xs font-light text-gray-500">
-                                    Choose a nice title for your pin.
-                                  </span>
-                                </label>
-                                <div className="mt-2">
-                                  <input
-                                    type="text"
-                                    name="title"
-                                    id="title"
-                                    autoComplete="off"
-                                    autoFocus
-                                    tabIndex={1}
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
-                                    // value={title.value}
-                                    // onChange={(e) => title.set(e.target.value)}
-                                  />
-                                </div>
-                              </div>
-                              <div>
-                                <label
-                                  htmlFor="description"
-                                  className="flex flex-col"
-                                >
-                                  <span className="text-sm font-medium leading-6 text-gray-900">
-                                    Description
-                                  </span>
-                                  <span className="text-xs font-light text-gray-500">
-                                    Explain what this board is about in a few
-                                    words.
-                                  </span>
-                                </label>
-                                <div className="mt-2">
-                                  <input
-                                    type="text"
-                                    name="description"
-                                    id="description"
-                                    autoComplete="off"
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
-                                    // value={description.value}
-                                    // onChange={(e) =>
-                                    //   description.set(e.target.value)
-                                    // }
-                                  />
-                                </div>
-                              </div>
-                              {['text', 'link'].includes(
-                                type.value?.type || ''
-                              ) && (
-                                <div>
-                                  <span className="flex flex-col">
-                                    <span className="text-sm font-medium leading-6 text-gray-900">
-                                      Image
-                                    </span>
-                                    <span className="text-xs font-light text-gray-500">
-                                      Select an option and choose a high quality
-                                      image that represents your pin.
-                                    </span>
-                                  </span>
-                                  <div className="mt-2">
-                                    <CoverImageMenu
-                                      image={image.value}
-                                      setImage={image.set}
-                                    />
+                              {type.value?.type === 'Image' && (
+                                <EditImagePin pin={currentPin} />
+                              )}
+
+                              {initialPinIndex && (
+                                <div className="py-6">
+                                  <div className="flex flex-col rounded-md border border-dashed border-red-300">
+                                    <div className="w-full bg-red-50 shadow-inner px-4 py-2 border-b border-red-100 rounded-t-md">
+                                      <span className="text-sm font-bold text-red-400">
+                                        Danger Zone
+                                      </span>
+                                    </div>
+                                    <div className="p-4 flex items-center">
+                                      <div className="text-xs">
+                                        Deleting a pin is permanent and cannot
+                                        be undone.
+                                      </div>
+                                      <button
+                                        type="button"
+                                        className="ml-auto rounded-md border border-red-200 px-4 py-1 text-sm font-bold leading-6 text-red-400 hover:text-red-500 hover:border-red-300"
+                                        // onClick={deletePin}
+                                      >
+                                        Delete Pin
+                                      </button>
+                                    </div>
                                   </div>
                                 </div>
                               )}
-
-                              {!!id.value &&
-                                initialBoard &&
-                                initialBoard.pins.length > 0 && (
-                                  <div className="py-6">
-                                    <div className="flex flex-col rounded-md border border-dashed border-red-300">
-                                      <div className="w-full bg-red-50 shadow-inner px-4 py-2 border-b border-red-100 rounded-t-md">
-                                        <span className="text-sm font-bold text-red-400">
-                                          Danger Zone
-                                        </span>
-                                      </div>
-                                      <div className="p-4 flex items-center">
-                                        <div className="text-xs">
-                                          Deleting a pin is permanent and cannot
-                                          be undone.
-                                        </div>
-                                        <button
-                                          type="button"
-                                          className="ml-auto rounded-md border border-red-200 px-4 py-1 text-sm font-bold leading-6 text-red-400 hover:text-red-500 hover:border-red-300"
-                                          // onClick={deletePin}
-                                        >
-                                          Delete Pin
-                                        </button>
-                                      </div>
-                                    </div>
-                                  </div>
-                                )}
                             </div>
                           </div>
                         </div>
@@ -321,7 +270,7 @@ export const PinSlideover = ({ open, setOpen, initialBoard }: Props) => {
 
                       {!!id.value && (
                         <div className="flex">
-                          {!initialBoard ? (
+                          {!initialPinIndex ? (
                             <>
                               <button
                                 type="button"
@@ -343,7 +292,10 @@ export const PinSlideover = ({ open, setOpen, initialBoard }: Props) => {
                               </button>
                               <button
                                 type="button"
-                                onClick={() => publishBoard.mutate()}
+                                onClick={() => {
+                                  refreshPins();
+                                  publishBoard.mutate();
+                                }}
                                 className="ml-4 inline-flex justify-center rounded-md bg-gray-800 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
                               >
                                 Add Pin
@@ -352,7 +304,10 @@ export const PinSlideover = ({ open, setOpen, initialBoard }: Props) => {
                           ) : (
                             <button
                               type="button"
-                              onClick={() => updateBoard.mutate()}
+                              onClick={() => {
+                                refreshPins();
+                                publishBoard.mutate();
+                              }}
                               className="ml-4 inline-flex justify-center rounded-md bg-gray-800 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
                             >
                               Update Pin
