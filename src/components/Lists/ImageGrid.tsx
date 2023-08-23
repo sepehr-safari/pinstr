@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { DetailsSlideover } from '@/components';
+import { Board } from '@/types';
 
 const images = [
   {
@@ -35,7 +36,7 @@ const images = [
   },
 ];
 
-export const ImageGrid = () => {
+export const ImageGrid = ({ board }: { board: Board }) => {
   const [shownDetailsIndex, setShownDetailsIndex] = useState(-1);
 
   return (
@@ -43,7 +44,7 @@ export const ImageGrid = () => {
       role="list"
       className="mt-14 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 xl:gap-x-8 2xl:grid-cols-3 3xl:grid-cols-4"
     >
-      {images.map((image, index) => (
+      {(board.pins || []).map((imagePin, index) => (
         <li
           key={index}
           className="p-2 group relative rounded-lg hover:bg-gray-50 ease-in-out duration-500 hover:shadow-md"
@@ -51,15 +52,15 @@ export const ImageGrid = () => {
           <div className="ease-in-out duration-700">
             <div className="aspect-w-5 aspect-h-4 block w-full overflow-hidden rounded-md bg-gray-200 text-gray-200">
               <img
-                src={image.source}
-                alt={image.title}
+                src={imagePin[0]}
+                alt={imagePin[1]}
                 className="object-cover object-center hover:opacity-75 hover:cursor-zoom-in"
               />
             </div>
           </div>
 
           <p className="mt-4 block truncate text-sm font-medium text-gray-900 ease-in-out duration-700">
-            {image.title}
+            {imagePin[1]}
           </p>
 
           <div className="w-full">
@@ -87,14 +88,15 @@ export const ImageGrid = () => {
                 currentIndex > 0 ? currentIndex - 1 : currentIndex
               )
             }
-            details={image}
+            pin={imagePin}
+            headers={board.headers}
           >
             <div className="max-w-sm mx-auto">
               <div className="ease-in-out duration-700">
                 <div className="aspect-w-5 aspect-h-4 block w-full overflow-hidden rounded-md bg-gray-200 text-gray-200">
                   <img
-                    src={image.source}
-                    alt={image.title}
+                    src={imagePin[0]}
+                    alt={imagePin[1]}
                     className="object-cover hover:opacity-75 hover:cursor-zoom-in"
                   />
                 </div>
