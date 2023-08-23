@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { DetailsSlideover } from '@/components';
+import { Board } from '@/types';
 
 const videos = [
   {
@@ -35,7 +36,7 @@ const videos = [
   },
 ];
 
-export const VideoGrid = () => {
+export const VideoGrid = ({ board }: { board: Board }) => {
   const [shownDetailsIndex, setShownDetailsIndex] = useState(-1);
 
   return (
@@ -43,29 +44,29 @@ export const VideoGrid = () => {
       role="list"
       className="mt-14 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 xl:gap-x-8 2xl:grid-cols-3 3xl:grid-cols-4"
     >
-      {videos.map((video, index) => (
+      {(board.pins || []).map((videoPin, index) => (
         <li
           key={index}
           className="p-2 group relative rounded-lg hover:bg-gray-50 ease-in-out duration-500 hover:shadow-md"
         >
           <div className="ease-in-out duration-700">
             <div className="aspect-h-7 aspect-w-10 block w-full overflow-hidden rounded-md bg-gray-200">
-              {video.isEmbedded ? (
-                <iframe className="object-cover" src={video.source} />
+              {true ? ( // TODO
+                <iframe className="object-cover" src={videoPin[0]} />
               ) : (
                 <video
                   controls
                   autoPlay={false}
                   preload="off"
                   className="object-cover"
-                  src={video.source}
+                  src={videoPin[0]}
                 />
               )}
             </div>
           </div>
 
           <p className="mt-4 block truncate text-sm font-medium text-gray-900 ease-in-out duration-700">
-            {video.title}
+            {videoPin[1]}
           </p>
 
           <div className="w-full ">
@@ -93,20 +94,21 @@ export const VideoGrid = () => {
                 currentIndex > 0 ? currentIndex - 1 : currentIndex
               )
             }
-            details={video}
+            pin={videoPin}
+            headers={board.headers}
           >
             <div className="max-w-sm mx-auto">
               <div className="ease-in-out duration-700">
                 <div className="aspect-h-7 aspect-w-10 block w-full overflow-hidden rounded-md bg-gray-100">
-                  {video.isEmbedded ? (
-                    <iframe className="object-cover" src={video.source} />
+                  {true ? ( // TODO
+                    <iframe className="object-cover" src={videoPin[0]} />
                   ) : (
                     <video
                       controls
                       autoPlay={false}
                       preload="off"
                       className="object-cover"
-                      src={video.source}
+                      src={videoPin[0]}
                     />
                   )}
                 </div>
