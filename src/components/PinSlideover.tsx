@@ -8,7 +8,14 @@ import { useMutateBoard } from '@/mutations';
 import { Board, ParsedPin } from '@/types';
 
 import { useBoardsByAuthor, useUser } from '@/queries';
-import { EditImagePin } from './EditPinComponents';
+import {
+  EditImagePin,
+  EditLinkPin,
+  EditNotePin,
+  EditProfilePin,
+  EditTextPin,
+  EditVideoPin,
+} from './EditPinComponents';
 
 type Props = {
   open: boolean;
@@ -226,6 +233,21 @@ export const PinSlideover = ({
                             <div className="space-y-4 pb-4 pt-4">
                               {type.value?.type === 'Image' && (
                                 <EditImagePin pin={currentPin} />
+                              )}
+                              {type.value?.type === 'Video' && (
+                                <EditVideoPin pin={currentPin} />
+                              )}
+                              {type.value?.type === 'Profile' && (
+                                <EditProfilePin pin={currentPin} />
+                              )}
+                              {type.value?.type === 'Note' && (
+                                <EditNotePin pin={currentPin} />
+                              )}
+                              {type.value?.type === 'Link' && (
+                                <EditLinkPin pin={currentPin} />
+                              )}
+                              {type.value?.type === 'Text' && (
+                                <EditTextPin pin={currentPin} />
                               )}
 
                               {initialPinIndex && (
