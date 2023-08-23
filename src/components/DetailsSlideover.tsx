@@ -1,3 +1,4 @@
+import { Pin } from '@/types';
 import { Dialog, Transition } from '@headlessui/react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 import { XMarkIcon } from '@heroicons/react/24/outline';
@@ -8,15 +9,17 @@ export const DetailsSlideover = ({
   onClose,
   onNext,
   onPrevious,
-  details,
   children,
+  pin,
+  headers,
 }: {
   isShown: boolean;
   onClose: () => void;
   onNext: () => void;
   onPrevious: () => void;
-  details: any;
   children: React.ReactNode;
+  pin: Pin;
+  headers: string[];
 }) => {
   const handleKeyUp = useCallback(
     (e: KeyboardEvent) => {
@@ -71,7 +74,7 @@ export const DetailsSlideover = ({
                     <div className="px-4 py-6 sm:px-6 border-b">
                       <div className="flex items-start justify-between">
                         <Dialog.Title className="text-base font-semibold leading-6 text-gray-900">
-                          {details.title || details.name || 'Details'}
+                          {'Details'}
                         </Dialog.Title>
                         <div className="ml-3 flex h-7 items-center">
                           <button

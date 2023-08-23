@@ -7,7 +7,6 @@ import { Link, useLocation } from 'react-router-dom';
 import { AuthorOverview } from '@/components';
 import { useAuthor, useBoardReactions } from '@/queries';
 import { Board } from '@/types';
-import { capitalizeFirstLetter } from '@/utils';
 
 export const BoardItem = ({
   board,
@@ -47,7 +46,7 @@ export const BoardItem = ({
                 leaveTo="opacity-0 -translate-x-1"
               >
                 <span className="inline-flex items-center gap-x-1.5 rounded-full bg-gray-200 px-1.5 py-0.5 text-xs font-medium text-gray-600 hover:bg-gray-300">
-                  {capitalizeFirstLetter(board.type)}
+                  {board.type}
                 </span>
               </Transition.Child>
               <Transition.Child

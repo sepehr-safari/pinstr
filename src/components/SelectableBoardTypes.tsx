@@ -30,7 +30,7 @@ export const selectableBoardTypeItems: SelectableBoardTypeItem[] = [
     description: 'e.g. a board of your favorite quotes',
     icon: DocumentTextIcon,
     background: 'bg-pink-600',
-    type: 'text',
+    type: 'Text',
     headers: ['Content', 'Title', 'Image'],
   },
   {
@@ -39,7 +39,7 @@ export const selectableBoardTypeItems: SelectableBoardTypeItem[] = [
     description: 'e.g. a board of your favorite blog posts',
     icon: LinkIcon,
     background: 'bg-indigo-600',
-    type: 'link',
+    type: 'Link',
     headers: ['Content', 'Title', 'Image'],
   },
   {
@@ -48,7 +48,7 @@ export const selectableBoardTypeItems: SelectableBoardTypeItem[] = [
     description: 'e.g. a board of your favorite memes or gifs',
     icon: PhotoIcon,
     background: 'bg-green-600',
-    type: 'image',
+    type: 'Image',
     headers: ['Content', 'Title'],
   },
   {
@@ -57,7 +57,7 @@ export const selectableBoardTypeItems: SelectableBoardTypeItem[] = [
     description: 'e.g. a board of your favorite YouTube videos',
     icon: VideoCameraIcon,
     background: 'bg-blue-600',
-    type: 'video',
+    type: 'Video',
     headers: ['Content', 'Title'],
   },
   {
@@ -66,7 +66,7 @@ export const selectableBoardTypeItems: SelectableBoardTypeItem[] = [
     description: 'e.g. a board of nostr developers you admire',
     icon: UserIcon,
     background: 'bg-yellow-600',
-    type: 'profile',
+    type: 'Profile',
     headers: ['Content'],
   },
   {
@@ -75,7 +75,7 @@ export const selectableBoardTypeItems: SelectableBoardTypeItem[] = [
     description: 'e.g. a board of your favorite notes about bitcoin',
     icon: ChatBubbleLeftIcon,
     background: 'bg-purple-600',
-    type: 'note',
+    type: 'Note',
     headers: ['Content'],
   },
 ];

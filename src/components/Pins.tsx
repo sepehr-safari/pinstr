@@ -12,7 +12,8 @@ import {
   ImageGrid,
   LinkGrid,
   NoteGrid,
-  PeopleGrid,
+  ProfileGrid,
+  TextGrid,
   VideoGrid,
 } from '@/components/Lists';
 import { useBoardReactions, useBoard, useUser } from '@/queries';
@@ -249,21 +250,12 @@ export const Pins = () => {
         </div>
       </div>
 
-      {title?.includes('Geek') ? (
-        <PeopleGrid />
-      ) : title?.includes('Encyclopedia') ? (
-        <NoteGrid />
-      ) : title?.includes('Zap') ? (
-        <LinkGrid urls={zapUrls} />
-      ) : title?.includes('Pizza') ? (
-        <ImageGrid />
-      ) : title?.includes('Movies') ? (
-        <VideoGrid />
-      ) : title?.includes('Books') ? (
-        <LinkGrid urls={bookUrls} />
-      ) : (
-        <></>
-      )}
+      {board?.type == 'Text' && <TextGrid board={board} />}
+      {board?.type == 'Link' && <LinkGrid board={board} />}
+      {board?.type == 'Image' && <ImageGrid board={board} />}
+      {board?.type == 'Video' && <VideoGrid board={board} />}
+      {board?.type == 'Profile' && <ProfileGrid board={board} />}
+      {board?.type == 'Note' && <NoteGrid board={board} />}
     </>
   );
 };
