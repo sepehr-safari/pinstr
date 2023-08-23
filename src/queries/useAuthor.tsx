@@ -19,7 +19,7 @@ export const useAuthor = (hexPubkey: string | undefined) => {
       const events = await pool.batchedList('authors', relays, [filter]);
       const parsedAuthors = parseAuthorsFromEvents(events);
 
-      if (parsedAuthors.length == 0) return null;
+      if (parsedAuthors.length == 0) throw new Error('Author not found');
 
       return parsedAuthors[0];
     } catch (error) {

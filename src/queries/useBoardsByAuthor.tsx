@@ -26,7 +26,7 @@ export const useBoardsByAuthor = ({ author }: { author: string }) => {
       const events = await pool.list(relays, [filter]);
       const parsedBoards = parseBoardsFromEvents(events);
 
-      if (parsedBoards.length == 0) return null;
+      if (parsedBoards.length == 0) throw new Error('No boards found');
 
       return parsedBoards;
     } catch (error) {

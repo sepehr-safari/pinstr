@@ -33,7 +33,7 @@ export const useBoard = ({
       const events = await pool.list(relays, [filter]);
       const parsedBoards = parseBoardsFromEvents(events);
 
-      if (parsedBoards.length == 0) return null;
+      if (parsedBoards.length == 0) throw new Error('Board not found');
 
       return parsedBoards[0];
     } catch (error) {
