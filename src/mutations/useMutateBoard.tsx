@@ -126,9 +126,7 @@ export const useMutateBoard = ({
     publishBoard: useMutation({
       mutationFn: publishBoardFn,
       onSuccess: (event) => {
-        queryClient.invalidateQueries({
-          queryKey: ['nostr', 'boards', event.pubkey, title],
-        });
+        queryClient.invalidateQueries({ queryKey: ['nostr', 'boards'] });
 
         setImage('');
         setOpen(false);
@@ -137,10 +135,8 @@ export const useMutateBoard = ({
     }),
     updateBoard: useMutation({
       mutationFn: updateBoardFn,
-      onSuccess: (event) => {
-        queryClient.invalidateQueries({
-          queryKey: ['nostr', 'boards', event.pubkey, title],
-        });
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['nostr', 'boards'] });
 
         setOpen(false);
       },
@@ -148,9 +144,7 @@ export const useMutateBoard = ({
     deleteBoard: useMutation({
       mutationFn: deleteBoardFn,
       onSuccess: () => {
-        queryClient.invalidateQueries({
-          queryKey: ['nostr', 'boards', initialBoard?.author, title],
-        });
+        queryClient.invalidateQueries({ queryKey: ['nostr', 'boards'] });
 
         setImage('');
         setOpen(false);

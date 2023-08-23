@@ -1,10 +1,6 @@
-import { nip19 } from 'nostr-tools';
-import { useParams } from 'react-router-dom';
-
 import { BoardItem } from '@/components';
-import { useBoards } from '@/queries';
+import { useBoardsExplorer } from '@/queries';
 import { Board } from '@/types';
-import { joinClassNames } from '@/utils';
 
 export const boards: Board[] = [
   {
@@ -140,30 +136,14 @@ export const boards: Board[] = [
   },
 ];
 
-export const Boards = ({
-  fullWidth = false,
-  hideAuthor = false,
-}: {
-  fullWidth?: boolean;
-  hideAuthor?: boolean;
-}) => {
-  const { npub } = useParams();
-  const hex = npub ? nip19.decode(npub).data.toString() : undefined;
-
-  const { data: boards } = useBoards({ author: hex, enabled: !!hex });
+export const BoardsExplorer = () => {
+  const { data: boards } = useBoardsExplorer();
 
   return (
     <div className="mx-auto pb-16 overflow-hidden max-w-md sm:max-w-none">
-      <div
-        className={joinClassNames(
-          'grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3',
-          fullWidth
-            ? 'xl:grid-cols-4 2xl:grid-cols-5'
-            : 'xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4'
-        )}
-      >
+      <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
         {(boards || []).map((board, index) => (
-          <BoardItem board={board} key={index} hideAuthor={hideAuthor} />
+          <BoardItem key={index} board={board} />
         ))}
       </div>
     </div>

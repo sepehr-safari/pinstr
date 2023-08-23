@@ -6,7 +6,7 @@ import { useLocalStore } from '@/store';
 import { Board, Reactions } from '@/types';
 import { parseReactionsFromEvents } from '@/utils';
 
-export const useBoardReactions = (board: Board | undefined) => {
+export const useBoardReactions = (board: Board | undefined | null) => {
   const pool = useLocalStore((store) => store.pool);
   const relays = useLocalStore((store) => store.relays);
 
@@ -32,9 +32,9 @@ export const useBoardReactions = (board: Board | undefined) => {
   }, [pool, relays, board]);
 
   return useQuery({
-    queryKey: ['nostr', 'boardReactions', board?.author, board?.title],
+    queryKey: ['nostr', 'boards', board?.author, board?.title, 'reactions'],
     queryFn: fetchReactions,
     refetchOnWindowFocus: false,
-    enabled: typeof board != 'undefined' && !!pool && !!relays,
+    enabled: !!board && !!pool && !!relays,
   });
 };

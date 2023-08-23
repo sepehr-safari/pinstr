@@ -15,7 +15,7 @@ import {
   PeopleGrid,
   VideoGrid,
 } from '@/components/Lists';
-import { useBoardReactions, useBoards, useUser } from '@/queries';
+import { useBoardReactions, useBoard, useUser } from '@/queries';
 import { formatRelativeTime } from '@/utils';
 
 // TODO: Replace with real data
@@ -136,14 +136,9 @@ export const Pins = () => {
   const [openPinSlideover, setOpenPinSlideover] = useState(false);
 
   const { npub, title } = useParams();
-  const hex = npub ? nip19.decode(npub).data.toString() : undefined;
+  const hex = nip19.decode(npub!).data.toString();
 
-  const { data: boards } = useBoards({
-    author: hex,
-    title,
-    enabled: !!hex && !!title,
-  });
-  const board = boards ? boards[0] : undefined;
+  const { data: board } = useBoard({ author: hex, title: title! });
 
   const { data: reactions } = useBoardReactions(board);
 

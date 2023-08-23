@@ -7,7 +7,7 @@ import { CoverImageMenu, categories } from '@/components/Menus';
 import { useMutateBoard } from '@/mutations';
 import { Board } from '@/types';
 
-import { boards as mockBoards } from './Boards'; // TODO: Replace with real data
+import { boards as mockBoards } from './BoardsExplorer'; // TODO: Replace with real data
 
 type Props = {
   open: boolean;
