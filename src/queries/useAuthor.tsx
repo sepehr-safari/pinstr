@@ -31,6 +31,7 @@ export const useAuthor = (hexPubkey: string | undefined) => {
     queryKey: ['nostr', 'authors', hexPubkey],
     queryFn: fetchAuthor,
     refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 5, // 5 minutes
     enabled: typeof hexPubkey != 'undefined' && !!pool && !!relays,
   });
 };
