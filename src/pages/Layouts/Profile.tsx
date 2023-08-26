@@ -1,13 +1,16 @@
 import { PlusIcon } from '@heroicons/react/20/solid';
 import { nip19 } from 'nostr-tools';
-import { Outlet, useParams } from 'react-router-dom';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
 
 import { Breadcrumb } from '@/components/Navbars';
 import { useAuthor } from '@/queries';
-import { loader } from '@/utils';
+import { joinClassNames, loader } from '@/utils';
 
 export const Profile = () => {
   const { npub } = useParams();
+
+  const location = useLocation();
+  const state = location.state as { backgroundLocation?: Location };
 
   const hex = npub ? nip19.decode(npub).data.toString() : undefined;
 
@@ -30,7 +33,12 @@ export const Profile = () => {
         </div>
 
         <div className="mx-auto max-w-screen-4xl">
-          <div className="mt-0 overflow-hidden bg-white shadow-md rounded-none w-full z-[1] xl:ml-12 xl:-mt-20 xl:w-80 xl:sticky top-0 xl:rounded-xl">
+          <div
+            className={joinClassNames(
+              'mt-0 overflow-hidden bg-white shadow-md rounded-none w-full z-[1] xl:ml-12 xl:-mt-20 xl:w-80 xl:sticky xl:rounded-xl',
+              state?.backgroundLocation ? 'xl:top-12' : 'xl:top-28'
+            )}
+          >
             <div className="px-6 py-10 flex flex-col items-center">
               <img
                 className="-mt-20 h-24 w-24 bg-gray-200 text-gray-200 shadow-lg rounded-full absolute z-[2] xl:static xl:mt-0"
