@@ -28,6 +28,13 @@ export const useBoardsByAuthor = ({ author }: { author: string }) => {
 
       if (parsedBoards.length == 0) throw new Error('No boards found');
 
+      parsedBoards.forEach((board) =>
+        queryClient.setQueryData(
+          ['nostr', 'boards', author, board.title],
+          board
+        )
+      );
+
       return parsedBoards;
     } catch (error) {
       throw new Error('Error in fetching boards');

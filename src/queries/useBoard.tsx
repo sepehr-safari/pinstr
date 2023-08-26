@@ -44,10 +44,6 @@ export const useBoard = ({
   return useQuery({
     queryKey: ['nostr', 'boards', author, title],
     queryFn: fetchBoard,
-    placeholderData: () =>
-      queryClient
-        .getQueryData<Board[]>(['nostr', 'boards'])
-        ?.find((board) => board.author == author && board.title == title),
     refetchOnWindowFocus: false,
     enabled: !!pool && !!relays,
   });

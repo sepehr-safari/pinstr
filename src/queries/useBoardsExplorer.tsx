@@ -24,6 +24,13 @@ export const useBoardsExplorer = () => {
 
       if (parsedBoards.length == 0) throw new Error('No boards found');
 
+      parsedBoards.forEach((board) =>
+        queryClient.setQueryData(
+          ['nostr', 'boards', board.author, board.title],
+          board
+        )
+      );
+
       return parsedBoards;
     } catch (error) {
       throw new Error('Error in fetching boards');
@@ -33,8 +40,6 @@ export const useBoardsExplorer = () => {
   return useQuery({
     queryKey: ['nostr', 'boards'],
     queryFn: fetchBoards,
-    placeholderData: () =>
-      queryClient.getQueryData<Board[]>(['nostr', 'boards']),
     refetchOnWindowFocus: false,
     enabled: !!pool && !!relays,
   });
