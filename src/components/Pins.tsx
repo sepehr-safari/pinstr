@@ -16,6 +16,7 @@ import {
   TextGrid,
   VideoGrid,
 } from '@/components/Lists';
+import { useMutateBoardLike } from '@/mutations';
 import { useBoard, useBoardReactions, useUser } from '@/queries';
 import { formatRelativeTime, loader } from '@/utils';
 
@@ -29,6 +30,7 @@ export const Pins = () => {
   const { data: board } = useBoard({ author: hex, title: title! });
 
   const { data: reactions } = useBoardReactions(board);
+  const { mutate: like } = useMutateBoardLike(board);
 
   const { pubkey } = useUser();
   const selfBoard = pubkey ? pubkey == hex : false;
@@ -120,7 +122,10 @@ export const Pins = () => {
           </div>
 
           <div className="mt-4 flex gap-4 xl:mt-auto">
-            <button className="inline-flex justify-center items-center rounded-md bg-gray-100 ring-1 ring-gray-300 px-4 py-2 text-xs font-semibold text-gray-500 hover:shadow-md hover:text-gray-800">
+            <button
+              className="inline-flex justify-center items-center rounded-md bg-gray-100 ring-1 ring-gray-300 px-4 py-2 text-xs font-semibold text-gray-500 hover:shadow-md hover:text-gray-800"
+              onClick={() => like()}
+            >
               <HandThumbUpIcon className="mr-2 h-4 w-4" />
               <span className="">{reactions ? reactions.likes.length : 0}</span>
             </button>

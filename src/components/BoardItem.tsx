@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import { AuthorOverview } from '@/components';
+import { useMutateBoardLike } from '@/mutations';
 import { useAuthor, useBoardReactions } from '@/queries';
 import { Board } from '@/types';
 import { loader } from '@/utils';
@@ -18,6 +19,7 @@ export const BoardItem = ({
 }) => {
   const { data: author } = useAuthor(board.author);
   const { data: reactions } = useBoardReactions(board);
+  const { mutate: like } = useMutateBoardLike(board);
 
   const location = useLocation();
 
@@ -92,7 +94,10 @@ export const BoardItem = ({
             {!hideAuthor && author && <AuthorOverview author={author} />}
           </div>
           <div className="ml-4 mt-[2px] flex">
-            <button className="flex text-xs font-bold text-gray-500 hover:text-gray-700">
+            <button
+              className="flex text-xs font-bold text-gray-500 hover:text-gray-700"
+              onClick={() => like()}
+            >
               <HandThumbUpIcon className="h-4 w-4" aria-hidden="true" />
               <span className="ml-1">
                 {reactions && reactions.likes.length > 0

@@ -7,6 +7,7 @@ import { signEventWithNip07, signEventWithSeckey } from '@/utils';
 
 export const usePublish = () => {
   const { pool, relays } = useLocalStore();
+
   const { seckey } = useUser();
 
   const publish = useCallback(
