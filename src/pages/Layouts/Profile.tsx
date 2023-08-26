@@ -19,7 +19,7 @@ export const Profile = () => {
         <div className="-mt-16 bg-gray-300 rounded-t-md">
           {author && author.banner ? (
             <img
-              className="h-52 w-full text-white md:rounded-t-md xl:h-64"
+              className="h-52 w-full object-cover text-white md:rounded-t-md xl:h-64"
               src={author ? loader(author.banner, { w: 1000, h: 256 }) : ''}
               alt={author ? author.displayName : ' banner'}
               loading="lazy"

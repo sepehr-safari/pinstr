@@ -4,7 +4,7 @@ import { loader } from '@/utils';
 
 export const NoMatch = () => {
   return (
-    <main className="relative isolate h-full">
+    <main className="relative object-cover isolate h-full">
       <img
         src={loader(
           `https://source.unsplash.com/random/1280x720/?bird&sig=${Math.random()}`,

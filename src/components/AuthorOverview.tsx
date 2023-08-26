@@ -43,7 +43,7 @@ export const AuthorOverview = ({ author }: { author: Author }) => {
                 <div className="relative">
                   <div className="absolute top-0 w-full p-1">
                     <img
-                      className="w-full h-24 bg-gray-200 text-gray-200 rounded-t"
+                      className="w-full h-24 object-cover bg-gray-200 text-gray-200 rounded-t"
                       src={loader(author.banner, { w: 300, h: 96 })}
                       alt={author.displayName + ' banner'}
                       loading="lazy"
