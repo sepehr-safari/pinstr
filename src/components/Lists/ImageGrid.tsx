@@ -23,7 +23,7 @@ export const ImageGrid = ({ board }: { board: Board }) => {
                 <img
                   src={loader(imagePin[0], { w: 500, h: 400 })}
                   alt={imagePin[1]}
-                  className="object-cover object-center hover:opacity-75 hover:cursor-zoom-in"
+                  className="hover:opacity-75 hover:cursor-zoom-in"
                   loading="lazy"
                 />
               </a>
@@ -59,7 +59,7 @@ export const ImageGrid = ({ board }: { board: Board }) => {
                     <img
                       src={loader(imagePin[0], { w: 500, h: 400 })}
                       alt={imagePin[1]}
-                      className="object-cover hover:opacity-75 hover:cursor-zoom-in"
+                      className="hover:opacity-75 hover:cursor-zoom-in"
                       loading="lazy"
                     />
                   </a>

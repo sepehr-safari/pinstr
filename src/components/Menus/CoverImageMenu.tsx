@@ -205,7 +205,7 @@ export const CoverImageMenu = ({ image, setImage }: Props) => {
                     <img
                       src={loader(url, { w: 500, h: 400 })}
                       alt="Cover Image"
-                      className="object-cover object-center w-full h-full rounded-md bg-gray-100 text-gray-100"
+                      className="w-full h-full rounded-md bg-gray-100 text-gray-100"
                       onClick={() => setShowModalIndex(index)}
                       loading="lazy"
                     />
@@ -221,7 +221,7 @@ export const CoverImageMenu = ({ image, setImage }: Props) => {
                       <img
                         src={loader(url, { w: 500, h: 400 })}
                         alt="Cover Image"
-                        className="object-cover object-center w-full h-full rounded-md bg-gray-100 text-gray-100"
+                        className="w-full h-full rounded-md bg-gray-100 text-gray-100"
                         loading="lazy"
                       />
                     </div>
@@ -287,7 +287,7 @@ export const CoverImageMenu = ({ image, setImage }: Props) => {
               <img
                 src={loader(image, { w: 500, h: 400 })}
                 alt="Cover image"
-                className="mx-auto w-32 h-auto object-cover rounded-md bg-gray-100 text-gray-100"
+                className="mx-auto w-32 h-auto rounded-md bg-gray-100 text-gray-100"
                 loading="lazy"
               />
               <button

@@ -78,7 +78,7 @@ export const BoardItem = ({
             <img
               src={loader(board.image, { w: 500, h: 400 })}
               alt={board.title}
-              className="h-full w-full object-cover object-center text-gray-100"
+              className="h-full w-full text-gray-100"
               loading="lazy"
             />
           </div>

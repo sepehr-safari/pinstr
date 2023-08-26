@@ -11,7 +11,7 @@ export const NoMatch = () => {
           { w: 1280, h: 720 }
         )}
         alt="Bird"
-        className="absolute inset-0 -z-10 h-full w-full object-cover object-center bg-gray-100 text-gray-100"
+        className="absolute inset-0 -z-10 h-full w-full bg-gray-100 text-gray-100"
         loading="lazy"
       />
       <div className="flex flex-col justify-center items-center h-full bg-black/30">

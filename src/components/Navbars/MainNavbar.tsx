@@ -93,7 +93,7 @@ export const MainNavbar = () => {
                           <span className="absolute -inset-1.5" />
                           <span className="sr-only">Open user menu</span>
                           <img
-                            className="h-10 w-10 rounded-full object-cover object-center bg-gray-200 text-gray-200"
+                            className="h-10 w-10 rounded-full bg-gray-200 text-gray-200"
                             src={loader(USER.image, { w: 96, h: 96 })}
                             alt={USER.name + ' avatar'}
                             loading="lazy"
@@ -112,7 +112,7 @@ export const MainNavbar = () => {
                         <Menu.Items className="absolute right-0 z-10 mt-6 w-64 origin-top-right divide-y divide-gray-100 rounded-2xl bg-white py-1 shadow-lg ring-1 ring-gray-900/20 focus:outline-none">
                           <Menu.Item as="div">
                             <img
-                              className="mt-4 mx-auto h-24 w-24 object-cover object-center flex-shrink-0 rounded-full bg-gray-100 text-gray-100"
+                              className="mt-4 mx-auto h-24 w-24 flex-shrink-0 rounded-full bg-gray-100 text-gray-100"
                               src={loader(USER.image, { w: 96, h: 96 })}
                               alt={USER.name + ' avatar'}
                               loading="lazy"

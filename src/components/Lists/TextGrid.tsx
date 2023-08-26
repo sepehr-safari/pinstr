@@ -25,7 +25,7 @@ export const TextGrid = ({ board }: { board: Board }) => {
               className="flex w-full items-center group hover:cursor-pointer"
             >
               <img
-                className="h-24 w-24 flex-shrink-0 rounded-ss-md object-cover object-center bg-gray-200 text-gray-200"
+                className="h-24 w-24 flex-shrink-0 rounded-ss-md bg-gray-200 text-gray-200"
                 src={loader(textPin[2], { w: 96, h: 96 })}
                 alt={textPin[1]}
                 loading="lazy"
@@ -63,7 +63,7 @@ export const TextGrid = ({ board }: { board: Board }) => {
               <div className="max-w-sm mx-auto">
                 <div className="rounded-lg shadow-md bg-white">
                   <img
-                    className="w-full object-cover object-center rounded-t-lg bg-gray-200 text-gray-200"
+                    className="w-full rounded-t-lg bg-gray-200 text-gray-200"
                     src={loader(textPin[2], { w: 400, h: 400 })}
                     alt={textPin[1]}
                     loading="lazy"

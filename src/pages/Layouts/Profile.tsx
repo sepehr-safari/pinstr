@@ -19,7 +19,7 @@ export const Profile = () => {
         <div className="-mt-16 bg-gray-300 rounded-t-md">
           {author && author.banner ? (
             <img
-              className="h-52 w-full object-cover object-center text-white md:rounded-t-md xl:h-64"
+              className="h-52 w-full text-white md:rounded-t-md xl:h-64"
               src={author ? loader(author.banner, { w: 1000, h: 256 }) : ''}
               alt={author ? author.displayName : ' banner'}
               loading="lazy"
@@ -33,7 +33,7 @@ export const Profile = () => {
           <div className="mt-0 overflow-hidden bg-white shadow-lg rounded-none w-full z-[1] xl:ml-12 xl:-mt-20 xl:w-80 xl:absolute xl:rounded-lg">
             <div className="px-6 py-10 flex flex-col items-center">
               <img
-                className="-mt-20 h-24 w-24 bg-gray-200 text-gray-200 object-cover object-center shadow-lg rounded-full absolute z-[2] xl:static xl:mt-0"
+                className="-mt-20 h-24 w-24 bg-gray-200 text-gray-200 shadow-lg rounded-full absolute z-[2] xl:static xl:mt-0"
                 src={author ? loader(author.picture, { w: 96, h: 96 }) : ''}
                 alt={author ? author.displayName : ' avatar'}
                 loading="lazy"

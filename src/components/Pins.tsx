@@ -41,7 +41,7 @@ export const Pins = () => {
             <img
               src={board ? loader(board?.image, { w: 500, h: 400 }) : ''}
               alt={title}
-              className="w-full h-full object-cover object-center rounded-md"
+              className="w-full h-full rounded-md"
               loading="lazy"
             />
           </div>

@@ -128,7 +128,7 @@ export const Login = () => {
         </div>
         <div className="relative hidden w-0 flex-1 lg:block">
           <img
-            className="absolute inset-0 h-full w-full object-cover bg-gray-100 text-gray-100"
+            className="absolute inset-0 h-full w-full bg-gray-100 text-gray-100"
             src="/assets/jack_nostr.png"
             alt="Jack Nostr"
             loading="lazy"

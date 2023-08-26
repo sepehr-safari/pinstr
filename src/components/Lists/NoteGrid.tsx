@@ -33,7 +33,7 @@ export const NoteGrid = ({ board }: { board: Board }) => {
                 </p>
               </div>
               <img
-                className="h-12 w-12 flex-shrink-0 rounded-full object-cover object-center bg-gray-200 text-gray-200"
+                className="h-12 w-12 flex-shrink-0 rounded-full bg-gray-200 text-gray-200"
                 src={''}
                 alt={pin[0]}
                 loading="lazy"

@@ -36,7 +36,7 @@ const ProfileGridItem = ({
     <>
       <div className="absolute top-0 w-full">
         <img
-          className="w-full h-24 bg-gray-200 text-gray-200 rounded-lg object-center object-cover ease-in-out duration-500 group-hover:rounded-b-none"
+          className="w-full h-24 bg-gray-200 text-gray-200 rounded-lg ease-in-out duration-500 group-hover:rounded-b-none"
           src={loader(profile.banner, { w: 300, h: 96 })}
           alt={profile.displayName + ' banner'}
           loading="lazy"
@@ -45,7 +45,7 @@ const ProfileGridItem = ({
       <div className="mt-auto flex flex-1 flex-col pt-16">
         <div className="mx-auto rounded-full bg-gray-300 text-gray-300 z-[1]">
           <img
-            className="w-24 h-24 rounded-full object-cover object-center ease-in-out duration-500 group-hover:-translate-y-1 group-hover:scale-110 group-hover:shadow-md"
+            className="w-24 h-24 rounded-full ease-in-out duration-500 group-hover:-translate-y-1 group-hover:scale-110 group-hover:shadow-md"
             src={loader(profile.picture, { w: 96, h: 96 })}
             alt={profile.displayName + ' avatar'}
             loading="lazy"
@@ -98,7 +98,7 @@ const ProfileGridItem = ({
           <div className="relative group rounded-lg shadow-md bg-white">
             <div className="absolute top-0 w-full">
               <img
-                className="w-full h-24 bg-gray-200 text-gray-200 rounded-lg object-center object-cover rounded-b-none"
+                className="w-full h-24 bg-gray-200 text-gray-200 rounded-lg rounded-b-none"
                 src={loader(profile.banner, { w: 300, h: 96 })}
                 alt={profile.displayName + ' banner'}
                 loading="lazy"
@@ -107,7 +107,7 @@ const ProfileGridItem = ({
             <div className="flex flex-1 flex-col pt-16">
               <div className="mx-auto rounded-full bg-gray-300 text-gray-300 z-[1]">
                 <img
-                  className="w-24 h-24 rounded-full object-cover object-center"
+                  className="w-24 h-24 rounded-full"
                   src={loader(profile.picture, { w: 96, h: 96 })}
                   alt={profile.displayName + ' avatar'}
                   loading="lazy"

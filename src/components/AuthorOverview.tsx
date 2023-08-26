@@ -43,8 +43,8 @@ export const AuthorOverview = ({ author }: { author: Author }) => {
                 <div className="relative">
                   <div className="absolute top-0 w-full p-1">
                     <img
-                      className="w-full h-24 bg-gray-200 text-gray-200 rounded-t object-center object-cover"
-                      src={loader(author.banner, { h: 96 })}
+                      className="w-full h-24 bg-gray-200 text-gray-200 rounded-t"
+                      src={loader(author.banner, { w: 300, h: 96 })}
                       alt={author.displayName + ' banner'}
                       loading="lazy"
                     />
@@ -52,7 +52,7 @@ export const AuthorOverview = ({ author }: { author: Author }) => {
                   <div className="flex flex-1 flex-col pt-10 pb-4">
                     <div className="mx-auto rounded-full bg-gray-300 text-gray-300 z-[1]">
                       <img
-                        className="w-24 h-24 object-cover object-center rounded-full"
+                        className="w-24 h-24 rounded-full"
                         src={loader(author.picture, { w: 96, h: 96 })}
                         alt={author.displayName + ' avatar'}
                         loading="lazy"
