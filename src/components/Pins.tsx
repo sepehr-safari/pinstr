@@ -38,7 +38,7 @@ export const Pins = () => {
   return (
     <>
       <div className="gap-8 flex flex-col xl:flex-row">
-        <div className="mx-auto xl:mx-0">
+        <div className="mx-auto p-2 bg-white rounded-xl shadow-md xl:mx-0">
           <div className="aspect-w-5 aspect-h-4 w-64 rounded-md bg-gray-200 text-gray-200">
             <img
               src={board ? loader(board?.image, { w: 500, h: 400 }) : ''}

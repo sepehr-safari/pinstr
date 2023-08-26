@@ -15,7 +15,7 @@ export const ImageGrid = ({ board }: { board: Board }) => {
       {(board.pins || []).map((imagePin, index) => (
         <li
           key={index}
-          className="p-2 group relative rounded-lg hover:bg-gray-50 ease-in-out duration-500 hover:shadow-md"
+          className="p-2 group relative rounded-xl hover:bg-gray-50 ease-in-out duration-500 hover:shadow-md"
         >
           <div className="ease-in-out duration-700">
             <div className="aspect-w-5 aspect-h-4 block overflow-hidden rounded-md bg-gray-200 text-gray-200">
