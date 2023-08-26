@@ -1,31 +1,23 @@
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid';
 import { nip19 } from 'nostr-tools';
-import { Fragment, useEffect } from 'react';
+import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
 import { CreatePopover } from '@/components/Popovers';
 import { useUser } from '@/queries';
 import { joinClassNames, loader } from '@/utils';
 
-const USER = {
-  name: 'Sepehr',
-  image: 'https://source.unsplash.com/random/?avatar',
-};
 const USER_NAVIGATION = [
-  { title: 'Open Profile', link: '/p/' },
+  { title: 'Open Profile', link: '#' },
   { title: 'Settings', link: '#' },
   { title: 'Sign out', link: '/logout' },
 ];
 
 export const MainNavbar = () => {
-  const { user } = useUser();
+  const { pubkey, metadata } = useUser();
 
-  useEffect(() => {
-    if (user) {
-      USER_NAVIGATION[0].link = `/p/${nip19.npubEncode(user.pubkey)}`;
-    }
-  }, [user]);
+  USER_NAVIGATION[0].link = pubkey ? `/p/${nip19.npubEncode(pubkey)}` : '#';
 
   return (
     <Disclosure
@@ -73,7 +65,7 @@ export const MainNavbar = () => {
             </div>
 
             <div className="relative z-10 flex items-center">
-              {!user && (
+              {!pubkey && (
                 <Link
                   to="/login"
                   className="inline-flex rounded-full bg-gray-900 px-4 py-2.5 text-xs font-semibold text-white shadow-sm hover:bg-gray-700"
@@ -82,7 +74,7 @@ export const MainNavbar = () => {
                 </Link>
               )}
 
-              {user && (
+              {pubkey && (
                 <>
                   <CreatePopover />
 
@@ -94,8 +86,15 @@ export const MainNavbar = () => {
                           <span className="sr-only">Open user menu</span>
                           <img
                             className="h-10 w-10 rounded-full bg-gray-200 text-gray-200"
-                            src={loader(USER.image, { w: 96, h: 96 })}
-                            alt={USER.name + ' avatar'}
+                            src={
+                              metadata?.picture
+                                ? loader(metadata?.picture, {
+                                    w: 96,
+                                    h: 96,
+                                  })
+                                : ''
+                            }
+                            alt={metadata?.displayName + ' avatar'}
                             loading="lazy"
                           />
                         </Menu.Button>
@@ -113,12 +112,19 @@ export const MainNavbar = () => {
                           <Menu.Item as="div">
                             <img
                               className="mt-4 mx-auto h-24 w-24 flex-shrink-0 rounded-full bg-gray-100 text-gray-100"
-                              src={loader(USER.image, { w: 96, h: 96 })}
-                              alt={USER.name + ' avatar'}
+                              src={
+                                metadata?.picture
+                                  ? loader(metadata?.picture, {
+                                      w: 96,
+                                      h: 96,
+                                    })
+                                  : ''
+                              }
+                              alt={metadata?.displayName + ' avatar'}
                               loading="lazy"
                             />
                             <h3 className="mt-2 mb-4 text-sm font-semibold text-gray-900 text-center">
-                              {USER.name}
+                              {metadata?.displayName}
                             </h3>
                           </Menu.Item>
                           <div className="py-1">

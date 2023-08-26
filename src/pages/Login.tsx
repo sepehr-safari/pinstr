@@ -4,15 +4,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '@/queries';
 
 export const Login = () => {
-  const { doLoginWithExtension, doLoginWithSeckey, user } = useUser();
+  const { doLoginWithExtension, doLoginWithSeckey, pubkey } = useUser();
   const navigate = useNavigate();
   const seckeyRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (!!user) {
-      navigate('/');
+    if (pubkey) {
+      navigate('/', { replace: true });
     }
-  }, [user, navigate]);
+  }, [pubkey, navigate]);
 
   return (
     <>

@@ -4,16 +4,16 @@ import { useNavigate } from 'react-router-dom';
 import { useUser } from '@/queries';
 
 export const Logout = () => {
-  const { user, doLogout } = useUser();
+  const { pubkey, doLogout } = useUser();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!!user) {
+    if (pubkey) {
       doLogout();
     } else {
-      navigate('/');
+      navigate('/', { replace: true });
     }
-  }, [user, navigate, doLogout]);
+  }, [pubkey, navigate, doLogout]);
 
   return <div></div>;
 };

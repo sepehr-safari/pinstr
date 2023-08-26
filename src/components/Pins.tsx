@@ -30,8 +30,8 @@ export const Pins = () => {
 
   const { data: reactions } = useBoardReactions(board);
 
-  const { user } = useUser();
-  const selfBoard = user ? user.pubkey == hex : false;
+  const { pubkey } = useUser();
+  const selfBoard = pubkey ? pubkey == hex : false;
 
   return (
     <>

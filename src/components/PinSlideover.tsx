@@ -33,9 +33,9 @@ export const PinSlideover = ({
 }: Props) => {
   const [searchInput, setSearchInput] = useState('');
 
-  const { user } = useUser();
+  const { pubkey } = useUser();
 
-  const { data: boards } = useBoardsByAuthor({ author: user!.pubkey });
+  const { data: boards } = useBoardsByAuthor({ author: pubkey || undefined });
 
   const {
     id,

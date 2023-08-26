@@ -6,14 +6,18 @@ import { useLocalStore } from '@/store';
 import { Board } from '@/types';
 import { parseBoardsFromEvents } from '@/utils';
 
-export const useBoardsByAuthor = ({ author }: { author: string }) => {
+export const useBoardsByAuthor = ({
+  author,
+}: {
+  author: string | undefined;
+}) => {
   const pool = useLocalStore((state) => state.pool);
   const relays = useLocalStore((state) => state.relays);
 
   const queryClient = useQueryClient();
 
   const fetchBoard = useCallback(async () => {
-    if (!pool || !relays)
+    if (!pool || !relays || !author)
       throw new Error('Missing dependencies in fetching boards');
 
     const filter: Filter = {
@@ -49,6 +53,6 @@ export const useBoardsByAuthor = ({ author }: { author: string }) => {
         .getQueryData<Board[]>(['nostr', 'boards'])
         ?.filter((board) => board.author == author),
     refetchOnWindowFocus: false,
-    enabled: !!pool && !!relays,
+    enabled: !!pool && !!relays && !!author,
   });
 };

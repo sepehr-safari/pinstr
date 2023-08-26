@@ -7,7 +7,7 @@ import { signEventWithNip07, signEventWithSeckey } from '@/utils';
 
 export const usePublish = () => {
   const { pool, relays } = useLocalStore();
-  const { user } = useUser();
+  const { seckey } = useUser();
 
   const publish = useCallback(
     (partialEvent: Partial<EventTemplate>) =>
@@ -28,8 +28,8 @@ export const usePublish = () => {
         };
 
         try {
-          const signedEvent = user?.seckey
-            ? signEventWithSeckey(eventTemplate, user?.seckey)
+          const signedEvent = seckey
+            ? signEventWithSeckey(eventTemplate, seckey)
             : await signEventWithNip07(eventTemplate);
 
           const pubs = pool.publish(relays, signedEvent);
@@ -39,7 +39,7 @@ export const usePublish = () => {
           reject(error);
         }
       }),
-    [relays, user, pool]
+    [relays, seckey, pool]
   );
 
   return publish;
