@@ -4,6 +4,7 @@ import { Outlet, useParams } from 'react-router-dom';
 
 import { Breadcrumb } from '@/components/Navbars';
 import { useAuthor } from '@/queries';
+import { loader } from '@/utils';
 
 export const Profile = () => {
   const { npub } = useParams();
@@ -19,8 +20,9 @@ export const Profile = () => {
           {author && author.banner ? (
             <img
               className="h-52 w-full object-cover object-center text-white md:rounded-t-md xl:h-64"
-              src={author ? author.banner : ''}
+              src={author ? loader(author.banner, { w: 1000, h: 256 }) : ''}
               alt={author ? author.displayName : ' banner'}
+              loading="lazy"
             />
           ) : (
             <div className="h-36 md:rounded-t-md xl:h-44" />
@@ -31,9 +33,10 @@ export const Profile = () => {
           <div className="mt-0 overflow-hidden bg-white shadow-lg rounded-none w-full z-[1] xl:ml-12 xl:-mt-20 xl:w-80 xl:absolute xl:rounded-lg">
             <div className="px-6 py-10 flex flex-col items-center">
               <img
-                className="-mt-20 h-28 w-28 bg-gray-200 text-gray-200 object-cover object-center shadow-lg rounded-full absolute z-[2] xl:static xl:mt-0"
-                src={author ? author.picture : ''}
+                className="-mt-20 h-24 w-24 bg-gray-200 text-gray-200 object-cover object-center shadow-lg rounded-full absolute z-[2] xl:static xl:mt-0"
+                src={author ? loader(author.picture, { w: 96, h: 96 }) : ''}
                 alt={author ? author.displayName : ' avatar'}
+                loading="lazy"
               />
 
               <h2 className="mt-12 text-lg font-semibold xl:mt-4">

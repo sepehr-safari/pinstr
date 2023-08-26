@@ -3,74 +3,6 @@ import { useState } from 'react';
 import { DetailsSlideover } from '@/components';
 import { Board } from '@/types';
 
-const people = [
-  {
-    name: 'Michael Foster',
-    email: 'michael@foster.com',
-    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
-  },
-  {
-    name: 'Michael Foster',
-    email: 'michael@foster.com',
-    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
-  },
-  {
-    name: 'Michael Foster',
-    email: 'michael@foster.com',
-    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
-  },
-  {
-    name: 'Michael Foster',
-    email: 'michael@foster.com',
-    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
-  },
-  {
-    name: 'Michael Foster',
-    email: 'michael@foster.com',
-    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
-  },
-  {
-    name: 'Michael Foster',
-    email: 'michael@foster.com',
-    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
-  },
-  {
-    name: 'Michael Foster',
-    email: 'michael@foster.com',
-    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
-  },
-  {
-    name: 'Michael Foster',
-    email: 'michael@foster.com',
-    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
-  },
-  {
-    name: 'Michael Foster',
-    email: 'michael@foster.com',
-    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
-  },
-  {
-    name: 'Michael Foster',
-    email: 'michael@foster.com',
-    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
-  },
-  {
-    name: 'Michael Foster',
-    email: 'michael@foster.com',
-    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
-  },
-  {
-    name: 'Michael Foster',
-    email: 'michael@foster.com',
-    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
-  },
-  {
-    name: 'Michael Foster',
-    email: 'michael@foster.com',
-    image: 'https://source.unsplash.com/random/?avatar&sig=' + Math.random(),
-  },
-];
-
 export const NoteGrid = ({ board }: { board: Board }) => {
   const [shownDetailsIndex, setShownDetailsIndex] = useState(-1);
 
@@ -104,6 +36,7 @@ export const NoteGrid = ({ board }: { board: Board }) => {
                 className="h-12 w-12 flex-shrink-0 rounded-full object-cover object-center bg-gray-200 text-gray-200"
                 src={''}
                 alt={pin[0]}
+                loading="lazy"
               />
             </div>
             <div className="p-4 text-justify font-light">
@@ -138,18 +71,8 @@ export const NoteGrid = ({ board }: { board: Board }) => {
             <DetailsSlideover
               isShown={shownDetailsIndex === index}
               onClose={() => setShownDetailsIndex(-1)}
-              onNext={() =>
-                setShownDetailsIndex((currentIndex) =>
-                  people.length > currentIndex + 1
-                    ? currentIndex + 1
-                    : currentIndex
-                )
-              }
-              onPrevious={() =>
-                setShownDetailsIndex((currentIndex) =>
-                  currentIndex > 0 ? currentIndex - 1 : currentIndex
-                )
-              }
+              onNext={() => setShownDetailsIndex((i) => i + 1)}
+              onPrevious={() => setShownDetailsIndex((i) => i - 1)}
               pin={pin}
               headers={board.headers}
             >

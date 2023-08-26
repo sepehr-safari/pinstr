@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { DetailsSlideover } from '@/components';
 import { useAuthor } from '@/queries';
 import { Board, Pin } from '@/types';
+import { loader } from '@/utils';
 
 const ProfileGridItem = ({
   index,
@@ -36,16 +37,18 @@ const ProfileGridItem = ({
       <div className="absolute top-0 w-full">
         <img
           className="w-full h-24 bg-gray-200 text-gray-200 rounded-lg object-center object-cover ease-in-out duration-500 group-hover:rounded-b-none"
-          src={profile.banner}
+          src={loader(profile.banner, { w: 300, h: 96 })}
           alt={profile.displayName + ' banner'}
+          loading="lazy"
         />
       </div>
       <div className="mt-auto flex flex-1 flex-col pt-16">
         <div className="mx-auto rounded-full bg-gray-300 text-gray-300 z-[1]">
           <img
-            className="aspect-1 w-24 h-24 rounded-full object-cover object-center ease-in-out duration-500 group-hover:-translate-y-1 group-hover:scale-110 group-hover:shadow-md"
-            src={profile.picture}
+            className="w-24 h-24 rounded-full object-cover object-center ease-in-out duration-500 group-hover:-translate-y-1 group-hover:scale-110 group-hover:shadow-md"
+            src={loader(profile.picture, { w: 96, h: 96 })}
             alt={profile.displayName + ' avatar'}
+            loading="lazy"
           />
         </div>
         <h3 className="mt-6 truncate text-base font-semibold leading-7 tracking-tight text-gray-900">
@@ -96,16 +99,18 @@ const ProfileGridItem = ({
             <div className="absolute top-0 w-full">
               <img
                 className="w-full h-24 bg-gray-200 text-gray-200 rounded-lg object-center object-cover rounded-b-none"
-                src={profile.banner}
+                src={loader(profile.banner, { w: 300, h: 96 })}
                 alt={profile.displayName + ' banner'}
+                loading="lazy"
               />
             </div>
             <div className="flex flex-1 flex-col pt-16">
               <div className="mx-auto rounded-full bg-gray-300 text-gray-300 z-[1]">
                 <img
-                  className="aspect-1 w-24 h-24 rounded-full object-cover object-center"
-                  src={profile.picture}
+                  className="w-24 h-24 rounded-full object-cover object-center"
+                  src={loader(profile.picture, { w: 96, h: 96 })}
                   alt={profile.displayName + ' avatar'}
+                  loading="lazy"
                 />
               </div>
               <h3 className="mt-4 text-center text-base font-semibold leading-7 tracking-tight text-gray-900">

@@ -3,39 +3,6 @@ import { useState } from 'react';
 import { DetailsSlideover } from '@/components';
 import { Board } from '@/types';
 
-const videos = [
-  {
-    title: 'Embedded Video From Youtube',
-    source: 'https://www.youtube.com/embed/GitxraPZ8dM',
-    isEmbedded: true,
-  },
-  {
-    title: 'Video With Direct Link',
-    source: 'https://void.cat/d/UMiCovzyaZKUv2FYwhCRCo.mp4',
-    isEmbedded: false,
-  },
-  {
-    title: 'Video Title 1',
-    source: 'https://www.youtube.com/embed/Zwd_8Jy7b-c',
-    isEmbedded: true,
-  },
-  {
-    title: 'Video Title 2',
-    source: 'https://www.youtube.com/embed/Z2_OJWthxbA',
-    isEmbedded: true,
-  },
-  {
-    title: 'Video Title 3',
-    source: 'https://www.youtube.com/embed/G0cfysoyOU4',
-    isEmbedded: true,
-  },
-  {
-    title: 'Video Title 4',
-    source: 'https://www.youtube.com/embed/-mPd-Eoiu08',
-    isEmbedded: true,
-  },
-];
-
 export const VideoGrid = ({ board }: { board: Board }) => {
   const [shownDetailsIndex, setShownDetailsIndex] = useState(-1);
 
@@ -82,18 +49,8 @@ export const VideoGrid = ({ board }: { board: Board }) => {
           <DetailsSlideover
             isShown={shownDetailsIndex === index}
             onClose={() => setShownDetailsIndex(-1)}
-            onNext={() =>
-              setShownDetailsIndex((currentIndex) =>
-                videos.length > currentIndex + 1
-                  ? currentIndex + 1
-                  : currentIndex
-              )
-            }
-            onPrevious={() =>
-              setShownDetailsIndex((currentIndex) =>
-                currentIndex > 0 ? currentIndex - 1 : currentIndex
-              )
-            }
+            onNext={() => setShownDetailsIndex((i) => i + 1)}
+            onPrevious={() => setShownDetailsIndex((i) => i - 1)}
             pin={videoPin}
             headers={board.headers}
           >

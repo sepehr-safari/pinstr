@@ -25,6 +25,7 @@ export const Login = () => {
                   className="h-10 rounded-md w-auto bg-gray-100 text-gray-100"
                   src="/assets/pinstr.png"
                   alt="Pinstr Logo"
+                  loading="lazy"
                 />
                 <span className="ml-2 text-lg font-bold transition-transform duration-500 group-hover:translate-x-1">
                   Pinstr
@@ -130,6 +131,7 @@ export const Login = () => {
             className="absolute inset-0 h-full w-full object-cover bg-gray-100 text-gray-100"
             src="/assets/jack_nostr.png"
             alt="Jack Nostr"
+            loading="lazy"
           />
         </div>
       </div>

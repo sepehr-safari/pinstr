@@ -8,6 +8,7 @@ import { useDropzone } from 'react-dropzone';
 
 import { Modal } from '@/components';
 import { MenuItem, MenuTemplate } from '@/components/Menus';
+import { loader } from '@/utils';
 
 interface Props {
   image: string;
@@ -200,12 +201,13 @@ export const CoverImageMenu = ({ image, setImage }: Props) => {
             {searchResult.length > 0 &&
               searchResult.map((url, index) => (
                 <div key={url + index}>
-                  <div className="aspect-h-4 aspect-w-5">
+                  <div className="aspect-w-5 aspect-h-4">
                     <img
-                      src={url}
+                      src={loader(url, { w: 500, h: 400 })}
                       alt="Cover Image"
                       className="object-cover object-center w-full h-full rounded-md bg-gray-100 text-gray-100"
                       onClick={() => setShowModalIndex(index)}
+                      loading="lazy"
                     />
                   </div>
                   <Modal
@@ -215,11 +217,12 @@ export const CoverImageMenu = ({ image, setImage }: Props) => {
                     setShowModalIndex={setShowModalIndex}
                     setSelectedStockImageURL={setImage}
                   >
-                    <div className="aspect-h-4 aspect-w-5">
+                    <div className="aspect-w-5 aspect-h-4">
                       <img
-                        src={url}
+                        src={loader(url, { w: 500, h: 400 })}
                         alt="Cover Image"
                         className="object-cover object-center w-full h-full rounded-md bg-gray-100 text-gray-100"
+                        loading="lazy"
                       />
                     </div>
                   </Modal>
@@ -282,9 +285,10 @@ export const CoverImageMenu = ({ image, setImage }: Props) => {
           <div className="mt-2 flex justify-center rounded-lg border border-gray-300 px-4 py-4">
             <div className="text-center">
               <img
-                src={image}
+                src={loader(image, { w: 500, h: 400 })}
                 alt="Cover image"
-                className="mx-auto h-40 w-52 object-cover rounded-md bg-gray-100 text-gray-100"
+                className="mx-auto w-32 h-auto object-cover rounded-md bg-gray-100 text-gray-100"
+                loading="lazy"
               />
               <button
                 type="button"

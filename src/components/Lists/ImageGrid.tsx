@@ -2,39 +2,7 @@ import { useState } from 'react';
 
 import { DetailsSlideover } from '@/components';
 import { Board } from '@/types';
-
-const images = [
-  {
-    title: 'Margherita',
-    size: '3.9 MB',
-    source: 'https://source.unsplash.com/random/?pizza&sig=' + Math.random(),
-  },
-  {
-    title: 'Pepperoni',
-    size: '3.9 MB',
-    source: 'https://source.unsplash.com/random/?pizza&sig=' + Math.random(),
-  },
-  {
-    title: 'Hawaiian',
-    size: '3.9 MB',
-    source: 'https://source.unsplash.com/random/?pizza&sig=' + Math.random(),
-  },
-  {
-    title: 'Meat Lovers',
-    size: '3.9 MB',
-    source: 'https://source.unsplash.com/random/?pizza&sig=' + Math.random(),
-  },
-  {
-    title: 'Veggie Lovers',
-    size: '3.9 MB',
-    source: 'https://source.unsplash.com/random/?pizza&sig=' + Math.random(),
-  },
-  {
-    title: 'Supreme',
-    size: '3.9 MB',
-    source: 'https://source.unsplash.com/random/?pizza&sig=' + Math.random(),
-  },
-];
+import { loader } from '@/utils';
 
 export const ImageGrid = ({ board }: { board: Board }) => {
   const [shownDetailsIndex, setShownDetailsIndex] = useState(-1);
@@ -50,12 +18,15 @@ export const ImageGrid = ({ board }: { board: Board }) => {
           className="p-2 group relative rounded-lg hover:bg-gray-50 ease-in-out duration-500 hover:shadow-md"
         >
           <div className="ease-in-out duration-700">
-            <div className="aspect-w-5 aspect-h-4 block w-full overflow-hidden rounded-md bg-gray-200 text-gray-200">
-              <img
-                src={imagePin[0]}
-                alt={imagePin[1]}
-                className="object-cover object-center hover:opacity-75 hover:cursor-zoom-in"
-              />
+            <div className="aspect-w-5 aspect-h-4 block overflow-hidden rounded-md bg-gray-200 text-gray-200">
+              <a href={imagePin[0]} target="_blank" rel="noreferrer">
+                <img
+                  src={loader(imagePin[0], { w: 500, h: 400 })}
+                  alt={imagePin[1]}
+                  className="object-cover object-center hover:opacity-75 hover:cursor-zoom-in"
+                  loading="lazy"
+                />
+              </a>
             </div>
           </div>
 
@@ -76,29 +47,22 @@ export const ImageGrid = ({ board }: { board: Board }) => {
           <DetailsSlideover
             isShown={shownDetailsIndex === index}
             onClose={() => setShownDetailsIndex(-1)}
-            onNext={() =>
-              setShownDetailsIndex((currentIndex) =>
-                images.length > currentIndex + 1
-                  ? currentIndex + 1
-                  : currentIndex
-              )
-            }
-            onPrevious={() =>
-              setShownDetailsIndex((currentIndex) =>
-                currentIndex > 0 ? currentIndex - 1 : currentIndex
-              )
-            }
+            onNext={() => setShownDetailsIndex((i) => i + 1)}
+            onPrevious={() => setShownDetailsIndex((i) => i - 1)}
             pin={imagePin}
             headers={board.headers}
           >
             <div className="max-w-sm mx-auto">
               <div className="ease-in-out duration-700">
                 <div className="aspect-w-5 aspect-h-4 block w-full overflow-hidden rounded-md bg-gray-200 text-gray-200">
-                  <img
-                    src={imagePin[0]}
-                    alt={imagePin[1]}
-                    className="object-cover hover:opacity-75 hover:cursor-zoom-in"
-                  />
+                  <a href={imagePin[0]} target="_blank" rel="noreferrer">
+                    <img
+                      src={loader(imagePin[0], { w: 500, h: 400 })}
+                      alt={imagePin[1]}
+                      className="object-cover hover:opacity-75 hover:cursor-zoom-in"
+                      loading="lazy"
+                    />
+                  </a>
                 </div>
               </div>
             </div>

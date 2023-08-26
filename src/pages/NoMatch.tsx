@@ -1,12 +1,18 @@
 import { Link } from 'react-router-dom';
 
+import { loader } from '@/utils';
+
 export const NoMatch = () => {
   return (
     <main className="relative isolate h-full">
       <img
-        src="https://source.unsplash.com/random/1280x720/?bird"
+        src={loader(
+          `https://source.unsplash.com/random/1280x720/?bird&sig=${Math.random()}`,
+          { w: 1280, h: 720 }
+        )}
         alt="Bird"
         className="absolute inset-0 -z-10 h-full w-full object-cover object-center bg-gray-100 text-gray-100"
+        loading="lazy"
       />
       <div className="flex flex-col justify-center items-center h-full bg-black/30">
         <p className="text-base font-semibold leading-8 text-white">404</p>

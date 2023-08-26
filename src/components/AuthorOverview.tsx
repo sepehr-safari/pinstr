@@ -5,6 +5,7 @@ import { usePopper } from 'react-popper';
 import { Link, useLocation } from 'react-router-dom';
 
 import { Author } from '@/types';
+import { loader } from '@/utils';
 
 export const AuthorOverview = ({ author }: { author: Author }) => {
   const location = useLocation();
@@ -42,17 +43,19 @@ export const AuthorOverview = ({ author }: { author: Author }) => {
                 <div className="relative">
                   <div className="absolute top-0 w-full p-1">
                     <img
-                      className="w-full h-20 bg-gray-200 text-gray-200 rounded-t object-center object-cover"
-                      src={author.banner}
+                      className="w-full h-24 bg-gray-200 text-gray-200 rounded-t object-center object-cover"
+                      src={loader(author.banner, { h: 96 })}
                       alt={author.displayName + ' banner'}
+                      loading="lazy"
                     />
                   </div>
                   <div className="flex flex-1 flex-col pt-10 pb-4">
                     <div className="mx-auto rounded-full bg-gray-300 text-gray-300 z-[1]">
                       <img
-                        className="aspect-1 w-24 h-w-24 object-cover object-center rounded-full"
-                        src={author.picture}
+                        className="w-24 h-24 object-cover object-center rounded-full"
+                        src={loader(author.picture, { w: 96, h: 96 })}
                         alt={author.displayName + ' avatar'}
+                        loading="lazy"
                       />
                     </div>
                     <h3 className="mt-4 text-sm font-semibold">

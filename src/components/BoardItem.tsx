@@ -7,6 +7,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { AuthorOverview } from '@/components';
 import { useAuthor, useBoardReactions } from '@/queries';
 import { Board } from '@/types';
+import { loader } from '@/utils';
 
 export const BoardItem = ({
   board,
@@ -33,7 +34,7 @@ export const BoardItem = ({
           to={`/p/${nip19.npubEncode(board.author)}/${board.title}`}
           state={{ backgroundLocation: location }}
         >
-          <div className="relative aspect-w-5 aspect-h-4 w-full overflow-hidden rounded-md bg-gray-100 hover:cursor-pointer">
+          <div className="relative aspect-w-5 aspect-h-4 overflow-hidden rounded-md bg-gray-100 hover:cursor-pointer">
             <Transition show={isHovering}>
               <Transition.Child
                 as="div"
@@ -75,9 +76,10 @@ export const BoardItem = ({
               />
             </Transition>
             <img
-              src={board.image}
+              src={loader(board.image, { w: 500, h: 400 })}
               alt={board.title}
               className="h-full w-full object-cover object-center text-gray-100"
+              loading="lazy"
             />
           </div>
         </Link>

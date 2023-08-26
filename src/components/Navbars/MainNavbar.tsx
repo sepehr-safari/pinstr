@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 import { CreatePopover } from '@/components/Popovers';
 import { useUser } from '@/queries';
-import { joinClassNames } from '@/utils';
+import { joinClassNames, loader } from '@/utils';
 
 const USER = {
   name: 'Sepehr',
@@ -41,6 +41,7 @@ export const MainNavbar = () => {
                   className="h-10 w-auto rounded-md bg-gray-100 text-gray-100"
                   src="/assets/pinstr.png"
                   alt="Pinstr Logo"
+                  loading="lazy"
                 />
                 <div className="ml-2 hidden md:block font-bold text-lg">
                   Pinstr
@@ -93,8 +94,9 @@ export const MainNavbar = () => {
                           <span className="sr-only">Open user menu</span>
                           <img
                             className="h-10 w-10 rounded-full object-cover object-center bg-gray-200 text-gray-200"
-                            src={USER.image}
+                            src={loader(USER.image, { w: 96, h: 96 })}
                             alt={USER.name + ' avatar'}
+                            loading="lazy"
                           />
                         </Menu.Button>
                       </div>
@@ -111,8 +113,9 @@ export const MainNavbar = () => {
                           <Menu.Item as="div">
                             <img
                               className="mt-4 mx-auto h-24 w-24 object-cover object-center flex-shrink-0 rounded-full bg-gray-100 text-gray-100"
-                              src={USER.image}
+                              src={loader(USER.image, { w: 96, h: 96 })}
                               alt={USER.name + ' avatar'}
+                              loading="lazy"
                             />
                             <h3 className="mt-2 mb-4 text-sm font-semibold text-gray-900 text-center">
                               {USER.name}

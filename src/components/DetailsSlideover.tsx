@@ -10,8 +10,6 @@ export const DetailsSlideover = ({
   onNext,
   onPrevious,
   children,
-  pin,
-  headers,
 }: {
   isShown: boolean;
   onClose: () => void;

@@ -16,6 +16,7 @@ import {
   EditTextPin,
   EditVideoPin,
 } from './EditPinComponents';
+import { loader } from '@/utils';
 
 type Props = {
   open: boolean;
@@ -160,7 +161,10 @@ export const PinSlideover = ({
                                     <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-lg bg-gray-200 text-gray-200">
                                       <img
                                         className="h-12 w-12 rounded-lg duration-300 ease-in-out group-hover:h-14 group-hover:w-14"
-                                        src={board.image}
+                                        src={loader(board.image, {
+                                          w: 96,
+                                          h: 96,
+                                        })}
                                         alt={board.title}
                                       />
                                     </div>

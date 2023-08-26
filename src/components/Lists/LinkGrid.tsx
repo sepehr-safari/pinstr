@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 import { DetailsSlideover } from '@/components';
 import { Board } from '@/types';
+import { loader } from '@/utils';
 
 export const LinkGrid = ({ board }: { board: Board }) => {
   const [shownDetailsIndex, setShownDetailsIndex] = useState(-1);
@@ -24,9 +25,10 @@ export const LinkGrid = ({ board }: { board: Board }) => {
               className="flex w-full items-center group hover:cursor-pointer"
             >
               <img
-                className="h-20 w-20 flex-shrink-0 rounded-ss-md object-cover object-center bg-gray-200 text-gray-200"
-                src={linkPin[2]}
+                className="h-24 w-24 flex-shrink-0 rounded-ss-md object-cover object-center bg-gray-200 text-gray-200"
+                src={loader(linkPin[2], { w: 96, h: 96 })}
                 alt={linkPin[1]}
+                loading="lazy"
               />
               <div className="flex-1 truncate px-4">
                 <div className="truncate flex items-center translate-y-3 ease-in-out duration-500 group-hover:translate-y-0">
@@ -55,18 +57,8 @@ export const LinkGrid = ({ board }: { board: Board }) => {
             <DetailsSlideover
               isShown={shownDetailsIndex === index}
               onClose={() => setShownDetailsIndex(-1)}
-              onNext={() =>
-                setShownDetailsIndex((currentIndex) =>
-                  board.pins.length > currentIndex + 1
-                    ? currentIndex + 1
-                    : currentIndex
-                )
-              }
-              onPrevious={() =>
-                setShownDetailsIndex((currentIndex) =>
-                  currentIndex > 0 ? currentIndex - 1 : currentIndex
-                )
-              }
+              onNext={() => setShownDetailsIndex((i) => i + 1)}
+              onPrevious={() => setShownDetailsIndex((i) => i - 1)}
               pin={linkPin}
               headers={board.headers}
             >
@@ -74,8 +66,9 @@ export const LinkGrid = ({ board }: { board: Board }) => {
                 <div className="rounded-lg shadow-md bg-white">
                   <img
                     className="w-full object-cover object-center aspect-1 rounded-t-lg bg-gray-200 text-gray-200"
-                    src={linkPin[2]}
+                    src={loader(linkPin[2], { w: 400, h: 400 })}
                     alt={linkPin[1]}
+                    loading="lazy"
                   />
                   <div className="p-4">
                     <a
