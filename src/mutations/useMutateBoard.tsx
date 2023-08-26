@@ -172,7 +172,9 @@ export const useMutateBoard = ({
 
         setImage('');
         setOpen(false);
-        navigate('/p/' + nip19.npubEncode(initialBoard!.author));
+        navigate('/p/' + nip19.npubEncode(initialBoard!.author), {
+          replace: true,
+        });
       },
     }),
   };
