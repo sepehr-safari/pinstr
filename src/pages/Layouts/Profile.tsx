@@ -30,7 +30,7 @@ export const Profile = () => {
         </div>
 
         <div className="mx-auto max-w-screen-4xl">
-          <div className="mt-0 overflow-hidden bg-white shadow-lg rounded-none w-full z-[1] xl:ml-12 xl:-mt-20 xl:w-80 xl:absolute xl:rounded-lg">
+          <div className="mt-0 overflow-hidden bg-white shadow-md rounded-none w-full z-[1] xl:ml-12 xl:-mt-20 xl:w-80 xl:sticky top-0 xl:rounded-xl">
             <div className="px-6 py-10 flex flex-col items-center">
               <img
                 className="-mt-20 h-24 w-24 bg-gray-200 text-gray-200 shadow-lg rounded-full absolute z-[2] xl:static xl:mt-0"
@@ -65,7 +65,7 @@ export const Profile = () => {
             </div>
           </div>
 
-          <div className="w-full h-full px-6 pb-16 pt-8 xl:pl-[26rem] xl:pr-12">
+          <div className="w-full h-full px-6 pb-16 pt-8 xl:pl-[26rem] xl:pr-12 xl:-mt-72">
             <div className="pb-8">
               <Breadcrumb />
             </div>
