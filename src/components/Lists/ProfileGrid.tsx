@@ -75,7 +75,7 @@ const ProfileGridItem = ({
 
       <div className="mt-8 flex w-full border-t opacity-0 -translate-y-1 ease-in-out duration-500 group-hover:opacity-100 group-hover:translate-y-0">
         <a
-          href="https://primal.net/note1"
+          href={`https://primal.net/p/${profile.npub}`}
           target="_blank"
           rel="noopener noreferrer"
           className="flex w-full items-center justify-center py-2 text-xs text-gray-700 font-medium border-r border-gray-200 ease-in-out duration-300 hover:bg-gray-200 hover:text-gray-900"
@@ -121,14 +121,15 @@ const ProfileGridItem = ({
               <h3 className="mt-4 text-center text-base font-semibold leading-7 tracking-tight text-gray-900">
                 {profile.displayName}
               </h3>
-              <p className="text-sm text-center leading-6 text-gray-600">
+
+              <p className="text-sm text-center leading-6 text-gray-600 px-4">
                 {profile.about}
               </p>
             </div>
 
-            <div className="flex w-full border-t">
+            <div className="mt-4 flex w-full border-t">
               <a
-                href={`https://primal.net/${profile.npub}`}
+                href={`https://primal.net/p/${profile.npub}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex w-full items-center justify-center py-2 text-xs text-gray-700 font-medium border-r border-gray-200 ease-in-out duration-300 hover:bg-gray-200 hover:text-gray-900"
