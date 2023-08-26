@@ -94,39 +94,24 @@ export const DetailsSlideover = ({
                         <dl className="space-y-8 sm:space-y-0 sm:divide-y sm:divide-gray-200">
                           <div className="sm:flex sm:px-6 sm:py-5">
                             <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0 lg:w-48">
-                              Bio
+                              First Optional Field Title
                             </dt>
                             <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:ml-6 sm:mt-0">
                               <p>
-                                Enim feugiat ut ipsum, neque ut. Tristique mi id
-                                elementum praesent. Gravida in tempus feugiat
-                                netus enim aliquet a, quam scelerisque. Dictumst
-                                in convallis nec in bibendum aenean arcu.
+                                Optional Field Content in a very long LOREM
+                                ipsum placeholder paragraph. Optional Field
+                                Content in a very long LOREM ipsum placeholder
+                                paragraph. Optional Field Content in a very long
+                                LOREM ipsum placeholder paragraph.
                               </p>
                             </dd>
                           </div>
                           <div className="sm:flex sm:px-6 sm:py-5">
                             <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0 lg:w-48">
-                              Location
+                              Second Optional Field Title
                             </dt>
                             <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:ml-6 sm:mt-0">
-                              New York, NY, USA
-                            </dd>
-                          </div>
-                          <div className="sm:flex sm:px-6 sm:py-5">
-                            <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0 lg:w-48">
-                              Website
-                            </dt>
-                            <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:ml-6 sm:mt-0">
-                              ashleyporter.com
-                            </dd>
-                          </div>
-                          <div className="sm:flex sm:px-6 sm:py-5">
-                            <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0 lg:w-48">
-                              Birthday
-                            </dt>
-                            <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:ml-6 sm:mt-0">
-                              <time dateTime="1982-06-23">June 23, 1982</time>
+                              Optional Field Content
                             </dd>
                           </div>
                         </dl>
