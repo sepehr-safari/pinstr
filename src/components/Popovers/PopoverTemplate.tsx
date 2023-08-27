@@ -2,10 +2,13 @@ import { Popover, Transition } from '@headlessui/react';
 import { useState } from 'react';
 import { usePopper } from 'react-popper';
 
+import { joinClassNames } from '@/utils';
+
 export interface PopoverItem {
   title: string;
-  description: string;
   onClick: () => void;
+  description?: string;
+  color?: string;
 }
 
 export interface PopoverProps {
@@ -30,10 +33,10 @@ export const PopoverTemplate = ({ children, items }: PopoverProps) => {
       </Popover.Button>
 
       <Transition
-        enter="transition ease-out duration-200"
+        enter="ease-out duration-200"
         enterFrom="opacity-0 -translate-y-2"
         enterTo="opacity-100 translate-y-0"
-        leave="transition ease-in duration-150"
+        leave="ease-in duration-150"
         leaveFrom="opacity-100 translate-y-0"
         leaveTo="opacity-0 -translate-y-2"
       >
@@ -43,18 +46,25 @@ export const PopoverTemplate = ({ children, items }: PopoverProps) => {
           style={styles.popper}
           {...attributes.popper}
         >
-          <div className="w-screen max-w-sm flex-auto rounded-2xl bg-white p-4 text-sm leading-6 shadow-lg ring-1 ring-gray-900/20">
+          <div className=" max-w-xs flex-auto rounded-xl bg-white p-2 text-sm shadow-lg ring-1 ring-gray-900/20">
             {items.map((item, index) => (
               <div
                 key={index}
-                className="relative rounded-lg p-4 hover:bg-gray-100"
+                className="relative rounded-md p-2 hover:bg-gray-100"
                 onClick={item.onClick}
               >
-                <div className="font-semibold text-gray-900">
+                <div
+                  className={joinClassNames(
+                    'font-semibold',
+                    item.color || 'text-gray-900'
+                  )}
+                >
                   {item.title}
                   <span className="absolute inset-0" />
                 </div>
-                <p className="mt-1 text-gray-600">{item.description}</p>
+                {!!item.description && (
+                  <p className="font-light text-gray-500">{item.description}</p>
+                )}
               </div>
             ))}
           </div>
