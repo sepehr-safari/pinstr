@@ -6,7 +6,7 @@ import { Board } from '@/types';
 import { loader } from '@/utils';
 
 export const LinkGrid = ({ board }: { board: Board }) => {
-  const [shownDetailsIndex, setShownDetailsIndex] = useState(-1);
+  const [pinIndex, setPinIndex] = useState<number>(-1);
 
   return (
     <>
@@ -21,7 +21,7 @@ export const LinkGrid = ({ board }: { board: Board }) => {
           >
             <button
               type="button"
-              onClick={() => setShownDetailsIndex(index)}
+              onClick={() => setPinIndex(index)}
               className="flex w-full items-center group hover:cursor-pointer"
             >
               <img
@@ -53,40 +53,59 @@ export const LinkGrid = ({ board }: { board: Board }) => {
                 </div>
               </a>
             </div>
-
-            <DetailsSlideover
-              isShown={shownDetailsIndex === index}
-              onClose={() => setShownDetailsIndex(-1)}
-              onNext={() => setShownDetailsIndex((i) => i + 1)}
-              onPrevious={() => setShownDetailsIndex((i) => i - 1)}
-              pin={linkPin}
-              headers={board.headers}
-            >
-              <div className="max-w-sm mx-auto">
-                <div className="rounded-lg shadow-md bg-white">
-                  <img
-                    className="w-full aspect-1 rounded-t-lg bg-gray-200 text-gray-200"
-                    src={loader(linkPin[2], { w: 400, h: 400 })}
-                    alt={linkPin[1]}
-                    loading="lazy"
-                  />
-                  <div className="p-4">
-                    <a
-                      href={linkPin[0]}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <div className="truncate text-xs font-light text-blue-700 hover:underline hover:text-blue-900">
-                        {linkPin[0]}
-                      </div>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </DetailsSlideover>
           </li>
         ))}
       </ul>
+
+      <DetailsSlideover
+        board={board}
+        pinIndex={pinIndex}
+        onClose={() => setPinIndex(-1)}
+        onPrevious={() =>
+          setPinIndex((pinIndex) => (pinIndex > -1 ? pinIndex - 1 : -1))
+        }
+        onNext={() =>
+          setPinIndex((pinIndex) =>
+            pinIndex > -1 && pinIndex < board.pins.length - 1
+              ? pinIndex + 1
+              : -1
+          )
+        }
+      >
+        {pinIndex > -1 && (
+          <div className="max-w-sm mx-auto">
+            <div className="rounded-lg shadow-md bg-white">
+              <a
+                href={board.pins[pinIndex][2]}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  className="w-96 h-96 aspect-1 rounded-t-lg bg-gray-200 text-gray-200 hover:cursor-zoom-in hover:opacity-80"
+                  src={loader(board.pins[pinIndex][2], { w: 400, h: 400 })}
+                  alt={board.pins[pinIndex][1]}
+                  loading="lazy"
+                />
+              </a>
+              <div className="p-4">
+                <a
+                  href={board.pins[pinIndex][0]}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group"
+                >
+                  <div className="truncate text-sm font-medium text-gray-900">
+                    {board.pins[pinIndex][1]}
+                  </div>
+                  <div className="mt-2 truncate text-xs font-light text-blue-700 group-hover:underline group-hover:text-blue-900">
+                    {board.pins[pinIndex][0]}
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        )}
+      </DetailsSlideover>
     </>
   );
 };

@@ -4,7 +4,7 @@ import { DetailsSlideover } from '@/components';
 import { Board } from '@/types';
 
 export const NoteGrid = ({ board }: { board: Board }) => {
-  const [shownDetailsIndex, setShownDetailsIndex] = useState(-1);
+  const [pinIndex, setPinIndex] = useState<number>(-1);
 
   return (
     <>
@@ -62,65 +62,74 @@ export const NoteGrid = ({ board }: { board: Board }) => {
 
               <button
                 className="flex w-full items-center justify-center py-2 text-xs text-gray-700 font-medium ease-in-out duration-300 hover:bg-gray-200 hover:text-gray-900"
-                onClick={() => setShownDetailsIndex(index)}
+                onClick={() => setPinIndex(index)}
               >
                 View details
               </button>
             </div>
-
-            <DetailsSlideover
-              isShown={shownDetailsIndex === index}
-              onClose={() => setShownDetailsIndex(-1)}
-              onNext={() => setShownDetailsIndex((i) => i + 1)}
-              onPrevious={() => setShownDetailsIndex((i) => i - 1)}
-              pin={pin}
-              headers={board.headers}
-            >
-              <div className="max-w-sm mx-auto">
-                <div className="rounded-lg shadow-md border bg-white">
-                  <div className="p-4">
-                    <div className="flex items-center space-x-3">
-                      <h3 className="text-sm font-medium text-gray-900">
-                        {
-                          pin[0] // note id
-                        }
-                      </h3>
-                    </div>
-                    <span className="text-xs text-gray-500">
-                      {
-                        // nip05
-                      }
-                    </span>
-                  </div>
-
-                  <div className="p-4 border-t text-xs text-gray-500">
-                    <p>
-                      a dynamic group of individuals who are passionate about
-                      what we do and dedicated to delivering the best results
-                      for our clients a dynamic group of individuals who are
-                      passionate about what we do and dedicated to delivering
-                      the best results for our clients a dynamic group of
-                      individuals who are passionate about what we do and
-                      dedicated to delivering the best results for our clients
-                    </p>
-                  </div>
-
-                  <div className="border-t flex w-full">
-                    <a
-                      href="https://primal.net/note1"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex w-full items-center justify-center py-2 text-xs text-gray-700 font-medium ease-in-out duration-300 hover:bg-gray-200 hover:text-gray-900"
-                    >
-                      Open with Primal
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </DetailsSlideover>
           </li>
         ))}
       </ul>
+
+      <DetailsSlideover
+        board={board}
+        pinIndex={pinIndex}
+        onClose={() => setPinIndex(-1)}
+        onPrevious={() =>
+          setPinIndex((pinIndex) => (pinIndex > -1 ? pinIndex - 1 : -1))
+        }
+        onNext={() =>
+          setPinIndex((pinIndex) =>
+            pinIndex > -1 && pinIndex < board.pins.length - 1
+              ? pinIndex + 1
+              : -1
+          )
+        }
+      >
+        {pinIndex > -1 && (
+          <div className="max-w-sm mx-auto">
+            <div className="rounded-lg shadow-md border bg-white">
+              <div className="p-4">
+                <div className="flex items-center space-x-3">
+                  <h3 className="text-sm font-medium text-gray-900">
+                    {
+                      board.pins[pinIndex][0] // note id
+                    }
+                  </h3>
+                </div>
+                <span className="text-xs text-gray-500">
+                  {
+                    // nip05
+                  }
+                </span>
+              </div>
+
+              <div className="p-4 border-t text-xs text-gray-500">
+                <p>
+                  a dynamic group of individuals who are passionate about what
+                  we do and dedicated to delivering the best results for our
+                  clients a dynamic group of individuals who are passionate
+                  about what we do and dedicated to delivering the best results
+                  for our clients a dynamic group of individuals who are
+                  passionate about what we do and dedicated to delivering the
+                  best results for our clients
+                </p>
+              </div>
+
+              <div className="border-t flex w-full">
+                <a
+                  href="https://primal.net/note1"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex w-full items-center justify-center py-2 text-xs text-gray-700 font-medium ease-in-out duration-300 hover:bg-gray-200 hover:text-gray-900"
+                >
+                  Open with Primal
+                </a>
+              </div>
+            </div>
+          </div>
+        )}
+      </DetailsSlideover>
     </>
   );
 };
