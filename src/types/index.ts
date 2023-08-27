@@ -37,3 +37,5 @@ export interface Reactions {
   zaps: Event<9735>[];
   comments: Event<1>[];
 }
+
+export type ProfileAddressType = 'nip05' | 'nip19' | 'hex' | 'unknown';
