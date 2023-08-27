@@ -27,7 +27,7 @@ export const Login = () => {
                   alt="Pinstr Logo"
                   loading="lazy"
                 />
-                <span className="ml-2 text-lg font-bold transition-transform duration-500 group-hover:translate-x-1">
+                <span className="ml-2 text-lg font-bold duration-500 group-hover:translate-x-1">
                   Pinstr
                 </span>
               </Link>

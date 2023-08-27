@@ -101,12 +101,12 @@ export const MainNavbar = () => {
                       </div>
                       <Transition
                         as={Fragment}
-                        enter="transition ease-out duration-200"
-                        enterFrom="transform opacity-0"
-                        enterTo="transform opacity-100"
-                        leave="transition ease-in duration-150"
-                        leaveFrom="transform opacity-100"
-                        leaveTo="transform opacity-0"
+                        enter="ease-out duration-200"
+                        enterFrom="opacity-0"
+                        enterTo="opacity-100"
+                        leave="ease-in duration-75"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
                       >
                         <Menu.Items className="absolute right-0 z-10 mt-6 w-64 origin-top-right divide-y divide-gray-100 rounded-2xl bg-white py-1 shadow-lg ring-1 ring-gray-900/20 focus:outline-none">
                           <Menu.Item as="div">

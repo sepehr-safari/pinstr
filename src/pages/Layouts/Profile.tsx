@@ -53,7 +53,7 @@ export const Profile = () => {
               <span className="text-xs font-light text-gray-500">
                 {author ? author.nip05 : ''}
               </span>
-              <span className="mt-4 text-xs font-light text-gray-500 text-center">
+              <span className="mt-4 text-xs font-light text-gray-700 text-center">
                 {author ? author.about : ''}
               </span>
 

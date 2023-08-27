@@ -31,12 +31,12 @@ export const MenuTemplate = ({ items, selected, setSelected }: MenuProps) => {
 
       <Transition
         as={Fragment}
-        enter="transition ease-out duration-100"
-        enterFrom="transform opacity-0 scale-95"
-        enterTo="transform opacity-100 scale-100"
-        leave="transition ease-in duration-75"
-        leaveFrom="transform opacity-100 scale-100"
-        leaveTo="transform opacity-0 scale-95"
+        enter="ease-out duration-100"
+        enterFrom="opacity-0 scale-95"
+        enterTo="opacity-100 scale-100"
+        leave="ease-in duration-75"
+        leaveFrom="opacity-100 scale-100"
+        leaveTo="opacity-0 scale-95"
       >
         <Menu.Items className="absolute left-0 z-10 mt-2 w-full origin-top-left rounded-md bg-white shadow-lg ring-1 ring-gray-900/10 max-h-80 overflow-y-auto focus:outline-none">
           <div className="py-1">

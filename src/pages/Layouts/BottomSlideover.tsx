@@ -22,7 +22,7 @@ export const BottomSlideover = () => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black bg-opacity-70 duration-300" />
+          <div className="fixed inset-0 bg-black bg-opacity-70 duration-200" />
         </Transition.Child>
 
         <div className="overflow-y-auto fixed inset-x-0 bottom-0 w-full h-full ">

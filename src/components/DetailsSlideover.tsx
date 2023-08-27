@@ -43,14 +43,14 @@ export const DetailsSlideover = ({
       <Dialog as="div" className="relative z-10" onClose={onClose}>
         <Transition.Child
           as={Fragment}
-          enter="ease-in-out duration-500"
+          enter="ease-in-out duration-200"
           enterFrom="opacity-0"
           enterTo="opacity-100"
-          leave="ease-in-out duration-500"
+          leave="ease-in-out duration-100"
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black bg-opacity-20 transition-opacity" />
+          <div className="fixed inset-0 bg-black bg-opacity-20" />
         </Transition.Child>
 
         <div className="fixed inset-0" />
@@ -60,10 +60,10 @@ export const DetailsSlideover = ({
             <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10 sm:pl-16">
               <Transition.Child
                 as={Fragment}
-                enter="transform transition ease-in-out duration-500 sm:duration-700"
+                enter="ease-in-out duration-500"
                 enterFrom="translate-x-full"
                 enterTo="translate-x-0"
-                leave="transform transition ease-in-out duration-500 sm:duration-700"
+                leave="ease-in-out duration-300"
                 leaveFrom="translate-x-0"
                 leaveTo="translate-x-full"
               >

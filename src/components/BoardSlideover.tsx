@@ -34,11 +34,11 @@ export const BoardSlideover = ({ open, setOpen, initialBoard }: Props) => {
           enter="ease-in-out duration-200"
           enterFrom="opacity-0"
           enterTo="opacity-100"
-          leave="ease-in-out duration-200"
+          leave="ease-in-out duration-100"
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black bg-opacity-70 transition-opacity" />
+          <div className="fixed inset-0 bg-black bg-opacity-70" />
         </Transition.Child>
 
         <div className="fixed inset-0" />
@@ -48,10 +48,10 @@ export const BoardSlideover = ({ open, setOpen, initialBoard }: Props) => {
             <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10 sm:pl-16">
               <Transition.Child
                 as={Fragment}
-                enter="transform transition ease-in-out duration-500 sm:duration-700"
+                enter="ease-in-out duration-500"
                 enterFrom="translate-x-full"
                 enterTo="translate-x-0"
-                leave="transform transition ease-in-out duration-500 sm:duration-700"
+                leave="ease-in-out duration-300"
                 leaveFrom="translate-x-0"
                 leaveTo="translate-x-full"
               >

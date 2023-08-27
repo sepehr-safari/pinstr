@@ -38,7 +38,7 @@ export const Pins = () => {
   return (
     <>
       <div className="gap-8 flex flex-col xl:flex-row">
-        <div className="mx-auto p-2 bg-white rounded-xl shadow-md xl:mx-0">
+        <div className="mx-auto p-2 bg-white/70 rounded-xl shadow xl:mx-0">
           <div className="aspect-w-5 aspect-h-4 w-64 rounded-md bg-gray-200 text-gray-200">
             <img
               src={board ? loader(board?.image, { w: 500, h: 400 }) : ''}
@@ -117,7 +117,7 @@ export const Pins = () => {
             )}
           </div>
 
-          <div className="mt-4 flex duration-200 text-xs font-light text-gray-500 text-center max-w-screen-sm xl:max-w-none xl:text-justify xl:mt-auto">
+          <div className="mt-4 flex duration-200 text-xs text-gray-700 text-center max-w-screen-sm xl:max-w-none xl:text-justify xl:mt-auto">
             {board?.description}
           </div>
 
