@@ -136,15 +136,15 @@ export const useMutateBoard = ({
     currentPin: {
       value: currentPin,
       set: setCurrentPin,
-    },
-    refreshPins: () => {
-      if (!initialPinIndex) {
-        setPins((pins) => [...pins, Object.values(currentPin)]);
-      } else {
-        const newPins = [...pins];
-        newPins[initialPinIndex] = Object.values(currentPin);
-        setPins(newPins);
-      }
+      sync: () => {
+        if (!initialPinIndex) {
+          setPins((pins) => [...pins, Object.values(currentPin)]);
+        } else {
+          const newPins = [...pins];
+          newPins[initialPinIndex] = Object.values(currentPin);
+          setPins(newPins);
+        }
+      },
     },
     publishBoard: useMutation({
       mutationFn: publishBoardFn,
