@@ -1,9 +1,8 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { Filter } from 'nostr-tools';
 import { useCallback } from 'react';
 
 import { useLocalStore } from '@/store';
-import { Board } from '@/types';
 import { parseBoardsFromEvents } from '@/utils';
 
 export const useBoard = ({
@@ -15,8 +14,6 @@ export const useBoard = ({
 }) => {
   const pool = useLocalStore((state) => state.pool);
   const relays = useLocalStore((state) => state.relays);
-
-  const queryClient = useQueryClient();
 
   const fetchBoard = useCallback(async () => {
     if (!pool || !relays)
