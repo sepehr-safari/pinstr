@@ -50,7 +50,7 @@ export const PopoverTemplate = ({ children, items }: PopoverProps) => {
             {items.map((item, index) => (
               <div
                 key={index}
-                className="relative rounded-md p-2 hover:bg-gray-100"
+                className="relative rounded-md p-2 hover:bg-gray-100 hover:cursor-pointer"
                 onClick={item.onClick}
               >
                 <div
