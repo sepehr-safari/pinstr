@@ -7,18 +7,16 @@ import {
   SelectableBoardTypeItem,
   selectableBoardTypeItems,
 } from '@/components';
-import { categories, MenuItem } from '@/components/Menus';
+import { MenuItem, categories } from '@/components/Menus';
 import { usePublish } from '@/mutations';
-import { Board, ParsedPin } from '@/types';
+import { Board } from '@/types';
 
 export const useMutateBoard = ({
-  setOpen,
+  onClose,
   initialBoard,
-  initialPinIndex,
 }: {
-  setOpen: (state: boolean) => void;
+  onClose?: () => void;
   initialBoard?: Board;
-  initialPinIndex?: number;
 }) => {
   const queryClient = useQueryClient();
 
@@ -46,15 +44,6 @@ export const useMutateBoard = ({
   const [headers, setHeaders] = useState<string[]>(initialBoard?.headers || []);
   const [tags, setTags] = useState<string[]>(initialBoard?.tags || []);
   const [pins, setPins] = useState<string[][]>(initialBoard?.pins || []);
-
-  const initialCurrentPin: ParsedPin = {};
-  headers.forEach((header, index) => {
-    initialCurrentPin[header] = initialPinIndex
-      ? pins[initialPinIndex][index]
-      : '';
-  });
-
-  const [currentPin, setCurrentPin] = useState(initialCurrentPin);
 
   const publishBoardFn = useCallback(() => {
     if (!type || !category || !title || !description || !image) {
@@ -133,36 +122,27 @@ export const useMutateBoard = ({
       value: headers,
       set: setHeaders,
     },
-    currentPin: {
-      value: currentPin,
-      set: setCurrentPin,
-      sync: () => {
-        if (!initialPinIndex) {
-          setPins((pins) => [...pins, Object.values(currentPin)]);
-        } else {
-          const newPins = [...pins];
-          newPins[initialPinIndex] = Object.values(currentPin);
-          setPins(newPins);
-        }
-      },
-    },
     publishBoard: useMutation({
       mutationFn: publishBoardFn,
       onSuccess: (event) => {
         queryClient.invalidateQueries({ queryKey: ['nostr', 'boards'] });
 
         setImage('');
-        setCurrentPin(initialCurrentPin);
-        setOpen(false);
-        navigate('/p/' + nip19.npubEncode(event.pubkey) + '/' + title);
+        onClose?.();
+        navigate('/p/' + nip19.npubEncode(event.pubkey) + '/' + title, {
+          replace: true,
+        });
       },
     }),
     updateBoard: useMutation({
       mutationFn: updateBoardFn,
-      onSuccess: () => {
+      onSuccess: (event) => {
         queryClient.invalidateQueries({ queryKey: ['nostr', 'boards'] });
 
-        setOpen(false);
+        onClose?.();
+        navigate('/p/' + nip19.npubEncode(event.pubkey) + '/' + title, {
+          replace: true,
+        });
       },
     }),
     deleteBoard: useMutation({
@@ -171,7 +151,7 @@ export const useMutateBoard = ({
         queryClient.invalidateQueries({ queryKey: ['nostr', 'boards'] });
 
         setImage('');
-        setOpen(false);
+        onClose?.();
         navigate('/p/' + nip19.npubEncode(initialBoard!.author), {
           replace: true,
         });
