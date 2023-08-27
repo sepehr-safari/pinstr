@@ -31,7 +31,7 @@ const coverImageMenuItems: MenuItem[] = [
   },
 ];
 
-export const CoverImageMenu = ({ image, setImage }: Props) => {
+export const ImageMenu = ({ image, setImage }: Props) => {
   const [selectedMenuItem, setSelectedMenuItem] = useState(
     coverImageMenuItems[0]
   );
@@ -124,7 +124,7 @@ export const CoverImageMenu = ({ image, setImage }: Props) => {
       {!image && selectedMenuItem.title === 'Upload' && (
         <div className="mt-4">
           <span className="block text-sm font-medium leading-6 text-gray-900">
-            Cover Image / Upload
+            Image / Upload
           </span>
 
           <div className="mt-2 flex justify-center rounded-lg border border-gray-300 px-4 py-6">
@@ -174,7 +174,7 @@ export const CoverImageMenu = ({ image, setImage }: Props) => {
       {!image && selectedMenuItem.title === 'Stock Images' && (
         <>
           <span className="mt-4 block text-sm font-medium leading-6 text-gray-900">
-            Cover Image / Search From Stock Images
+            Image / Search From Stock Images
           </span>
 
           <div className="mt-2 relative">
@@ -200,14 +200,35 @@ export const CoverImageMenu = ({ image, setImage }: Props) => {
           <div className="mt-4 grid grid-cols-2 gap-4 max-h-80 overflow-y-scroll">
             {searchResult.length > 0 &&
               searchResult.map((url, index) => (
-                <div key={url + index}>
+                <div key={url + index} className="p-2">
                   <div className="aspect-w-5 aspect-h-4">
                     <img
+                      id={`stock-image-${index}`}
                       src={loader(url, { w: 500, h: 400 })}
-                      alt="Cover Image"
-                      className="w-full h-full rounded-md bg-gray-100 text-gray-100"
-                      onClick={() => setShowModalIndex(index)}
+                      alt="Image"
+                      tabIndex={0}
                       loading="lazy"
+                      className="w-full h-full rounded-md bg-gray-100 text-gray-100 focus:outline-offset-4 focus:outline-gray-900"
+                      onClick={() => setShowModalIndex(index)}
+                      onKeyUp={(e) => {
+                        switch (e.key) {
+                          case 'Enter':
+                            setShowModalIndex(index);
+                            break;
+                          case 'ArrowRight':
+                            document
+                              .getElementById(`stock-image-${index + 1}`)
+                              ?.focus();
+                            break;
+                          case 'ArrowLeft':
+                            document
+                              .getElementById(`stock-image-${index - 1}`)
+                              ?.focus();
+                            break;
+                          default:
+                            break;
+                        }
+                      }}
                     />
                   </div>
                   <Modal
@@ -220,7 +241,7 @@ export const CoverImageMenu = ({ image, setImage }: Props) => {
                     <div className="aspect-w-5 aspect-h-4">
                       <img
                         src={loader(url, { w: 500, h: 400 })}
-                        alt="Cover Image"
+                        alt="Image"
                         className="w-full h-full rounded-md bg-gray-100 text-gray-100"
                         loading="lazy"
                       />
@@ -258,7 +279,7 @@ export const CoverImageMenu = ({ image, setImage }: Props) => {
             htmlFor="cover-image-url"
             className="block text-sm font-medium leading-6 text-gray-900"
           >
-            Cover Image / URL
+            Image / URL
           </label>
           <div className="mt-2">
             <input
@@ -279,14 +300,14 @@ export const CoverImageMenu = ({ image, setImage }: Props) => {
       {!!image && (
         <div className="mt-4">
           <span className="block text-sm font-medium leading-6 text-gray-900">
-            Cover Image / Selected Image
+            Image / Selected Image
           </span>
 
           <div className="mt-2 flex justify-center rounded-lg border border-gray-300 px-4 py-4">
             <div className="text-center">
               <img
                 src={loader(image, { w: 500, h: 400 })}
-                alt="Cover image"
+                alt="Image"
                 className="mx-auto w-32 h-auto rounded-md bg-gray-100 text-gray-100"
                 loading="lazy"
               />
