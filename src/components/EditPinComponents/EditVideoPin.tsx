@@ -22,7 +22,6 @@ export const EditVideoPin = ({
             id="Title"
             autoComplete="off"
             autoFocus
-            tabIndex={1}
             className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
             value={pin.value['Title']}
             onChange={(e) => {
@@ -44,7 +43,6 @@ export const EditVideoPin = ({
             id="Content"
             autoComplete="off"
             autoFocus
-            tabIndex={1}
             className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
             value={pin.value['Content']}
             onChange={(e) => {

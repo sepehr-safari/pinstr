@@ -1,4 +1,4 @@
-import { CoverImageMenu } from '@/components/Menus';
+import { ImageMenu } from '@/components/Menus';
 import { ParsedPin } from '@/types';
 
 export const EditTextPin = ({
@@ -23,7 +23,6 @@ export const EditTextPin = ({
             id="Title"
             autoComplete="off"
             autoFocus
-            tabIndex={1}
             className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
             value={pin.value['Title']}
             onChange={(e) => {
@@ -65,7 +64,7 @@ export const EditTextPin = ({
           </span>
         </span>
         <div className="mt-2">
-          <CoverImageMenu
+          <ImageMenu
             image={pin.value['Image']}
             setImage={(url) => {
               pin.set({ ...pin.value, Image: url });

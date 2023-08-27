@@ -12,7 +12,7 @@ export const EditProfilePin = ({
       <div>
         <label htmlFor="Content" className="flex flex-col">
           <span className="text-sm font-medium leading-6 text-gray-900">
-            Pubkey
+            {`Pubkey (npub1 / nip05 nostr address / hex)`}
           </span>
         </label>
         <div className="mt-2">
@@ -22,7 +22,6 @@ export const EditProfilePin = ({
             id="Content"
             autoComplete="off"
             autoFocus
-            tabIndex={1}
             className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
             value={pin.value['Content']}
             onChange={(e) => {
