@@ -1,5 +1,5 @@
 import { PlusIcon } from '@heroicons/react/20/solid';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { DetailsSlideover } from '@/components';
