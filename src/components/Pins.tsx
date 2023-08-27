@@ -78,13 +78,14 @@ export const Pins = () => {
                     <>
                       <BoardSlideover
                         open={openBoardSlideover}
-                        setOpen={setOpenBoardSlideover}
+                        onClose={() => setOpenBoardSlideover(false)}
                         initialBoard={board}
                       />
                       <PinSlideover
                         open={openPinSlideover}
-                        setOpen={setOpenPinSlideover}
+                        onClose={() => setOpenPinSlideover(false)}
                         initialBoard={board}
+                        initialPinIndex={-1}
                       />
                     </>
                   )}

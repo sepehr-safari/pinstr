@@ -1,23 +1,25 @@
-import { Pin } from '@/types';
 import { Dialog, Transition } from '@headlessui/react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { Fragment, useCallback, useEffect } from 'react';
 
+import { Board } from '@/types';
+import { EditPinPopover } from './Popovers';
+
 export const DetailsSlideover = ({
-  isShown,
+  board,
+  pinIndex,
   onClose,
   onNext,
   onPrevious,
   children,
 }: {
-  isShown: boolean;
+  board: Board;
+  pinIndex: number;
   onClose: () => void;
   onNext: () => void;
   onPrevious: () => void;
   children: React.ReactNode;
-  pin: Pin;
-  headers: string[];
 }) => {
   const handleKeyUp = useCallback(
     (e: KeyboardEvent) => {
@@ -31,15 +33,15 @@ export const DetailsSlideover = ({
   );
 
   useEffect(() => {
-    isShown && document.addEventListener('keyup', handleKeyUp);
+    document.addEventListener('keyup', handleKeyUp);
 
     return () => {
       document.removeEventListener('keyup', handleKeyUp);
     };
-  }, [handleKeyUp, isShown]);
+  }, [handleKeyUp]);
 
   return (
-    <Transition.Root show={isShown} as={Fragment}>
+    <Transition.Root show={pinIndex > -1} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={onClose}>
         <Transition.Child
           as={Fragment}
@@ -55,7 +57,10 @@ export const DetailsSlideover = ({
 
         <div className="fixed inset-0" />
 
-        <div className="fixed inset-0 overflow-hidden" tabIndex={0}>
+        <div
+          className="fixed inset-0 overflow-hidden focus:outline-none"
+          tabIndex={0}
+        >
           <div className="absolute inset-0 overflow-hidden">
             <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10 sm:pl-16">
               <Transition.Child
@@ -72,7 +77,12 @@ export const DetailsSlideover = ({
                     <div className="px-4 py-6 sm:px-6 border-b">
                       <div className="flex items-start justify-between">
                         <Dialog.Title className="text-base font-semibold leading-6 text-gray-900">
-                          {'Details'}
+                          <EditPinPopover
+                            board={board}
+                            pinIndex={pinIndex}
+                            overlay={false}
+                            onClose={onClose}
+                          />
                         </Dialog.Title>
                         <div className="ml-3 flex h-7 items-center">
                           <button
@@ -89,7 +99,29 @@ export const DetailsSlideover = ({
                     </div>
                     {/* Main */}
                     <div className="divide-y divide-gray-200">
-                      <div className="py-6 bg-white">{children}</div>
+                      <div className="py-6 bg-white flex justify-between items-center">
+                        <div>
+                          <button
+                            type="button"
+                            onClick={onPrevious}
+                            className="p-2 sm:p-4 md:p-8"
+                          >
+                            <ChevronLeftIcon className="h-8 w-8 text-gray-500/40 sm:h-10 sm:w-10 md:h-12 md:w-12" />
+                          </button>
+                        </div>
+
+                        {children}
+
+                        <div>
+                          <button
+                            type="button"
+                            onClick={onNext}
+                            className="p-2 sm:p-4 md:p-8"
+                          >
+                            <ChevronRightIcon className="h-8 w-8 text-gray-500/40 sm:h-10 sm:w-10 md:h-12 md:w-12" />
+                          </button>
+                        </div>
+                      </div>
                       <div className="px-4 py-5 sm:px-0 sm:py-0">
                         <dl className="space-y-8 sm:space-y-0 sm:divide-y sm:divide-gray-200">
                           <div className="sm:flex sm:px-6 sm:py-5">
@@ -115,33 +147,6 @@ export const DetailsSlideover = ({
                             </dd>
                           </div>
                         </dl>
-                      </div>
-
-                      <div className="absolute bottom-0 w-full flex justify-center items-center">
-                        <span className="isolate inline-flex w-full rounded-md shadow-sm">
-                          <button
-                            type="button"
-                            onClick={onPrevious}
-                            className="relative flex justify-center items-center bg-white w-full py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-100 hover:text-gray-500"
-                          >
-                            <ChevronLeftIcon
-                              className="h-5 w-5"
-                              aria-hidden="true"
-                            />
-                            <span className="text-sm">Previous</span>
-                          </button>
-                          <button
-                            type="button"
-                            onClick={onNext}
-                            className="relative -ml-px flex justify-center items-center bg-white w-full py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-100 hover:text-gray-500"
-                          >
-                            <span className="text-sm">Next</span>
-                            <ChevronRightIcon
-                              className="h-5 w-5"
-                              aria-hidden="true"
-                            />
-                          </button>
-                        </span>
                       </div>
                     </div>
                   </div>
