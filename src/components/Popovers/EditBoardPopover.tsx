@@ -11,7 +11,7 @@ export const EditBoardPopover = ({ board }: { board: Board }) => {
   const [openPinEdit, setOpenPinEdit] = useState(false);
 
   const { deleteBoard } = useMutateBoard({
-    setOpen: setOpenBoardEdit,
+    onClose: () => setOpenBoardEdit(false),
     initialBoard: board,
   });
 
@@ -31,7 +31,7 @@ export const EditBoardPopover = ({ board }: { board: Board }) => {
         onClick: () => deleteBoard.mutate(),
       },
     ],
-    [setOpenBoardEdit]
+    [setOpenBoardEdit, setOpenPinEdit, deleteBoard]
   );
 
   return (
@@ -44,13 +44,14 @@ export const EditBoardPopover = ({ board }: { board: Board }) => {
 
       <BoardSlideover
         open={openBoardEdit}
-        setOpen={setOpenBoardEdit}
+        onClose={() => setOpenBoardEdit(false)}
         initialBoard={board}
       />
       <PinSlideover
         open={openPinEdit}
-        setOpen={setOpenPinEdit}
+        onClose={() => setOpenPinEdit(false)}
         initialBoard={board}
+        initialPinIndex={-1}
       />
     </>
   );
