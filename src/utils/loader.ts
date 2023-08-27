@@ -14,7 +14,5 @@ export const loader = (src: string, opt?: { w?: number; h?: number }) => {
     }
   }
 
-  if (src.includes('avatar')) console.log('avatar', src, btoa(src));
-
   return `https://img.pinstr.app/${encodeURIComponent(btoa(src))}${queries}`;
 };
