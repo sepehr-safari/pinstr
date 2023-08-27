@@ -4,7 +4,7 @@ import { Fragment, useState } from 'react';
 
 import { selectableBoardTypeItems } from '@/components';
 import { categories } from '@/components/Menus';
-import { useMutateBoard } from '@/mutations';
+import { useMutateBoard, useMutatePin } from '@/mutations';
 import { Board, ParsedPin } from '@/types';
 
 import { useBoardsByAuthor, useUser } from '@/queries';
@@ -20,14 +20,14 @@ import { loader } from '@/utils';
 
 type Props = {
   open: boolean;
-  setOpen: (state: boolean) => void;
+  onClose: () => void;
   initialBoard?: Board;
-  initialPinIndex?: number;
+  initialPinIndex: number;
 };
 
 export const PinSlideover = ({
   open,
-  setOpen,
+  onClose,
   initialBoard,
   initialPinIndex,
 }: Props) => {
@@ -37,34 +37,28 @@ export const PinSlideover = ({
 
   const { data: boards } = useBoardsByAuthor({ author: pubkey || undefined });
 
-  const {
-    id,
-    title,
-    description,
-    type,
-    category,
-    tags,
-    image,
-    pins,
-    headers,
-    currentPin,
-    refreshPins,
-    publishBoard,
-  } = useMutateBoard({ setOpen, initialBoard, initialPinIndex });
+  const { id, title, description, type, category, tags, image, pins, headers } =
+    useMutateBoard({ onClose, initialBoard });
+
+  const { currentPin, publishPin, removePin } = useMutatePin({
+    initialBoard,
+    initialPinIndex,
+    onClose,
+  });
 
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={setOpen}>
+      <Dialog as="div" className="relative z-10" onClose={onClose}>
         <Transition.Child
           as={Fragment}
           enter="ease-in-out duration-200"
           enterFrom="opacity-0"
           enterTo="opacity-100"
-          leave="ease-in-out duration-200"
+          leave="ease-in-out duration-100"
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black bg-opacity-70 transition-opacity" />
+          <div className="fixed inset-0 bg-black bg-opacity-70" />
         </Transition.Child>
 
         <div className="fixed inset-0" />
@@ -74,10 +68,10 @@ export const PinSlideover = ({
             <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10 sm:pl-16">
               <Transition.Child
                 as={Fragment}
-                enter="transform transition ease-in-out duration-500 sm:duration-700"
+                enter="ease-in-out duration-500"
                 enterFrom="translate-x-full"
                 enterTo="translate-x-0"
-                leave="transform transition ease-in-out duration-500 sm:duration-700"
+                leave="ease-in-out duration-300"
                 leaveFrom="translate-x-0"
                 leaveTo="translate-x-full"
               >
@@ -87,7 +81,7 @@ export const PinSlideover = ({
                       <div className="bg-gray-800 px-4 py-6 sm:px-6">
                         <div className="flex items-center justify-between">
                           <Dialog.Title className="text-base font-semibold leading-6 text-white">
-                            {!initialPinIndex ? (
+                            {initialPinIndex == -1 ? (
                               !id.value ? (
                                 <span>Add a new pin</span>
                               ) : (
@@ -102,7 +96,7 @@ export const PinSlideover = ({
                           <p className="text-sm font-light text-gray-300">
                             {!title.value ? (
                               <span>Get started by choosing a board.</span>
-                            ) : !initialPinIndex ? (
+                            ) : initialPinIndex == -1 ? (
                               <span>
                                 Fill in the details below to add a new pin to
                                 your board.
@@ -207,7 +201,7 @@ export const PinSlideover = ({
                                               selectedBoard.headers.forEach(
                                                 (header, index) => {
                                                   initialCurrentPin[header] =
-                                                    initialPinIndex
+                                                    initialPinIndex > -1
                                                       ? selectedBoard.pins[
                                                           initialPinIndex
                                                         ][index]
@@ -254,7 +248,7 @@ export const PinSlideover = ({
                                 <EditTextPin pin={currentPin} />
                               )}
 
-                              {initialPinIndex && (
+                              {initialPinIndex > -1 && (
                                 <div className="py-6">
                                   <div className="flex flex-col rounded-md border border-dashed border-red-300">
                                     <div className="w-full bg-red-50 shadow-inner px-4 py-2 border-b border-red-100 rounded-t-md">
@@ -270,7 +264,9 @@ export const PinSlideover = ({
                                       <button
                                         type="button"
                                         className="ml-auto rounded-md border border-red-200 px-4 py-1 text-sm font-bold leading-6 text-red-400 hover:text-red-500 hover:border-red-300"
-                                        // onClick={deletePin}
+                                        onClick={() => {
+                                          removePin.mutate();
+                                        }}
                                       >
                                         Delete Pin
                                       </button>
@@ -288,7 +284,7 @@ export const PinSlideover = ({
                         <button
                           type="button"
                           className="rounded-md bg-white px-3 py-2 text-xs font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                          onClick={() => setOpen(false)}
+                          onClick={() => onClose()}
                         >
                           Cancel
                         </button>
@@ -296,7 +292,7 @@ export const PinSlideover = ({
 
                       {!!id.value && (
                         <div className="flex">
-                          {!initialPinIndex ? (
+                          {initialPinIndex == -1 ? (
                             <>
                               <button
                                 type="button"
@@ -319,8 +315,7 @@ export const PinSlideover = ({
                               <button
                                 type="button"
                                 onClick={() => {
-                                  refreshPins();
-                                  publishBoard.mutate();
+                                  publishPin.mutate();
                                 }}
                                 className="ml-4 inline-flex justify-center rounded-md bg-gray-800 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
                               >
@@ -331,8 +326,7 @@ export const PinSlideover = ({
                             <button
                               type="button"
                               onClick={() => {
-                                refreshPins();
-                                publishBoard.mutate();
+                                publishPin.mutate();
                               }}
                               className="ml-4 inline-flex justify-center rounded-md bg-gray-800 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
                             >

@@ -2,18 +2,18 @@ import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 
 import { SelectableBoardTypes } from '@/components';
-import { CategoryMenu, CoverImageMenu } from '@/components/Menus';
+import { CategoryMenu, ImageMenu } from '@/components/Menus';
 import { useMutateBoard } from '@/mutations';
 import { Board } from '@/types';
 import { capitalizeFirstLetter } from '@/utils';
 
 type Props = {
   open: boolean;
-  setOpen: (state: boolean) => void;
+  onClose: () => void;
   initialBoard?: Board;
 };
 
-export const BoardSlideover = ({ open, setOpen, initialBoard }: Props) => {
+export const BoardSlideover = ({ open, onClose, initialBoard }: Props) => {
   const {
     title,
     description,
@@ -24,11 +24,11 @@ export const BoardSlideover = ({ open, setOpen, initialBoard }: Props) => {
     publishBoard,
     updateBoard,
     deleteBoard,
-  } = useMutateBoard({ setOpen, initialBoard });
+  } = useMutateBoard({ onClose, initialBoard });
 
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={setOpen}>
+      <Dialog as="div" className="relative z-10" onClose={onClose}>
         <Transition.Child
           as={Fragment}
           enter="ease-in-out duration-200"
@@ -123,7 +123,6 @@ export const BoardSlideover = ({ open, setOpen, initialBoard }: Props) => {
                                     id="title"
                                     autoComplete="off"
                                     autoFocus
-                                    tabIndex={1}
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
                                     value={title.value}
                                     onChange={(e) => title.set(e.target.value)}
@@ -232,7 +231,7 @@ export const BoardSlideover = ({ open, setOpen, initialBoard }: Props) => {
                                   </span>
                                 </span>
                                 <div className="mt-2">
-                                  <CoverImageMenu
+                                  <ImageMenu
                                     image={image.value}
                                     setImage={image.set}
                                   />
@@ -273,7 +272,7 @@ export const BoardSlideover = ({ open, setOpen, initialBoard }: Props) => {
                         <button
                           type="button"
                           className="rounded-md bg-white px-3 py-2 text-xs font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                          onClick={() => setOpen(false)}
+                          onClick={onClose}
                         >
                           Cancel
                         </button>
