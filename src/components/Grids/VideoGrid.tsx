@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import ReactPlayer from 'react-player';
 
 import { DetailsSlideover } from '@/components/Slideovers';
 import { Board } from '@/types';
@@ -17,20 +18,13 @@ export const VideoGrid = ({ board }: { board: Board }) => {
             key={index}
             className="p-2 group relative rounded-lg hover:bg-gray-50 ease-in-out duration-500 hover:shadow-md"
           >
-            <div className="ease-in-out duration-700">
-              <div className="aspect-h-7 aspect-w-10 block w-full overflow-hidden rounded-md bg-gray-200">
-                {true ? ( // TODO
-                  <iframe className="object-cover" src={videoPin[0]} />
-                ) : (
-                  <video
-                    controls
-                    autoPlay={false}
-                    preload="off"
-                    className="object-cover"
-                    src={videoPin[0]}
-                  />
-                )}
-              </div>
+            <div className="aspect-w-10 aspect-h-7 overflow-hidden rounded-md bg-black">
+              <ReactPlayer
+                url={videoPin[0]}
+                width="100%"
+                height="100%"
+                controls
+              />
             </div>
 
             <p className="mt-4 block truncate text-sm font-medium text-gray-900 ease-in-out duration-700">
@@ -68,19 +62,14 @@ export const VideoGrid = ({ board }: { board: Board }) => {
         {pinIndex > -1 && (
           <div
             key={pinIndex}
-            className="aspect-h-7 aspect-w-10 block w-full overflow-hidden rounded-md bg-gray-100"
+            className="aspect-w-10 aspect-h-7 overflow-hidden rounded-md bg-black"
           >
-            {true ? ( // TODO
-              <iframe className="object-cover" src={board.pins[pinIndex][0]} />
-            ) : (
-              <video
-                controls
-                autoPlay={false}
-                preload="off"
-                className="object-cover"
-                src={board.pins[pinIndex][0]}
-              />
-            )}
+            <ReactPlayer
+              url={board.pins[pinIndex][0]}
+              width="100%"
+              height="100%"
+              controls
+            />
           </div>
         )}
       </DetailsSlideover>
