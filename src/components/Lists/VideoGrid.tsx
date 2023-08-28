@@ -66,25 +66,21 @@ export const VideoGrid = ({ board }: { board: Board }) => {
         }
       >
         {pinIndex > -1 && (
-          <div className="max-w-sm mx-auto">
-            <div className="ease-in-out duration-700">
-              <div className="aspect-h-7 aspect-w-10 block w-full overflow-hidden rounded-md bg-gray-100">
-                {true ? ( // TODO
-                  <iframe
-                    className="object-cover"
-                    src={board.pins[pinIndex][0]}
-                  />
-                ) : (
-                  <video
-                    controls
-                    autoPlay={false}
-                    preload="off"
-                    className="object-cover"
-                    src={board.pins[pinIndex][0]}
-                  />
-                )}
-              </div>
-            </div>
+          <div
+            key={pinIndex}
+            className="aspect-h-7 aspect-w-10 block w-full overflow-hidden rounded-md bg-gray-100"
+          >
+            {true ? ( // TODO
+              <iframe className="object-cover" src={board.pins[pinIndex][0]} />
+            ) : (
+              <video
+                controls
+                autoPlay={false}
+                preload="off"
+                className="object-cover"
+                src={board.pins[pinIndex][0]}
+              />
+            )}
           </div>
         )}
       </DetailsSlideover>
