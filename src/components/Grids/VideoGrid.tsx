@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { DetailsSlideover } from '@/components';
+import { DetailsSlideover } from '@/components/Slideovers';
 import { Board } from '@/types';
 
 export const VideoGrid = ({ board }: { board: Board }) => {

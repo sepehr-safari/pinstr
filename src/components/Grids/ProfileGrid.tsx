@@ -3,7 +3,7 @@ import { nip19 } from 'nostr-tools';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { DetailsSlideover } from '@/components';
+import { DetailsSlideover } from '@/components/Slideovers';
 import { useAuthor } from '@/queries';
 import { Board } from '@/types';
 import { joinClassNames, loader } from '@/utils';

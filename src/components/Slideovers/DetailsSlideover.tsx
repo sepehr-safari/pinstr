@@ -3,8 +3,8 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { Fragment, useCallback, useEffect } from 'react';
 
+import { EditPinPopover } from '@/components/Popovers';
 import { Board } from '@/types';
-import { EditPinPopover } from './Popovers';
 
 export const DetailsSlideover = ({
   board,

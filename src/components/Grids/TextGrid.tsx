@@ -1,7 +1,7 @@
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
 import { useState } from 'react';
 
-import { DetailsSlideover } from '@/components';
+import { DetailsSlideover } from '@/components/Slideovers';
 import { Board } from '@/types';
 import { loader } from '@/utils';
 

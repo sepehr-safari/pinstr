@@ -3,7 +3,6 @@ export * from './BoardItem';
 export * from './BoardSlideover';
 export * from './BoardsExplorer';
 export * from './BoardsInProfile';
-export * from './DetailsSlideover';
 export * from './Footer';
 export * from './Modal';
 export * from './PinSlideover';
