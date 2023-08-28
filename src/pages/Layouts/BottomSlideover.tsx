@@ -25,9 +25,9 @@ export const BottomSlideover = () => {
           <div className="fixed inset-0 bg-black bg-opacity-70 duration-200" />
         </Transition.Child>
 
-        <div className="overflow-y-auto fixed inset-x-0 bottom-0 w-full h-full ">
+        <div className="overflow-hidden fixed inset-x-0 bottom-0 w-full h-full">
           <div
-            className="pointer-events-none w-full h-full flex px-0 pt-28 focus:outline-none md:px-10 lg:px-20"
+            className="pointer-events-none overflow-y-auto w-full h-full flex px-0 pt-28 focus:outline-none md:px-10 lg:px-20"
             id="bottom-slideover"
             tabIndex={0}
           >
