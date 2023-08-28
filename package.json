@@ -10,27 +10,27 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@heroicons/react": "^2.0.17",
+    "@heroicons/react": "2.0.17",
     "@types/node": "18.16.3",
     "@types/react": "18.2.0",
     "@types/react-dom": "18.2.1",
     "autoprefixer": "10.4.14",
     "eslint": "8.39.0",
     "eslint-config-next": "13.3.4",
-    "next": "^13.4.1",
-    "nostr-hooks": "^1.8.0",
-    "nostr-tools": "^1.13.0",
+    "next": "13.4.1",
+    "nostr-hooks": "1.8.0",
+    "nostr-tools": "1.13.0",
     "postcss": "8.4.23",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-hook-form": "^7.43.9",
-    "react-top-loading-bar": "^2.3.1",
+    "react-hook-form": "7.43.9",
+    "react-top-loading-bar": "2.3.1",
     "tailwindcss": "3.3.2",
     "typescript": "5.0.4"
   },
   "devDependencies": {
-    "daisyui": "^3.1.6",
-    "eslint-config-prettier": "^8.8.0",
+    "daisyui": "3.1.6",
+    "eslint-config-prettier": "8.8.0",
     "prettier": "2.8.8"
   }
 }
