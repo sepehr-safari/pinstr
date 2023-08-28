@@ -1,7 +1,10 @@
+import { nip19 } from 'nostr-tools';
 import { useState } from 'react';
 
 import { DetailsSlideover } from '@/components';
+import { useAuthor, useNote } from '@/queries';
 import { Board } from '@/types';
+import { joinClassNames, loader } from '@/utils';
 
 export const NoteGrid = ({ board }: { board: Board }) => {
   const [pinIndex, setPinIndex] = useState<number>(-1);
@@ -14,59 +17,14 @@ export const NoteGrid = ({ board }: { board: Board }) => {
       >
         {(board.pins || []).map((pin, index) => (
           <li
-            key={index}
-            className="group col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow ease-in-out duration-300 hover:shadow-md"
+            key={pin[0] + index}
+            className="group flex flex-col h-full justify-between divide-y divide-gray-200 rounded-lg bg-white shadow ease-in-out duration-300 hover:shadow-md"
           >
-            <div className="flex w-full items-center justify-between space-x-6 p-4">
-              <div className="flex-1 truncate">
-                <div className="flex items-center space-x-3">
-                  <h3 className="truncate text-sm font-medium text-gray-900">
-                    {
-                      pin[0] // note id
-                    }
-                  </h3>
-                </div>
-                <p className="mt-1 truncate text-xs text-gray-500">
-                  {
-                    // nip05
-                  }
-                </p>
-              </div>
-              <img
-                className="h-12 w-12 flex-shrink-0 rounded-full bg-gray-200 text-gray-200"
-                src={''}
-                alt={pin[0]}
-                loading="lazy"
-              />
-            </div>
-            <div className="p-4 text-justify font-light">
-              <span className="text-xs line-clamp-4 translate-y-2 group-hover:translate-y-0 ease-in-out duration-700">
-                a dynamic group of individuals who are passionate about what we
-                do and dedicated to delivering the best results for our clients
-                a dynamic group of individuals who are passionate about what we
-                do and dedicated to delivering the best results for our clients
-                a dynamic group of individuals who are passionate about what we
-                do and dedicated to delivering the best results for our clients
-              </span>
-            </div>
-
-            <div className="flex w-full opacity-0 ease-in-out duration-500 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0">
-              <a
-                href={`https://primal.net/${pin[0]}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex w-full items-center justify-center py-2 text-xs text-gray-700 font-medium border-r border-gray-200 ease-in-out duration-300 hover:bg-gray-200 hover:text-gray-900"
-              >
-                Open with Primal
-              </a>
-
-              <button
-                className="flex w-full items-center justify-center py-2 text-xs text-gray-700 font-medium ease-in-out duration-300 hover:bg-gray-200 hover:text-gray-900"
-                onClick={() => setPinIndex(index)}
-              >
-                View details
-              </button>
-            </div>
+            <NoteDetails
+              onOpen={() => setPinIndex(index)}
+              noteId={pin[0]}
+              summary
+            />
           </li>
         ))}
       </ul>
@@ -87,49 +45,101 @@ export const NoteGrid = ({ board }: { board: Board }) => {
         }
       >
         {pinIndex > -1 && (
-          <div className="max-w-sm mx-auto">
-            <div className="rounded-lg shadow-md border bg-white">
-              <div className="p-4">
-                <div className="flex items-center space-x-3">
-                  <h3 className="text-sm font-medium text-gray-900">
-                    {
-                      board.pins[pinIndex][0] // note id
-                    }
-                  </h3>
-                </div>
-                <span className="text-xs text-gray-500">
-                  {
-                    // nip05
-                  }
-                </span>
-              </div>
-
-              <div className="p-4 border-t text-xs text-gray-500">
-                <p>
-                  a dynamic group of individuals who are passionate about what
-                  we do and dedicated to delivering the best results for our
-                  clients a dynamic group of individuals who are passionate
-                  about what we do and dedicated to delivering the best results
-                  for our clients a dynamic group of individuals who are
-                  passionate about what we do and dedicated to delivering the
-                  best results for our clients
-                </p>
-              </div>
-
-              <div className="border-t flex w-full">
-                <a
-                  href="https://primal.net/note1"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex w-full items-center justify-center py-2 text-xs text-gray-700 font-medium ease-in-out duration-300 hover:bg-gray-200 hover:text-gray-900"
-                >
-                  Open with Primal
-                </a>
-              </div>
-            </div>
-          </div>
+          <NoteDetails key={pinIndex} noteId={board.pins[pinIndex][0]} />
         )}
       </DetailsSlideover>
+    </>
+  );
+};
+
+const NoteDetails = ({
+  noteId,
+  summary = false,
+  onOpen,
+}: {
+  noteId: string;
+  summary?: boolean;
+  onOpen?: () => void;
+}) => {
+  const { data: note } = useNote(noteId);
+  const { data: author } = useAuthor(note?.pubkey);
+
+  if (!note) {
+    return <></>; // TODO: Loading state
+  }
+
+  return (
+    <>
+      <div className="w-full">
+        <div className="flex w-full items-center justify-between space-x-6 p-4">
+          <div className="flex-1 truncate">
+            <div className="flex items-center space-x-3">
+              <h3 className="truncate text-sm font-medium text-gray-900">
+                {author?.displayName}
+              </h3>
+            </div>
+            <p className="mt-1 truncate text-xs text-gray-500">
+              {author?.nip05}
+            </p>
+          </div>
+          <div className="h-12 w-12 rounded-full bg-gray-300 text-gray-300">
+            {!!author && !!author.picture && (
+              <img
+                className="rounded-full"
+                src={loader(author.picture, { w: 96, h: 96 })}
+                alt={author?.displayName + ' avatar'}
+                loading="lazy"
+              />
+            )}
+          </div>
+        </div>
+
+        <div className="p-4 border-t text-xs text-gray-500">
+          <p
+            className={joinClassNames(
+              'whitespace-break-spaces break-words',
+              summary
+                ? 'delay-100 duration-500 translate-y-2 group-hover:translate-y-0'
+                : ''
+            )}
+          >
+            {summary && note.content.length > 200
+              ? note.content.slice(0, 200) + '...'
+              : note.content}
+          </p>
+        </div>
+      </div>
+
+      {summary ? (
+        <div className="flex w-full opacity-0 ease-in-out duration-500 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0">
+          <a
+            href={`https://primal.net/e/${nip19.noteEncode(noteId)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex w-full items-center justify-center py-2 text-xs text-gray-700 font-medium border-r border-gray-200 ease-in-out duration-300 hover:bg-gray-200 hover:text-gray-900"
+          >
+            Open with Primal
+          </a>
+
+          <button
+            className="flex w-full items-center justify-center py-2 text-xs text-gray-700 font-medium ease-in-out duration-300 hover:bg-gray-200 hover:text-gray-900"
+            onClick={onOpen}
+          >
+            View details
+          </button>
+        </div>
+      ) : (
+        <div className="border-t flex w-full">
+          <a
+            href={`https://primal.net/e/${nip19.noteEncode(noteId)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex w-full items-center justify-center py-2 text-xs text-gray-700 font-medium ease-in-out duration-300 hover:bg-gray-200 hover:text-gray-900"
+          >
+            Open with Primal
+          </a>
+        </div>
+      )}
     </>
   );
 };
