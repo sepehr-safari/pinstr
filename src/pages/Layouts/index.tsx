@@ -1,3 +1,3 @@
 export * from './BottomSlideover';
 export * from './MainLayout';
-export * from './Profile';
+export * from './ProfileLayout';

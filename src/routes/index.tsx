@@ -2,7 +2,7 @@ import { Location, Route, Routes, useLocation } from 'react-router-dom';
 
 import { BoardsInProfile, Pins } from '@/components';
 import { Home, Login, Logout, NoMatch } from '@/pages';
-import { BottomSlideover, MainLayout, Profile } from '@/pages/Layouts';
+import { BottomSlideover, MainLayout, ProfileLayout } from '@/pages/Layouts';
 
 export const AppRouter = () => {
   const location = useLocation();
@@ -16,7 +16,7 @@ export const AppRouter = () => {
 
           <Route path="p">
             <Route index element={<NoMatch />} />
-            <Route path=":npub" element={<Profile />}>
+            <Route path=":npub" element={<ProfileLayout />}>
               <Route index element={<BoardsInProfile />} />
               <Route path=":title" element={<Pins />} />
             </Route>
@@ -31,7 +31,7 @@ export const AppRouter = () => {
         <Routes>
           <Route path="p" element={<BottomSlideover />}>
             <Route index element={<NoMatch />} />
-            <Route path=":npub" element={<Profile />}>
+            <Route path=":npub" element={<ProfileLayout />}>
               <Route index element={<BoardsInProfile />} />
               <Route path=":title" element={<Pins />} />
             </Route>

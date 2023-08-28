@@ -6,7 +6,7 @@ import { Breadcrumb } from '@/components/Navbars';
 import { useAuthor } from '@/queries';
 import { joinClassNames, loader } from '@/utils';
 
-export const Profile = () => {
+export const ProfileLayout = () => {
   const { npub } = useParams();
 
   const location = useLocation();
