@@ -73,27 +73,26 @@ export const TextGrid = ({ board }: { board: Board }) => {
         }
       >
         {pinIndex > -1 && (
-          <div className="max-w-sm mx-auto">
-            <div className="rounded-lg shadow-md bg-white">
-              <a
-                href={board.pins[pinIndex][2]}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img
-                  className="w-96 h-96 aspect-1 rounded-t-lg bg-gray-200 text-gray-200 hover:cursor-zoom-in hover:opacity-80"
-                  src={loader(board.pins[pinIndex][2], { w: 400, h: 400 })}
-                  alt={board.pins[pinIndex][1]}
-                  loading="lazy"
-                />
-              </a>
-              <div className="p-4">
-                <div className="text-xs font-light">
-                  {board.pins[pinIndex][0]}
-                </div>
+          <>
+            <a
+              key={pinIndex}
+              href={board.pins[pinIndex][2]}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                className="w-96 h-96 aspect-1 rounded-t-lg bg-gray-200 text-gray-200 hover:cursor-zoom-in hover:opacity-80"
+                src={loader(board.pins[pinIndex][2], { w: 400, h: 400 })}
+                alt={board.pins[pinIndex][1]}
+                loading="lazy"
+              />
+            </a>
+            <div className="p-4">
+              <div className="text-xs font-light">
+                {board.pins[pinIndex][0]}
               </div>
             </div>
-          </div>
+          </>
         )}
       </DetailsSlideover>
     </>
