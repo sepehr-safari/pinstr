@@ -31,7 +31,7 @@ export const MainNavbar = () => {
               <Link to="/" className="flex flex-shrink-0 items-center">
                 <img
                   className="h-10 w-auto rounded-md bg-gray-100 text-gray-100"
-                  src="/assets/pinstr.png"
+                  src="/assets/pinstr.svg"
                   alt="Pinstr Logo"
                   loading="lazy"
                 />

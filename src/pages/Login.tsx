@@ -23,7 +23,7 @@ export const Login = () => {
               <Link to="/" className="inline-flex items-center group">
                 <img
                   className="h-10 rounded-md w-auto bg-gray-100 text-gray-100"
-                  src="/assets/pinstr.png"
+                  src="/assets/pinstr.svg"
                   alt="Pinstr Logo"
                   loading="lazy"
                 />
