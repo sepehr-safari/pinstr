@@ -48,7 +48,7 @@ export const BoardItem = ({
               leaveFrom="opacity-100 translate-x-0"
               leaveTo="opacity-0 -translate-x-2"
             >
-              <span className="inline-flex items-center rounded-full bg-gray-300/80 px-3 py-0.5 text-xs font-medium text-gray-900 hover:bg-gray-300/90">
+              <span className="inline-flex items-center rounded-full bg-gray-200 px-3 py-0.5 text-xs font-medium text-gray-900 hover:bg-gray-300">
                 {board.type}
               </span>
             </Transition.Child>
@@ -62,7 +62,7 @@ export const BoardItem = ({
               leaveFrom="opacity-100 translate-x-0"
               leaveTo="opacity-0 translate-x-2"
             >
-              <span className="inline-flex items-center rounded-full bg-gray-300/80 px-3 py-0.5 text-xs font-medium text-gray-900 hover:bg-gray-300/90">
+              <span className="inline-flex items-center rounded-full bg-gray-200 px-3 py-0.5 text-xs font-medium text-gray-900 hover:bg-gray-300">
                 {board.category}
               </span>
             </Transition.Child>
@@ -89,9 +89,9 @@ export const BoardItem = ({
                 className="z-[1] absolute inset-0 bg-black"
                 enter="duration-300"
                 enterFrom="opacity-0"
-                enterTo="opacity-30"
+                enterTo="opacity-50"
                 leave="duration-100"
-                leaveFrom="opacity-30"
+                leaveFrom="opacity-50"
                 leaveTo="opacity-0"
               />
             </Link>
