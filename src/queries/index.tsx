@@ -4,4 +4,5 @@ export * from './useBoardReactions';
 export * from './useBoardsByAuthor';
 export * from './useBoardsExplorer';
 // export * from './useCommentReactions';
+export * from './useNote';
 export * from './useUser';
