@@ -17,7 +17,7 @@ export const TextGrid = ({ board }: { board: Board }) => {
         {(board.pins || []).map((textPin, index) => (
           <li
             key={index}
-            className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow ease-in-out duration-200 hover:shadow-md"
+            className="flex flex-col justify-between divide-y divide-gray-200 rounded-lg bg-white shadow ease-in-out duration-200 hover:shadow-md"
           >
             <button
               type="button"
@@ -46,11 +46,11 @@ export const TextGrid = ({ board }: { board: Board }) => {
                 </div>
               </div>
             </button>
-            <div className="p-4 ">
+            <div className="p-4 flex flex-grow items-center">
               <div className="text-xs font-light">
-                {textPin[0].length < 200
+                {textPin[0].length < 120
                   ? textPin[0]
-                  : textPin[0].slice(0, 200) + '...'}
+                  : textPin[0].slice(0, 120) + '...'}
               </div>
             </div>
           </li>
@@ -88,7 +88,10 @@ export const TextGrid = ({ board }: { board: Board }) => {
               />
             </a>
             <div className="p-4">
-              <div className="text-xs font-light">
+              <h3 className="text-sm font-medium text-gray-900">
+                {board.pins[pinIndex][1]}
+              </h3>
+              <div className="mt-2 text-xs font-light">
                 {board.pins[pinIndex][0]}
               </div>
             </div>
