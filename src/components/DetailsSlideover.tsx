@@ -99,26 +99,28 @@ export const DetailsSlideover = ({
                     </div>
                     {/* Main */}
                     <div className="divide-y divide-gray-200">
-                      <div className="py-6 bg-white flex justify-between items-center">
-                        <div>
+                      <div className="w-full py-6 bg-white flex justify-between items-center">
+                        <div className="">
                           <button
                             type="button"
                             onClick={onPrevious}
-                            className="p-2 sm:p-4 md:p-8"
+                            className="py-20 px-2 text-gray-500/40 hover:text-gray-500 sm:px-4 md:px-8"
                           >
-                            <ChevronLeftIcon className="h-8 w-8 text-gray-500/40 sm:h-10 sm:w-10 md:h-12 md:w-12" />
+                            <ChevronLeftIcon className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12" />
                           </button>
                         </div>
 
-                        {children}
+                        <div className="relative max-w-sm w-full rounded-lg shadow-md border bg-white">
+                          {children}
+                        </div>
 
                         <div>
                           <button
                             type="button"
                             onClick={onNext}
-                            className="p-2 sm:p-4 md:p-8"
+                            className="py-20 px-2 text-gray-500/40 hover:text-gray-500 sm:px-4 md:px-8"
                           >
-                            <ChevronRightIcon className="h-8 w-8 text-gray-500/40 sm:h-10 sm:w-10 md:h-12 md:w-12" />
+                            <ChevronRightIcon className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12" />
                           </button>
                         </div>
                       </div>
