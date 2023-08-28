@@ -1,7 +1,7 @@
 import { Transition } from '@headlessui/react';
 import { BoltIcon, HandThumbUpIcon } from '@heroicons/react/20/solid';
 import { nip19 } from 'nostr-tools';
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import { AuthorOverview } from '@/components';
@@ -10,14 +10,17 @@ import { useAuthor, useBoardReactions, useUser } from '@/queries';
 import { Board } from '@/types';
 import { loader } from '@/utils';
 import { EditBoardPopover } from './Popovers';
+import { BoardSlideover, PinSlideover } from './Slideovers';
 
-export const BoardItem = ({
+const BoardItem = ({
   board,
   hideAuthor = false,
 }: {
   board: Board;
   hideAuthor?: boolean;
 }) => {
+  const [openBoardEdit, setOpenBoardEdit] = useState(false);
+  const [openPinEdit, setOpenPinEdit] = useState(false);
   const [isHovering, setIsHover] = useState<boolean | undefined>(false);
 
   const { data: author } = useAuthor(board.author);
@@ -77,7 +80,12 @@ export const BoardItem = ({
                 leaveFrom="opacity-100 translate-x-0"
                 leaveTo="opacity-0 translate-x-2"
               >
-                <EditBoardPopover board={board} />
+                <EditBoardPopover
+                  board={board}
+                  onCloseBoardEdit={() => setOpenBoardEdit(false)}
+                  onOpenBoardEdit={() => setOpenBoardEdit(true)}
+                  onOpenPinEdit={() => setOpenPinEdit(true)}
+                />
               </Transition.Child>
             )}
             <Link
@@ -135,6 +143,23 @@ export const BoardItem = ({
           </div>
         </div>
       </div>
+
+      <BoardSlideover
+        open={openBoardEdit}
+        onClose={() => setOpenBoardEdit(false)}
+        initialBoard={board}
+      />
+      <PinSlideover
+        open={openPinEdit}
+        onClose={() => setOpenPinEdit(false)}
+        initialBoard={board}
+        initialPinIndex={-1}
+      />
     </>
   );
 };
+
+export const MemoizedBoardItem = memo(
+  BoardItem,
+  (prev, next) => prev.board.id == next.board.id
+);

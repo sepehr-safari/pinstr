@@ -1,17 +1,23 @@
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 
 import { PopoverItem, PopoverTemplate } from '@/components/Popovers';
-import { BoardSlideover, PinSlideover } from '@/components/Slideovers';
 import { useMutateBoard } from '@/mutations';
 import { Board } from '@/types';
 
-export const EditBoardPopover = ({ board }: { board: Board }) => {
-  const [openBoardEdit, setOpenBoardEdit] = useState(false);
-  const [openPinEdit, setOpenPinEdit] = useState(false);
-
+export const EditBoardPopover = ({
+  board,
+  onOpenBoardEdit,
+  onOpenPinEdit,
+  onCloseBoardEdit,
+}: {
+  board: Board;
+  onOpenBoardEdit: () => void;
+  onOpenPinEdit: () => void;
+  onCloseBoardEdit: () => void;
+}) => {
   const { deleteBoard } = useMutateBoard({
-    onClose: () => setOpenBoardEdit(false),
+    onClose: onCloseBoardEdit,
     initialBoard: board,
   });
 
@@ -19,11 +25,11 @@ export const EditBoardPopover = ({ board }: { board: Board }) => {
     () => [
       {
         title: 'Edit Board',
-        onClick: () => setOpenBoardEdit(true),
+        onClick: onOpenBoardEdit,
       },
       {
         title: 'Add a Pin to this Board',
-        onClick: () => setOpenPinEdit(true),
+        onClick: onOpenPinEdit,
       },
       {
         title: 'Remove Board',
@@ -31,7 +37,7 @@ export const EditBoardPopover = ({ board }: { board: Board }) => {
         onClick: () => deleteBoard.mutate(),
       },
     ],
-    [setOpenBoardEdit, setOpenPinEdit, deleteBoard]
+    [onOpenPinEdit, onOpenBoardEdit, onCloseBoardEdit, deleteBoard]
   );
 
   return (
@@ -41,18 +47,6 @@ export const EditBoardPopover = ({ board }: { board: Board }) => {
           <EllipsisVerticalIcon className="h-6 w-6" />
         </div>
       </PopoverTemplate>
-
-      <BoardSlideover
-        open={openBoardEdit}
-        onClose={() => setOpenBoardEdit(false)}
-        initialBoard={board}
-      />
-      <PinSlideover
-        open={openPinEdit}
-        onClose={() => setOpenPinEdit(false)}
-        initialBoard={board}
-        initialPinIndex={-1}
-      />
     </>
   );
 };

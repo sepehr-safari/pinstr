@@ -1,7 +1,7 @@
 import { nip19 } from 'nostr-tools';
 import { useParams } from 'react-router-dom';
 
-import { BoardItem } from '@/components';
+import { MemoizedBoardItem } from '@/components';
 import { useBoardsByAuthor } from '@/queries';
 
 export const BoardsInProfile = () => {
@@ -17,8 +17,8 @@ export const BoardsInProfile = () => {
           'grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4'
         }
       >
-        {(boards || []).map((board, index) => (
-          <BoardItem board={board} key={index} hideAuthor={true} />
+        {(boards || []).map((board) => (
+          <MemoizedBoardItem key={board.id} board={board} hideAuthor={true} />
         ))}
       </div>
     </div>
