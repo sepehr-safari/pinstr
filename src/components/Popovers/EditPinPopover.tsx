@@ -1,8 +1,8 @@
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid';
 import { useMemo, useState } from 'react';
 
-import { PinSlideover } from '@/components';
 import { PopoverItem, PopoverTemplate } from '@/components/Popovers';
+import { PinSlideover } from '@/components/Slideovers';
 import { useMutatePin } from '@/mutations';
 import { Board } from '@/types';
 import { joinClassNames } from '@/utils';

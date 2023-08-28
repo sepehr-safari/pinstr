@@ -7,7 +7,6 @@ import { categories } from '@/components/Menus';
 import { useMutateBoard, useMutatePin } from '@/mutations';
 import { Board, ParsedPin } from '@/types';
 
-import { useBoardsByAuthor, useUser } from '@/queries';
 import {
   EditImagePin,
   EditLinkPin,
@@ -15,7 +14,8 @@ import {
   EditProfilePin,
   EditTextPin,
   EditVideoPin,
-} from './EditPinComponents';
+} from '@/components/EditPinComponents';
+import { useBoardsByAuthor, useUser } from '@/queries';
 import { loader } from '@/utils';
 
 type Props = {

@@ -7,7 +7,6 @@ import { nip19 } from 'nostr-tools';
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
-import { BoardSlideover, PinSlideover } from '@/components';
 import {
   ImageGrid,
   LinkGrid,
@@ -16,6 +15,7 @@ import {
   TextGrid,
   VideoGrid,
 } from '@/components/Grids';
+import { BoardSlideover, PinSlideover } from '@/components/Slideovers';
 import { useMutateBoardLike } from '@/mutations';
 import { useBoard, useBoardReactions, useUser } from '@/queries';
 import { formatRelativeTime, loader } from '@/utils';
