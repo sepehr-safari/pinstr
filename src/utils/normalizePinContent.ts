@@ -14,7 +14,7 @@ export const normalizePinContent = async ({
       return content;
     case 'Note':
       if (content.startsWith('note1')) {
-        return content;
+        return nip19.decode(content).data.toString();
       } else {
         throw new Error('Invalid note id for content');
       }
