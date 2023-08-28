@@ -15,7 +15,7 @@ import {
   ProfileGrid,
   TextGrid,
   VideoGrid,
-} from '@/components/Lists';
+} from '@/components/Grids';
 import { useMutateBoardLike } from '@/mutations';
 import { useBoard, useBoardReactions, useUser } from '@/queries';
 import { formatRelativeTime, loader } from '@/utils';
