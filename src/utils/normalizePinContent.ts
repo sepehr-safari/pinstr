@@ -22,7 +22,7 @@ export const normalizePinContent = async ({
     case 'Image':
     case 'Video':
       if (content.startsWith('http')) {
-        return encodeURIComponent(content);
+        return content;
       } else {
         throw new Error('Invalid URL for pin content of type ' + boardType);
       }

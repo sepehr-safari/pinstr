@@ -47,13 +47,9 @@ export const LinkGrid = ({ board }: { board: Board }) => {
               </div>
             </button>
             <div className="p-4 ">
-              <a
-                href={decodeURIComponent(linkPin[0])}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href={linkPin[0]} target="_blank" rel="noopener noreferrer">
                 <div className="truncate text-xs font-light text-blue-700 hover:underline hover:text-blue-900">
-                  {decodeURIComponent(linkPin[0])}
+                  {linkPin[0]}
                 </div>
               </a>
             </div>
@@ -93,7 +89,7 @@ export const LinkGrid = ({ board }: { board: Board }) => {
             </a>
             <div className="p-4">
               <a
-                href={decodeURIComponent(board.pins[pinIndex][0])}
+                href={board.pins[pinIndex][0]}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group"
@@ -102,7 +98,7 @@ export const LinkGrid = ({ board }: { board: Board }) => {
                   {board.pins[pinIndex][1]}
                 </div>
                 <div className="mt-2 text-xs font-light text-blue-700 group-hover:underline group-hover:text-blue-900">
-                  {decodeURIComponent(board.pins[pinIndex][0])}
+                  {board.pins[pinIndex][0]}
                 </div>
               </a>
             </div>
