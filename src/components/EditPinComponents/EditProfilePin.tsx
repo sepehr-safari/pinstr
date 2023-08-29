@@ -1,11 +1,12 @@
-import { ParsedPin } from '@/types';
+import { useLocalStore } from '@/store';
+import { useSearchParams } from 'react-router-dom';
 
-export const EditProfilePin = ({
-  pin,
-}: {
-  pin: { value: ParsedPin; set: (value: ParsedPin) => void };
-}) => {
-  const headers = Object.keys(pin.value);
+export const EditProfilePin = () => {
+  const [searchParams, _] = useSearchParams();
+  const pinIndex = searchParams.get('i');
+
+  const { headers, pins } = useLocalStore((store) => store.board);
+  const setPin = useLocalStore((store) => store.setPin);
 
   return (
     <>
@@ -23,17 +24,20 @@ export const EditProfilePin = ({
             autoComplete="off"
             autoFocus
             className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
-            value={pin.value['Content']}
+            value={
+              pins && pinIndex != null ? pins[parseInt(pinIndex)]?.[0] : ''
+            }
             onChange={(e) => {
-              pin.set({ ...pin.value, ['Content']: e.target.value });
+              pinIndex != null && setPin(parseInt(pinIndex), 0, e.target.value);
             }}
           />
         </div>
       </div>
 
-      {headers.length > 1 &&
-        headers.slice(1).map((header, index) => (
-          <div key={index}>
+      {headers &&
+        headers.length > 1 &&
+        headers.slice(1).map((header, hIndex) => (
+          <div key={hIndex}>
             <label htmlFor={header} className="flex flex-col">
               <span className="text-sm font-medium leading-6 text-gray-900">
                 {header}
@@ -45,11 +49,16 @@ export const EditProfilePin = ({
                 name={header}
                 id={header}
                 autoComplete="off"
-                tabIndex={index + 2}
+                tabIndex={hIndex + 2}
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
-                value={pin.value[header]}
+                value={
+                  pins && pinIndex != null
+                    ? pins[parseInt(pinIndex)]?.[hIndex + 2]
+                    : ''
+                }
                 onChange={(e) => {
-                  pin.set({ ...pin.value, [header]: e.target.value });
+                  pinIndex != null &&
+                    setPin(parseInt(pinIndex), hIndex + 2, e.target.value);
                 }}
               />
             </div>
