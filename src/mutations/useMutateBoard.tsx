@@ -1,137 +1,127 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { nip19 } from 'nostr-tools';
-import { useCallback, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useCallback } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
-import {
-  SelectableBoardTypeItem,
-  selectableBoardTypeItems,
-} from '@/components';
-import { MenuItem, categories } from '@/components/Menus';
+import { boardTypes } from '@/components';
 import { usePublish } from '@/mutations';
+import { useLocalStore } from '@/store';
 import { Board } from '@/types';
+import { normalizePinContent } from '@/utils';
 
-export const useMutateBoard = ({
-  onClose,
-  initialBoard,
-}: {
-  onClose?: () => void;
-  initialBoard?: Board;
-}) => {
+export const useMutateBoard = () => {
+  const [searchParams, _] = useSearchParams();
+  const action = searchParams.get('action');
+  const pinIndex = searchParams.get('i');
+
+  const {
+    category,
+    description,
+    headers,
+    image,
+    pins,
+    tags,
+    title,
+    type,
+    id,
+    author,
+  } = useLocalStore((store) => store.board);
+  const setBoard = useLocalStore((store) => store.setBoard);
+
   const queryClient = useQueryClient();
 
   const navigate = useNavigate();
 
   const publish = usePublish();
 
-  const [id, setId] = useState<string>(initialBoard?.id || '');
-  const [title, setTitle] = useState<string>(initialBoard?.title || '');
-  const [description, setDescription] = useState<string>(
-    initialBoard?.description || ''
-  );
-  const [image, setImage] = useState<string>(initialBoard?.image || '');
-  const [category, setCategory] = useState<MenuItem | null>(
-    initialBoard?.category
-      ? categories.find((c) => c.title === initialBoard.category) || null
-      : null
-  );
-  const [type, setType] = useState<SelectableBoardTypeItem | null>(
-    initialBoard?.type
-      ? selectableBoardTypeItems.find((b) => b.type == initialBoard.type) ||
-          null
-      : null
-  );
-  const [headers, setHeaders] = useState<string[]>(initialBoard?.headers || []);
-  const [tags, setTags] = useState<string[]>(initialBoard?.tags || []);
-  const [pins, setPins] = useState<string[][]>(initialBoard?.pins || []);
+  const publishBoardFn = useCallback(
+    async (overridePins?: string[][] | undefined) => {
+      if (!type || !category || !title || !description || !image) {
+        throw new Error('Missing required fields');
+      }
 
-  const publishBoardFn = useCallback(() => {
-    if (!type || !category || !title || !description || !image) {
-      throw new Error('Missing required fields');
-    }
+      const newPins = [...(overridePins || pins || [])];
+      if (
+        pinIndex != null &&
+        newPins.length > +pinIndex &&
+        action != 'remove-pin'
+      ) {
+        const normalizedContent = await normalizePinContent({
+          content: newPins[+pinIndex]?.[0],
+          boardType: type,
+        });
+        newPins[+pinIndex][0] = normalizedContent;
+      }
 
-    return publish({
-      kind: 33889 as number,
-      tags: [
-        ['d', title],
-        ['description', description],
-        ['category', category.title],
-        ['type', type.type],
-        ['image', image],
-        headers.length > 0
-          ? ['headers', ...headers]
-          : ['headers', ...type.headers],
-        ...tags
-          .filter((t, i, a) => t.length > 0 && a.indexOf(t) === i)
-          .map((t) => ['t', t]),
-        ...pins.map((p) => ['pin', ...p]),
-      ],
-    });
-  }, [publish, title, description, image, category, type, tags, pins, headers]);
+      return publish({
+        kind: 33889 as number,
+        tags: [
+          ['d', title],
+          ['description', description],
+          ['category', category],
+          ['type', type],
+          ['image', image],
+          headers && headers.length > 0
+            ? ['headers', ...headers]
+            : ['headers', ...boardTypes[type].headers],
+          ...(tags || [])
+            .filter((t, i, a) => t.length > 0 && a.indexOf(t) === i)
+            .map((t) => ['t', t]),
+          ...newPins.map((p) => ['pin', ...p]),
+        ],
+      });
+    },
+    [
+      publish,
+      title,
+      description,
+      image,
+      category,
+      type,
+      tags,
+      pins,
+      headers,
+      pinIndex,
+    ]
+  );
 
   const deleteBoardFn = useCallback(() => {
-    if (!initialBoard) {
+    if (!id) {
       throw new Error('Missing initial board');
     }
 
-    return publish({ kind: 5, tags: [['e', initialBoard.id]] });
-  }, [initialBoard?.id, publish]);
+    return publish({ kind: 5, tags: [['e', id]] });
+  }, [id, publish]);
 
   const updateBoardFn = useCallback(async () => {
-    if (initialBoard && initialBoard.title != title) {
+    const cachedBoard = queryClient.getQueryData<Board>([
+      'nostr',
+      'boards',
+      author,
+      title,
+    ]);
+
+    if (!cachedBoard) {
       await deleteBoardFn();
     }
 
     return publishBoardFn();
-  }, [publishBoardFn, deleteBoardFn, title, initialBoard?.title]);
+  }, [publishBoardFn, deleteBoardFn, queryClient, author, title]);
 
   return {
-    id: {
-      value: id,
-      set: setId,
-    },
-    type: {
-      value: type,
-      set: setType,
-    },
-    title: {
-      value: title,
-      set: setTitle,
-    },
-    description: {
-      value: description,
-      set: setDescription,
-    },
-    image: {
-      value: image,
-      set: setImage,
-    },
-    category: {
-      value: category,
-      set: setCategory,
-    },
-    tags: {
-      value: tags,
-      set: setTags,
-    },
-    pins: {
-      value: pins,
-      set: setPins,
-    },
-    headers: {
-      value: headers,
-      set: setHeaders,
-    },
     publishBoard: useMutation({
-      mutationFn: publishBoardFn,
+      mutationFn: () => publishBoardFn(),
       onSuccess: (event) => {
         queryClient.invalidateQueries({ queryKey: ['nostr', 'boards'] });
 
-        setImage('');
-        onClose?.();
+        setBoard({});
         navigate('/p/' + nip19.npubEncode(event.pubkey) + '/' + title, {
           replace: true,
         });
+      },
+      onError: () => {
+        setBoard({});
+        navigate('/', { replace: true });
       },
     }),
     updateBoard: useMutation({
@@ -139,10 +129,14 @@ export const useMutateBoard = ({
       onSuccess: (event) => {
         queryClient.invalidateQueries({ queryKey: ['nostr', 'boards'] });
 
-        onClose?.();
+        setBoard({});
         navigate('/p/' + nip19.npubEncode(event.pubkey) + '/' + title, {
           replace: true,
         });
+      },
+      onError: () => {
+        setBoard({});
+        navigate('/', { replace: true });
       },
     }),
     deleteBoard: useMutation({
@@ -150,11 +144,41 @@ export const useMutateBoard = ({
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['nostr', 'boards'] });
 
-        setImage('');
-        onClose?.();
-        navigate('/p/' + nip19.npubEncode(initialBoard!.author), {
+        setBoard({});
+        navigate('/p/' + nip19.npubEncode(author!), {
           replace: true,
         });
+      },
+      onError: () => {
+        setBoard({});
+        navigate('/', { replace: true });
+      },
+    }),
+    removePin: useMutation({
+      mutationFn: () => {
+        const newPins = [...(pins || [])];
+
+        if (pinIndex != null && newPins.length > 0) {
+          newPins.splice(parseInt(pinIndex), 1);
+
+          return publishBoardFn(newPins);
+        } else {
+          throw new Error('Unexpected remove action');
+        }
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ['nostr', 'boards', author, title],
+        });
+
+        setBoard({});
+        navigate('/p/' + nip19.npubEncode(author!) + '/' + title, {
+          replace: true,
+        });
+      },
+      onError: () => {
+        setBoard({});
+        navigate('/', { replace: true });
       },
     }),
   };
