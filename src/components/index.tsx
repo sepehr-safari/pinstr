@@ -1,5 +1,6 @@
 export * from './AuthorOverview';
 export * from './BoardItem';
+export * from './BoardSummary';
 export * from './BoardsExplorer';
 export * from './BoardsInProfile';
 export * from './Footer';
