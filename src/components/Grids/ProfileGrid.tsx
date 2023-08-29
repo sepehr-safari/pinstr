@@ -75,7 +75,7 @@ const ProfileDetails = ({
         <Link to={`/p/${profile.npub}`}>
           <div
             className={joinClassNames(
-              'w-full h-24 bg-gray-200 text-gray-200 duration-500 group-hover:rounded-b-none',
+              'w-full h-24 bg-gradient-to-br from-purple-800 to-purple-500 text-gray-200 duration-500 group-hover:rounded-b-none',
               summary ? 'rounded-lg' : 'rounded-t-lg'
             )}
           >
