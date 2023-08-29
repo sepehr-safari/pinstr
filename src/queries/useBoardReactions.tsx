@@ -34,7 +34,7 @@ export const useBoardReactions = (board: Board | undefined | null) => {
   return useQuery({
     queryKey: ['nostr', 'boards', board?.author, board?.title, 'reactions'],
     queryFn: fetchReactions,
-    refetchOnWindowFocus: false,
+    staleTime: 1000, // 1 second
     enabled: !!board && !!pool && !!relays,
   });
 };

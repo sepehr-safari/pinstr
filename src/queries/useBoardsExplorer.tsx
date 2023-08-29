@@ -40,7 +40,7 @@ export const useBoardsExplorer = () => {
   return useQuery({
     queryKey: ['nostr', 'boards'],
     queryFn: fetchBoards,
-    refetchOnWindowFocus: false,
+    staleTime: 1000, // 1 second
     enabled: !!pool && !!relays,
   });
 };

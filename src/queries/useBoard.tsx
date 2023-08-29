@@ -41,7 +41,7 @@ export const useBoard = ({
   return useQuery({
     queryKey: ['nostr', 'boards', author, title],
     queryFn: fetchBoard,
-    refetchOnWindowFocus: false,
+    staleTime: 1000, // 1 second
     enabled: !!pool && !!relays,
   });
 };

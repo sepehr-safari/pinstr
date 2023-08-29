@@ -13,6 +13,7 @@ export const useUser = () => {
 
       return pubkey;
     },
+    staleTime: 0,
   });
 
   const { data: seckey } = useQuery({
@@ -23,6 +24,7 @@ export const useUser = () => {
 
       return seckey;
     },
+    staleTime: 0,
   });
 
   const { data: metadata } = useAuthor(pubkey || undefined);

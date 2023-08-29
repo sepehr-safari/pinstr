@@ -52,7 +52,7 @@ export const useBoardsByAuthor = ({
       queryClient
         .getQueryData<Board[]>(['nostr', 'boards'])
         ?.filter((board) => board.author == author),
-    refetchOnWindowFocus: false,
+    staleTime: 1000, // 1 second
     enabled: !!pool && !!relays && !!author,
   });
 };
