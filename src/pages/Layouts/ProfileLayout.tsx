@@ -33,16 +33,17 @@ const MaxWidthContainer = ({ children }: { children: React.ReactNode }) => (
   </div>
 );
 
-const BoardDetails = () => (
+const MainContainer = () => (
   <div className="mt-0 w-full h-full px-8 pb-20 xl:mt-40 xl:px-0">
     <div className="pb-8">
       <Breadcrumb />
     </div>
+
     <Outlet />
   </div>
 );
 
-const ProfileContainer = ({
+const StickyContainer = ({
   children,
   backgroundLocation,
 }: {
@@ -120,7 +121,7 @@ export const ProfileLayout = () => {
         <Banner banner={banner} displayName={displayName} />
 
         <MaxWidthContainer>
-          <ProfileContainer backgroundLocation={state?.backgroundLocation}>
+          <StickyContainer backgroundLocation={state?.backgroundLocation}>
             <ProfileCard
               about={about}
               displayName={displayName}
@@ -128,9 +129,11 @@ export const ProfileLayout = () => {
               npub={npub}
               picture={picture}
             />
-          </ProfileContainer>
 
-          <BoardDetails />
+            {/* <BoardSummary /> */}
+          </StickyContainer>
+
+          <MainContainer />
         </MaxWidthContainer>
       </div>
     </>
