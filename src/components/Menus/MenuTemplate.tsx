@@ -12,8 +12,8 @@ export interface MenuItem {
 
 export interface MenuProps {
   items: MenuItem[];
-  selected: MenuItem | null;
-  setSelected: (item: MenuItem) => void;
+  selected: string | undefined;
+  setSelected: (item: string) => void;
 }
 
 export const MenuTemplate = ({ items, selected, setSelected }: MenuProps) => {
@@ -21,7 +21,7 @@ export const MenuTemplate = ({ items, selected, setSelected }: MenuProps) => {
     <Menu as="div" className="relative inline-block text-left w-full">
       <div>
         <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-          {selected?.title}
+          {selected}
           <ChevronDownIcon className="-mr-1 h-5 w-5 text-gray-400" />
         </Menu.Button>
       </div>
@@ -45,7 +45,7 @@ export const MenuTemplate = ({ items, selected, setSelected }: MenuProps) => {
                       active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                       'block w-full px-6 py-4 text-left text-sm'
                     )}
-                    onClick={() => setSelected(item)}
+                    onClick={() => setSelected(item.title)}
                   >
                     {item.title}
                     {item.description && (

@@ -14,7 +14,7 @@ const groups: MenuItem[] = [
 ];
 
 export const AuthorGroupMenu = () => {
-  const [selected, setSelected] = useState<MenuItem>(groups[0]);
+  const [selected, setSelected] = useState(groups[0].title);
 
   return (
     <>

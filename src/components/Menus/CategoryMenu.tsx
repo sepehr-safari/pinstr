@@ -78,12 +78,12 @@ export const CategoryMenu = ({
   setSelected,
   hideFirstOption,
 }: {
-  selected: MenuItem | null;
-  setSelected: (item: MenuItem) => void;
+  selected: string | undefined;
+  setSelected: (item: string) => void;
   hideFirstOption?: boolean;
 }) => {
   useEffect(() => {
-    setSelected(!hideFirstOption ? categories[0] : categories[1]);
+    setSelected(!hideFirstOption ? categories[0].title : categories[1].title);
   }, []);
 
   return (

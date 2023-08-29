@@ -30,11 +30,11 @@ export const BoardTypeMenu = ({
   selected,
   setSelected,
 }: {
-  selected: MenuItem | null;
-  setSelected: (item: MenuItem) => void;
+  selected: string | undefined;
+  setSelected: (item: string) => void;
 }) => {
   useEffect(() => {
-    setSelected(boardTypeMenuItems[0]);
+    setSelected(boardTypeMenuItems[0].title);
   }, []);
 
   return (

@@ -11,7 +11,7 @@ import { MenuItem, MenuTemplate } from '@/components/Menus';
 import { loader } from '@/utils';
 
 interface Props {
-  image: string;
+  image: string | undefined;
   setImage: (image: string) => void;
 }
 
@@ -33,7 +33,7 @@ const coverImageMenuItems: MenuItem[] = [
 
 export const ImageMenu = ({ image, setImage }: Props) => {
   const [selectedMenuItem, setSelectedMenuItem] = useState(
-    coverImageMenuItems[0]
+    coverImageMenuItems[0].title
   );
   const [searchKeyword, setSearchKeyword] = useState('');
   const [searchResult, setSearchResult] = useState<string[]>([]);
@@ -121,7 +121,7 @@ export const ImageMenu = ({ image, setImage }: Props) => {
         setSelected={setSelectedMenuItem}
       />
 
-      {!image && selectedMenuItem.title === 'Upload' && (
+      {!image && selectedMenuItem === 'Upload' && (
         <div className="mt-4">
           <span className="block text-sm font-medium leading-6 text-gray-900">
             Image / Upload
@@ -171,7 +171,7 @@ export const ImageMenu = ({ image, setImage }: Props) => {
         </div>
       )}
 
-      {!image && selectedMenuItem.title === 'Stock Images' && (
+      {!image && selectedMenuItem === 'Stock Images' && (
         <>
           <span className="mt-4 block text-sm font-medium leading-6 text-gray-900">
             Image / Search From Stock Images
@@ -273,7 +273,7 @@ export const ImageMenu = ({ image, setImage }: Props) => {
         </>
       )}
 
-      {selectedMenuItem.title === 'URL' && (
+      {selectedMenuItem === 'URL' && (
         <div className="mt-4">
           <label
             htmlFor="cover-image-url"
