@@ -5,19 +5,14 @@ import {
 } from '@heroicons/react/24/solid';
 import { useQueryClient } from '@tanstack/react-query';
 import { nip19 } from 'nostr-tools';
-import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
-import { BoardSlideover, PinSlideover } from '@/components/Slideovers';
 import { useMutateBoardLike } from '@/mutations';
 import { useUser } from '@/queries';
 import { Board, Reactions } from '@/types';
 import { formatRelativeTime } from '@/utils';
 
 export const BoardSummary = () => {
-  const [openBoardSlideover, setOpenBoardSlideover] = useState(false);
-  const [openPinSlideover, setOpenPinSlideover] = useState(false);
-
   const { npub, title } = useParams();
   const hex = nip19.decode(npub!).data.toString();
 
@@ -88,34 +83,18 @@ export const BoardSummary = () => {
                   <button
                     type="button"
                     className="rounded-md bg-gray-100 px-3 py-2 text-xs font-semibold text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-200 hover:text-gray-900"
-                    onClick={() => setOpenBoardSlideover(true)}
+                    onClick={() => {}}
                   >
                     Edit Board
                   </button>
                   <button
                     type="button"
                     className="rounded-md bg-gray-100 px-3 py-2 text-xs font-semibold text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-200 hover:text-gray-900"
-                    onClick={() => setOpenPinSlideover(true)}
+                    onClick={() => {}}
                   >
                     Add Pin
                   </button>
                 </div>
-
-                {board && (
-                  <>
-                    <BoardSlideover
-                      open={openBoardSlideover}
-                      onClose={() => setOpenBoardSlideover(false)}
-                      initialBoard={board}
-                    />
-                    <PinSlideover
-                      open={openPinSlideover}
-                      onClose={() => setOpenPinSlideover(false)}
-                      initialBoard={board}
-                      initialPinIndex={-1}
-                    />
-                  </>
-                )}
               </>
             )}
           </div>
