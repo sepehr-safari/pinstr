@@ -1,43 +1,60 @@
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid';
 import { useMemo } from 'react';
+import { useLocation, useSearchParams } from 'react-router-dom';
 
 import { PopoverItem, PopoverTemplate } from '@/components/Popovers';
 import { useMutateBoard } from '@/mutations';
+import { useLocalStore } from '@/store';
 import { Board } from '@/types';
 
-export const EditBoardPopover = ({
-  board,
-  onOpenBoardEdit,
-  onOpenPinEdit,
-  onCloseBoardEdit,
-}: {
-  board: Board;
-  onOpenBoardEdit: () => void;
-  onOpenPinEdit: () => void;
-  onCloseBoardEdit: () => void;
-}) => {
-  const { deleteBoard } = useMutateBoard({
-    onClose: onCloseBoardEdit,
-    initialBoard: board,
-  });
+export const EditBoardPopover = ({ board }: { board: Board }) => {
+  const { deleteBoard } = useMutateBoard();
+
+  const setBoard = useLocalStore((store) => store.setBoard);
+
+  const [_, setSearchParams] = useSearchParams();
 
   const items: PopoverItem[] = useMemo(
     () => [
       {
         title: 'Edit Board',
-        onClick: onOpenBoardEdit,
+        onClick: () => {
+          setBoard(board);
+          setSearchParams(
+            (searchParams) => {
+              searchParams.set('action', 'edit-board');
+              return searchParams;
+            },
+            { replace: true }
+          );
+        },
       },
       {
         title: 'Add a Pin to this Board',
-        onClick: onOpenPinEdit,
+        onClick: () => {
+          if (board) {
+            setBoard(board);
+            setSearchParams(
+              (searchParams) => {
+                searchParams.set('action', 'create-pin');
+                searchParams.set('i', board.pins.length.toString());
+                return searchParams;
+              },
+              { replace: true }
+            );
+          }
+        },
       },
       {
         title: 'Remove Board',
         color: 'text-red-600',
-        onClick: () => deleteBoard.mutate(),
+        onClick: () => {
+          setBoard(board);
+          deleteBoard.mutate();
+        },
       },
     ],
-    [onOpenPinEdit, onOpenBoardEdit, onCloseBoardEdit, deleteBoard]
+    [deleteBoard, setBoard, setSearchParams]
   );
 
   return (

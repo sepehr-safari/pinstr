@@ -1,27 +1,46 @@
 import { PlusIcon } from '@heroicons/react/20/solid';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
+import { useLocation, useSearchParams } from 'react-router-dom';
 
 import { PopoverItem, PopoverTemplate } from '@/components/Popovers';
-import { BoardSlideover, PinSlideover } from '@/components/Slideovers';
+import { useLocalStore } from '@/store';
 
 export const CreatePopover = () => {
-  const [openBoard, setOpenBoard] = useState(false);
-  const [openPin, setOpenPin] = useState(false);
+  const [_, setSearchParams] = useSearchParams();
+  const setBoard = useLocalStore((store) => store.setBoard);
 
   const items: PopoverItem[] = useMemo(
     () => [
       {
         title: 'New Board',
         description: 'Create a new board',
-        onClick: () => setOpenBoard(true),
+        onClick: () => {
+          setBoard({});
+          setSearchParams(
+            (searchParams) => {
+              searchParams.set('action', 'create-board');
+              return searchParams;
+            },
+            { replace: true }
+          );
+        },
       },
       {
         title: 'Add Pin',
         description: 'Add a new pin to an existing board',
-        onClick: () => setOpenPin(true),
+        onClick: () => {
+          setBoard({});
+          setSearchParams(
+            (searchParams) => {
+              searchParams.set('action', 'create-pin');
+              return searchParams;
+            },
+            { replace: true }
+          );
+        },
       },
     ],
-    [setOpenBoard, setOpenPin]
+    [setSearchParams, setBoard]
   );
 
   return (
@@ -32,13 +51,6 @@ export const CreatePopover = () => {
           Create
         </div>
       </PopoverTemplate>
-
-      <BoardSlideover open={openBoard} onClose={() => setOpenBoard(false)} />
-      <PinSlideover
-        open={openPin}
-        onClose={() => setOpenPin(false)}
-        initialPinIndex={-1}
-      />
     </>
   );
 };

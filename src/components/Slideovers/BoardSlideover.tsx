@@ -1,34 +1,42 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import { SelectableBoardTypes } from '@/components';
 import { CategoryMenu, ImageMenu } from '@/components/Menus';
 import { useMutateBoard } from '@/mutations';
-import { Board } from '@/types';
+import { useLocalStore } from '@/store';
 import { capitalizeFirstLetter } from '@/utils';
 
-type Props = {
-  open: boolean;
-  onClose: () => void;
-  initialBoard?: Board;
-};
+export const BoardSlideover = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const action = searchParams.get('action');
 
-export const BoardSlideover = ({ open, onClose, initialBoard }: Props) => {
-  const {
-    title,
-    description,
-    type,
-    category,
-    tags,
-    image,
-    publishBoard,
-    updateBoard,
-    deleteBoard,
-  } = useMutateBoard({ onClose, initialBoard });
+  const { category, description, image, tags, title, type } = useLocalStore(
+    (store) => store.board
+  );
+  const setBoardItem = useLocalStore((store) => store.setBoardItem);
+
+  const { publishBoard, updateBoard, deleteBoard } = useMutateBoard();
 
   return (
-    <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={onClose}>
+    <Transition.Root
+      show={action === 'create-board' || action === 'edit-board'}
+      as={Fragment}
+    >
+      <Dialog
+        as="div"
+        className="relative z-10"
+        onClose={() =>
+          setSearchParams(
+            (searchParams) => {
+              searchParams.delete('action');
+              return searchParams;
+            },
+            { replace: true }
+          )
+        }
+      >
         <Transition.Child
           as={Fragment}
           enter="ease-in-out duration-200"
@@ -61,11 +69,11 @@ export const BoardSlideover = ({ open, onClose, initialBoard }: Props) => {
                       <div className="bg-gray-800 px-4 py-6 sm:px-6">
                         <div className="flex items-center justify-between">
                           <Dialog.Title className="text-base font-semibold leading-6 text-white">
-                            {!initialBoard ? (
-                              !type.value ? (
+                            {action === 'create-board' ? (
+                              !type ? (
                                 <span>Create a new board</span>
                               ) : (
-                                <span>{type.value.title}</span>
+                                <span>{type}</span>
                               )
                             ) : (
                               <span>Edit your board</span>
@@ -74,8 +82,8 @@ export const BoardSlideover = ({ open, onClose, initialBoard }: Props) => {
                         </div>
                         <div className="mt-1">
                           <p className="text-sm font-light text-gray-300">
-                            {!initialBoard ? (
-                              !type.value ? (
+                            {action === 'create-board' ? (
+                              !type ? (
                                 <span>
                                   Get started by choosing a board type.
                                 </span>
@@ -94,11 +102,9 @@ export const BoardSlideover = ({ open, onClose, initialBoard }: Props) => {
                         </div>
                       </div>
 
-                      {!type.value ? (
+                      {!type ? (
                         <div className="p-6">
-                          <SelectableBoardTypes
-                            setSelectedBoardType={type.set}
-                          />
+                          <SelectableBoardTypes />
                         </div>
                       ) : (
                         <div className="flex flex-1 flex-col justify-between">
@@ -124,8 +130,10 @@ export const BoardSlideover = ({ open, onClose, initialBoard }: Props) => {
                                     autoComplete="off"
                                     autoFocus
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
-                                    value={title.value}
-                                    onChange={(e) => title.set(e.target.value)}
+                                    value={title}
+                                    onChange={(e) =>
+                                      setBoardItem('title', e.target.value)
+                                    }
                                   />
                                 </div>
                               </div>
@@ -149,9 +157,12 @@ export const BoardSlideover = ({ open, onClose, initialBoard }: Props) => {
                                     id="description"
                                     autoComplete="off"
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
-                                    value={description.value}
+                                    value={description}
                                     onChange={(e) =>
-                                      description.set(e.target.value)
+                                      setBoardItem(
+                                        'description',
+                                        e.target.value
+                                      )
                                     }
                                   />
                                 </div>
@@ -167,8 +178,10 @@ export const BoardSlideover = ({ open, onClose, initialBoard }: Props) => {
                                 </span>
                                 <div className="mt-2">
                                   <CategoryMenu
-                                    selected={category.value}
-                                    setSelected={category.set}
+                                    selected={category}
+                                    setSelected={(value) =>
+                                      setBoardItem('category', value)
+                                    }
                                     hideFirstOption
                                   />
                                 </div>
@@ -190,9 +203,10 @@ export const BoardSlideover = ({ open, onClose, initialBoard }: Props) => {
                                     id="tags"
                                     autoComplete="off"
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
-                                    value={tags.value.join(' ')}
+                                    value={tags?.join(' ')}
                                     onChange={(event) =>
-                                      tags.set(
+                                      setBoardItem(
+                                        'tags',
                                         event.target.value
                                           ? event.target.value
                                               .split(' ')
@@ -206,9 +220,9 @@ export const BoardSlideover = ({ open, onClose, initialBoard }: Props) => {
                                   />
                                 </div>
 
-                                {tags.value.length > 0 && (
+                                {tags && tags.length > 0 && (
                                   <div className="mt-2 flex gap-2 flex-wrap">
-                                    {tags.value.map((tag, index) => (
+                                    {tags.map((tag, index) => (
                                       <span
                                         key={index}
                                         className="inline-flex items-center gap-x-0.5 rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10"
@@ -232,13 +246,15 @@ export const BoardSlideover = ({ open, onClose, initialBoard }: Props) => {
                                 </span>
                                 <div className="mt-2">
                                   <ImageMenu
-                                    image={image.value}
-                                    setImage={image.set}
+                                    image={image}
+                                    setImage={(value) =>
+                                      setBoardItem('image', value)
+                                    }
                                   />
                                 </div>
                               </div>
 
-                              {initialBoard && (
+                              {action === 'edit-board' && (
                                 <div className="py-6">
                                   <div className="flex flex-col rounded-md border border-dashed border-red-300">
                                     <div className="w-full bg-red-50 shadow-inner px-4 py-2 border-b border-red-100 rounded-t-md">
@@ -272,19 +288,29 @@ export const BoardSlideover = ({ open, onClose, initialBoard }: Props) => {
                         <button
                           type="button"
                           className="rounded-md bg-white px-3 py-2 text-xs font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                          onClick={onClose}
+                          onClick={() =>
+                            setSearchParams(
+                              (searchParams) => {
+                                searchParams.delete('action');
+                                return searchParams;
+                              },
+                              {
+                                replace: true,
+                              }
+                            )
+                          }
                         >
                           Cancel
                         </button>
                       </div>
 
-                      {type.value && (
+                      {!!type && (
                         <div className="flex">
-                          {!initialBoard ? (
+                          {action === 'create-board' ? (
                             <>
                               <button
                                 type="button"
-                                onClick={() => type.set(null)}
+                                onClick={() => setBoardItem('type', undefined)}
                                 className="flex items-center rounded-md bg-white px-3 py-2 text-xs font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                               >
                                 <span aria-hidden="true">&larr;</span>

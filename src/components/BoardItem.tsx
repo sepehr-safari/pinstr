@@ -10,7 +10,6 @@ import { useAuthor, useBoardReactions, useUser } from '@/queries';
 import { Board } from '@/types';
 import { loader } from '@/utils';
 import { EditBoardPopover } from './Popovers';
-import { BoardSlideover, PinSlideover } from './Slideovers';
 
 const BoardItem = ({
   board,
@@ -19,8 +18,6 @@ const BoardItem = ({
   board: Board;
   hideAuthor?: boolean;
 }) => {
-  const [openBoardEdit, setOpenBoardEdit] = useState(false);
-  const [openPinEdit, setOpenPinEdit] = useState(false);
   const [isHovering, setIsHover] = useState<boolean | undefined>(false);
 
   const { data: author } = useAuthor(board.author);
@@ -80,12 +77,7 @@ const BoardItem = ({
                 leaveFrom="opacity-100 translate-x-0"
                 leaveTo="opacity-0 translate-x-2"
               >
-                <EditBoardPopover
-                  board={board}
-                  onCloseBoardEdit={() => setOpenBoardEdit(false)}
-                  onOpenBoardEdit={() => setOpenBoardEdit(true)}
-                  onOpenPinEdit={() => setOpenPinEdit(true)}
-                />
+                <EditBoardPopover board={board} />
               </Transition.Child>
             )}
             <Link
@@ -143,18 +135,6 @@ const BoardItem = ({
           </div>
         </div>
       </div>
-
-      <BoardSlideover
-        open={openBoardEdit}
-        onClose={() => setOpenBoardEdit(false)}
-        initialBoard={board}
-      />
-      <PinSlideover
-        open={openPinEdit}
-        onClose={() => setOpenPinEdit(false)}
-        initialBoard={board}
-        initialPinIndex={-1}
-      />
     </>
   );
 };

@@ -4,8 +4,7 @@ import {
   HandThumbUpIcon,
 } from '@heroicons/react/24/solid';
 import { nip19 } from 'nostr-tools';
-import { useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
 
 import {
   ImageGrid,
@@ -15,14 +14,15 @@ import {
   TextGrid,
   VideoGrid,
 } from '@/components/Grids';
-import { BoardSlideover, PinSlideover } from '@/components/Slideovers';
 import { useMutateBoardLike } from '@/mutations';
 import { useBoard, useBoardReactions, useUser } from '@/queries';
+import { useLocalStore } from '@/store';
 import { formatRelativeTime, loader } from '@/utils';
 
 export const Pins = () => {
-  const [openBoardSlideover, setOpenBoardSlideover] = useState(false);
-  const [openPinSlideover, setOpenPinSlideover] = useState(false);
+  const [_, setSearchParams] = useSearchParams();
+
+  const setBoard = useLocalStore((store) => store.setBoard);
 
   const { npub, title } = useParams();
   const hex = nip19.decode(npub!).data.toString();
@@ -61,34 +61,44 @@ export const Pins = () => {
                     <button
                       type="button"
                       className="rounded-md bg-gray-900 px-3 py-2 text-xs font-semibold text-gray-50 ring-1 ring-inset ring-gray-900 hover:bg-gray-700 hover:text-gray-50"
-                      onClick={() => setOpenBoardSlideover(true)}
+                      onClick={() => {
+                        if (board) {
+                          setBoard(board);
+                          setSearchParams(
+                            (searchParams) => {
+                              searchParams.set('action', 'edit-board');
+                              return searchParams;
+                            },
+                            { replace: true }
+                          );
+                        }
+                      }}
                     >
                       Edit Board
                     </button>
                     <button
                       type="button"
                       className="rounded-md bg-gray-900 px-3 py-2 text-xs font-semibold text-gray-50 ring-1 ring-inset ring-gray-900 hover:bg-gray-700 hover:text-gray-50"
-                      onClick={() => setOpenPinSlideover(true)}
+                      onClick={() => {
+                        if (board) {
+                          setBoard(board);
+                          setSearchParams(
+                            (searchParams) => {
+                              searchParams.set('action', 'create-pin');
+                              searchParams.set(
+                                'i',
+                                board.pins.length.toString()
+                              );
+                              return searchParams;
+                            },
+                            { replace: true }
+                          );
+                        }
+                      }}
                     >
                       Add Pin
                     </button>
                   </div>
-
-                  {board && (
-                    <>
-                      <BoardSlideover
-                        open={openBoardSlideover}
-                        onClose={() => setOpenBoardSlideover(false)}
-                        initialBoard={board}
-                      />
-                      <PinSlideover
-                        open={openPinSlideover}
-                        onClose={() => setOpenPinSlideover(false)}
-                        initialBoard={board}
-                        initialPinIndex={-1}
-                      />
-                    </>
-                  )}
                 </>
               )}
             </div>
