@@ -11,39 +11,48 @@ export const ImageGrid = ({ board }: { board: Board }) => {
     <>
       <ul
         role="list"
-        className="mt-14 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 xl:gap-x-8 2xl:grid-cols-3 3xl:grid-cols-4"
+        className="grid grid-cols-2 gap-x-6 gap-y-6 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-3 xl:gap-x-8 2xl:grid-cols-4 3xl:grid-cols-5"
       >
         {(board.pins || []).map((imagePin, index) => (
           <li
             key={index}
-            className="p-2 group relative rounded-xl hover:bg-gray-50 ease-in-out duration-500 hover:shadow-md"
+            className="group aspect-w-5 aspect-h-4 relative block overflow-hidden rounded-md bg-gray-200 text-gray-200"
           >
-            <div className="ease-in-out duration-700">
-              <div className="aspect-w-5 aspect-h-4 block overflow-hidden rounded-md bg-gray-200 text-gray-200">
-                <a href={imagePin[0]} target="_blank" rel="noreferrer">
-                  <img
-                    src={loader(imagePin[0], { w: 500, h: 400 })}
-                    alt={imagePin[1]}
-                    className="hover:opacity-75 hover:cursor-zoom-in"
-                    loading="lazy"
-                  />
-                </a>
+            <div className="absolute inset-0 flex flex-col justify-end z-[3]">
+              <div className="flex-grow flex justify-center items-center bg-black/60 opacity-0 duration-200 group-hover:opacity-100">
+                <div className="w-3/4">
+                  <button
+                    type="button"
+                    className="w-full text-xs text-gray-900 font-medium py-1 bg-white/60 rounded-md hover:bg-white/90 md:py-2"
+                    onClick={() => setPinIndex(index)}
+                  >
+                    View Details
+                  </button>
+
+                  <a
+                    href={imagePin[0]}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-4 w-full inline-block text-center text-xs text-gray-900 font-medium py-1 bg-white/60 rounded-md hover:bg-white/90 md:py-2"
+                  >
+                    Open
+                  </a>
+                </div>
               </div>
             </div>
 
-            <p className="mt-4 block truncate text-sm font-medium text-gray-900 ease-in-out duration-700">
-              {imagePin[1]}
-            </p>
-
-            <div className="w-full">
-              <button
-                type="button"
-                className="mt-4 w-full text-xs text-gray-700 font-medium px-4 py-2 bg-gray-200 rounded-md ease-in-out duration-500 opacity-0 translate-y-2 hover:bg-gray-300 hover:text-gray-900 group-hover:opacity-100 group-hover:translate-y-0"
-                onClick={() => setPinIndex(index)}
-              >
-                View Details
-              </button>
+            <div className="z-[2] absolute inset-0 flex flex-col justify-end">
+              <p className="p-2 pt-6 block truncate text-xs font-medium text-white md:text-sm bg-gradient-to-t from-black/60 to-transparent">
+                {imagePin[1]}
+              </p>
             </div>
+
+            <img
+              src={loader(imagePin[0], { w: 500, h: 400 })}
+              alt={imagePin[1]}
+              className="z-[1]"
+              loading="lazy"
+            />
           </li>
         ))}
       </ul>
