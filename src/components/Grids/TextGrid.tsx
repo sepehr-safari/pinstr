@@ -12,7 +12,7 @@ export const TextGrid = ({ board }: { board: Board }) => {
     <>
       <ul
         role="list"
-        className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4"
+        className="grid grid-cols-1 gap-6 md:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4"
       >
         {(board.pins || []).map((textPin, index) => (
           <li

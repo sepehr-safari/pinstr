@@ -15,7 +15,7 @@ export const ProfileGrid = ({ board }: { board: Board }) => {
     <>
       <ul
         role="list"
-        className="mx-auto mt-14 grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 lg:mx-0 xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4"
+        className="mx-auto grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-3 lg:mx-0 xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4"
       >
         {(board.pins || []).map((pin, index) => (
           <li
@@ -101,7 +101,7 @@ const ProfileDetails = ({
             ? profile.displayName.slice(0, 20) + '...'
             : profile.displayName}
         </h3>
-        <p className="mt-2 text-xs font-light text-gray-700 px-4">
+        <p className="mt-2 text-xs font-light text-gray-700 px-4 max-w-xs">
           {summary && profile.about.length > 100
             ? profile.about.slice(0, 100) + '...'
             : profile.about}
@@ -111,7 +111,7 @@ const ProfileDetails = ({
       {summary ? (
         <>
           <div className="mt-4 mx-auto flex flex-col">
-            <button className="flex justify-center items-center rounded-full bg-gray-200 px-6 py-2.5 text-xs font-semibold text-gray-500 ease-in-out duration-300 hover:shadow hover:text-gray-700 hover:bg-gray-300">
+            <button className="flex justify-center items-center rounded-full bg-gray-200 px-6 py-2.5 text-xs font-semibold text-gray-600 duration-200 hover:text-gray-900 hover:bg-gray-300">
               <PlusIcon className="-ml-1 w-4 h-4" />
               <span className="ml-1">Follow</span>
             </button>

@@ -11,14 +11,14 @@ export const VideoGrid = ({ board }: { board: Board }) => {
     <>
       <ul
         role="list"
-        className="mt-14 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 xl:gap-x-8 2xl:grid-cols-3 3xl:grid-cols-4"
+        className="grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4"
       >
         {(board.pins || []).map((videoPin, index) => (
           <li
             key={index}
-            className="p-2 group relative rounded-lg hover:bg-gray-50 ease-in-out duration-500 hover:shadow-md"
+            className="p-2 group relative rounded-lg hover:bg-gray-50 ease-in-out duration-500 hover:shadow-lg"
           >
-            <div className="aspect-w-10 aspect-h-7 overflow-hidden rounded-md bg-black">
+            <div className="aspect-w-5 aspect-h-3 overflow-hidden rounded-md bg-black">
               <ReactPlayer url={videoPin[0]} width="100%" height="100%" controls />
             </div>
 
