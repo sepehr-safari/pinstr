@@ -7,9 +7,7 @@ export const SlideoverLayout = () => {
   const location = useLocation();
 
   useEffect(() => {
-    document
-      .getElementById('bottom-slideover')
-      ?.scrollTo({ top: 0, behavior: 'smooth' });
+    document.getElementById('bottom-slideover')?.scrollTo({ top: 0, behavior: 'smooth' });
   }, [location.pathname]);
 
   return (

@@ -10,10 +10,7 @@ export const Breadcrumb = () => {
   const { data: author } = useAuthor(hex);
 
   return (
-    <nav
-      className="flex justify-center xl:justify-start"
-      aria-label="Breadcrumb"
-    >
+    <nav className="flex justify-center xl:justify-start" aria-label="Breadcrumb">
       <ol role="list" className="flex items-center space-x-1">
         <li>
           <div>

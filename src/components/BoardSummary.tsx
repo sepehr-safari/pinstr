@@ -1,8 +1,4 @@
-import {
-  BoltIcon,
-  ChatBubbleLeftIcon,
-  HandThumbUpIcon,
-} from '@heroicons/react/24/solid';
+import { BoltIcon, ChatBubbleLeftIcon, HandThumbUpIcon } from '@heroicons/react/24/solid';
 import { useQueryClient } from '@tanstack/react-query';
 import { nip19 } from 'nostr-tools';
 import { Link, useParams } from 'react-router-dom';
@@ -17,12 +13,7 @@ export const BoardSummary = () => {
   const hex = nip19.decode(npub!).data.toString();
 
   const queryClient = useQueryClient();
-  const board = queryClient.getQueryData<Board>([
-    'nostr',
-    'boards',
-    hex,
-    title,
-  ]);
+  const board = queryClient.getQueryData<Board>(['nostr', 'boards', hex, title]);
   const reactions = queryClient.getQueryData<Reactions>([
     'nostr',
     'boards',
@@ -69,9 +60,7 @@ export const BoardSummary = () => {
           )}
 
           <div className="mt-6 border-t border-b py-6 flex gap-4 flex-col w-full items-center text-center">
-            <h3 className="text-base font-semibold tracking-tight text-gray-900">
-              {title}
-            </h3>
+            <h3 className="text-base font-semibold tracking-tight text-gray-900">{title}</h3>
 
             <div className="flex text-xs font-light text-gray-600 text-center">
               {board?.description}
@@ -114,9 +103,7 @@ export const BoardSummary = () => {
           </button>
           <button className="inline-flex justify-center items-center rounded-md bg-gray-100 ring-1 ring-gray-300 px-4 py-2 text-xs font-semibold text-gray-500 hover:shadow-md hover:text-gray-800">
             <ChatBubbleLeftIcon className="mr-2 h-4 w-4" />
-            <span className="">
-              {reactions ? reactions.comments.length : 0}
-            </span>
+            <span className="">{reactions ? reactions.comments.length : 0}</span>
           </button>
         </div>
       </div>

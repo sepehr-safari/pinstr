@@ -12,18 +12,13 @@ export const BoardSlideover = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const action = searchParams.get('action');
 
-  const { category, description, image, tags, title, type } = useLocalStore(
-    (store) => store.board
-  );
+  const { category, description, image, tags, title, type } = useLocalStore((store) => store.board);
   const setBoardItem = useLocalStore((store) => store.setBoardItem);
 
   const { publishBoard, updateBoard, deleteBoard } = useMutateBoard();
 
   return (
-    <Transition.Root
-      show={action === 'create-board' || action === 'edit-board'}
-      as={Fragment}
-    >
+    <Transition.Root show={action === 'create-board' || action === 'edit-board'} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-10"
@@ -84,19 +79,12 @@ export const BoardSlideover = () => {
                           <p className="text-sm font-light text-gray-300">
                             {action === 'create-board' ? (
                               !type ? (
-                                <span>
-                                  Get started by choosing a board type.
-                                </span>
+                                <span>Get started by choosing a board type.</span>
                               ) : (
-                                <span>
-                                  Fill in the details below to create your
-                                  desired board.
-                                </span>
+                                <span>Fill in the details below to create your desired board.</span>
                               )
                             ) : (
-                              <span>
-                                Edit the details below to update your board.
-                              </span>
+                              <span>Edit the details below to update your board.</span>
                             )}
                           </p>
                         </div>
@@ -111,10 +99,7 @@ export const BoardSlideover = () => {
                           <div className="divide-y divide-gray-200 px-4 sm:px-6">
                             <div className="space-y-4 pb-4 pt-4">
                               <div>
-                                <label
-                                  htmlFor="title"
-                                  className="flex flex-col"
-                                >
+                                <label htmlFor="title" className="flex flex-col">
                                   <span className="text-sm font-medium leading-6 text-gray-900">
                                     Title
                                   </span>
@@ -131,23 +116,17 @@ export const BoardSlideover = () => {
                                     autoFocus
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
                                     value={title}
-                                    onChange={(e) =>
-                                      setBoardItem('title', e.target.value)
-                                    }
+                                    onChange={(e) => setBoardItem('title', e.target.value)}
                                   />
                                 </div>
                               </div>
                               <div>
-                                <label
-                                  htmlFor="description"
-                                  className="flex flex-col"
-                                >
+                                <label htmlFor="description" className="flex flex-col">
                                   <span className="text-sm font-medium leading-6 text-gray-900">
                                     Description
                                   </span>
                                   <span className="text-xs font-light text-gray-500">
-                                    Explain what this board is about in a few
-                                    words.
+                                    Explain what this board is about in a few words.
                                   </span>
                                 </label>
                                 <div className="mt-2">
@@ -158,12 +137,7 @@ export const BoardSlideover = () => {
                                     autoComplete="off"
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
                                     value={description}
-                                    onChange={(e) =>
-                                      setBoardItem(
-                                        'description',
-                                        e.target.value
-                                      )
-                                    }
+                                    onChange={(e) => setBoardItem('description', e.target.value)}
                                   />
                                 </div>
                               </div>
@@ -179,9 +153,7 @@ export const BoardSlideover = () => {
                                 <div className="mt-2">
                                   <CategoryMenu
                                     selected={category}
-                                    setSelected={(value) =>
-                                      setBoardItem('category', value)
-                                    }
+                                    setSelected={(value) => setBoardItem('category', value)}
                                     hideFirstOption
                                   />
                                 </div>
@@ -192,8 +164,8 @@ export const BoardSlideover = () => {
                                     Tags
                                   </span>
                                   <span className="text-xs font-light text-gray-500">
-                                    Add a few space separated tags to help
-                                    people find your board easier.
+                                    Add a few space separated tags to help people find your board
+                                    easier.
                                   </span>
                                 </label>
                                 <div className="mt-2">
@@ -210,9 +182,7 @@ export const BoardSlideover = () => {
                                         event.target.value
                                           ? event.target.value
                                               .split(' ')
-                                              .filter(
-                                                (t, i, a) => a.indexOf(t) === i
-                                              )
+                                              .filter((t, i, a) => a.indexOf(t) === i)
                                               .map(capitalizeFirstLetter)
                                           : []
                                       )
@@ -240,16 +210,14 @@ export const BoardSlideover = () => {
                                     Cover Image
                                   </span>
                                   <span className="text-xs font-light text-gray-500">
-                                    Select an option and choose a high quality
-                                    image that represents your board.
+                                    Select an option and choose a high quality image that represents
+                                    your board.
                                   </span>
                                 </span>
                                 <div className="mt-2">
                                   <ImageMenu
                                     image={image}
-                                    setImage={(value) =>
-                                      setBoardItem('image', value)
-                                    }
+                                    setImage={(value) => setBoardItem('image', value)}
                                   />
                                 </div>
                               </div>
@@ -264,8 +232,7 @@ export const BoardSlideover = () => {
                                     </div>
                                     <div className="p-4 flex items-center">
                                       <div className="text-xs">
-                                        Deleting a board is permanent and cannot
-                                        be undone.
+                                        Deleting a board is permanent and cannot be undone.
                                       </div>
                                       <button
                                         type="button"

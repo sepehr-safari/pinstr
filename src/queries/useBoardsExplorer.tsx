@@ -13,8 +13,7 @@ export const useBoardsExplorer = () => {
   const queryClient = useQueryClient();
 
   const fetchBoards = useCallback(async () => {
-    if (!pool || !relays)
-      throw new Error('Missing dependencies in fetching boards');
+    if (!pool || !relays) throw new Error('Missing dependencies in fetching boards');
 
     const filter: Filter = { kinds: [33889 as number], limit: 10 };
 
@@ -25,10 +24,7 @@ export const useBoardsExplorer = () => {
       if (parsedBoards.length == 0) throw new Error('No boards found');
 
       parsedBoards.forEach((board) =>
-        queryClient.setQueryData(
-          ['nostr', 'boards', board.author, board.title],
-          board
-        )
+        queryClient.setQueryData(['nostr', 'boards', board.author, board.title], board)
       );
 
       return parsedBoards;

@@ -18,11 +18,7 @@ export const AuthorGroupMenu = () => {
 
   return (
     <>
-      <MenuTemplate
-        items={groups}
-        selected={selected}
-        setSelected={setSelected}
-      />
+      <MenuTemplate items={groups} selected={selected} setSelected={setSelected} />
     </>
   );
 };

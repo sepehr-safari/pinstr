@@ -1,7 +1,4 @@
-import {
-  PersistedClient,
-  Persister,
-} from '@tanstack/react-query-persist-client';
+import { PersistedClient, Persister } from '@tanstack/react-query-persist-client';
 import { del, get, set } from 'idb-keyval';
 
 export const createIDBPersister = (idbValidKey: IDBValidKey = 'reactQuery') =>

@@ -5,19 +5,12 @@ import { useCallback } from 'react';
 import { useLocalStore } from '@/store';
 import { parseBoardsFromEvents } from '@/utils';
 
-export const useBoard = ({
-  author,
-  title,
-}: {
-  author: string;
-  title: string;
-}) => {
+export const useBoard = ({ author, title }: { author: string; title: string }) => {
   const pool = useLocalStore((state) => state.pool);
   const relays = useLocalStore((state) => state.relays);
 
   const fetchBoard = useCallback(async () => {
-    if (!pool || !relays)
-      throw new Error('Missing dependencies in fetching boards');
+    if (!pool || !relays) throw new Error('Missing dependencies in fetching boards');
 
     const filter: Filter = {
       kinds: [33889 as number],

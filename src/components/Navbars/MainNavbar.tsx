@@ -35,9 +35,7 @@ export const MainNavbar = () => {
                   alt="Pinstr Logo"
                   loading="lazy"
                 />
-                <div className="ml-2 hidden md:block font-bold text-lg">
-                  Pinstr
-                </div>
+                <div className="ml-2 hidden md:block font-bold text-lg">Pinstr</div>
               </Link>
             </div>
 
@@ -48,10 +46,7 @@ export const MainNavbar = () => {
                 </label>
                 <div className="relative">
                   <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                    <MagnifyingGlassIcon
-                      className="h-5 w-5 text-gray-500"
-                      aria-hidden="true"
-                    />
+                    <MagnifyingGlassIcon className="h-5 w-5 text-gray-500" aria-hidden="true" />
                   </div>
                   <input
                     id="search"

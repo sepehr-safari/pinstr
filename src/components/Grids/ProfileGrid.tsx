@@ -22,11 +22,7 @@ export const ProfileGrid = ({ board }: { board: Board }) => {
             key={pin[0] + index}
             className="relative group flex flex-col justify-between rounded-lg ease-in-out duration-500 hover:shadow-md hover:bg-gray-50"
           >
-            <ProfileDetails
-              onOpen={() => setPinIndex(index)}
-              pubkey={pin[0]}
-              summary
-            />
+            <ProfileDetails onOpen={() => setPinIndex(index)} pubkey={pin[0]} summary />
           </li>
         ))}
       </ul>
@@ -35,20 +31,14 @@ export const ProfileGrid = ({ board }: { board: Board }) => {
         board={board}
         pinIndex={pinIndex}
         onClose={() => setPinIndex(-1)}
-        onPrevious={() =>
-          setPinIndex((pinIndex) => (pinIndex > -1 ? pinIndex - 1 : -1))
-        }
+        onPrevious={() => setPinIndex((pinIndex) => (pinIndex > -1 ? pinIndex - 1 : -1))}
         onNext={() =>
           setPinIndex((pinIndex) =>
-            pinIndex > -1 && pinIndex < board.pins.length - 1
-              ? pinIndex + 1
-              : -1
+            pinIndex > -1 && pinIndex < board.pins.length - 1 ? pinIndex + 1 : -1
           )
         }
       >
-        {pinIndex > -1 && (
-          <ProfileDetails key={pinIndex} pubkey={board.pins[pinIndex][0]} />
-        )}
+        {pinIndex > -1 && <ProfileDetails key={pinIndex} pubkey={board.pins[pinIndex][0]} />}
       </DetailsSlideover>
     </>
   );

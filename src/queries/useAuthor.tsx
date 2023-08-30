@@ -10,8 +10,7 @@ export const useAuthor = (hexPubkey: string | undefined) => {
   const relays = useLocalStore((store) => store.relays);
 
   const fetchAuthor = useCallback(async () => {
-    if (!pool || !relays || !hexPubkey)
-      throw new Error('Missing dependencies in fetching author');
+    if (!pool || !relays || !hexPubkey) throw new Error('Missing dependencies in fetching author');
 
     const filter: Filter = { kinds: [0], limit: 1, authors: [hexPubkey] };
 

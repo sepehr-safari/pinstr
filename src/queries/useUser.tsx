@@ -8,8 +8,7 @@ export const useUser = () => {
   const { data: pubkey } = useQuery({
     queryKey: ['app', 'user', 'pubkey'],
     queryFn: () => {
-      const pubkey: string | null =
-        queryClient.getQueryData(['app', 'user', 'pubkey']) || null;
+      const pubkey: string | null = queryClient.getQueryData(['app', 'user', 'pubkey']) || null;
 
       return pubkey;
     },
@@ -19,8 +18,7 @@ export const useUser = () => {
   const { data: seckey } = useQuery({
     queryKey: ['app', 'user', 'seckey'],
     queryFn: () => {
-      const seckey: string | null =
-        queryClient.getQueryData(['app', 'user', 'seckey']) || null;
+      const seckey: string | null = queryClient.getQueryData(['app', 'user', 'seckey']) || null;
 
       return seckey;
     },

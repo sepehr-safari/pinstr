@@ -19,10 +19,7 @@ const queryClient = new QueryClient({
 
 export const App = () => {
   return (
-    <PersistQueryClientProvider
-      client={queryClient}
-      persistOptions={{ persister }}
-    >
+    <PersistQueryClientProvider client={queryClient} persistOptions={{ persister }}>
       <AppRouter />
     </PersistQueryClientProvider>
   );

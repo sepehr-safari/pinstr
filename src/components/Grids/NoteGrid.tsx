@@ -20,11 +20,7 @@ export const NoteGrid = ({ board }: { board: Board }) => {
             key={pin[0] + index}
             className="group flex flex-col h-full justify-between divide-y divide-gray-200 rounded-lg bg-white shadow ease-in-out duration-300 hover:shadow-md"
           >
-            <NoteDetails
-              onOpen={() => setPinIndex(index)}
-              noteId={pin[0]}
-              summary
-            />
+            <NoteDetails onOpen={() => setPinIndex(index)} noteId={pin[0]} summary />
           </li>
         ))}
       </ul>
@@ -33,20 +29,14 @@ export const NoteGrid = ({ board }: { board: Board }) => {
         board={board}
         pinIndex={pinIndex}
         onClose={() => setPinIndex(-1)}
-        onPrevious={() =>
-          setPinIndex((pinIndex) => (pinIndex > -1 ? pinIndex - 1 : -1))
-        }
+        onPrevious={() => setPinIndex((pinIndex) => (pinIndex > -1 ? pinIndex - 1 : -1))}
         onNext={() =>
           setPinIndex((pinIndex) =>
-            pinIndex > -1 && pinIndex < board.pins.length - 1
-              ? pinIndex + 1
-              : -1
+            pinIndex > -1 && pinIndex < board.pins.length - 1 ? pinIndex + 1 : -1
           )
         }
       >
-        {pinIndex > -1 && (
-          <NoteDetails key={pinIndex} noteId={board.pins[pinIndex][0]} />
-        )}
+        {pinIndex > -1 && <NoteDetails key={pinIndex} noteId={board.pins[pinIndex][0]} />}
       </DetailsSlideover>
     </>
   );
@@ -74,13 +64,9 @@ const NoteDetails = ({
         <div className="flex w-full items-center justify-between space-x-6 p-4">
           <div className="flex-1 truncate">
             <div className="flex items-center space-x-3">
-              <h3 className="truncate text-sm font-medium text-gray-900">
-                {author?.displayName}
-              </h3>
+              <h3 className="truncate text-sm font-medium text-gray-900">{author?.displayName}</h3>
             </div>
-            <p className="mt-1 truncate text-xs text-gray-500">
-              {author?.nip05}
-            </p>
+            <p className="mt-1 truncate text-xs text-gray-500">{author?.nip05}</p>
           </div>
           <div className="h-12 w-12 rounded-full bg-gray-300 text-gray-300">
             {!!author && !!author.picture && (
@@ -98,9 +84,7 @@ const NoteDetails = ({
           <p
             className={joinClassNames(
               'whitespace-break-spaces break-words',
-              summary
-                ? 'delay-100 duration-500 translate-y-2 group-hover:translate-y-0'
-                : ''
+              summary ? 'delay-100 duration-500 translate-y-2 group-hover:translate-y-0' : ''
             )}
           >
             {summary && note.content.length > 200

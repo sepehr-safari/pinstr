@@ -68,9 +68,7 @@ export const EditPinPopover = ({
         <div
           className={joinClassNames(
             'rounded-full p-2 duration-200',
-            overlay
-              ? 'text-white hover:bg-white/20'
-              : 'text-gray-900 hover:bg-gray-200'
+            overlay ? 'text-white hover:bg-white/20' : 'text-gray-900 hover:bg-gray-200'
           )}
         >
           <EllipsisVerticalIcon className="h-6 w-6" />

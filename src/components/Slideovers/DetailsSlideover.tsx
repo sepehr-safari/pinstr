@@ -57,10 +57,7 @@ export const DetailsSlideover = ({
 
         <div className="fixed inset-0" />
 
-        <div
-          className="fixed inset-0 overflow-hidden focus:outline-none"
-          tabIndex={0}
-        >
+        <div className="fixed inset-0 overflow-hidden focus:outline-none" tabIndex={0}>
           <div className="absolute inset-0 overflow-hidden">
             <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10 sm:pl-16">
               <Transition.Child
@@ -132,11 +129,10 @@ export const DetailsSlideover = ({
                             </dt>
                             <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:ml-6 sm:mt-0">
                               <p>
-                                Optional Field Content in a very long LOREM
-                                ipsum placeholder paragraph. Optional Field
-                                Content in a very long LOREM ipsum placeholder
-                                paragraph. Optional Field Content in a very long
-                                LOREM ipsum placeholder paragraph.
+                                Optional Field Content in a very long LOREM ipsum placeholder
+                                paragraph. Optional Field Content in a very long LOREM ipsum
+                                placeholder paragraph. Optional Field Content in a very long LOREM
+                                ipsum placeholder paragraph.
                               </p>
                             </dd>
                           </div>

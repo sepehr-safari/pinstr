@@ -11,13 +11,7 @@ import { Board } from '@/types';
 import { loader } from '@/utils';
 import { EditBoardPopover } from './Popovers';
 
-const BoardItem = ({
-  board,
-  hideAuthor = false,
-}: {
-  board: Board;
-  hideAuthor?: boolean;
-}) => {
+const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: boolean }) => {
   const [isHovering, setIsHover] = useState<boolean | undefined>(false);
 
   const { data: author } = useAuthor(board.author);
@@ -106,9 +100,7 @@ const BoardItem = ({
 
         <div className="mt-2 flex justify-between">
           <div>
-            <h3 className="text-sm font-semibold text-gray-900 hover:underline">
-              {board.title}
-            </h3>
+            <h3 className="text-sm font-semibold text-gray-900 hover:underline">{board.title}</h3>
 
             {!hideAuthor && author && <AuthorOverview author={author} />}
           </div>
@@ -119,17 +111,13 @@ const BoardItem = ({
             >
               <HandThumbUpIcon className="h-4 w-4" aria-hidden="true" />
               <span className="ml-1">
-                {reactions && reactions.likes.length > 0
-                  ? reactions.likes.length
-                  : 0}
+                {reactions && reactions.likes.length > 0 ? reactions.likes.length : 0}
               </span>
             </button>
             <button className="ml-4 flex text-xs font-bold text-gray-500 hover:text-gray-700">
               <BoltIcon className="h-4 w-4" aria-hidden="true" />
               <span className="ml-1">
-                {reactions && reactions.zaps.length > 0
-                  ? reactions.zaps.length
-                  : 0}
+                {reactions && reactions.zaps.length > 0 ? reactions.zaps.length : 0}
               </span>
             </button>
           </div>
@@ -139,7 +127,4 @@ const BoardItem = ({
   );
 };
 
-export const MemoizedBoardItem = memo(
-  BoardItem,
-  (prev, next) => prev.board.id == next.board.id
-);
+export const MemoizedBoardItem = memo(BoardItem, (prev, next) => prev.board.id == next.board.id);

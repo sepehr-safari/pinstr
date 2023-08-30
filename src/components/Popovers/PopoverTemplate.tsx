@@ -17,11 +17,8 @@ export interface PopoverProps {
 }
 
 export const PopoverTemplate = ({ children, items }: PopoverProps) => {
-  const [referenceElement, setReferenceElement] =
-    useState<HTMLButtonElement | null>(null);
-  const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(
-    null
-  );
+  const [referenceElement, setReferenceElement] = useState<HTMLButtonElement | null>(null);
+  const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null);
   const { styles, attributes } = usePopper(referenceElement, popperElement, {
     placement: 'bottom',
   });
@@ -53,12 +50,7 @@ export const PopoverTemplate = ({ children, items }: PopoverProps) => {
                 className="relative rounded-md p-2 hover:bg-gray-100 hover:cursor-pointer"
                 onClick={item.onClick}
               >
-                <div
-                  className={joinClassNames(
-                    'font-semibold',
-                    item.color || 'text-gray-900'
-                  )}
-                >
+                <div className={joinClassNames('font-semibold', item.color || 'text-gray-900')}>
                   {item.title}
                   <span className="absolute inset-0" />
                 </div>

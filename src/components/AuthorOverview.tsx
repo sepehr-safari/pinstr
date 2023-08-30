@@ -10,11 +10,8 @@ import { loader } from '@/utils';
 export const AuthorOverview = ({ author }: { author: Author }) => {
   const location = useLocation();
 
-  const [referenceElement, setReferenceElement] =
-    useState<HTMLButtonElement | null>(null);
-  const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(
-    null
-  );
+  const [referenceElement, setReferenceElement] = useState<HTMLButtonElement | null>(null);
+  const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null);
   const { styles, attributes } = usePopper(referenceElement, popperElement, {
     placement: 'top',
   });
@@ -58,14 +55,10 @@ export const AuthorOverview = ({ author }: { author: Author }) => {
                         loading="lazy"
                       />
                     </div>
-                    <h3 className="mt-4 text-sm font-semibold">
-                      {author.displayName}
-                    </h3>
+                    <h3 className="mt-4 text-sm font-semibold">{author.displayName}</h3>
                     <dl className="mt-1 flex flex-grow flex-col justify-between">
                       <dt className="sr-only">Title</dt>
-                      <dd className="text-xs font-light text-gray-500">
-                        {author.about}
-                      </dd>
+                      <dd className="text-xs font-light text-gray-500">{author.about}</dd>
                     </dl>
                   </div>
                 </div>
@@ -77,10 +70,7 @@ export const AuthorOverview = ({ author }: { author: Author }) => {
                         state={{ backgroundLocation: location }}
                         className="relative inline-flex w-0 flex-1 items-center justify-center gap-x-2 rounded-bl-lg border border-transparent py-2 text-xs font-semibold text-gray-900 hover:underline"
                       >
-                        <UserIcon
-                          className="h-5 w-5 text-gray-400"
-                          aria-hidden="true"
-                        />
+                        <UserIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
                         Open Profile
                       </Link>
                     </div>
@@ -89,10 +79,7 @@ export const AuthorOverview = ({ author }: { author: Author }) => {
                         href={''}
                         className="relative inline-flex w-0 flex-1 items-center justify-center gap-x-2 rounded-br-lg border border-transparent py-2 text-xs font-semibold text-gray-900 hover:underline"
                       >
-                        <PlusIcon
-                          className="h-5 w-5 text-gray-400"
-                          aria-hidden="true"
-                        />
+                        <PlusIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
                         Follow
                       </a>
                     </div>

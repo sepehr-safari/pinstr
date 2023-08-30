@@ -22,8 +22,7 @@ export const useBoardReactions = (board: Board | undefined | null) => {
     try {
       const events = await pool.batchedList('boardReactions', relays, [filter]);
 
-      if (events.length == 0)
-        return { likes: [], comments: [], zaps: [] } as Reactions;
+      if (events.length == 0) return { likes: [], comments: [], zaps: [] } as Reactions;
 
       return parseReactionsFromEvents(events);
     } catch (error) {

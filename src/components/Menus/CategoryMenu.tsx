@@ -12,8 +12,7 @@ export const categories: MenuItem[] = [
   },
   {
     title: 'Technology',
-    description:
-      'Computers, Softwares, Mobiles, Gadgets, Programming, and more',
+    description: 'Computers, Softwares, Mobiles, Gadgets, Programming, and more',
   },
   {
     title: 'FOSS',
@@ -21,8 +20,7 @@ export const categories: MenuItem[] = [
   },
   {
     title: 'Global Perspectives',
-    description:
-      'Economics, Politics, Environment, Society, Governance, and more',
+    description: 'Economics, Politics, Environment, Society, Governance, and more',
   },
   {
     title: 'Fashion & Style',
@@ -34,8 +32,7 @@ export const categories: MenuItem[] = [
   },
   {
     title: 'Arts & Creativity',
-    description:
-      'Visual Arts, Graphic Design, Photography, Crafts, DIY Projects, and more',
+    description: 'Visual Arts, Graphic Design, Photography, Crafts, DIY Projects, and more',
   },
   {
     title: 'Sports & Fitness',
@@ -64,8 +61,7 @@ export const categories: MenuItem[] = [
   },
   {
     title: 'Family & Mindfulness',
-    description:
-      'Parenting Tips, Family Life, Relationships, Mindfulness, Wellness, and more',
+    description: 'Parenting Tips, Family Life, Relationships, Mindfulness, Wellness, and more',
   },
   {
     title: 'History & Culture',

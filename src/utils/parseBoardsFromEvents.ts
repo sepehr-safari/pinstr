@@ -48,14 +48,7 @@ export const parseBoardsFromEvents = (events: Event[]) => {
       }
     }
 
-    if (
-      !title ||
-      !image ||
-      !description ||
-      !type ||
-      !category ||
-      headers.length == 0
-    ) {
+    if (!title || !image || !description || !type || !category || headers.length == 0) {
       continue;
     }
 

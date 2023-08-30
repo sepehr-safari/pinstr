@@ -19,12 +19,7 @@ export const VideoGrid = ({ board }: { board: Board }) => {
             className="p-2 group relative rounded-lg hover:bg-gray-50 ease-in-out duration-500 hover:shadow-md"
           >
             <div className="aspect-w-10 aspect-h-7 overflow-hidden rounded-md bg-black">
-              <ReactPlayer
-                url={videoPin[0]}
-                width="100%"
-                height="100%"
-                controls
-              />
+              <ReactPlayer url={videoPin[0]} width="100%" height="100%" controls />
             </div>
 
             <p className="mt-4 block truncate text-sm font-medium text-gray-900 ease-in-out duration-700">
@@ -48,14 +43,10 @@ export const VideoGrid = ({ board }: { board: Board }) => {
         board={board}
         pinIndex={pinIndex}
         onClose={() => setPinIndex(-1)}
-        onPrevious={() =>
-          setPinIndex((pinIndex) => (pinIndex > -1 ? pinIndex - 1 : -1))
-        }
+        onPrevious={() => setPinIndex((pinIndex) => (pinIndex > -1 ? pinIndex - 1 : -1))}
         onNext={() =>
           setPinIndex((pinIndex) =>
-            pinIndex > -1 && pinIndex < board.pins.length - 1
-              ? pinIndex + 1
-              : -1
+            pinIndex > -1 && pinIndex < board.pins.length - 1 ? pinIndex + 1 : -1
           )
         }
       >
@@ -64,12 +55,7 @@ export const VideoGrid = ({ board }: { board: Board }) => {
             key={pinIndex}
             className="aspect-w-10 aspect-h-7 overflow-hidden rounded-md bg-black"
           >
-            <ReactPlayer
-              url={board.pins[pinIndex][0]}
-              width="100%"
-              height="100%"
-              controls
-            />
+            <ReactPlayer url={board.pins[pinIndex][0]} width="100%" height="100%" controls />
           </div>
         )}
       </DetailsSlideover>

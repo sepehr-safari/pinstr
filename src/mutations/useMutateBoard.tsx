@@ -14,18 +14,8 @@ export const useMutateBoard = () => {
   const action = searchParams.get('action');
   const pinIndex = searchParams.get('i');
 
-  const {
-    category,
-    description,
-    headers,
-    image,
-    pins,
-    tags,
-    title,
-    type,
-    id,
-    author,
-  } = useLocalStore((store) => store.board);
+  const { category, description, headers, image, pins, tags, title, type, id, author } =
+    useLocalStore((store) => store.board);
   const setBoard = useLocalStore((store) => store.setBoard);
 
   const queryClient = useQueryClient();
@@ -41,11 +31,7 @@ export const useMutateBoard = () => {
       }
 
       const newPins = [...(overridePins || pins || [])];
-      if (
-        pinIndex != null &&
-        newPins.length > +pinIndex &&
-        action != 'remove-pin'
-      ) {
+      if (pinIndex != null && newPins.length > +pinIndex && action != 'remove-pin') {
         const normalizedContent = await normalizePinContent({
           content: newPins[+pinIndex]?.[0],
           boardType: type,
@@ -71,18 +57,7 @@ export const useMutateBoard = () => {
         ],
       });
     },
-    [
-      publish,
-      title,
-      description,
-      image,
-      category,
-      type,
-      tags,
-      pins,
-      headers,
-      pinIndex,
-    ]
+    [publish, title, description, image, category, type, tags, pins, headers, pinIndex]
   );
 
   const deleteBoardFn = useCallback(() => {
@@ -94,12 +69,7 @@ export const useMutateBoard = () => {
   }, [id, publish]);
 
   const updateBoardFn = useCallback(async () => {
-    const cachedBoard = queryClient.getQueryData<Board>([
-      'nostr',
-      'boards',
-      author,
-      title,
-    ]);
+    const cachedBoard = queryClient.getQueryData<Board>(['nostr', 'boards', author, title]);
 
     if (!cachedBoard) {
       await deleteBoardFn();

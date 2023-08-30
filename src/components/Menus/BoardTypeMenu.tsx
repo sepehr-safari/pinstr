@@ -39,11 +39,7 @@ export const BoardTypeMenu = ({
 
   return (
     <>
-      <MenuTemplate
-        items={boardTypeMenuItems}
-        selected={selected}
-        setSelected={setSelected}
-      />
+      <MenuTemplate items={boardTypeMenuItems} selected={selected} setSelected={setSelected} />
     </>
   );
 };

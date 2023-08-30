@@ -9,8 +9,7 @@ export const useNote = (noteId: string | undefined) => {
   const relays = useLocalStore((store) => store.relays);
 
   const fetchNote = useCallback(async () => {
-    if (!pool || !relays || !noteId)
-      throw new Error('Missing dependencies in fetching note');
+    if (!pool || !relays || !noteId) throw new Error('Missing dependencies in fetching note');
 
     const filter: Filter = { kinds: [1], limit: 1, ids: [noteId] };
 

@@ -32,9 +32,7 @@ export const normalizePinContent = async ({
           return nip19.decode(content).data.toString();
         case 'nip05':
           try {
-            const profile = await nip05.queryProfile(
-              content.replace('%40', '@')
-            );
+            const profile = await nip05.queryProfile(content.replace('%40', '@'));
 
             if (profile == null || !profile.pubkey)
               throw new Error('Invalid profile address ' + content);

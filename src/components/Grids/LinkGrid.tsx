@@ -38,9 +38,7 @@ export const LinkGrid = ({ board }: { board: Board }) => {
                 </div>
                 <div className="w-full flex justify-end">
                   <div className="inline-flex items-center translate-x-2 opacity-0 ease-in-out duration-500 group-hover:opacity-100 group-hover:translate-x-0">
-                    <span className="text-xs font-light text-gray-500">
-                      View Details
-                    </span>
+                    <span className="text-xs font-light text-gray-500">View Details</span>
                     <ChevronRightIcon className="ml-1 h-5 w-5 text-gray-400" />
                   </div>
                 </div>
@@ -61,14 +59,10 @@ export const LinkGrid = ({ board }: { board: Board }) => {
         board={board}
         pinIndex={pinIndex}
         onClose={() => setPinIndex(-1)}
-        onPrevious={() =>
-          setPinIndex((pinIndex) => (pinIndex > -1 ? pinIndex - 1 : -1))
-        }
+        onPrevious={() => setPinIndex((pinIndex) => (pinIndex > -1 ? pinIndex - 1 : -1))}
         onNext={() =>
           setPinIndex((pinIndex) =>
-            pinIndex > -1 && pinIndex < board.pins.length - 1
-              ? pinIndex + 1
-              : -1
+            pinIndex > -1 && pinIndex < board.pins.length - 1 ? pinIndex + 1 : -1
           )
         }
       >
@@ -94,9 +88,7 @@ export const LinkGrid = ({ board }: { board: Board }) => {
                 rel="noopener noreferrer"
                 className="group"
               >
-                <div className="text-sm font-medium text-gray-900">
-                  {board.pins[pinIndex][1]}
-                </div>
+                <div className="text-sm font-medium text-gray-900">{board.pins[pinIndex][1]}</div>
                 <div className="mt-2 text-xs font-light text-blue-700 group-hover:underline group-hover:text-blue-900">
                   {board.pins[pinIndex][0]}
                 </div>

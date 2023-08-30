@@ -6,10 +6,10 @@ export const NoMatch = () => {
   return (
     <main className="relative object-cover isolate h-full">
       <img
-        src={loader(
-          `https://source.unsplash.com/random/1280x720/?bird&sig=${Math.random()}`,
-          { w: 1280, h: 720 }
-        )}
+        src={loader(`https://source.unsplash.com/random/1280x720/?bird&sig=${Math.random()}`, {
+          w: 1280,
+          h: 720,
+        })}
         alt="Bird"
         className="absolute inset-0 -z-10 h-full w-full bg-gray-100 text-gray-100"
         loading="lazy"

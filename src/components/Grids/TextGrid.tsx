@@ -38,9 +38,7 @@ export const TextGrid = ({ board }: { board: Board }) => {
                 </div>
                 <div className="w-full flex justify-end">
                   <div className="inline-flex items-center translate-x-2 opacity-0 ease-in-out duration-500 group-hover:opacity-100 group-hover:translate-x-0">
-                    <span className="text-xs font-light text-gray-500">
-                      View Details
-                    </span>
+                    <span className="text-xs font-light text-gray-500">View Details</span>
                     <ChevronRightIcon className="ml-1 h-5 w-5 text-gray-400" />
                   </div>
                 </div>
@@ -48,9 +46,7 @@ export const TextGrid = ({ board }: { board: Board }) => {
             </button>
             <div className="p-4 flex flex-grow items-center">
               <div className="text-xs font-light">
-                {textPin[0].length < 120
-                  ? textPin[0]
-                  : textPin[0].slice(0, 120) + '...'}
+                {textPin[0].length < 120 ? textPin[0] : textPin[0].slice(0, 120) + '...'}
               </div>
             </div>
           </li>
@@ -61,14 +57,10 @@ export const TextGrid = ({ board }: { board: Board }) => {
         board={board}
         pinIndex={pinIndex}
         onClose={() => setPinIndex(-1)}
-        onPrevious={() =>
-          setPinIndex((pinIndex) => (pinIndex > -1 ? pinIndex - 1 : -1))
-        }
+        onPrevious={() => setPinIndex((pinIndex) => (pinIndex > -1 ? pinIndex - 1 : -1))}
         onNext={() =>
           setPinIndex((pinIndex) =>
-            pinIndex > -1 && pinIndex < board.pins.length - 1
-              ? pinIndex + 1
-              : -1
+            pinIndex > -1 && pinIndex < board.pins.length - 1 ? pinIndex + 1 : -1
           )
         }
       >
@@ -88,12 +80,8 @@ export const TextGrid = ({ board }: { board: Board }) => {
               />
             </a>
             <div className="p-4">
-              <h3 className="text-sm font-medium text-gray-900">
-                {board.pins[pinIndex][1]}
-              </h3>
-              <div className="mt-2 text-xs font-light">
-                {board.pins[pinIndex][0]}
-              </div>
+              <h3 className="text-sm font-medium text-gray-900">{board.pins[pinIndex][1]}</h3>
+              <div className="mt-2 text-xs font-light">{board.pins[pinIndex][0]}</div>
             </div>
           </>
         )}

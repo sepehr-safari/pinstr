@@ -1,8 +1,4 @@
-import {
-  BoltIcon,
-  ChatBubbleLeftIcon,
-  HandThumbUpIcon,
-} from '@heroicons/react/24/solid';
+import { BoltIcon, ChatBubbleLeftIcon, HandThumbUpIcon } from '@heroicons/react/24/solid';
 import { nip19 } from 'nostr-tools';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 
@@ -85,10 +81,7 @@ export const Pins = () => {
                           setSearchParams(
                             (searchParams) => {
                               searchParams.set('action', 'create-pin');
-                              searchParams.set(
-                                'i',
-                                board.pins.length.toString()
-                              );
+                              searchParams.set('i', board.pins.length.toString());
                               return searchParams;
                             },
                             { replace: true }
@@ -146,9 +139,7 @@ export const Pins = () => {
             </button>
             <button className="inline-flex justify-center items-center rounded-md bg-gray-100 ring-1 ring-gray-300 px-4 py-2 text-xs font-semibold text-gray-500 hover:shadow-md hover:text-gray-800">
               <ChatBubbleLeftIcon className="mr-2 h-4 w-4" />
-              <span className="">
-                {reactions ? reactions.comments.length : 0}
-              </span>
+              <span className="">{reactions ? reactions.comments.length : 0}</span>
             </button>
           </div>
         </div>

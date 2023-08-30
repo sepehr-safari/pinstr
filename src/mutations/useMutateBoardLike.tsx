@@ -21,13 +21,7 @@ export const useMutateBoardLike = (board: Board | undefined | null) => {
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries([
-        'nostr',
-        'boards',
-        board?.author,
-        board?.title,
-        'reactions',
-      ]);
+      queryClient.invalidateQueries(['nostr', 'boards', board?.author, board?.title, 'reactions']);
     },
   });
 };

@@ -1,8 +1,4 @@
-import {
-  CogIcon,
-  MagnifyingGlassIcon,
-  PhotoIcon,
-} from '@heroicons/react/20/solid';
+import { CogIcon, MagnifyingGlassIcon, PhotoIcon } from '@heroicons/react/20/solid';
 import { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 
@@ -22,8 +18,7 @@ const coverImageMenuItems: MenuItem[] = [
   },
   {
     title: 'Stock Images',
-    description:
-      'Search and select from a library of stock images provided by Unsplash.',
+    description: 'Search and select from a library of stock images provided by Unsplash.',
   },
   {
     title: 'URL',
@@ -32,9 +27,7 @@ const coverImageMenuItems: MenuItem[] = [
 ];
 
 export const ImageMenu = ({ image, setImage }: Props) => {
-  const [selectedMenuItem, setSelectedMenuItem] = useState(
-    coverImageMenuItems[0].title
-  );
+  const [selectedMenuItem, setSelectedMenuItem] = useState(coverImageMenuItems[0].title);
   const [searchKeyword, setSearchKeyword] = useState('');
   const [searchResult, setSearchResult] = useState<string[]>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -45,9 +38,7 @@ export const ImageMenu = ({ image, setImage }: Props) => {
     setIsSearching(true);
 
     const promises = Array.from({ length: 5 }, () => {
-      return fetch(
-        `https://source.unsplash.com/random/?${searchKeyword}&sig=${Math.random()}`
-      );
+      return fetch(`https://source.unsplash.com/random/?${searchKeyword}&sig=${Math.random()}`);
     });
 
     Promise.all(promises).then((responses) => {
@@ -97,9 +88,7 @@ export const ImageMenu = ({ image, setImage }: Props) => {
       setIsSearching(true);
 
       const promises = Array.from({ length: 5 }, () => {
-        return fetch(
-          `https://source.unsplash.com/random/?${searchKeyword}&sig=${Math.random()}`
-        );
+        return fetch(`https://source.unsplash.com/random/?${searchKeyword}&sig=${Math.random()}`);
       });
 
       Promise.all(promises).then((responses) => {
@@ -123,16 +112,11 @@ export const ImageMenu = ({ image, setImage }: Props) => {
 
       {!image && selectedMenuItem === 'Upload' && (
         <div className="mt-4">
-          <span className="block text-sm font-medium leading-6 text-gray-900">
-            Image / Upload
-          </span>
+          <span className="block text-sm font-medium leading-6 text-gray-900">Image / Upload</span>
 
           <div className="mt-2 flex justify-center rounded-lg border border-gray-300 px-4 py-6">
             <div className="text-center" {...getRootProps()}>
-              <PhotoIcon
-                className="mx-auto h-12 w-12 text-gray-300"
-                aria-hidden="true"
-              />
+              <PhotoIcon className="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
 
               <div className="mt-4 flex text-sm leading-6 text-gray-600">
                 <label
@@ -151,21 +135,15 @@ export const ImageMenu = ({ image, setImage }: Props) => {
                 {!isUploading && <p className="pl-1">or drag and drop</p>}
               </div>
               {!isDragActive && !isUploading && (
-                <p className="text-xs leading-5 text-gray-600">
-                  PNG, JPG, GIF up to 10MB
-                </p>
+                <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
               )}
               {isUploading && (
                 <div className="w-full flex justify-center items-center">
                   <CogIcon className="h-6 w-6 text-gray-500 animate-spin" />
-                  <span className="ml-1 text-xs text-gray-500">
-                    Uploading...
-                  </span>
+                  <span className="ml-1 text-xs text-gray-500">Uploading...</span>
                 </div>
               )}
-              {isDragActive && (
-                <p className="text-xs leading-5 text-gray-600">Drop here...</p>
-              )}
+              {isDragActive && <p className="text-xs leading-5 text-gray-600">Drop here...</p>}
             </div>
           </div>
         </div>
@@ -179,10 +157,7 @@ export const ImageMenu = ({ image, setImage }: Props) => {
 
           <div className="mt-2 relative">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-              <MagnifyingGlassIcon
-                className="h-5 w-5 text-gray-400"
-                aria-hidden="true"
-              />
+              <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
             </div>
             <input
               className="block w-full rounded-md border-0 bg-white py-1.5 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-500 sm:text-sm sm:leading-6"
@@ -216,14 +191,10 @@ export const ImageMenu = ({ image, setImage }: Props) => {
                             setShowModalIndex(index);
                             break;
                           case 'ArrowRight':
-                            document
-                              .getElementById(`stock-image-${index + 1}`)
-                              ?.focus();
+                            document.getElementById(`stock-image-${index + 1}`)?.focus();
                             break;
                           case 'ArrowLeft':
-                            document
-                              .getElementById(`stock-image-${index - 1}`)
-                              ?.focus();
+                            document.getElementById(`stock-image-${index - 1}`)?.focus();
                             break;
                           default:
                             break;

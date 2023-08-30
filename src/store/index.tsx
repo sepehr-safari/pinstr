@@ -22,8 +22,7 @@ export const useLocalStore = create<State & Actions>((set) => ({
   relays: ['wss://nos.lol'],
   setRelays: (relays) => set({ relays }),
   board: {},
-  setBoardItem: (key, value) =>
-    set((state) => ({ board: { ...state.board, [key]: value } })),
+  setBoardItem: (key, value) => set((state) => ({ board: { ...state.board, [key]: value } })),
   setBoard: (board) => set({ board: cloneDeep(board) }),
   setPin: (pinIndex, headerIndex, value) =>
     set((state) => {

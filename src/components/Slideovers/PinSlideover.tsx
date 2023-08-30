@@ -37,10 +37,7 @@ const SelectBoard = () => {
             </label>
             <div className="relative">
               <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                <MagnifyingGlassIcon
-                  className="h-5 w-5 text-gray-500"
-                  aria-hidden="true"
-                />
+                <MagnifyingGlassIcon className="h-5 w-5 text-gray-500" aria-hidden="true" />
               </div>
               <input
                 type="search"
@@ -57,9 +54,7 @@ const SelectBoard = () => {
         </div>
         <ul role="list" className="mt-4 px-6 grid grid-cols-2 gap-4">
           {(boards || [])
-            .filter((board) =>
-              board.title.toLowerCase().includes(searchInput.toLowerCase())
-            )
+            .filter((board) => board.title.toLowerCase().includes(searchInput.toLowerCase()))
             .map((board) => (
               <li key={board.id} className="flow-root">
                 <div className="relative group flex items-center gap-2 pr-2 rounded-xl focus-within:ring-2 focus-within:ring-gray-500 hover:bg-gray-100 hover:cursor-pointer">
@@ -79,10 +74,7 @@ const SelectBoard = () => {
                         onClick={() => {
                           setSearchParams(
                             (searchParams) => {
-                              searchParams.set(
-                                'i',
-                                board.pins.length.toString()
-                              );
+                              searchParams.set('i', board.pins.length.toString());
                               return searchParams;
                             },
                             { replace: true }
@@ -123,10 +115,7 @@ export const PinSlideover = () => {
   }, [removePin, action, pinIndex]);
 
   return (
-    <Transition.Root
-      show={action === 'create-pin' || action === 'edit-pin'}
-      as={Fragment}
-    >
+    <Transition.Root show={action === 'create-pin' || action === 'edit-pin'} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-10"
@@ -189,14 +178,9 @@ export const PinSlideover = () => {
                             {!title ? (
                               <span>Get started by choosing a board.</span>
                             ) : action === 'create-pin' ? (
-                              <span>
-                                Fill in the details below to add a new pin to
-                                your board.
-                              </span>
+                              <span>Fill in the details below to add a new pin to your board.</span>
                             ) : (
-                              <span>
-                                Edit the details below to update your pin.
-                              </span>
+                              <span>Edit the details below to update your pin.</span>
                             )}
                           </p>
                         </div>
@@ -225,8 +209,7 @@ export const PinSlideover = () => {
                                     </div>
                                     <div className="p-4 flex items-center">
                                       <div className="text-xs">
-                                        Deleting a pin is permanent and cannot
-                                        be undone.
+                                        Deleting a pin is permanent and cannot be undone.
                                       </div>
                                       <button
                                         type="button"

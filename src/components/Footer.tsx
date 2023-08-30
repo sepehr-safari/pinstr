@@ -11,9 +11,7 @@ export const Footer = () => {
           Made with <span className="text-red-500">♥️</span> by Sepehr
         </a>
 
-        <span className="text-gray-200 mx-2 cursor-default hidden md:block">
-          |
-        </span>
+        <span className="text-gray-200 mx-2 cursor-default hidden md:block">|</span>
 
         <a
           href="https://opensats.org/blog/nostr-grants-july-2023"
@@ -21,8 +19,7 @@ export const Footer = () => {
           rel="noreferrer"
           className="hover:underline hover:text-gray-900"
         >
-          Supported with <span className="text-yellow-500">⚡️</span> by
-          OpenSats
+          Supported with <span className="text-yellow-500">⚡️</span> by OpenSats
         </a>
       </div>
 
@@ -36,9 +33,7 @@ export const Footer = () => {
           What is nostr?
         </a>
 
-        <span className="text-gray-200 mx-2 cursor-default hidden md:block">
-          |
-        </span>
+        <span className="text-gray-200 mx-2 cursor-default hidden md:block">|</span>
 
         <a
           href="https://github.com/sepehr-safari/pinstr"
