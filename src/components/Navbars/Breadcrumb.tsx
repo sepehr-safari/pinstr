@@ -11,7 +11,7 @@ export const Breadcrumb = () => {
 
   return (
     <nav className="flex justify-center xl:justify-start" aria-label="Breadcrumb">
-      <ol role="list" className="flex items-center space-x-1">
+      <ol role="list" className="flex items-center space-x-2">
         <li>
           <div>
             <Link to="/" className="text-gray-300 hover:text-gray-500">
@@ -33,7 +33,7 @@ export const Breadcrumb = () => {
               </svg>
               <Link
                 to={'/p/' + npub}
-                className="ml-1 truncate text-xs font-light text-gray-400 hover:text-gray-700"
+                className="ml-2 truncate text-xs font-light text-gray-400 hover:text-gray-700"
               >
                 {author.displayName}
               </Link>
@@ -53,7 +53,7 @@ export const Breadcrumb = () => {
               </svg>
               <Link
                 to={'/p/' + npub + '/' + title}
-                className="ml-1 truncate text-xs font-light text-gray-400 hover:text-gray-700"
+                className="ml-2 truncate text-xs font-light text-gray-400 hover:text-gray-700"
               >
                 {title}
               </Link>
