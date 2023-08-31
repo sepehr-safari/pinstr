@@ -7,7 +7,7 @@ import { useAuthor, useUser } from '@/logic/queries';
 import { Board } from '@/logic/types';
 import { joinClassNames, loader } from '@/logic/utils';
 
-import { PinContextMenu } from '@/ui/components';
+import { PinContextMenu, Spinner } from '@/ui/components';
 import { DetailsSlideover } from '@/ui/components/Slideovers';
 
 export const ProfileGrid = ({ board }: { board: Board }) => {
@@ -63,10 +63,18 @@ export const ProfileGrid = ({ board }: { board: Board }) => {
 const ProfileDetails = ({ pubkey, summary = false }: { pubkey: string; summary?: boolean }) => {
   const location = useLocation();
 
-  const { data: profile } = useAuthor(pubkey);
+  const { data: profile, status } = useAuthor(pubkey);
+
+  if (status == 'loading') {
+    return (
+      <div className="w-full h-32 bg-white flex justify-center items-center">
+        <Spinner />
+      </div>
+    );
+  }
 
   if (!profile) {
-    return <></>; // TODO: Loading state
+    return <div className="w-full h-full">Profile not found!</div>;
   }
 
   return (

@@ -7,7 +7,7 @@ import { useAuthor, useNote, useUser } from '@/logic/queries';
 import { Board } from '@/logic/types';
 import { loader } from '@/logic/utils';
 
-import { PinContextMenu } from '@/ui/components';
+import { PinContextMenu, Spinner } from '@/ui/components';
 import { DetailsSlideover } from '@/ui/components/Slideovers';
 
 export const NoteGrid = ({ board }: { board: Board }) => {
@@ -58,11 +58,19 @@ export const NoteGrid = ({ board }: { board: Board }) => {
 };
 
 const NoteDetails = ({ noteId, summary = false }: { noteId: string; summary?: boolean }) => {
-  const { data: note } = useNote(noteId);
+  const { data: note, status } = useNote(noteId);
   const { data: author } = useAuthor(note?.pubkey);
 
+  if (status == 'loading') {
+    return (
+      <div className="h-32 flex justify-center items-center">
+        <Spinner />
+      </div>
+    );
+  }
+
   if (!note) {
-    return <></>; // TODO: Loading state
+    return <div className="w-full h-full">Note not found!</div>;
   }
 
   return (
@@ -95,8 +103,8 @@ const NoteDetails = ({ noteId, summary = false }: { noteId: string; summary?: bo
 
         <div className="p-4 border-t text-xs text-gray-500">
           <p className="whitespace-break-spaces break-words">
-            {summary && note.content.length > 200
-              ? note.content.slice(0, 200) + '...'
+            {summary && note.content.length > 100
+              ? note.content.slice(0, 100) + '...'
               : note.content}
           </p>
         </div>
