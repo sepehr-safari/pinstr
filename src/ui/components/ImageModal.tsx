@@ -10,7 +10,7 @@ interface Props {
   setSelectedStockImageURL: (state: string) => void;
 }
 
-export const Modal = ({
+export const ImageModal = ({
   children,
   modalIndex,
   stockImageURL,
