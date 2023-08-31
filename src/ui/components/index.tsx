@@ -9,4 +9,5 @@ export * from './PinContextMenu';
 export * from './ProfileBanner';
 export * from './ProfileCard';
 export * from './SelectableBoardTypes';
+export * from './Spinner';
 export * from './WarnModal';
