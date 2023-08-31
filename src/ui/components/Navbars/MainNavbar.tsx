@@ -23,7 +23,7 @@ export const MainNavbar = () => {
   return (
     <Disclosure
       as="header"
-      className="bg-white shadow fixed top-0 left-0 right-0 bg-opacity-50 z-[5] backdrop-filter backdrop-blur-lg"
+      className="bg-white shadow-md fixed top-0 left-0 right-0 bg-opacity-50 z-[5] backdrop-filter backdrop-blur-lg"
     >
       <>
         <div className="mx-auto px-4 sm:px-6 lg:divide-y lg:divide-gray-200">
