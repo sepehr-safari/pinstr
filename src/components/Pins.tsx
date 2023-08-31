@@ -14,6 +14,7 @@ import { useMutateBoardLike } from '@/mutations';
 import { useBoard, useBoardReactions, useUser } from '@/queries';
 import { useLocalStore } from '@/store';
 import { formatRelativeTime, loader } from '@/utils';
+import { BoardSummary } from '.';
 
 export const Pins = () => {
   const [_, setSearchParams] = useSearchParams();
@@ -33,7 +34,7 @@ export const Pins = () => {
 
   return (
     <>
-      <div className="gap-8 flex flex-col xl:flex-row">
+      {/* <div className="gap-8 flex flex-col xl:flex-row">
         <div className="mx-auto p-2 bg-white/70 rounded-xl shadow xl:mx-0">
           <div className="aspect-w-5 aspect-h-4 w-64 rounded-md bg-gray-200 text-gray-200">
             <img
@@ -143,7 +144,9 @@ export const Pins = () => {
             </button>
           </div>
         </div>
-      </div>
+      </div> */}
+
+      {/* <BoardSummary /> */}
 
       {board?.type == 'Text' && <TextGrid board={board} />}
       {board?.type == 'Link' && <LinkGrid board={board} />}
