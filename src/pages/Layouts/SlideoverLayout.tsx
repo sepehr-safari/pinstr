@@ -28,7 +28,7 @@ export const SlideoverLayout = () => {
           tabIndex={0}
           id="bottom-slideover"
         >
-          <div className="pointer-events-none w-full h-full flex px-0 pt-28 md:px-10 lg:px-20">
+          <div className="pointer-events-none w-full h-full flex px-0 pt-40 md:px-10 lg:px-20">
             <Transition.Child
               as={Fragment}
               enterFrom="translate-y-full"

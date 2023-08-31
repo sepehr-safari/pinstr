@@ -10,7 +10,7 @@ import { formatRelativeTime, loader } from '@/utils';
 
 export const BoardSummary = () => {
   const { npub, title } = useParams();
-  const hex = nip19.decode(npub!).data.toString();
+  const hex = npub ? nip19.decode(npub).data.toString() : '';
 
   const queryClient = useQueryClient();
   const board = queryClient.getQueryData<Board>(['nostr', 'boards', hex, title]);

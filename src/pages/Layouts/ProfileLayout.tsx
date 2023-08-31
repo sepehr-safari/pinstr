@@ -18,26 +18,28 @@ const Banner = ({
   const state = location.state as { backgroundLocation?: Location };
 
   return (
-    <div className="-mt-20 absolute top-0 w-full bg-gray-300 rounded-t-md">
+    <div
+      className={joinClassNames(
+        '-mt-20 absolute top-0 w-full bg-gray-300 rounded-t-md',
+        state?.backgroundLocation ? 'h-40' : 'h-52'
+      )}
+    >
       {!!banner ? (
         <img
-          className={joinClassNames(
-            'w-full object-cover text-white md:rounded-t-md',
-            state?.backgroundLocation ? 'h-40' : 'h-52'
-          )}
+          className="w-full h-full object-cover text-white md:rounded-t-md"
           src={loader(banner, { w: 1000, h: 256 })}
           alt={`${displayName} banner`}
           loading="lazy"
         />
       ) : (
-        <div className="h-52 md:rounded-t-md xl:h-64 bg-gradient-to-br from-purple-900 to-purple-600" />
+        <div className="w-full h-full md:rounded-t-md bg-gradient-to-br from-purple-900 to-purple-600" />
       )}
     </div>
   );
 };
 
 const MaxWidthContainer = ({ children }: { children: React.ReactNode }) => (
-  <div className="mx-auto relative max-w-screen-4xl gap-8 flex flex-col xl:flex-row xl:p-10">
+  <div className="mx-auto relative max-w-screen-4xl gap-6 flex flex-col xl:flex-row xl:p-6">
     {children}
   </div>
 );
@@ -49,11 +51,11 @@ const MainContainer = () => {
   return (
     <div
       className={joinClassNames(
-        'w-full h-full px-8 pb-20 xl:px-0',
+        'w-full h-full px-8 pb-6 xl:px-0',
         state?.backgroundLocation ? 'xl:mt-16' : 'xl:mt-28'
       )}
     >
-      <div className="mb-6">
+      <div className="mb-4 mt-3">
         <Breadcrumb />
       </div>
 
