@@ -17,7 +17,7 @@ export const ProfileCard = () => {
     <div className="p-6 flex flex-col items-center bg-white shadow-md z-[1] rounded-none xl:rounded-xl xl:items-start">
       <div className="flex flex-col gap-4 w-full items-center xl:flex-row xl:items-stretch">
         <a
-          href={`https://primal.net/${npub}`}
+          href={`https://primal.net/p/${npub}`}
           target="_blank"
           rel="noreferrer"
           className="-mt-16 overflow-hidden shrink-0 h-24 w-24 bg-gray-200 text-gray-200 shadow-lg rounded-full absolute z-[2] xl:static xl:mt-0 hover:cursor-pointer"
