@@ -1,10 +1,12 @@
-import { BoltIcon, ChatBubbleLeftIcon, HandThumbUpIcon } from '@heroicons/react/24/solid';
+import { BoltIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/solid';
 import { nip19 } from 'nostr-tools';
+import { useMemo } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import { useMutateBoardLike } from '@/logic/mutations';
 import { useBoard, useBoardReactions, useUser } from '@/logic/queries';
-import { formatRelativeTime, loader } from '@/logic/utils';
+import { formatRelativeTime, joinClassNames, loader } from '@/logic/utils';
+import { HeartIcon } from '@heroicons/react/20/solid';
 
 export const BoardSummary = () => {
   const { npub, title } = useParams();
@@ -17,6 +19,15 @@ export const BoardSummary = () => {
 
   const { pubkey } = useUser();
   const selfBoard = pubkey ? pubkey == hex : false;
+
+  const likedByUser = useMemo(
+    () => !!reactions?.likes.find((event) => event.pubkey == pubkey),
+    [reactions?.likes, pubkey]
+  );
+  const zapedByUser = useMemo(
+    () => !!reactions?.zaps.find((event) => event.pubkey == pubkey),
+    [reactions?.zaps, pubkey]
+  );
 
   if (!board) {
     return null;
@@ -91,19 +102,37 @@ export const BoardSummary = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-3 w-full h-10 divide-x border-t text-gray-600">
+        <div className="grid grid-cols-3 w-full h-10 divide-x border-t">
           <button
-            className="inline-flex justify-center items-center text-xs font-semibold duration-200 hover:text-gray-900 hover:bg-gray-100"
-            onClick={() => like()}
+            type="button"
+            onClick={() => !likedByUser && like()}
+            className={joinClassNames(
+              'inline-flex justify-center items-center text-xs font-semibold',
+              likedByUser
+                ? 'text-red-600 hover:cursor-default'
+                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+            )}
           >
-            <HandThumbUpIcon className="mr-2 h-4 w-4" />
+            <HeartIcon className="mr-2 h-4 w-4" />
             <span className="">{reactions ? reactions.likes.length : 0}</span>
           </button>
-          <button className="inline-flex justify-center items-center text-xs font-semibold duration-200 hover:text-gray-900 hover:bg-gray-100">
+          <button
+            type="button"
+            // onClick={() => zap()}
+            className={joinClassNames(
+              'inline-flex justify-center items-center text-xs font-semibold',
+              zapedByUser
+                ? 'text-yellow-600 hover:text-yellow-700'
+                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+            )}
+          >
             <BoltIcon className="mr-2 h-4 w-4" />
             <span className="">{reactions ? reactions.zaps.length : 0}</span>
           </button>
-          <button className="inline-flex justify-center items-center text-xs font-semibold duration-200 hover:text-gray-900 hover:bg-gray-100">
+          <button
+            type="button"
+            className="inline-flex justify-center items-center text-xs font-semibold duration-200 text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+          >
             <ChatBubbleLeftIcon className="mr-2 h-4 w-4" />
             <span className="">{reactions ? reactions.comments.length : 0}</span>
           </button>
