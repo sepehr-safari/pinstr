@@ -1,4 +1,5 @@
 import { HeartIcon } from '@heroicons/react/20/solid';
+import { PaperClipIcon, PencilIcon } from '@heroicons/react/24/outline';
 import { BoltIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/solid';
 import { nip19 } from 'nostr-tools';
 import { useMemo } from 'react';
@@ -89,7 +90,7 @@ export const BoardSummary = () => {
                 <div className="mt-6 mb-2 flex gap-2 shrink-0 w-full max-w-xs">
                   <button
                     type="button"
-                    className="rounded-md bg-gray-100 w-full py-2 text-xs font-semibold text-gray-600 hover:bg-gray-200 hover:text-gray-900"
+                    className="flex items-center justify-center rounded-md bg-gray-100 w-full py-2 text-xs font-semibold text-gray-600 hover:bg-gray-200 hover:text-gray-900"
                     onClick={() => {
                       if (board) {
                         setBoard(board);
@@ -103,11 +104,12 @@ export const BoardSummary = () => {
                       }
                     }}
                   >
-                    Edit Board
+                    <PencilIcon className="-ml-2 w-4 h-4" />
+                    <span className="ml-2">Edit Board</span>
                   </button>
                   <button
                     type="button"
-                    className="rounded-md bg-gray-100 w-full py-2 text-xs font-semibold text-gray-600 hover:bg-gray-200 hover:text-gray-900"
+                    className="flex items-center justify-center rounded-md bg-gray-100 w-full py-2 text-xs font-semibold text-gray-600 hover:bg-gray-200 hover:text-gray-900"
                     onClick={() => {
                       if (board) {
                         setBoard(board);
@@ -122,7 +124,8 @@ export const BoardSummary = () => {
                       }
                     }}
                   >
-                    Add Pin
+                    <PaperClipIcon className="-ml-2 w-4 h-4" />
+                    <span className="ml-2">Add Pin</span>{' '}
                   </button>
                 </div>
               </>

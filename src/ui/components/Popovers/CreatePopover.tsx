@@ -1,4 +1,4 @@
-import { PlusIcon } from '@heroicons/react/20/solid';
+import { ListBulletIcon, PaperClipIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
@@ -15,6 +15,7 @@ export const CreatePopover = () => {
       {
         title: 'New Board',
         description: 'Create a new board',
+        icon: ListBulletIcon,
         onClick: () => {
           setBoard({});
           setSearchParams(
@@ -29,6 +30,7 @@ export const CreatePopover = () => {
       {
         title: 'Add Pin',
         description: 'Add a new pin to an existing board',
+        icon: PaperClipIcon,
         onClick: () => {
           setBoard({});
           setSearchParams(
