@@ -1,8 +1,8 @@
 import { QueryClient } from '@tanstack/react-query';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 
-import { AppRouter } from '@/routes';
-import { createIDBPersister } from './utils';
+import { AppRouter } from '@/logic/routes';
+import { createIDBPersister } from './logic/utils';
 
 const persister = createIDBPersister();
 const queryClient = new QueryClient({
