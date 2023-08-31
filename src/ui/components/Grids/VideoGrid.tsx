@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import ReactPlayer from 'react-player';
 
+import { useUser } from '@/logic/queries';
 import { Board } from '@/logic/types';
 
 import { PinContextMenu } from '@/ui/components';
@@ -9,6 +10,9 @@ import { DetailsSlideover } from '@/ui/components/Slideovers';
 export const VideoGrid = ({ board }: { board: Board }) => {
   const [pinIndex, setPinIndex] = useState<number>(-1);
   const [playingIndex, setPlayingIndex] = useState<number>(-1);
+
+  const { pubkey } = useUser();
+  const selfBoard = pubkey ? pubkey == board.author : false;
 
   return (
     <>
@@ -22,6 +26,9 @@ export const VideoGrid = ({ board }: { board: Board }) => {
               onClick={() => setPlayingIndex((prev) => (prev != index ? index : -1))}
               onView={() => setPinIndex(index)}
               href={videoPin[0]}
+              board={board}
+              selfBoard={selfBoard}
+              pinIndex={index}
             />
 
             <div className="aspect-w-5 aspect-h-3 overflow-hidden rounded-md bg-black">

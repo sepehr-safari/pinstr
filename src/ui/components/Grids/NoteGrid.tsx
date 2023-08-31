@@ -3,7 +3,7 @@ import { nip19 } from 'nostr-tools';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { useAuthor, useNote } from '@/logic/queries';
+import { useAuthor, useNote, useUser } from '@/logic/queries';
 import { Board } from '@/logic/types';
 import { loader } from '@/logic/utils';
 
@@ -12,6 +12,9 @@ import { DetailsSlideover } from '@/ui/components/Slideovers';
 
 export const NoteGrid = ({ board }: { board: Board }) => {
   const [pinIndex, setPinIndex] = useState<number>(-1);
+
+  const { pubkey } = useUser();
+  const selfBoard = pubkey ? pubkey == board.author : false;
 
   return (
     <>
@@ -27,6 +30,9 @@ export const NoteGrid = ({ board }: { board: Board }) => {
             <PinContextMenu
               onView={() => setPinIndex(index)}
               href={`https://primal.net/e/${nip19.noteEncode(pin[0])}`}
+              board={board}
+              selfBoard={selfBoard}
+              pinIndex={index}
             />
 
             <NoteDetails noteId={pin[0]} summary />
@@ -65,11 +71,8 @@ const NoteDetails = ({ noteId, summary = false }: { noteId: string; summary?: bo
         <div className="flex w-full items-center justify-between space-x-6 p-4">
           <div className="flex-1 truncate">
             <div className="flex items-center space-x-3">
-              <Link
-                to={`/p/${author?.npub}`}
-                className="z-[4] hover:underline hover:cursor-zoom-in"
-              >
-                <h3 className="inline-flex items-center truncate text-sm font-medium text-gray-900">
+              <Link to={`/p/${author?.npub}`} className="z-[4] hover:cursor-zoom-in">
+                <h3 className="inline-flex items-center truncate text-sm font-medium text-gray-900 hover:underline">
                   {author?.displayName}
 
                   <ArrowRightIcon className="ml-1 w-4 h-4 duration-500 -translate-x-1 opacity-0 group-hover:opacity-100 group-hover:translate-x-0" />

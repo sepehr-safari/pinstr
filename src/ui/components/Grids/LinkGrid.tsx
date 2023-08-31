@@ -1,6 +1,7 @@
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
 import { useState } from 'react';
 
+import { useUser } from '@/logic/queries';
 import { Board } from '@/logic/types';
 import { loader } from '@/logic/utils';
 
@@ -9,6 +10,9 @@ import { DetailsSlideover } from '@/ui/components/Slideovers';
 
 export const LinkGrid = ({ board }: { board: Board }) => {
   const [pinIndex, setPinIndex] = useState<number>(-1);
+
+  const { pubkey } = useUser();
+  const selfBoard = pubkey ? pubkey == board.author : false;
 
   return (
     <>
@@ -21,7 +25,12 @@ export const LinkGrid = ({ board }: { board: Board }) => {
             key={index}
             className="group relative overflow-hidden rounded-lg bg-white shadow ease-in-out duration-200 hover:shadow-md"
           >
-            <PinContextMenu onView={() => setPinIndex(index)} href={linkPin[0]} />
+            <PinContextMenu
+              onView={() => setPinIndex(index)}
+              board={board}
+              selfBoard={selfBoard}
+              pinIndex={index}
+            />
 
             <button
               type="button"

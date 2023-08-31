@@ -3,7 +3,7 @@ import { nip19 } from 'nostr-tools';
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-import { useAuthor } from '@/logic/queries';
+import { useAuthor, useUser } from '@/logic/queries';
 import { Board } from '@/logic/types';
 import { joinClassNames, loader } from '@/logic/utils';
 
@@ -14,6 +14,9 @@ export const ProfileGrid = ({ board }: { board: Board }) => {
   const [pinIndex, setPinIndex] = useState<number>(-1);
 
   const navigate = useNavigate();
+
+  const { pubkey } = useUser();
+  const selfBoard = pubkey ? pubkey == board.author : false;
 
   return (
     <>
@@ -30,6 +33,9 @@ export const ProfileGrid = ({ board }: { board: Board }) => {
               onClick={() => navigate(`/p/${nip19.npubEncode(pin[0])}`)}
               onView={() => setPinIndex(index)}
               href={`https://primal.net/p/${nip19.npubEncode(pin[0])}`}
+              board={board}
+              selfBoard={selfBoard}
+              pinIndex={index}
             />
 
             <ProfileDetails pubkey={pin[0]} summary />
