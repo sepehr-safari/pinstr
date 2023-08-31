@@ -15,7 +15,7 @@ export const MainContainer = ({ children }: { children: React.ReactNode }) => {
         state?.backgroundLocation ? 'xl:mt-16' : 'xl:mt-28'
       )}
     >
-      <div className="mb-4 mt-3">
+      <div className="mb-4 xl:mt-3">
         <Breadcrumb />
       </div>
 
