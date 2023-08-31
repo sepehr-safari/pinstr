@@ -11,7 +11,7 @@ import { normalizePinContent } from '@/logic/utils';
 import { boardTypes } from '@/ui/components';
 
 export const useMutateBoard = () => {
-  const [searchParams, _] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const action = searchParams.get('action');
   const pinIndex = searchParams.get('i');
 
@@ -92,7 +92,11 @@ export const useMutateBoard = () => {
       },
       onError: () => {
         setBoard({});
-        navigate('/', { replace: true });
+        setSearchParams((searchParams) => {
+          searchParams.delete('action');
+          searchParams.delete('i');
+          return searchParams;
+        });
       },
     }),
     updateBoard: useMutation({
@@ -107,7 +111,10 @@ export const useMutateBoard = () => {
       },
       onError: () => {
         setBoard({});
-        navigate('/', { replace: true });
+        setSearchParams((searchParams) => {
+          searchParams.delete('action');
+          return searchParams;
+        });
       },
     }),
     deleteBoard: useMutation({
@@ -122,7 +129,10 @@ export const useMutateBoard = () => {
       },
       onError: () => {
         setBoard({});
-        navigate('/', { replace: true });
+        setSearchParams((searchParams) => {
+          searchParams.delete('action');
+          return searchParams;
+        });
       },
     }),
     removePin: useMutation({
@@ -149,7 +159,11 @@ export const useMutateBoard = () => {
       },
       onError: () => {
         setBoard({});
-        navigate('/', { replace: true });
+        setSearchParams((searchParams) => {
+          searchParams.delete('action');
+          searchParams.delete('i');
+          return searchParams;
+        });
       },
     }),
   };
