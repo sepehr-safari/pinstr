@@ -39,7 +39,7 @@ export const BoardSummary = () => {
   }
 
   return (
-    <div className="overflow-hidden bg-white rounded-xl shadow-md text-xs hidden xl:block">
+    <div className="overflow-hidden bg-white shadow-md text-xs xl:rounded-xl">
       <div className="w-full flex flex-col justify-between items-center">
         <div className="w-full py-4 px-4">
           <div className="inline-flex w-full justify-center items-center gap-1 text-xs font-light text-gray-400">
@@ -86,7 +86,7 @@ export const BoardSummary = () => {
 
             {selfBoard && (
               <>
-                <div className="mt-6 mb-2 flex gap-2 shrink-0 w-full">
+                <div className="mt-6 mb-2 flex gap-2 shrink-0 w-full max-w-xs">
                   <button
                     type="button"
                     className="rounded-md bg-gray-100 w-full py-2 text-xs font-semibold text-gray-600 hover:bg-gray-200 hover:text-gray-900"
