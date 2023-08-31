@@ -1,10 +1,13 @@
 import { useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
+import { useMutateUser } from '@/logic/mutations';
 import { useUser } from '@/logic/queries';
 
 export const Login = () => {
-  const { doLoginWithExtension, doLoginWithSeckey, pubkey } = useUser();
+  const { pubkey } = useUser();
+  const { loginWithExtension, loginWithSeckey } = useMutateUser();
+
   const navigate = useNavigate();
   const seckeyRef = useRef<HTMLInputElement>(null);
 
@@ -74,7 +77,7 @@ export const Login = () => {
                       onClick={() =>
                         seckeyRef &&
                         seckeyRef.current &&
-                        doLoginWithSeckey(seckeyRef.current?.value)
+                        loginWithSeckey.mutate(seckeyRef.current?.value)
                       }
                       className="flex w-full justify-center rounded-md bg-gray-800 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-800"
                     >
@@ -97,7 +100,7 @@ export const Login = () => {
                 <div className="mt-6">
                   <button
                     type="button"
-                    onClick={doLoginWithExtension}
+                    onClick={() => loginWithExtension.mutate()}
                     className="flex w-full items-center justify-center gap-3 rounded-md bg-purple-800 px-3 py-1.5 text-white"
                   >
                     <span className="text-sm font-semibold leading-6">
