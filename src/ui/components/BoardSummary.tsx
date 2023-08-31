@@ -1,16 +1,21 @@
+import { HeartIcon } from '@heroicons/react/20/solid';
 import { BoltIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/solid';
 import { nip19 } from 'nostr-tools';
 import { useMemo } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
 
 import { useMutateBoardLike } from '@/logic/mutations';
 import { useBoard, useBoardReactions, useUser } from '@/logic/queries';
+import { useLocalStore } from '@/logic/store';
 import { formatRelativeTime, joinClassNames, loader } from '@/logic/utils';
-import { HeartIcon } from '@heroicons/react/20/solid';
 
 export const BoardSummary = () => {
+  const [_, setSearchParams] = useSearchParams();
+
   const { npub, title } = useParams();
   const hex = npub ? nip19.decode(npub).data.toString() : '';
+
+  const setBoard = useLocalStore((store) => store.setBoard);
 
   const { data: board } = useBoard({ author: hex, title: title! });
 
@@ -85,14 +90,37 @@ export const BoardSummary = () => {
                   <button
                     type="button"
                     className="rounded-md bg-gray-100 w-full py-2 text-xs font-semibold text-gray-600 hover:bg-gray-200 hover:text-gray-900"
-                    onClick={() => {}}
+                    onClick={() => {
+                      if (board) {
+                        setBoard(board);
+                        setSearchParams(
+                          (searchParams) => {
+                            searchParams.set('action', 'edit-board');
+                            return searchParams;
+                          },
+                          { replace: true }
+                        );
+                      }
+                    }}
                   >
                     Edit Board
                   </button>
                   <button
                     type="button"
                     className="rounded-md bg-gray-100 w-full py-2 text-xs font-semibold text-gray-600 hover:bg-gray-200 hover:text-gray-900"
-                    onClick={() => {}}
+                    onClick={() => {
+                      if (board) {
+                        setBoard(board);
+                        setSearchParams(
+                          (searchParams) => {
+                            searchParams.set('action', 'create-pin');
+                            searchParams.set('i', board.pins.length.toString());
+                            return searchParams;
+                          },
+                          { replace: true }
+                        );
+                      }
+                    }}
                   >
                     Add Pin
                   </button>
