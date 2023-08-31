@@ -5,6 +5,7 @@ export * from './BoardsByAuthor';
 export * from './BoardsExplorer';
 export * from './Footer';
 export * from './Modal';
+export * from './PinContextMenu';
 export * from './ProfileBanner';
 export * from './ProfileCard';
 export * from './SelectableBoardTypes';
