@@ -1,16 +1,19 @@
 import { PlusIcon } from '@heroicons/react/20/solid';
 import { nip19 } from 'nostr-tools';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { useAuthor } from '@/logic/queries';
 import { Board } from '@/logic/types';
 import { joinClassNames, loader } from '@/logic/utils';
 
+import { PinContextMenu } from '@/ui/components';
 import { DetailsSlideover } from '@/ui/components/Slideovers';
 
 export const ProfileGrid = ({ board }: { board: Board }) => {
   const [pinIndex, setPinIndex] = useState<number>(-1);
+
+  const navigate = useNavigate();
 
   return (
     <>
@@ -21,9 +24,15 @@ export const ProfileGrid = ({ board }: { board: Board }) => {
         {(board.pins || []).map((pin, index) => (
           <li
             key={pin[0] + index}
-            className="relative group flex flex-col justify-between rounded-lg ease-in-out duration-500 hover:shadow-md hover:bg-gray-50"
+            className="relative group overflow-hidden flex flex-col justify-between rounded-lg ease-in-out duration-500 hover:shadow-md hover:bg-gray-50"
           >
-            <ProfileDetails onOpen={() => setPinIndex(index)} pubkey={pin[0]} summary />
+            <PinContextMenu
+              onClick={() => navigate(`/p/${nip19.npubEncode(pin[0])}`)}
+              onView={() => setPinIndex(index)}
+              href={`https://primal.net/p/${nip19.npubEncode(pin[0])}`}
+            />
+
+            <ProfileDetails pubkey={pin[0]} summary />
           </li>
         ))}
       </ul>
@@ -45,15 +54,9 @@ export const ProfileGrid = ({ board }: { board: Board }) => {
   );
 };
 
-const ProfileDetails = ({
-  pubkey,
-  onOpen,
-  summary = false,
-}: {
-  pubkey: string;
-  onOpen?: () => void;
-  summary?: boolean;
-}) => {
+const ProfileDetails = ({ pubkey, summary = false }: { pubkey: string; summary?: boolean }) => {
+  const location = useLocation();
+
   const { data: profile } = useAuthor(pubkey);
 
   if (!profile) {
@@ -63,7 +66,7 @@ const ProfileDetails = ({
   return (
     <>
       <div className="w-full absolute top-0">
-        <Link to={`/p/${profile.npub}`}>
+        <Link to={`/p/${profile.npub}`} state={{ backgroundLocation: location }}>
           <div
             className={joinClassNames(
               'w-full h-24 bg-gradient-to-br from-purple-800 to-purple-500 text-gray-200 duration-500 group-hover:rounded-b-none',
@@ -86,7 +89,7 @@ const ProfileDetails = ({
       </div>
       <div className="mt-auto flex flex-1 flex-col pt-16 items-center text-center">
         <div className="mx-auto rounded-full bg-gray-300 text-gray-300 z-[1]">
-          <Link to={`/p/${profile.npub}`}>
+          <Link to={`/p/${profile.npub}`} state={{ backgroundLocation: location }}>
             {!!profile.picture && (
               <img
                 className="w-24 h-24 rounded-full duration-500 group-hover:-translate-y-1 group-hover:scale-110 group-hover:shadow-md"
@@ -110,32 +113,12 @@ const ProfileDetails = ({
       </div>
 
       {summary ? (
-        <>
-          <div className="mt-4 mx-auto flex flex-col">
-            <button className="flex justify-center items-center rounded-full bg-gray-200 px-6 py-2.5 text-xs font-semibold text-gray-600 duration-200 hover:text-gray-900 hover:bg-gray-300">
-              <PlusIcon className="-ml-1 w-4 h-4" />
-              <span className="ml-1">Follow</span>
-            </button>
-          </div>
-
-          <div className="mt-4 flex w-full border-t opacity-0 translate-y-1 ease-in-out duration-500 group-hover:opacity-100 group-hover:translate-y-0">
-            <a
-              href={`https://primal.net/p/${nip19.npubEncode(pubkey)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex w-full items-center justify-center py-2 text-xs text-gray-700 font-medium border-r border-gray-200 ease-in-out duration-300 hover:bg-gray-200 hover:text-gray-900"
-            >
-              Open with Primal
-            </a>
-
-            <button
-              className="flex w-full items-center justify-center py-2 text-xs text-gray-700 font-medium ease-in-out duration-300 hover:bg-gray-200 hover:text-gray-900"
-              onClick={onOpen}
-            >
-              View details
-            </button>
-          </div>
-        </>
+        <div className="my-4 mx-auto flex flex-col z-[4]">
+          <button className="flex justify-center items-center rounded-full bg-gray-200 px-6 py-2.5 text-xs font-semibold text-gray-600 duration-200 hover:text-gray-900 hover:bg-gray-300">
+            <PlusIcon className="-ml-1 w-4 h-4" />
+            <span className="ml-1">Follow</span>
+          </button>
+        </div>
       ) : (
         <div className="mt-4 flex w-full border-t">
           <a

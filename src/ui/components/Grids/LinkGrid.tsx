@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Board } from '@/logic/types';
 import { loader } from '@/logic/utils';
 
+import { PinContextMenu } from '@/ui/components';
 import { DetailsSlideover } from '@/ui/components/Slideovers';
 
 export const LinkGrid = ({ board }: { board: Board }) => {
@@ -18,15 +19,17 @@ export const LinkGrid = ({ board }: { board: Board }) => {
         {(board.pins || []).map((linkPin, index) => (
           <li
             key={index}
-            className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow ease-in-out duration-200 hover:shadow-md"
+            className="group relative overflow-hidden rounded-lg bg-white shadow ease-in-out duration-200 hover:shadow-md"
           >
+            <PinContextMenu onView={() => setPinIndex(index)} href={linkPin[0]} />
+
             <button
               type="button"
               onClick={() => setPinIndex(index)}
-              className="flex w-full items-center group hover:cursor-pointer"
+              className="flex w-full items-center border-b"
             >
               <img
-                className="h-24 w-24 flex-shrink-0 rounded-ss-md bg-gray-200 text-gray-200"
+                className="h-24 w-24 flex-shrink-0 bg-gray-200 text-gray-200"
                 src={loader(linkPin[2], { w: 96, h: 96 })}
                 alt={linkPin[1]}
                 loading="lazy"
@@ -45,12 +48,17 @@ export const LinkGrid = ({ board }: { board: Board }) => {
                 </div>
               </div>
             </button>
-            <div className="p-4 ">
-              <a href={linkPin[0]} target="_blank" rel="noopener noreferrer">
-                <div className="truncate text-xs font-light text-blue-700 hover:underline hover:text-blue-900">
+            <div className="p-6 relative">
+              <div className="absolute inset-0 flex items-center px-4">
+                <a
+                  className="z-[4] truncate text-xs font-light text-blue-700 hover:underline hover:text-blue-900"
+                  href={linkPin[0]}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   {linkPin[0]}
-                </div>
-              </a>
+                </a>
+              </div>
             </div>
           </li>
         ))}

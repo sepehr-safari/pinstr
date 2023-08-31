@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Board } from '@/logic/types';
 import { loader } from '@/logic/utils';
 
+import { PinContextMenu } from '@/ui/components';
 import { DetailsSlideover } from '@/ui/components/Slideovers';
 
 export const ImageGrid = ({ board }: { board: Board }) => {
@@ -19,28 +20,7 @@ export const ImageGrid = ({ board }: { board: Board }) => {
             key={index}
             className="group aspect-w-5 aspect-h-4 relative block overflow-hidden rounded-md bg-gray-200 text-gray-200"
           >
-            <div className="absolute inset-0 flex flex-col justify-end z-[3]">
-              <div className="flex-grow flex justify-center items-center bg-black/60 opacity-0 duration-200 group-hover:opacity-100">
-                <div className="w-3/4">
-                  <button
-                    type="button"
-                    className="w-full text-xs text-gray-900 font-medium py-1 bg-white/60 rounded-md hover:bg-white/90 md:py-2"
-                    onClick={() => setPinIndex(index)}
-                  >
-                    View Details
-                  </button>
-
-                  <a
-                    href={imagePin[0]}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="mt-4 w-full inline-block text-center text-xs text-gray-900 font-medium py-1 bg-white/60 rounded-md hover:bg-white/90 md:py-2"
-                  >
-                    Open
-                  </a>
-                </div>
-              </div>
-            </div>
+            <PinContextMenu onView={() => setPinIndex(index)} href={imagePin[0]} />
 
             <div className="z-[2] absolute inset-0 flex flex-col justify-end">
               <p className="p-2 pt-6 block truncate text-xs font-medium text-white md:text-sm bg-gradient-to-t from-black/60 to-transparent">

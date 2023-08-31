@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Board } from '@/logic/types';
 import { loader } from '@/logic/utils';
 
+import { PinContextMenu } from '@/ui/components';
 import { DetailsSlideover } from '@/ui/components/Slideovers';
 
 export const TextGrid = ({ board }: { board: Board }) => {
@@ -18,12 +19,14 @@ export const TextGrid = ({ board }: { board: Board }) => {
         {(board.pins || []).map((textPin, index) => (
           <li
             key={index}
-            className="flex flex-col justify-between divide-y divide-gray-200 rounded-lg bg-white shadow ease-in-out duration-200 hover:shadow-md"
+            className="group relative overflow-hidden flex flex-col justify-between rounded-lg bg-white shadow duration-200 hover:shadow-md"
           >
+            <PinContextMenu onView={() => setPinIndex(index)} />
+
             <button
               type="button"
               onClick={() => setPinIndex(index)}
-              className="flex w-full items-center group hover:cursor-pointer"
+              className="flex w-full items-center border-b"
             >
               <img
                 className="h-24 w-24 flex-shrink-0 rounded-ss-md bg-gray-200 text-gray-200"
@@ -32,13 +35,13 @@ export const TextGrid = ({ board }: { board: Board }) => {
                 loading="lazy"
               />
               <div className="flex-1 truncate px-4">
-                <div className="truncate flex items-center translate-y-3 ease-in-out duration-500 group-hover:translate-y-0">
+                <div className="truncate flex items-center translate-y-3 duration-500 group-hover:translate-y-0">
                   <h3 className="leading-10 truncate text-sm font-medium text-gray-900">
                     {textPin[1]}
                   </h3>
                 </div>
                 <div className="w-full flex justify-end">
-                  <div className="inline-flex items-center translate-x-2 opacity-0 ease-in-out duration-500 group-hover:opacity-100 group-hover:translate-x-0">
+                  <div className="inline-flex items-center translate-x-2 opacity-0 duration-500 group-hover:opacity-100 group-hover:translate-x-0">
                     <span className="text-xs font-light text-gray-500">View Details</span>
                     <ChevronRightIcon className="ml-1 h-5 w-5 text-gray-400" />
                   </div>

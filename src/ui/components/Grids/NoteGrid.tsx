@@ -1,10 +1,13 @@
+import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import { nip19 } from 'nostr-tools';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { useAuthor, useNote } from '@/logic/queries';
 import { Board } from '@/logic/types';
-import { joinClassNames, loader } from '@/logic/utils';
+import { loader } from '@/logic/utils';
 
+import { PinContextMenu } from '@/ui/components';
 import { DetailsSlideover } from '@/ui/components/Slideovers';
 
 export const NoteGrid = ({ board }: { board: Board }) => {
@@ -19,9 +22,14 @@ export const NoteGrid = ({ board }: { board: Board }) => {
         {(board.pins || []).map((pin, index) => (
           <li
             key={pin[0] + index}
-            className="group flex flex-col h-full justify-between divide-y divide-gray-200 rounded-lg bg-white shadow ease-in-out duration-300 hover:shadow-md"
+            className="group relative overflow-hidden flex flex-col h-full justify-between rounded-lg bg-white shadow duration-300 hover:shadow-md"
           >
-            <NoteDetails onOpen={() => setPinIndex(index)} noteId={pin[0]} summary />
+            <PinContextMenu
+              onView={() => setPinIndex(index)}
+              href={`https://primal.net/e/${nip19.noteEncode(pin[0])}`}
+            />
+
+            <NoteDetails noteId={pin[0]} summary />
           </li>
         ))}
       </ul>
@@ -43,15 +51,7 @@ export const NoteGrid = ({ board }: { board: Board }) => {
   );
 };
 
-const NoteDetails = ({
-  noteId,
-  summary = false,
-  onOpen,
-}: {
-  noteId: string;
-  summary?: boolean;
-  onOpen?: () => void;
-}) => {
+const NoteDetails = ({ noteId, summary = false }: { noteId: string; summary?: boolean }) => {
   const { data: note } = useNote(noteId);
   const { data: author } = useAuthor(note?.pubkey);
 
@@ -65,7 +65,16 @@ const NoteDetails = ({
         <div className="flex w-full items-center justify-between space-x-6 p-4">
           <div className="flex-1 truncate">
             <div className="flex items-center space-x-3">
-              <h3 className="truncate text-sm font-medium text-gray-900">{author?.displayName}</h3>
+              <Link
+                to={`/p/${author?.npub}`}
+                className="z-[4] hover:underline hover:cursor-zoom-in"
+              >
+                <h3 className="inline-flex items-center truncate text-sm font-medium text-gray-900">
+                  {author?.displayName}
+
+                  <ArrowRightIcon className="ml-1 w-4 h-4 duration-500 -translate-x-1 opacity-0 group-hover:opacity-100 group-hover:translate-x-0" />
+                </h3>
+              </Link>
             </div>
             <p className="mt-1 truncate text-xs text-gray-500">{author?.nip05}</p>
           </div>
@@ -82,12 +91,7 @@ const NoteDetails = ({
         </div>
 
         <div className="p-4 border-t text-xs text-gray-500">
-          <p
-            className={joinClassNames(
-              'whitespace-break-spaces break-words',
-              summary ? 'delay-100 duration-500 translate-y-2 group-hover:translate-y-0' : ''
-            )}
-          >
+          <p className="whitespace-break-spaces break-words">
             {summary && note.content.length > 200
               ? note.content.slice(0, 200) + '...'
               : note.content}
@@ -95,31 +99,13 @@ const NoteDetails = ({
         </div>
       </div>
 
-      {summary ? (
-        <div className="flex w-full opacity-0 ease-in-out duration-500 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0">
-          <a
-            href={`https://primal.net/e/${nip19.noteEncode(noteId)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex w-full items-center justify-center py-2 text-xs text-gray-700 font-medium border-r border-gray-200 ease-in-out duration-300 hover:bg-gray-200 hover:text-gray-900"
-          >
-            Open with Primal
-          </a>
-
-          <button
-            className="flex w-full items-center justify-center py-2 text-xs text-gray-700 font-medium ease-in-out duration-300 hover:bg-gray-200 hover:text-gray-900"
-            onClick={onOpen}
-          >
-            View details
-          </button>
-        </div>
-      ) : (
+      {!summary && (
         <div className="border-t flex w-full">
           <a
             href={`https://primal.net/e/${nip19.noteEncode(noteId)}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex w-full items-center justify-center py-2 text-xs text-gray-700 font-medium ease-in-out duration-300 hover:bg-gray-200 hover:text-gray-900"
+            className="flex w-full items-center justify-center py-2 text-xs text-gray-700 font-medium duration-300 hover:bg-gray-200 hover:text-gray-900"
           >
             Open with Primal
           </a>
