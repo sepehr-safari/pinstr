@@ -92,11 +92,14 @@ export const useMutateBoard = () => {
       },
       onError: () => {
         setBoard({});
-        setSearchParams((searchParams) => {
-          searchParams.delete('action');
-          searchParams.delete('i');
-          return searchParams;
-        });
+        setSearchParams(
+          (searchParams) => {
+            searchParams.delete('action');
+            searchParams.delete('i');
+            return searchParams;
+          },
+          { replace: true }
+        );
       },
     }),
     updateBoard: useMutation({
@@ -111,10 +114,13 @@ export const useMutateBoard = () => {
       },
       onError: () => {
         setBoard({});
-        setSearchParams((searchParams) => {
-          searchParams.delete('action');
-          return searchParams;
-        });
+        setSearchParams(
+          (searchParams) => {
+            searchParams.delete('action');
+            return searchParams;
+          },
+          { replace: true }
+        );
       },
     }),
     deleteBoard: useMutation({
@@ -129,10 +135,14 @@ export const useMutateBoard = () => {
       },
       onError: () => {
         setBoard({});
-        setSearchParams((searchParams) => {
-          searchParams.delete('action');
-          return searchParams;
-        });
+        setSearchParams(
+          (searchParams) => {
+            searchParams.delete('action');
+            searchParams.delete('confirm');
+            return searchParams;
+          },
+          { replace: true }
+        );
       },
     }),
     removePin: useMutation({
@@ -159,11 +169,15 @@ export const useMutateBoard = () => {
       },
       onError: () => {
         setBoard({});
-        setSearchParams((searchParams) => {
-          searchParams.delete('action');
-          searchParams.delete('i');
-          return searchParams;
-        });
+        setSearchParams(
+          (searchParams) => {
+            searchParams.delete('action');
+            searchParams.delete('i');
+            searchParams.delete('confirm');
+            return searchParams;
+          },
+          { replace: true }
+        );
       },
     }),
   };
