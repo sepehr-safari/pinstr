@@ -12,8 +12,6 @@ import { useClickAway, useLongPress } from '@/logic/hooks';
 import { useLocalStore } from '@/logic/store';
 import { Board } from '@/logic/types';
 
-import { WarnModal } from '@/ui/components';
-
 export const PinContextMenu = ({
   onView,
   href,
@@ -32,7 +30,6 @@ export const PinContextMenu = ({
   pinIndex: number;
 }) => {
   const [showContextMenu, setShowContextMenu] = useState<boolean>(false);
-  const [openWarnModal, setOpenWarnModal] = useState(false);
 
   const setBoard = useLocalStore((store) => store.setBoard);
 
@@ -68,24 +65,6 @@ export const PinContextMenu = ({
           setShowContextMenu(true);
         }}
         className="absolute inset-0 flex flex-col justify-end z-[3] hover:cursor-pointer"
-      />
-
-      <WarnModal
-        open={openWarnModal}
-        setOpen={setOpenWarnModal}
-        onRemove={() => {
-          if (board) {
-            setBoard(board);
-            setSearchParams(
-              (searchParams) => {
-                searchParams.set('action', 'remove-pin');
-                searchParams.set('i', pinIndex.toString());
-                return searchParams;
-              },
-              { replace: true }
-            );
-          }
-        }}
       />
 
       <Transition.Root show={showContextMenu} as={Fragment}>
@@ -149,7 +128,19 @@ export const PinContextMenu = ({
                   <button
                     type="button"
                     className="mt-2 w-full flex items-center text-xs text-red-700 font-medium py-1 px-2 bg-white/80 rounded-md hover:bg-white/90 md:py-2"
-                    onClick={() => setOpenWarnModal(true)}
+                    onClick={() => {
+                      if (board) {
+                        setBoard(board);
+                        setSearchParams(
+                          (searchParams) => {
+                            searchParams.set('action', 'remove-pin');
+                            searchParams.set('i', pinIndex.toString());
+                            return searchParams;
+                          },
+                          { replace: true }
+                        );
+                      }
+                    }}
                   >
                     <TrashIcon className="w-5 h-5" />
                     <span className="-ml-4 grow">Remove Pin</span>
