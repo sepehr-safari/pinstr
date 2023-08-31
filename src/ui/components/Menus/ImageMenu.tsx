@@ -2,9 +2,10 @@ import { CogIcon, MagnifyingGlassIcon, PhotoIcon } from '@heroicons/react/20/sol
 import { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 
-import { Modal } from '@/ui/components';
-import { MenuItem, MenuTemplate } from '@/ui/components/Menus';
 import { loader } from '@/logic/utils';
+
+import { ImageModal } from '@/ui/components';
+import { MenuItem, MenuTemplate } from '@/ui/components/Menus';
 
 interface Props {
   image: string | undefined;
@@ -202,7 +203,7 @@ export const ImageMenu = ({ image, setImage }: Props) => {
                       }}
                     />
                   </div>
-                  <Modal
+                  <ImageModal
                     modalIndex={index}
                     stockImageURL={url}
                     showModalIndex={showModalIndex}
@@ -217,7 +218,7 @@ export const ImageMenu = ({ image, setImage }: Props) => {
                         loading="lazy"
                       />
                     </div>
-                  </Modal>
+                  </ImageModal>
                 </div>
               ))}
           </div>
