@@ -75,12 +75,7 @@ export const DetailsSlideover = ({
                     <div className="px-4 py-6 sm:px-6 border-b">
                       <div className="flex items-start justify-between">
                         <Dialog.Title className="text-base font-semibold leading-6 text-gray-900">
-                          <EditPinPopover
-                            board={board}
-                            pinIndex={pinIndex}
-                            overlay={false}
-                            onClose={onClose}
-                          />
+                          <EditPinPopover board={board} pinIndex={pinIndex} overlay={false} />
                         </Dialog.Title>
                         <div className="ml-3 flex h-7 items-center">
                           <button
@@ -108,7 +103,7 @@ export const DetailsSlideover = ({
                           </button>
                         </div>
 
-                        <div className="relative max-w-sm w-full rounded-lg shadow-md border bg-white">
+                        <div className="group relative max-w-sm w-full rounded-lg shadow-md border bg-white">
                           {children}
                         </div>
 

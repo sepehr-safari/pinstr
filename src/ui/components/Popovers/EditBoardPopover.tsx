@@ -51,7 +51,13 @@ export const EditBoardPopover = ({ board }: { board: Board }) => {
         color: 'text-red-600',
         onClick: () => {
           setBoard(board);
-          deleteBoard.mutate();
+          setSearchParams(
+            (searchParams) => {
+              searchParams.set('action', 'remove-board');
+              return searchParams;
+            },
+            { replace: true }
+          );
         },
       },
     ],

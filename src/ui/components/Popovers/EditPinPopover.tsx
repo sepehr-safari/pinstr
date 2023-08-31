@@ -13,12 +13,10 @@ export const EditPinPopover = ({
   board,
   pinIndex,
   overlay = true,
-  onClose,
 }: {
   board: Board;
   pinIndex: number;
   overlay?: boolean;
-  onClose: () => void;
 }) => {
   const setBoard = useLocalStore((store) => store.setBoard);
 
@@ -31,7 +29,6 @@ export const EditPinPopover = ({
       {
         title: 'Edit Pin',
         onClick: () => {
-          onClose();
           setBoard(board);
           setSearchParams(
             (searchParams) => {
@@ -47,7 +44,6 @@ export const EditPinPopover = ({
         title: 'Remove Pin',
         color: 'text-red-600',
         onClick: () => {
-          onClose();
           setBoard(board);
           setSearchParams(
             (searchParams) => {
@@ -60,7 +56,7 @@ export const EditPinPopover = ({
         },
       },
     ],
-    [onClose, pinIndex, setBoard, setSearchParams, removePin, board]
+    [pinIndex, setBoard, setSearchParams, removePin, board]
   );
 
   return (

@@ -102,18 +102,18 @@ export const PinSlideover = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const action = searchParams.get('action');
   const pinIndex = searchParams.get('i');
+  const confirm = searchParams.get('confirm');
 
   const setBoard = useLocalStore((store) => store.setBoard);
-  const title = useLocalStore((store) => store.board.title);
-  const type = useLocalStore((store) => store.board.type);
+  const board = useLocalStore((store) => store.board);
 
   const { removePin, publishBoard } = useMutateBoard();
 
   useEffect(() => {
-    if (action === 'remove-pin' && pinIndex != null) {
+    if (action === 'remove-pin' && pinIndex != null && confirm === 'true') {
       !removePin.isLoading && removePin.mutate();
     }
-  }, [removePin, action, pinIndex]);
+  }, [removePin, action, pinIndex, confirm]);
 
   return (
     <Transition.Root show={action === 'create-pin' || action === 'edit-pin'} as={Fragment}>
@@ -125,6 +125,7 @@ export const PinSlideover = () => {
             (searchParams) => {
               searchParams.delete('action');
               searchParams.delete('i');
+              searchParams.delete('confirm');
               return searchParams;
             },
             { replace: true }
@@ -164,10 +165,10 @@ export const PinSlideover = () => {
                         <div className="flex items-center justify-between">
                           <Dialog.Title className="text-base font-semibold leading-6 text-white">
                             {action === 'create-pin' ? (
-                              !title ? (
+                              !board.title ? (
                                 <span>Add a new pin</span>
                               ) : (
-                                <span>Add a new pin to {title}</span>
+                                <span>Add a new pin to {board.title}</span>
                               )
                             ) : (
                               <span>Edit your pin</span>
@@ -176,7 +177,7 @@ export const PinSlideover = () => {
                         </div>
                         <div className="mt-1">
                           <p className="text-sm font-light text-gray-300">
-                            {!title ? (
+                            {!board.title ? (
                               <span>Get started by choosing a board.</span>
                             ) : action === 'create-pin' ? (
                               <span>Fill in the details below to add a new pin to your board.</span>
@@ -187,18 +188,18 @@ export const PinSlideover = () => {
                         </div>
                       </div>
 
-                      {!title ? (
+                      {!board.title ? (
                         <SelectBoard />
                       ) : (
                         <div className="flex flex-1 flex-col justify-between">
                           <div className="divide-y divide-gray-200 px-4 sm:px-6">
                             <div className="space-y-4 pb-4 pt-4">
-                              {type === 'Image' && <ImagePinEditor />}
-                              {type === 'Video' && <VideoPinEditor />}
-                              {type === 'Profile' && <ProfilePinEditor />}
-                              {type === 'Note' && <NotePinEditor />}
-                              {type === 'Link' && <LinkPinEditor />}
-                              {type === 'Text' && <TextPinEditor />}
+                              {board.type === 'Image' && <ImagePinEditor />}
+                              {board.type === 'Video' && <VideoPinEditor />}
+                              {board.type === 'Profile' && <ProfilePinEditor />}
+                              {board.type === 'Note' && <NotePinEditor />}
+                              {board.type === 'Link' && <LinkPinEditor />}
+                              {board.type === 'Text' && <TextPinEditor />}
 
                               {action === 'edit-pin' && (
                                 <div className="py-6">
@@ -216,7 +217,14 @@ export const PinSlideover = () => {
                                         type="button"
                                         className="ml-auto rounded-md border border-red-200 px-4 py-1 text-sm font-bold leading-6 text-red-400 hover:text-red-500 hover:border-red-300"
                                         onClick={() => {
-                                          removePin.mutate();
+                                          setBoard(board);
+                                          setSearchParams(
+                                            (searchParams) => {
+                                              searchParams.set('action', 'remove-pin');
+                                              return searchParams;
+                                            },
+                                            { replace: true }
+                                          );
                                         }}
                                       >
                                         Delete Pin
@@ -240,6 +248,7 @@ export const PinSlideover = () => {
                               (searchParams) => {
                                 searchParams.delete('action');
                                 searchParams.delete('i');
+                                searchParams.delete('confirm');
                                 return searchParams;
                               },
                               { replace: true }
@@ -250,7 +259,7 @@ export const PinSlideover = () => {
                         </button>
                       </div>
 
-                      {title && (
+                      {board.title && (
                         <div className="flex">
                           {action === 'create-pin' ? (
                             <>

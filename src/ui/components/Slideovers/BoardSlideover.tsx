@@ -1,5 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { useMutateBoard } from '@/logic/mutations';
@@ -12,11 +12,19 @@ import { CategoryMenu, ImageMenu } from '@/ui/components/Menus';
 export const BoardSlideover = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const action = searchParams.get('action');
+  const confirm = searchParams.get('confirm');
 
-  const { category, description, image, tags, title, type } = useLocalStore((store) => store.board);
+  const board = useLocalStore((store) => store.board);
+  const setBoard = useLocalStore((store) => store.setBoard);
   const setBoardItem = useLocalStore((store) => store.setBoardItem);
 
   const { publishBoard, updateBoard, deleteBoard } = useMutateBoard();
+
+  useEffect(() => {
+    if (action === 'remove-board' && confirm === 'true') {
+      !deleteBoard.isLoading && deleteBoard.mutate();
+    }
+  }, [deleteBoard, action, confirm]);
 
   return (
     <Transition.Root show={action === 'create-board' || action === 'edit-board'} as={Fragment}>
@@ -66,10 +74,10 @@ export const BoardSlideover = () => {
                         <div className="flex items-center justify-between">
                           <Dialog.Title className="text-base font-semibold leading-6 text-white">
                             {action === 'create-board' ? (
-                              !type ? (
+                              !board.type ? (
                                 <span>Create a new board</span>
                               ) : (
-                                <span>{type}</span>
+                                <span>{board.type}</span>
                               )
                             ) : (
                               <span>Edit your board</span>
@@ -79,7 +87,7 @@ export const BoardSlideover = () => {
                         <div className="mt-1">
                           <p className="text-sm font-light text-gray-300">
                             {action === 'create-board' ? (
-                              !type ? (
+                              !board.type ? (
                                 <span>Get started by choosing a board type.</span>
                               ) : (
                                 <span>Fill in the details below to create your desired board.</span>
@@ -91,7 +99,7 @@ export const BoardSlideover = () => {
                         </div>
                       </div>
 
-                      {!type ? (
+                      {!board.type ? (
                         <div className="p-6">
                           <SelectableBoardTypes />
                         </div>
@@ -116,7 +124,7 @@ export const BoardSlideover = () => {
                                     autoComplete="off"
                                     autoFocus
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
-                                    value={title}
+                                    value={board.title}
                                     onChange={(e) => setBoardItem('title', e.target.value)}
                                   />
                                 </div>
@@ -137,7 +145,7 @@ export const BoardSlideover = () => {
                                     id="description"
                                     autoComplete="off"
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
-                                    value={description}
+                                    value={board.description}
                                     onChange={(e) => setBoardItem('description', e.target.value)}
                                   />
                                 </div>
@@ -153,14 +161,14 @@ export const BoardSlideover = () => {
                                 </span>
                                 <div className="mt-2">
                                   <CategoryMenu
-                                    selected={category}
+                                    selected={board.category}
                                     setSelected={(value) => setBoardItem('category', value)}
                                     hideFirstOption
                                   />
                                 </div>
                               </div>
                               <div>
-                                <label htmlFor="tags" className="flex flex-col">
+                                <label htmlFor="board.tags" className="flex flex-col">
                                   <span className="text-sm font-medium leading-6 text-gray-900">
                                     Tags
                                   </span>
@@ -176,7 +184,7 @@ export const BoardSlideover = () => {
                                     id="tags"
                                     autoComplete="off"
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
-                                    value={tags?.join(' ')}
+                                    value={board.tags?.join(' ')}
                                     onChange={(event) =>
                                       setBoardItem(
                                         'tags',
@@ -191,9 +199,9 @@ export const BoardSlideover = () => {
                                   />
                                 </div>
 
-                                {tags && tags.length > 0 && (
+                                {board.tags && board.tags.length > 0 && (
                                   <div className="mt-2 flex gap-2 flex-wrap">
-                                    {tags.map((tag, index) => (
+                                    {board.tags.map((tag, index) => (
                                       <span
                                         key={index}
                                         className="inline-flex items-center gap-x-0.5 rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10"
@@ -217,7 +225,7 @@ export const BoardSlideover = () => {
                                 </span>
                                 <div className="mt-2">
                                   <ImageMenu
-                                    image={image}
+                                    image={board.image}
                                     setImage={(value) => setBoardItem('image', value)}
                                   />
                                 </div>
@@ -238,7 +246,16 @@ export const BoardSlideover = () => {
                                       <button
                                         type="button"
                                         className="ml-auto rounded-md border border-red-200 px-4 py-1 text-sm font-bold leading-6 text-red-400 hover:text-red-500 hover:border-red-300"
-                                        onClick={() => deleteBoard.mutate()}
+                                        onClick={() => {
+                                          setBoard(board);
+                                          setSearchParams(
+                                            (searchParams) => {
+                                              searchParams.set('action', 'remove-board');
+                                              return searchParams;
+                                            },
+                                            { replace: true }
+                                          );
+                                        }}
                                       >
                                         Delete Board
                                       </button>
@@ -272,7 +289,7 @@ export const BoardSlideover = () => {
                         </button>
                       </div>
 
-                      {!!type && (
+                      {!!board.type && (
                         <div className="flex">
                           {action === 'create-board' ? (
                             <>
