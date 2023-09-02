@@ -66,17 +66,7 @@ export const TextGrid = ({ board }: { board: Board }) => {
         ))}
       </ul>
 
-      <DetailsSlideover
-        board={board}
-        pinIndex={pinIndex}
-        onClose={() => setPinIndex(-1)}
-        onPrevious={() => setPinIndex((pinIndex) => (pinIndex > -1 ? pinIndex - 1 : -1))}
-        onNext={() =>
-          setPinIndex((pinIndex) =>
-            pinIndex > -1 && pinIndex < board.pins.length - 1 ? pinIndex + 1 : -1
-          )
-        }
-      >
+      <DetailsSlideover board={board} pinIndex={pinIndex} setPinIndex={setPinIndex}>
         {pinIndex > -1 && (
           <>
             <a

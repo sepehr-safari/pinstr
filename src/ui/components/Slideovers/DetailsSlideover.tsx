@@ -1,7 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import { Fragment, useCallback, useEffect } from 'react';
+import { Dispatch, Fragment, SetStateAction, useCallback, useEffect } from 'react';
 
 import { Board } from '@/logic/types';
 
@@ -10,27 +10,33 @@ import { EditPinPopover } from '@/ui/components/Popovers';
 export const DetailsSlideover = ({
   board,
   pinIndex,
-  onClose,
-  onNext,
-  onPrevious,
+  setPinIndex,
   children,
 }: {
   board: Board;
   pinIndex: number;
-  onClose: () => void;
-  onNext: () => void;
-  onPrevious: () => void;
+  setPinIndex: Dispatch<SetStateAction<number>>;
   children: React.ReactNode;
 }) => {
+  const previous = useCallback(
+    () => setPinIndex((prev) => (prev > -1 ? prev - 1 : -1)),
+    [setPinIndex]
+  );
+  const next = useCallback(
+    () => setPinIndex((prev) => (prev > -1 && prev < board.pins.length - 1 ? prev + 1 : -1)),
+    [setPinIndex, board.pins.length]
+  );
+  const close = useCallback(() => setPinIndex(-1), [setPinIndex]);
+
   const handleKeyUp = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft') {
-        onPrevious();
+        previous();
       } else if (e.key === 'ArrowRight') {
-        onNext();
+        next();
       }
     },
-    [onPrevious, onNext]
+    [previous, next]
   );
 
   useEffect(() => {
@@ -43,7 +49,7 @@ export const DetailsSlideover = ({
 
   return (
     <Transition.Root show={pinIndex > -1} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={onClose}>
+      <Dialog as="div" className="relative z-10" onClose={close}>
         <Transition.Child
           as={Fragment}
           enter="ease-in-out duration-200"
@@ -81,7 +87,7 @@ export const DetailsSlideover = ({
                           <button
                             type="button"
                             className="relative rounded-md bg-white text-gray-400 hover:text-gray-500"
-                            onClick={onClose}
+                            onClick={close}
                           >
                             <span className="absolute -inset-2.5" />
                             <span className="sr-only">Close panel</span>
@@ -96,7 +102,7 @@ export const DetailsSlideover = ({
                         <div className="">
                           <button
                             type="button"
-                            onClick={onPrevious}
+                            onClick={previous}
                             className="py-20 px-2 text-gray-500/40 hover:text-gray-500 sm:px-4 md:px-8"
                           >
                             <ChevronLeftIcon className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12" />
@@ -110,7 +116,7 @@ export const DetailsSlideover = ({
                         <div>
                           <button
                             type="button"
-                            onClick={onNext}
+                            onClick={next}
                             className="py-20 px-2 text-gray-500/40 hover:text-gray-500 sm:px-4 md:px-8"
                           >
                             <ChevronRightIcon className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12" />
