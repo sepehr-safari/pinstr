@@ -51,11 +51,11 @@ export const PopoverTemplate = ({ children, items }: PopoverProps) => {
                 className="group flex items-center gap-2 rounded-md p-2 hover:bg-gray-100 hover:cursor-pointer"
                 onClick={item.onClick}
               >
-                <div className="bg-gray-200 rounded-md w-10 h-10 flex justify-center items-center">
-                  {item.icon && (
+                {item.icon && (
+                  <div className="bg-gray-200 rounded-md w-10 h-10 flex justify-center items-center">
                     <item.icon className="w-5 h-5 duration-300 group-hover:scale-125" />
-                  )}
-                </div>
+                  </div>
+                )}
 
                 <div className="">
                   <div className={joinClassNames('font-semibold', item.color || 'text-gray-900')}>
