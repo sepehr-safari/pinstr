@@ -215,7 +215,7 @@ export const PinSlideover = () => {
                                       </div>
                                       <button
                                         type="button"
-                                        className="ml-auto rounded-md border border-red-200 px-4 py-1 text-sm font-bold leading-6 text-red-400 hover:text-red-500 hover:border-red-300"
+                                        className="ml-auto shrink-0 rounded-md border border-red-500 px-2 py-1 text-xs font-semibold text-red-500 hover:bg-red-50"
                                         onClick={() => {
                                           setBoard(board);
                                           setSearchParams(
