@@ -43,7 +43,7 @@ export const EllipsisPopover = ({
         className={joinClassNames(
           buttonTheme == 'light'
             ? 'text-gray-500 bg-black/5 hover:bg-black/10'
-            : 'text-white bg-black/20 hover:bg-black/50',
+            : 'text-white bg-black/30 hover:bg-black/50',
           slideInFrom == 'right' ? 'translate-x-2' : '-translate-x-2',
           'absolute z-[4] outline-none rounded-full p-2 duration-200 opacity-0 group-hover:opacity-100 group-hover:translate-x-0',
           className

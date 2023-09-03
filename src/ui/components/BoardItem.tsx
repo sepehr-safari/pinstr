@@ -66,7 +66,7 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
               leaveFrom="opacity-100 translate-x-0"
               leaveTo="opacity-0 -translate-x-2"
             >
-              <span className="inline-flex items-center rounded-full bg-gray-200 px-3 py-0.5 text-xs font-medium text-gray-900 hover:bg-gray-300">
+              <span className="inline-flex items-center rounded-full bg-black/30 px-3 py-1 text-xs font-medium text-white hover:bg-black/50 hover:text-gray-100">
                 {board.type}
               </span>
             </Transition.Child>
@@ -80,7 +80,7 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
               leaveFrom="opacity-100 translate-x-0"
               leaveTo="opacity-0 translate-x-2"
             >
-              <span className="inline-flex items-center rounded-full bg-gray-200 px-3 py-0.5 text-xs font-medium text-gray-900 hover:bg-gray-300">
+              <span className="inline-flex items-center rounded-full bg-black/30 px-3 py-1 text-xs font-medium text-white hover:bg-black/50 hover:text-gray-100">
                 {board.category}
               </span>
             </Transition.Child>
