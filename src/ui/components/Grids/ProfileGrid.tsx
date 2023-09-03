@@ -18,37 +18,32 @@ export const ProfileGrid = ({ board }: { board: Board }) => {
 
   return (
     <>
-      <ul
-        role="list"
-        className="mx-auto grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-3 lg:mx-0 xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4"
-      >
-        {(board.pins || []).map((pin, index) => (
-          <li
-            key={pin[0] + index}
-            className="relative group overflow-hidden flex flex-col justify-between rounded-lg ease-in-out duration-500 hover:shadow-md hover:bg-gray-50"
-          >
-            <EllipsisPopover
-              board={board}
-              selfBoard={selfBoard}
-              pinIndex={index}
-              internalLinks={[[`/p/${nip19.npubEncode(pin[0])}`, 'Open Profile']]}
-              externalLinks={[
-                [`https://primal.net/p/${nip19.npubEncode(pin[0])}`, 'Open With Primal'],
-              ]}
-              editType="pin"
-              className="bottom-4 right-4"
-            />
+      {(board.pins || []).map((pin, index) => (
+        <li
+          key={pin[0] + index}
+          className="relative group overflow-hidden flex flex-col justify-between rounded-lg ease-in-out duration-500 hover:shadow-md hover:bg-gray-50"
+        >
+          <EllipsisPopover
+            board={board}
+            selfBoard={selfBoard}
+            pinIndex={index}
+            internalLinks={[[`/p/${nip19.npubEncode(pin[0])}`, 'Open Profile']]}
+            externalLinks={[
+              [`https://primal.net/p/${nip19.npubEncode(pin[0])}`, 'Open With Primal'],
+            ]}
+            editType="pin"
+            className="bottom-4 right-4"
+          />
 
-            <button
-              type="button"
-              onClick={() => setPinIndex(index)}
-              className="flex flex-col grow justify-stretch items-stretch"
-            >
-              <ProfileDetails pubkey={pin[0]} summary />
-            </button>
-          </li>
-        ))}
-      </ul>
+          <button
+            type="button"
+            onClick={() => setPinIndex(index)}
+            className="flex flex-col grow justify-stretch items-stretch"
+          >
+            <ProfileDetails pubkey={pin[0]} summary />
+          </button>
+        </li>
+      ))}
 
       <DetailsSlideover board={board} pinIndex={pinIndex} setPinIndex={setPinIndex}>
         {pinIndex > -1 && <ProfileDetails key={pinIndex} pubkey={board.pins[pinIndex][0]} />}

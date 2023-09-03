@@ -16,41 +16,36 @@ export const TextGrid = ({ board }: { board: Board }) => {
 
   return (
     <>
-      <ul
-        role="list"
-        className="grid grid-cols-1 gap-6 md:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4"
-      >
-        {(board.pins || []).map((textPin, index) => (
-          <li
-            key={index}
-            className="group relative overflow-hidden flex flex-col justify-between rounded-lg bg-white shadow duration-200 hover:shadow-md"
-          >
-            <EllipsisPopover board={board} selfBoard={selfBoard} pinIndex={index} editType="pin" />
+      {(board.pins || []).map((textPin, index) => (
+        <li
+          key={index}
+          className="group relative overflow-hidden flex flex-col justify-between rounded-lg bg-white shadow duration-200 hover:shadow-md"
+        >
+          <EllipsisPopover board={board} selfBoard={selfBoard} pinIndex={index} editType="pin" />
 
-            <button
-              type="button"
-              onClick={() => setPinIndex(index)}
-              className="group/top flex w-full items-stretch border-b hover:bg-gray-50"
-            >
-              <img
-                className="h-24 w-24 flex-shrink-0 bg-gray-200 text-gray-200 duration-300 group-hover/top:opacity-70"
-                src={loader(textPin[2], { w: 96, h: 96 })}
-                alt={textPin[1]}
-                loading="lazy"
-              />
-              <div className="flex items-center px-4 truncate group-hover/top:underline">
-                <h3 className="truncate text-sm font-medium text-gray-900">{textPin[1]}</h3>
-                <ArrowRightIcon className="ml-1 w-4 h-4 duration-300 -translate-x-1 opacity-0 group-hover/top:opacity-100 group-hover/top:translate-x-0" />
-              </div>
-            </button>
-            <div className="p-4 flex flex-grow items-center">
-              <div className="text-xs font-light">
-                {textPin[0].length < 120 ? textPin[0] : textPin[0].slice(0, 120) + '...'}
-              </div>
+          <button
+            type="button"
+            onClick={() => setPinIndex(index)}
+            className="group/top flex w-full items-stretch border-b hover:bg-gray-50"
+          >
+            <img
+              className="h-24 w-24 flex-shrink-0 bg-gray-200 text-gray-200 duration-300 group-hover/top:opacity-70"
+              src={loader(textPin[2], { w: 96, h: 96 })}
+              alt={textPin[1]}
+              loading="lazy"
+            />
+            <div className="flex items-center px-4 truncate group-hover/top:underline">
+              <h3 className="truncate text-sm font-medium text-gray-900">{textPin[1]}</h3>
+              <ArrowRightIcon className="ml-1 w-4 h-4 duration-300 -translate-x-1 opacity-0 group-hover/top:opacity-100 group-hover/top:translate-x-0" />
             </div>
-          </li>
-        ))}
-      </ul>
+          </button>
+          <div className="p-4 flex flex-grow items-center">
+            <div className="text-xs font-light">
+              {textPin[0].length < 120 ? textPin[0] : textPin[0].slice(0, 120) + '...'}
+            </div>
+          </div>
+        </li>
+      ))}
 
       <DetailsSlideover board={board} pinIndex={pinIndex} setPinIndex={setPinIndex}>
         {pinIndex > -1 && (

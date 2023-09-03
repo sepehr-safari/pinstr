@@ -18,29 +18,24 @@ export const NoteGrid = ({ board }: { board: Board }) => {
 
   return (
     <>
-      <ul
-        role="list"
-        className="grid grid-cols-1 gap-6 md:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4"
-      >
-        {(board.pins || []).map((pin, index) => (
-          <li
-            key={pin[0] + index}
-            className="group relative overflow-hidden flex flex-col h-full justify-between rounded-lg bg-white shadow duration-300 hover:shadow-md"
-          >
-            <EllipsisPopover
-              board={board}
-              selfBoard={selfBoard}
-              pinIndex={index}
-              externalLinks={[
-                [`https://primal.net/e/${nip19.noteEncode(pin[0])}`, 'Open With Primal'],
-              ]}
-              editType="pin"
-            />
+      {(board.pins || []).map((pin, index) => (
+        <li
+          key={pin[0] + index}
+          className="group relative overflow-hidden flex flex-col h-full justify-between rounded-lg bg-white shadow duration-300 hover:shadow-md"
+        >
+          <EllipsisPopover
+            board={board}
+            selfBoard={selfBoard}
+            pinIndex={index}
+            externalLinks={[
+              [`https://primal.net/e/${nip19.noteEncode(pin[0])}`, 'Open With Primal'],
+            ]}
+            editType="pin"
+          />
 
-            <NoteDetails noteId={pin[0]} setPinIndex={() => setPinIndex(index)} summary />
-          </li>
-        ))}
-      </ul>
+          <NoteDetails noteId={pin[0]} setPinIndex={() => setPinIndex(index)} summary />
+        </li>
+      ))}
 
       <DetailsSlideover board={board} pinIndex={pinIndex} setPinIndex={setPinIndex}>
         {pinIndex > -1 && <NoteDetails key={pinIndex} noteId={board.pins[pinIndex][0]} />}

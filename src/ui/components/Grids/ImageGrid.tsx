@@ -15,45 +15,40 @@ export const ImageGrid = ({ board }: { board: Board }) => {
 
   return (
     <>
-      <ul
-        role="list"
-        className="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 xl:gap-x-8 2xl:grid-cols-3 3xl:grid-cols-4"
-      >
-        {(board.pins || []).map((imagePin, index) => (
-          <li
-            key={index}
-            className="group aspect-w-5 aspect-h-4 relative block overflow-hidden rounded-md"
+      {(board.pins || []).map((imagePin, index) => (
+        <li
+          key={index}
+          className="group aspect-w-5 aspect-h-4 relative block overflow-hidden rounded-md"
+        >
+          <EllipsisPopover
+            board={board}
+            selfBoard={selfBoard}
+            pinIndex={index}
+            externalLinks={[[imagePin[0], 'Open Image']]}
+            editType="pin"
+            buttonTheme="dark"
+          />
+
+          <button
+            type="button"
+            className="z-[3] absolute inset-0 flex items-end"
+            onClick={() => setPinIndex(index)}
           >
-            <EllipsisPopover
-              board={board}
-              selfBoard={selfBoard}
-              pinIndex={index}
-              externalLinks={[[imagePin[0], 'Open Image']]}
-              editType="pin"
-              buttonTheme="dark"
-            />
+            <p className="w-full p-2 pt-6 block truncate text-start text-xs font-medium text-white md:text-sm bg-gradient-to-t from-black/60 to-transparent">
+              {imagePin[1]}
+            </p>
+          </button>
 
-            <button
-              type="button"
-              className="z-[3] absolute inset-0 flex items-end"
-              onClick={() => setPinIndex(index)}
-            >
-              <p className="w-full p-2 pt-6 block truncate text-start text-xs font-medium text-white md:text-sm bg-gradient-to-t from-black/60 to-transparent">
-                {imagePin[1]}
-              </p>
-            </button>
+          <div className="absolute z-[2] inset-0 hidden bg-black/20 group-hover:block" />
 
-            <div className="absolute z-[2] inset-0 hidden bg-black/20 group-hover:block" />
-
-            <img
-              src={loader(imagePin[0], { w: 500, h: 400 })}
-              alt={imagePin[1]}
-              className="z-[1] bg-gray-200 text-gray-200"
-              loading="lazy"
-            />
-          </li>
-        ))}
-      </ul>
+          <img
+            src={loader(imagePin[0], { w: 500, h: 400 })}
+            alt={imagePin[1]}
+            className="z-[1] bg-gray-200 text-gray-200"
+            loading="lazy"
+          />
+        </li>
+      ))}
 
       <DetailsSlideover board={board} pinIndex={pinIndex} setPinIndex={setPinIndex}>
         {pinIndex > -1 && (

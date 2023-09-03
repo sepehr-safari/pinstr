@@ -16,38 +16,33 @@ export const VideoGrid = ({ board }: { board: Board }) => {
 
   return (
     <>
-      <ul
-        role="list"
-        className="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 xl:gap-x-8 2xl:grid-cols-3 3xl:grid-cols-4"
-      >
-        {(board.pins || []).map((videoPin, index) => (
-          <li key={index} className="group relative overflow-hidden rounded-lg">
-            <EllipsisPopover
-              board={board}
-              selfBoard={selfBoard}
-              pinIndex={index}
-              actionButtons={[
-                {
-                  title: 'View Details',
-                  icon: DocumentTextIcon,
-                  onClick: () => setPinIndex(index),
-                },
-              ]}
-              externalLinks={[[videoPin[0], 'Open Video']]}
-              editType="pin"
-              className="right-0 bottom-0"
-            />
+      {(board.pins || []).map((videoPin, index) => (
+        <li key={index} className="group relative overflow-hidden rounded-lg">
+          <EllipsisPopover
+            board={board}
+            selfBoard={selfBoard}
+            pinIndex={index}
+            actionButtons={[
+              {
+                title: 'View Details',
+                icon: DocumentTextIcon,
+                onClick: () => setPinIndex(index),
+              },
+            ]}
+            externalLinks={[[videoPin[0], 'Open Video']]}
+            editType="pin"
+            className="right-0 bottom-0"
+          />
 
-            <div className="aspect-w-5 aspect-h-3 overflow-hidden rounded-md bg-black">
-              <ReactPlayer url={videoPin[0]} width="100%" height="100%" controls />
-            </div>
+          <div className="aspect-w-5 aspect-h-3 overflow-hidden rounded-md bg-black">
+            <ReactPlayer url={videoPin[0]} width="100%" height="100%" controls />
+          </div>
 
-            <p className="mt-4 mb-2 mr-14 block truncate text-sm font-medium text-gray-900 duration-700">
-              {videoPin[1]}
-            </p>
-          </li>
-        ))}
-      </ul>
+          <p className="mt-4 mb-2 mr-14 block truncate text-sm font-medium text-gray-900 duration-700">
+            {videoPin[1]}
+          </p>
+        </li>
+      ))}
 
       <DetailsSlideover board={board} pinIndex={pinIndex} setPinIndex={setPinIndex}>
         {pinIndex > -1 && (
