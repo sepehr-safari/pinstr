@@ -1,4 +1,3 @@
-import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import { nip19 } from 'nostr-tools';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -7,7 +6,8 @@ import { useAuthor, useNote, useUser } from '@/logic/queries';
 import { Board } from '@/logic/types';
 import { loader } from '@/logic/utils';
 
-import { PinContextMenu, Spinner } from '@/ui/components';
+import { Spinner } from '@/ui/components';
+import { EllipsisPopover } from '@/ui/components/Popovers';
 import { DetailsSlideover } from '@/ui/components/Slideovers';
 
 export const NoteGrid = ({ board }: { board: Board }) => {
@@ -27,15 +27,17 @@ export const NoteGrid = ({ board }: { board: Board }) => {
             key={pin[0] + index}
             className="group relative overflow-hidden flex flex-col h-full justify-between rounded-lg bg-white shadow duration-300 hover:shadow-md"
           >
-            <PinContextMenu
-              onView={() => setPinIndex(index)}
-              href={`https://primal.net/e/${nip19.noteEncode(pin[0])}`}
+            <EllipsisPopover
               board={board}
               selfBoard={selfBoard}
               pinIndex={index}
+              externalLinks={[
+                [`https://primal.net/e/${nip19.noteEncode(pin[0])}`, 'Open With Primal'],
+              ]}
+              editType="pin"
             />
 
-            <NoteDetails noteId={pin[0]} summary />
+            <NoteDetails noteId={pin[0]} setPinIndex={() => setPinIndex(index)} summary />
           </li>
         ))}
       </ul>
@@ -47,7 +49,15 @@ export const NoteGrid = ({ board }: { board: Board }) => {
   );
 };
 
-const NoteDetails = ({ noteId, summary = false }: { noteId: string; summary?: boolean }) => {
+const NoteDetails = ({
+  noteId,
+  summary = false,
+  setPinIndex,
+}: {
+  noteId: string;
+  summary?: boolean;
+  setPinIndex?: () => void;
+}) => {
   const { data: note, status } = useNote(noteId);
   const { data: author } = useAuthor(note?.pubkey);
 
@@ -65,20 +75,8 @@ const NoteDetails = ({ noteId, summary = false }: { noteId: string; summary?: bo
 
   return (
     <>
-      <div className="w-full">
-        <div className="flex w-full items-center justify-between space-x-6 p-4">
-          <div className="flex-1 truncate">
-            <div className="flex items-center space-x-3">
-              <Link to={`/p/${author?.npub}`} className="z-[4] hover:cursor-zoom-in">
-                <h3 className="inline-flex items-center truncate text-sm font-medium text-gray-900 hover:underline">
-                  {author?.displayName}
-
-                  <ArrowRightIcon className="ml-1 w-4 h-4 duration-500 -translate-x-1 opacity-0 group-hover:opacity-100 group-hover:translate-x-0" />
-                </h3>
-              </Link>
-            </div>
-            <p className="mt-1 truncate text-xs text-gray-500">{author?.nip05}</p>
-          </div>
+      <div className="w-full h-full flex flex-col">
+        <div className="flex w-full items-center justify-between space-x-2 p-4">
           <div className="h-12 w-12 rounded-full bg-gray-300 text-gray-300">
             {!!author && !!author.picture && (
               <img
@@ -89,15 +87,40 @@ const NoteDetails = ({ noteId, summary = false }: { noteId: string; summary?: bo
               />
             )}
           </div>
+
+          <div className="flex-1 truncate">
+            <div className="flex items-center space-x-3">
+              <Link to={`/p/${author?.npub}`} className="z-[4] hover:cursor-zoom-in">
+                <h3 className="inline-flex items-center truncate text-sm font-medium text-gray-900 hover:underline">
+                  {author?.displayName}
+                </h3>
+              </Link>
+            </div>
+            <p className="mt-1 truncate text-xs text-gray-500">{author?.nip05}</p>
+          </div>
         </div>
 
-        <div className="p-4 border-t text-xs text-gray-500">
-          <p className="whitespace-break-spaces break-words">
-            {summary && note.content.length > 100
-              ? note.content.slice(0, 100) + '...'
-              : note.content}
-          </p>
-        </div>
+        {summary ? (
+          <button
+            type="button"
+            className="p-4 border-t text-xs text-gray-500 grow w-full text-left hover:bg-gray-50"
+            onClick={setPinIndex}
+          >
+            <p className="whitespace-break-spaces break-words">
+              {summary && note.content.length > 100
+                ? note.content.slice(0, 100) + '...'
+                : note.content}
+            </p>
+          </button>
+        ) : (
+          <div className="p-4 border-t text-xs text-gray-500 grow w-full text-left">
+            <p className="whitespace-break-spaces break-words">
+              {summary && note.content.length > 100
+                ? note.content.slice(0, 100) + '...'
+                : note.content}
+            </p>
+          </div>
+        )}
       </div>
 
       {!summary && (
