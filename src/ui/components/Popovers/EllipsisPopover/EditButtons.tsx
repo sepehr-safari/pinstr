@@ -1,15 +1,16 @@
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { useMemo } from 'react';
-import { useSearchParams } from 'react-router-dom';
 
-import { useMutateBoard } from '@/logic/mutations';
-import { useLocalStore } from '@/logic/store';
+import {
+  useEditBoardParams,
+  useEditPinParams,
+  useRemoveBoardParams,
+  useRemovePinParams,
+} from '@/logic/hooks';
 import { Board } from '@/logic/types';
-
 import { IPopoverButton } from '../types';
+
 import { ActionButton } from './ActionButton';
-import { useEditBoard } from '@/logic/hooks/useEditBoard';
-import { useEditPin, useRemoveBoard, useRemovePin } from '@/logic/hooks';
 
 export const EditButtons = ({
   board,
@@ -20,26 +21,26 @@ export const EditButtons = ({
   pinIndex?: number | undefined;
   editType: 'pin' | 'board';
 }) => {
-  const { editBoard } = useEditBoard(board);
-  const { removeBoard } = useRemoveBoard(board);
-  const { editPin } = useEditPin(board, pinIndex);
-  const { removePin } = useRemovePin(board, pinIndex);
+  const { setEditBoardParams } = useEditBoardParams(board);
+  const { setRemoveBoardParams } = useRemoveBoardParams(board);
+  const { setEditPinParams } = useEditPinParams(board, pinIndex);
+  const { setRemovePinParams } = useRemovePinParams(board, pinIndex);
 
   const buttons = useMemo<IPopoverButton[]>(
     () => [
       {
         title: 'Edit',
         icon: PencilIcon,
-        onClick: editType == 'board' ? editBoard : editPin,
+        onClick: editType == 'board' ? setEditBoardParams : setEditPinParams,
       },
       {
         title: 'Remove',
         icon: TrashIcon,
         color: 'text-red-600',
-        onClick: editType == 'board' ? removeBoard : removePin,
+        onClick: editType == 'board' ? setRemoveBoardParams : setRemovePinParams,
       },
     ],
-    []
+    [editType, setEditBoardParams, setEditPinParams, setRemoveBoardParams, setRemovePinParams]
   );
 
   return (

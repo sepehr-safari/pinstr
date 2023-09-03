@@ -11,8 +11,8 @@ export const BoardSummary = () => {
     board,
     title,
     reactions,
-    createPin,
-    editBoard,
+    setCreatePinParams,
+    setEditBoardParams,
     like,
     likedByUser,
     selfBoard,
@@ -75,7 +75,7 @@ export const BoardSummary = () => {
                   <button
                     type="button"
                     className="flex items-center justify-center rounded-md bg-gray-100 w-full py-2 text-xs font-semibold text-gray-600 hover:bg-gray-200 hover:text-gray-900"
-                    onClick={editBoard}
+                    onClick={setEditBoardParams}
                   >
                     <PencilIcon className="-ml-2 w-4 h-4" />
                     <span className="ml-2">Edit Board</span>
@@ -83,7 +83,7 @@ export const BoardSummary = () => {
                   <button
                     type="button"
                     className="flex items-center justify-center rounded-md bg-gray-100 w-full py-2 text-xs font-semibold text-gray-600 hover:bg-gray-200 hover:text-gray-900"
-                    onClick={createPin}
+                    onClick={setCreatePinParams}
                   >
                     <PaperClipIcon className="-ml-2 w-4 h-4" />
                     <span className="ml-2">Add Pin</span>{' '}

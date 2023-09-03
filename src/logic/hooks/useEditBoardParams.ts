@@ -3,18 +3,18 @@ import { useSearchParams } from 'react-router-dom';
 import { useLocalStore } from '@/logic/store';
 import { Board } from '@/logic/types';
 
-export const useRemoveBoard = (board: Board | undefined) => {
+export const useEditBoardParams = (board: Partial<Board> | undefined) => {
   const setBoard = useLocalStore((store) => store.setBoard);
 
   const [_, setSearchParams] = useSearchParams();
 
   return {
-    removeBoard: () => {
+    setEditBoardParams: () => {
       if (board) {
         setBoard(board);
         setSearchParams(
           (searchParams) => {
-            searchParams.set('action', 'remove-board');
+            searchParams.set('action', 'edit-board');
             return searchParams;
           },
           { replace: true }

@@ -3,19 +3,19 @@ import { useSearchParams } from 'react-router-dom';
 import { useLocalStore } from '@/logic/store';
 import { Board } from '@/logic/types';
 
-export const useEditPin = (board: Board | undefined, pinIndex: number | undefined) => {
+export const useCreatePinParams = (board: Partial<Board> | undefined) => {
   const setBoard = useLocalStore((store) => store.setBoard);
 
   const [_, setSearchParams] = useSearchParams();
 
   return {
-    editPin: () => {
-      if (board && pinIndex != undefined) {
+    setCreatePinParams: () => {
+      if (board) {
         setBoard(board);
         setSearchParams(
           (searchParams) => {
-            searchParams.set('action', 'edit-pin');
-            searchParams.set('i', pinIndex.toString());
+            searchParams.set('action', 'create-pin');
+            board.pins && searchParams.set('i', board.pins.length.toString());
             return searchParams;
           },
           { replace: true }

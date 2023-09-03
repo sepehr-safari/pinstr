@@ -3,6 +3,7 @@ import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 import { Fragment, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
+import { useRemovePinParams } from '@/logic/hooks';
 import { useMutateBoard } from '@/logic/mutations';
 import { useBoardsByAuthor, useUser } from '@/logic/queries';
 import { useLocalStore } from '@/logic/store';
@@ -71,7 +72,8 @@ const SelectBoard = () => {
                   </div>
                   <div>
                     <h3 className="text-sm font-medium text-gray-900">
-                      <div
+                      <button
+                        type="button"
                         onClick={() => {
                           setSearchParams(
                             (searchParams) => {
@@ -86,7 +88,7 @@ const SelectBoard = () => {
                       >
                         <span className="absolute inset-0" aria-hidden="true" />
                         <span>{board.title}</span>
-                      </div>
+                      </button>
                     </h3>
                   </div>
                 </div>
@@ -108,6 +110,11 @@ export const PinSlideover = () => {
   const board = useLocalStore((store) => store.board);
 
   const { removePin, publishBoard } = useMutateBoard();
+
+  const { setRemovePinParams } = useRemovePinParams(
+    board,
+    pinIndex != null ? +pinIndex : undefined
+  );
 
   useEffect(() => {
     if (action === 'remove-pin' && pinIndex != null && confirm === 'true') {
@@ -216,16 +223,7 @@ export const PinSlideover = () => {
                                       <button
                                         type="button"
                                         className="ml-auto shrink-0 rounded-md border border-red-500 px-2 py-1 text-xs font-semibold text-red-500 hover:bg-red-50"
-                                        onClick={() => {
-                                          setBoard(board);
-                                          setSearchParams(
-                                            (searchParams) => {
-                                              searchParams.set('action', 'remove-pin');
-                                              return searchParams;
-                                            },
-                                            { replace: true }
-                                          );
-                                        }}
+                                        onClick={setRemovePinParams}
                                       >
                                         Delete Pin
                                       </button>

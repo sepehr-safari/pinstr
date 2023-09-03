@@ -3,13 +3,16 @@ import { useSearchParams } from 'react-router-dom';
 import { useLocalStore } from '@/logic/store';
 import { Board } from '@/logic/types';
 
-export const useRemovePin = (board: Board | undefined, pinIndex: number | undefined) => {
+export const useRemovePinParams = (
+  board: Partial<Board> | undefined,
+  pinIndex: number | undefined
+) => {
   const setBoard = useLocalStore((store) => store.setBoard);
 
   const [_, setSearchParams] = useSearchParams();
 
   return {
-    removePin: () => {
+    setRemovePinParams: () => {
       if (board && pinIndex != undefined) {
         setBoard(board);
         setSearchParams(

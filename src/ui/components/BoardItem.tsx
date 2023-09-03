@@ -5,7 +5,7 @@ import { nip19 } from 'nostr-tools';
 import { memo, useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-import { useCreatePin } from '@/logic/hooks';
+import { useCreatePinParams } from '@/logic/hooks';
 import { useMutateBoardLike } from '@/logic/mutations';
 import { useAuthor, useBoardReactions, useUser } from '@/logic/queries';
 import { Board } from '@/logic/types';
@@ -35,7 +35,7 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
 
   const location = useLocation();
 
-  const { createPin } = useCreatePin(board);
+  const { setCreatePinParams } = useCreatePinParams(board);
 
   return (
     <>
@@ -49,7 +49,7 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
             board={board}
             pinIndex={0}
             selfBoard={selfBoard}
-            actionButtons={[{ title: 'Add Pin', icon: PaperClipIcon, onClick: createPin }]}
+            actionButtons={[{ title: 'Add Pin', icon: PaperClipIcon, onClick: setCreatePinParams }]}
             editType="board"
           />
 

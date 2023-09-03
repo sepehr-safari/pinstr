@@ -2,6 +2,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
+import { useRemoveBoardParams } from '@/logic/hooks';
 import { useMutateBoard } from '@/logic/mutations';
 import { useLocalStore } from '@/logic/store';
 import { capitalizeFirstLetter } from '@/logic/utils';
@@ -15,10 +16,11 @@ export const BoardSlideover = () => {
   const confirm = searchParams.get('confirm');
 
   const board = useLocalStore((store) => store.board);
-  const setBoard = useLocalStore((store) => store.setBoard);
   const setBoardItem = useLocalStore((store) => store.setBoardItem);
 
   const { publishBoard, updateBoard, deleteBoard } = useMutateBoard();
+
+  const { setRemoveBoardParams } = useRemoveBoardParams(board);
 
   useEffect(() => {
     if (action === 'remove-board' && confirm === 'true') {
@@ -246,16 +248,7 @@ export const BoardSlideover = () => {
                                       <button
                                         type="button"
                                         className="ml-auto rounded-md border border-red-200 px-4 py-1 text-sm font-bold leading-6 text-red-400 hover:text-red-500 hover:border-red-300"
-                                        onClick={() => {
-                                          setBoard(board);
-                                          setSearchParams(
-                                            (searchParams) => {
-                                              searchParams.set('action', 'remove-board');
-                                              return searchParams;
-                                            },
-                                            { replace: true }
-                                          );
-                                        }}
+                                        onClick={setRemoveBoardParams}
                                       >
                                         Delete Board
                                       </button>

@@ -2,7 +2,7 @@ import { nip19 } from 'nostr-tools';
 import { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useCreatePin, useEditBoard } from '@/logic/hooks';
+import { useCreatePinParams, useEditBoardParams } from '@/logic/hooks';
 import { useMutateBoardLike } from '@/logic/mutations';
 import { useBoard, useBoardReactions, useUser } from '@/logic/queries';
 
@@ -27,15 +27,15 @@ export const useBoardSummary = () => {
     [reactions?.zaps, pubkey]
   );
 
-  const { editBoard } = useEditBoard(board);
-  const { createPin } = useCreatePin(board);
+  const { setEditBoardParams } = useEditBoardParams(board);
+  const { setCreatePinParams } = useCreatePinParams(board);
 
   return {
     board,
     title,
     reactions,
-    createPin,
-    editBoard,
+    setEditBoardParams,
+    setCreatePinParams,
     selfBoard,
     like,
     likedByUser,
