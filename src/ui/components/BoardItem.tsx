@@ -51,6 +51,8 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
             selfBoard={selfBoard}
             actionButtons={[{ title: 'Add Pin', icon: PaperClipIcon, onClick: setCreatePinParams }]}
             editType="board"
+            buttonTheme="dark"
+            className="top-3 right-3"
           />
 
           <Transition show={isHovering}>

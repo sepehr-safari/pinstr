@@ -30,6 +30,7 @@ export const ImageGrid = ({ board }: { board: Board }) => {
               pinIndex={index}
               externalLinks={[[imagePin[0], 'Open Image']]}
               editType="pin"
+              buttonTheme="dark"
             />
 
             <button

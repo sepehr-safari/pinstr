@@ -35,14 +35,14 @@ export const VideoGrid = ({ board }: { board: Board }) => {
               ]}
               externalLinks={[[videoPin[0], 'Open Video']]}
               editType="pin"
-              className="right-2 bottom-2"
+              className="right-0 bottom-0"
             />
 
             <div className="aspect-w-5 aspect-h-3 overflow-hidden rounded-md bg-black">
               <ReactPlayer url={videoPin[0]} width="100%" height="100%" controls />
             </div>
 
-            <p className="my-4 mr-14 block truncate text-sm font-medium text-gray-900 duration-700">
+            <p className="mt-4 mb-2 mr-14 block truncate text-sm font-medium text-gray-900 duration-700">
               {videoPin[1]}
             </p>
           </li>
