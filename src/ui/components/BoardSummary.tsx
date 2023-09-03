@@ -86,7 +86,7 @@ export const BoardSummary = () => {
                     onClick={setCreatePinParams}
                   >
                     <PaperClipIcon className="-ml-2 w-4 h-4" />
-                    <span className="ml-2">Add Pin</span>{' '}
+                    <span className="ml-2">Add Pin</span>
                   </button>
                 </div>
               </>
