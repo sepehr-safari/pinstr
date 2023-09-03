@@ -17,6 +17,7 @@ export const BoardSummary = () => {
     likedByUser,
     selfBoard,
     zapedByUser,
+    toggleCommentsParams,
   } = useBoardSummary();
 
   if (!board) {
@@ -106,7 +107,7 @@ export const BoardSummary = () => {
             )}
           >
             <HeartIcon className="mr-2 h-4 w-4" />
-            <span className="">{reactions ? reactions.likes.length : 0}</span>
+            <span>{reactions ? reactions.likes.length : 0}</span>
           </button>
           <button
             type="button"
@@ -119,14 +120,15 @@ export const BoardSummary = () => {
             )}
           >
             <BoltIcon className="mr-2 h-4 w-4" />
-            <span className="">{reactions ? reactions.zaps.length : 0}</span>
+            <span>{reactions ? reactions.zaps.length : 0}</span>
           </button>
           <button
             type="button"
+            onClick={toggleCommentsParams}
             className="inline-flex justify-center items-center text-xs font-semibold duration-200 text-gray-600 hover:text-gray-900 hover:bg-gray-100"
           >
             <ChatBubbleLeftIcon className="mr-2 h-4 w-4" />
-            <span className="">{reactions ? reactions.comments.length : 0}</span>
+            <span>{reactions ? reactions.comments.length : 0}</span>
           </button>
         </div>
       </div>
