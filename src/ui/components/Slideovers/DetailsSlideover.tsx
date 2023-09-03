@@ -117,7 +117,7 @@ export const DetailsSlideover = ({
                           </button>
                         </div>
 
-                        <div className="group/view relative overflow-hidden w-full max-w-sm rounded-lg shadow-md border bg-white">
+                        <div className="relative overflow-hidden w-full max-w-sm rounded-lg shadow-md border bg-white">
                           {children}
                         </div>
 

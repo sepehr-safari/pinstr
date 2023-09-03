@@ -77,14 +77,14 @@ const ProfileDetails = ({ pubkey, summary = false }: { pubkey: string; summary?:
       <div className="w-full absolute top-0">
         <div
           className={joinClassNames(
-            'w-full h-24 bg-gradient-to-br from-purple-800 to-purple-500 text-gray-200 duration-500 group-hover/view:rounded-b-none',
+            'w-full h-24 bg-gradient-to-br from-purple-800 to-purple-500 text-gray-200 duration-500 group-hover:rounded-b-none',
             summary ? 'rounded-lg' : 'rounded-t-lg'
           )}
         >
           {!!profile.banner && (
             <img
               className={joinClassNames(
-                'w-full h-full object-cover duration-500 group-hover/view:rounded-b-none',
+                'w-full h-full object-cover duration-500 group-hover:rounded-b-none',
                 summary ? 'rounded-lg' : 'rounded-t-lg'
               )}
               src={loader(profile.banner, { w: 300, h: 96 })}
@@ -98,7 +98,7 @@ const ProfileDetails = ({ pubkey, summary = false }: { pubkey: string; summary?:
         <div className="mx-auto rounded-full bg-gray-300 text-gray-300 z-[1]">
           {!!profile.picture && (
             <img
-              className="w-24 h-24 rounded-full duration-500 group-hover/view:-translate-y-1 group-hover/view:scale-105 group-hover/view:shadow-md"
+              className="w-24 h-24 rounded-full duration-500 group-hover:-translate-y-1 group-hover:scale-105 group-hover:shadow-md"
               src={loader(profile.picture, { w: 96, h: 96 })}
               alt={profile.displayName + ' avatar'}
               loading="lazy"
