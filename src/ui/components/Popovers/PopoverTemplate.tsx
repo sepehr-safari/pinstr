@@ -2,12 +2,11 @@ import { Popover, Transition } from '@headlessui/react';
 import { useState } from 'react';
 import { usePopper } from 'react-popper';
 
+import { PopoverButton } from '@/logic/types';
 import { joinClassNames } from '@/logic/utils';
 
-import { IPopoverButton } from './types';
-
 export interface PopoverProps {
-  buttons: IPopoverButton[];
+  buttons: PopoverButton[];
   children: React.ReactNode;
 }
 

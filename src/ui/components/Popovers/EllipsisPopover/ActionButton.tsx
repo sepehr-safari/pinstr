@@ -1,8 +1,7 @@
+import { PopoverButton } from '@/logic/types';
 import { joinClassNames } from '@/logic/utils';
 
-import { IPopoverButton } from '../types';
-
-export const ActionButton = ({ button }: { button: IPopoverButton }) => {
+export const ActionButton = ({ button }: { button: PopoverButton }) => {
   return (
     <>
       <div

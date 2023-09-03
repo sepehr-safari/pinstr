@@ -7,8 +7,7 @@ import {
   useRemoveBoardParams,
   useRemovePinParams,
 } from '@/logic/hooks';
-import { Board } from '@/logic/types';
-import { IPopoverButton } from '../types';
+import { Board, PopoverButton } from '@/logic/types';
 
 import { ActionButton } from './ActionButton';
 
@@ -26,7 +25,7 @@ export const EditButtons = ({
   const { setEditPinParams } = useEditPinParams(board, pinIndex);
   const { setRemovePinParams } = useRemovePinParams(board, pinIndex);
 
-  const buttons = useMemo<IPopoverButton[]>(
+  const buttons = useMemo<PopoverButton[]>(
     () => [
       {
         title: 'Edit',

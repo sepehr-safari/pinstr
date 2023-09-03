@@ -2,15 +2,15 @@ import { ListBulletIcon, PaperClipIcon, PlusIcon } from '@heroicons/react/24/out
 import { useMemo } from 'react';
 
 import { useCreateBoardParams, useCreatePinParams } from '@/logic/hooks';
+import { PopoverButton } from '@/logic/types';
 
 import { PopoverTemplate } from './';
-import { IPopoverButton } from './types';
 
 export const CreatePopover = () => {
   const { setCreateBoardParams } = useCreateBoardParams();
   const { setCreatePinParams } = useCreatePinParams({});
 
-  const buttons: IPopoverButton[] = useMemo(
+  const buttons: PopoverButton[] = useMemo(
     () => [
       {
         title: 'New Board',

@@ -39,3 +39,11 @@ export interface Reactions {
 }
 
 export type ProfileAddressType = 'nip05' | 'nip19' | 'hex' | 'unknown';
+
+export interface PopoverButton {
+  title: string;
+  onClick: () => void;
+  description?: string;
+  color?: string;
+  icon?: any;
+}

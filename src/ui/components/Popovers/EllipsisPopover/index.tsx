@@ -1,15 +1,14 @@
 import { Popover } from '@headlessui/react';
+import { EllipsisVerticalIcon } from '@heroicons/react/24/outline';
 
-import { Board } from '@/logic/types';
+import { Board, PopoverButton } from '@/logic/types';
+import { joinClassNames } from '@/logic/utils';
 
-import { IPopoverButton } from '../types';
 import { ActionButton } from './ActionButton';
 import { EditButtons } from './EditButtons';
 import { ExternalLink } from './ExternalLink';
 import { InternalLink } from './InternalLink';
-import { PopoverButton } from './PopoverButton';
 import { TransitionWrapper } from './TransitionWrapper';
-import { joinClassNames } from '@/logic/utils';
 
 export const EllipsisPopover = ({
   board,
@@ -25,7 +24,7 @@ export const EllipsisPopover = ({
 }: {
   board: Board;
   pinIndex?: number;
-  actionButtons?: IPopoverButton[];
+  actionButtons?: PopoverButton[];
   internalLinks?: string[][];
   externalLinks?: string[][];
   selfBoard: boolean;
@@ -38,7 +37,15 @@ export const EllipsisPopover = ({
 
   return (
     <Popover>
-      <PopoverButton className={className} slideInFrom={slideInFrom} />
+      <Popover.Button
+        className={joinClassNames(
+          slideInFrom == 'right' ? 'translate-x-2' : '-translate-x-2',
+          'absolute z-[4] outline-none text-white rounded-full bg-black/30 p-2 duration-200 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 hover:bg-black/50',
+          className
+        )}
+      >
+        <EllipsisVerticalIcon className="h-6 w-6" />
+      </Popover.Button>
 
       <TransitionWrapper overlay={overlay}>
         <Popover.Panel
