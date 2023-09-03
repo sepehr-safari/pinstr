@@ -3,6 +3,7 @@ export * from './BoardItem';
 export * from './BoardSummary';
 export * from './BoardsByAuthor';
 export * from './BoardsExplorer';
+export * from './Comments';
 export * from './Footer';
 export * from './ImageModal';
 export * from './ProfileBanner';
