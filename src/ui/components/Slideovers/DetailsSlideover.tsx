@@ -5,7 +5,7 @@ import { Dispatch, Fragment, SetStateAction, useCallback, useEffect } from 'reac
 
 import { Board } from '@/logic/types';
 
-import { EditPinPopover } from '@/ui/components/Popovers';
+import { EllipsisPopover } from '@/ui/components/Popovers';
 
 export const DetailsSlideover = ({
   board,
@@ -76,13 +76,21 @@ export const DetailsSlideover = ({
                 leaveFrom="translate-x-0"
                 leaveTo="translate-x-full"
               >
-                <Dialog.Panel className="pointer-events-auto w-screen max-w-2xl">
+                <Dialog.Panel className="group pointer-events-auto w-screen max-w-2xl">
                   <div className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
+                    <EllipsisPopover
+                      board={board}
+                      pinIndex={pinIndex}
+                      selfBoard={true}
+                      editType="pin"
+                      className="top-4 left-4"
+                      overlay={false}
+                      slideInFrom="left"
+                    />
+
                     <div className="px-4 py-6 sm:px-6 border-b">
                       <div className="flex items-start justify-between">
-                        <Dialog.Title className="text-base font-semibold leading-6 text-gray-900">
-                          <EditPinPopover board={board} pinIndex={pinIndex} overlay={false} />
-                        </Dialog.Title>
+                        <Dialog.Title className="text-base font-semibold leading-6 text-gray-900"></Dialog.Title>
                         <div className="ml-3 flex h-7 items-center">
                           <button
                             type="button"
@@ -109,7 +117,7 @@ export const DetailsSlideover = ({
                           </button>
                         </div>
 
-                        <div className="group relative max-w-sm w-full rounded-lg shadow-md border bg-white">
+                        <div className="group/view relative overflow-hidden w-full max-w-sm rounded-lg shadow-md border bg-white">
                           {children}
                         </div>
 

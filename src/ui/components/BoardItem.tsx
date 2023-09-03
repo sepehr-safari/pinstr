@@ -1,16 +1,18 @@
 import { Transition } from '@headlessui/react';
 import { BoltIcon, HeartIcon } from '@heroicons/react/20/solid';
+import { PaperClipIcon } from '@heroicons/react/24/outline';
 import { nip19 } from 'nostr-tools';
 import { memo, useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-import { AuthorOverview } from '@/ui/components';
-import { EditBoardPopover } from '@/ui/components/Popovers';
-
+import { useCreatePin } from '@/logic/hooks';
 import { useMutateBoardLike } from '@/logic/mutations';
 import { useAuthor, useBoardReactions, useUser } from '@/logic/queries';
 import { Board } from '@/logic/types';
 import { joinClassNames, loader } from '@/logic/utils';
+
+import { AuthorOverview } from '@/ui/components';
+import { EllipsisPopover } from '@/ui/components/Popovers';
 
 const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: boolean }) => {
   const [isHovering, setIsHover] = useState<boolean | undefined>(false);
@@ -33,6 +35,8 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
 
   const location = useLocation();
 
+  const { createPin } = useCreatePin(board);
+
   return (
     <>
       <div
@@ -41,6 +45,14 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
         onMouseLeave={() => setIsHover(false)}
       >
         <div className="relative aspect-w-5 aspect-h-4 overflow-hidden rounded-md bg-gray-100 hover:cursor-pointer">
+          <EllipsisPopover
+            board={board}
+            pinIndex={0}
+            selfBoard={selfBoard}
+            actionButtons={[{ title: 'Add Pin', icon: PaperClipIcon, onClick: createPin }]}
+            editType="board"
+          />
+
           <Transition show={isHovering}>
             <Transition.Child
               as="div"
@@ -70,32 +82,18 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
                 {board.category}
               </span>
             </Transition.Child>
-            {selfBoard && (
-              <Transition.Child
-                as="div"
-                className="z-[2] absolute right-2 top-2"
-                enter="duration-200"
-                enterFrom="opacity-0 translate-x-2"
-                enterTo="opacity-100 translate-x-0"
-                leave="duration-200"
-                leaveFrom="opacity-100 translate-x-0"
-                leaveTo="opacity-0 translate-x-2"
-              >
-                <EditBoardPopover board={board} />
-              </Transition.Child>
-            )}
             <Link
               to={`/p/${nip19.npubEncode(board.author)}/${board.title}`}
               state={{ backgroundLocation: location }}
             >
               <Transition.Child
                 as="div"
-                className="z-[1] absolute inset-0 bg-black"
+                className="z-[1] absolute inset-0 bg-black/20"
                 enter="duration-300"
                 enterFrom="opacity-0"
-                enterTo="opacity-50"
+                enterTo="opacity-100"
                 leave="duration-100"
-                leaveFrom="opacity-50"
+                leaveFrom="opacity-100"
                 leaveTo="opacity-0"
               />
             </Link>

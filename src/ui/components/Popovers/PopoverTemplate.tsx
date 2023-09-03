@@ -4,20 +4,14 @@ import { usePopper } from 'react-popper';
 
 import { joinClassNames } from '@/logic/utils';
 
-export interface PopoverItem {
-  title: string;
-  onClick: () => void;
-  description?: string;
-  color?: string;
-  icon?: any;
-}
+import { IPopoverButton } from './types';
 
 export interface PopoverProps {
-  items: PopoverItem[];
+  buttons: IPopoverButton[];
   children: React.ReactNode;
 }
 
-export const PopoverTemplate = ({ children, items }: PopoverProps) => {
+export const PopoverTemplate = ({ children, buttons }: PopoverProps) => {
   const [referenceElement, setReferenceElement] = useState<HTMLButtonElement | null>(null);
   const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null);
   const { styles, attributes } = usePopper(referenceElement, popperElement, {
@@ -45,7 +39,7 @@ export const PopoverTemplate = ({ children, items }: PopoverProps) => {
           {...attributes.popper}
         >
           <div className=" max-w-xs flex-auto rounded-xl bg-white p-2 text-sm shadow-lg ring-1 ring-gray-900/20">
-            {items.map((item, index) => (
+            {buttons.map((item, index) => (
               <div
                 key={index}
                 className="group flex items-center gap-2 rounded-md p-2 hover:bg-gray-100 hover:cursor-pointer"
