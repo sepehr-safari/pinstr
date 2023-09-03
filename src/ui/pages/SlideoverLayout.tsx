@@ -20,7 +20,7 @@ export const SlideoverLayout = () => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black/80 duration-200" />
+          <div className="fixed inset-0 bg-black/80 duration-500" />
         </Transition.Child>
 
         <div
