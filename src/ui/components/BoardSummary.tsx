@@ -1,39 +1,23 @@
 import { HeartIcon } from '@heroicons/react/20/solid';
 import { PaperClipIcon, PencilIcon } from '@heroicons/react/24/outline';
 import { BoltIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/solid';
-import { nip19 } from 'nostr-tools';
-import { useMemo } from 'react';
-import { Link, useParams, useSearchParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-import { useMutateBoardLike } from '@/logic/mutations';
-import { useBoard, useBoardReactions, useUser } from '@/logic/queries';
-import { useLocalStore } from '@/logic/store';
+import { useBoardSummary } from '@/logic/hooks';
 import { formatRelativeTime, joinClassNames, loader } from '@/logic/utils';
 
 export const BoardSummary = () => {
-  const [_, setSearchParams] = useSearchParams();
-
-  const { npub, title } = useParams();
-  const hex = npub ? nip19.decode(npub).data.toString() : '';
-
-  const setBoard = useLocalStore((store) => store.setBoard);
-
-  const { data: board } = useBoard({ author: hex, title: title! });
-
-  const { data: reactions } = useBoardReactions(board);
-  const { mutate: like } = useMutateBoardLike(board);
-
-  const { pubkey } = useUser();
-  const selfBoard = pubkey ? pubkey == hex : false;
-
-  const likedByUser = useMemo(
-    () => !!reactions?.likes.find((event) => event.pubkey == pubkey),
-    [reactions?.likes, pubkey]
-  );
-  const zapedByUser = useMemo(
-    () => !!reactions?.zaps.find((event) => event.pubkey == pubkey),
-    [reactions?.zaps, pubkey]
-  );
+  const {
+    board,
+    title,
+    reactions,
+    createPin,
+    editBoard,
+    like,
+    likedByUser,
+    selfBoard,
+    zapedByUser,
+  } = useBoardSummary();
 
   if (!board) {
     return null;
@@ -91,18 +75,7 @@ export const BoardSummary = () => {
                   <button
                     type="button"
                     className="flex items-center justify-center rounded-md bg-gray-100 w-full py-2 text-xs font-semibold text-gray-600 hover:bg-gray-200 hover:text-gray-900"
-                    onClick={() => {
-                      if (board) {
-                        setBoard(board);
-                        setSearchParams(
-                          (searchParams) => {
-                            searchParams.set('action', 'edit-board');
-                            return searchParams;
-                          },
-                          { replace: true }
-                        );
-                      }
-                    }}
+                    onClick={editBoard}
                   >
                     <PencilIcon className="-ml-2 w-4 h-4" />
                     <span className="ml-2">Edit Board</span>
@@ -110,19 +83,7 @@ export const BoardSummary = () => {
                   <button
                     type="button"
                     className="flex items-center justify-center rounded-md bg-gray-100 w-full py-2 text-xs font-semibold text-gray-600 hover:bg-gray-200 hover:text-gray-900"
-                    onClick={() => {
-                      if (board) {
-                        setBoard(board);
-                        setSearchParams(
-                          (searchParams) => {
-                            searchParams.set('action', 'create-pin');
-                            searchParams.set('i', board.pins.length.toString());
-                            return searchParams;
-                          },
-                          { replace: true }
-                        );
-                      }
-                    }}
+                    onClick={createPin}
                   >
                     <PaperClipIcon className="-ml-2 w-4 h-4" />
                     <span className="ml-2">Add Pin</span>{' '}
