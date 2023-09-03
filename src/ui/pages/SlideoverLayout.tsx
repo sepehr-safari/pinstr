@@ -20,7 +20,7 @@ export const SlideoverLayout = () => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black bg-opacity-70 duration-200" />
+          <div className="fixed inset-0 bg-black/80 duration-200" />
         </Transition.Child>
 
         <div
@@ -28,7 +28,7 @@ export const SlideoverLayout = () => {
           tabIndex={0}
           id="bottom-slideover"
         >
-          <div className="pointer-events-none w-full h-full flex px-0 pt-40 md:px-10 lg:px-20">
+          <div className="pointer-events-none w-full h-full flex px-0 pt-40 md:px-10">
             <Transition.Child
               as={Fragment}
               enterFrom="translate-y-full"
