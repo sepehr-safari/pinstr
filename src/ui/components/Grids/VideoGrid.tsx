@@ -2,7 +2,6 @@ import { DocumentTextIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
 import ReactPlayer from 'react-player';
 
-import { useCommentsParams } from '@/logic/hooks';
 import { useUser } from '@/logic/queries';
 import { Board } from '@/logic/types';
 import { joinClassNames } from '@/logic/utils';
@@ -16,17 +15,13 @@ export const VideoGrid = ({ board }: { board: Board }) => {
   const { pubkey } = useUser();
   const selfBoard = pubkey ? pubkey == board.author : false;
 
-  const { commentsParam } = useCommentsParams();
-
   return (
     <>
       <ul
         role="list"
         className={joinClassNames(
           'grid gap-4 grid-cols-1 sm:grid-cols-2',
-          commentsParam == null
-            ? 'md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-3 4xl:grid-cols-4 5xl:grid-cols-5'
-            : 'md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-1 2xl:grid-cols-2 3xl:grid-cols-3 4xl:grid-cols-3 5xl:grid-cols-4'
+          'md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-3 4xl:grid-cols-4 5xl:grid-cols-5'
         )}
       >
         {(board.pins || []).map((videoPin, index) => (
