@@ -1,6 +1,6 @@
 import { PlusIcon } from '@heroicons/react/20/solid';
 import { nip19 } from 'nostr-tools';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import { useAuthor } from '@/logic/queries';
 import { loader } from '@/logic/utils';
@@ -45,7 +45,10 @@ export const ProfileCard = () => {
         </a>
 
         <div className="mt-12 w-full text-center xl:text-start xl:mt-0 xl:flex xl:flex-col xl:justify-around">
-          <h2 className="text-lg font-semibold xl:leading-none">{displayName || ''}</h2>
+          <Link to={`/p/${npub}`} className="text-start max-w-fit hover:underline">
+            <h2 className="text-lg font-semibold xl:leading-none">{displayName || ''}</h2>
+          </Link>
+
           <span className="mt-1 text-xs font-light text-gray-500">{nip05 || ''}</span>
 
           <button className="mt-1 hidden w-full xl:inline-flex justify-center items-center rounded-full bg-gray-900 py-2 text-xs font-semibold text-white shadow-sm hover:bg-gray-700">
