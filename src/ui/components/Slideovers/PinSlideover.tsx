@@ -74,6 +74,7 @@ const SelectBoard = () => {
                     <h3 className="text-sm font-medium text-gray-900">
                       <button
                         type="button"
+                        className="text-start"
                         onClick={() => {
                           setSearchParams(
                             (searchParams) => {
