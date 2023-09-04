@@ -34,7 +34,7 @@ export const CommentsCard = () => {
             <Spinner />
           </div>
         ) : reactions?.comments.length == 0 ? (
-          <div className="py-4 text-center">
+          <div className="py-2 text-center">
             <p className="text-sm font-semibold">No Comments yet!</p>
             <p>Add one to start the conversation.</p>
           </div>
