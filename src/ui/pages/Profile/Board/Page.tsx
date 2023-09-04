@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import { useBoard } from '@/logic/queries';
 
+import { Spinner } from '@/ui/components';
 import {
   ImageGrid,
   LinkGrid,
@@ -19,7 +20,11 @@ export const Page = () => {
   const { data: board, status } = useBoard({ author: hex, title: title });
 
   if (status == 'loading') {
-    return <div>Loading ...</div>;
+    return (
+      <div className="h-32 flex justify-center items-center">
+        <Spinner />
+      </div>
+    );
   }
 
   if (!board) {
