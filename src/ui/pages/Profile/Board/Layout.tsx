@@ -10,17 +10,17 @@ export const Layout = () => {
 
   return (
     <>
-      <StickyContainer>
+      <StickyContainer className="order-1">
         <ProfileCard />
         <BoardSummary />
       </StickyContainer>
 
-      <MainContainer>
+      <MainContainer className="order-3 xl:order-2">
         <Outlet />
       </MainContainer>
 
       {commentsParam != null && (
-        <StickyContainer>
+        <StickyContainer className="order-2 xl:order-3 xl:max-w-sm 2xl:max-w-xs">
           <Comments />
         </StickyContainer>
       )}

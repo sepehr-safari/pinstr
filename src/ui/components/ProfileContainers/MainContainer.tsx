@@ -4,7 +4,13 @@ import { joinClassNames } from '@/logic/utils';
 
 import { Breadcrumb } from '@/ui/components/Navbars';
 
-export const MainContainer = ({ children }: { children: React.ReactNode }) => {
+export const MainContainer = ({
+  children,
+  className = '',
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => {
   const location = useLocation();
   const state = location.state as { backgroundLocation?: Location };
 
@@ -12,7 +18,8 @@ export const MainContainer = ({ children }: { children: React.ReactNode }) => {
     <div
       className={joinClassNames(
         'w-full h-full px-8 pb-6 xl:px-0',
-        state?.backgroundLocation ? 'xl:mt-16' : 'xl:mt-28'
+        state?.backgroundLocation ? 'xl:mt-16' : 'xl:mt-28',
+        className
       )}
     >
       <div className="mb-5 xl:mt-2">
