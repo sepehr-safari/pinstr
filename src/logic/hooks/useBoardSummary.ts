@@ -2,7 +2,7 @@ import { nip19 } from 'nostr-tools';
 import { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useCommentsParams, useCreatePinParams, useEditBoardParams } from '@/logic/hooks';
+import { useCreatePinParams, useEditBoardParams } from '@/logic/hooks';
 import { useMutateBoardLike } from '@/logic/mutations';
 import { useBoard, useBoardReactions, useUser } from '@/logic/queries';
 
@@ -29,7 +29,6 @@ export const useBoardSummary = () => {
 
   const { setEditBoardParams } = useEditBoardParams(board);
   const { setCreatePinParams } = useCreatePinParams(board);
-  const { toggleCommentsParams } = useCommentsParams();
 
   return {
     status,
@@ -42,6 +41,5 @@ export const useBoardSummary = () => {
     like,
     likedByUser,
     zapedByUser,
-    toggleCommentsParams,
   };
 };

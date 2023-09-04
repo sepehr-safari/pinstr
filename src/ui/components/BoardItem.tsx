@@ -1,37 +1,25 @@
 import { Transition } from '@headlessui/react';
-import { BoltIcon, HeartIcon } from '@heroicons/react/20/solid';
 import { PaperClipIcon } from '@heroicons/react/24/outline';
 import { nip19 } from 'nostr-tools';
-import { memo, useMemo, useState } from 'react';
+import { memo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import { useCreatePinParams } from '@/logic/hooks';
-import { useMutateBoardLike } from '@/logic/mutations';
-import { useAuthor, useBoardReactions, useUser } from '@/logic/queries';
+import { useAuthor, useUser } from '@/logic/queries';
 import { Board } from '@/logic/types';
-import { joinClassNames, loader } from '@/logic/utils';
+import { loader } from '@/logic/utils';
 
 import { AuthorOverview } from '@/ui/components';
 import { EllipsisPopover } from '@/ui/components/Popovers';
+import { BoardLikeButton, BoardZapButton } from '@/ui/components/ReactionButtons';
 
 const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: boolean }) => {
   const [isHovering, setIsHover] = useState<boolean | undefined>(false);
 
   const { data: author } = useAuthor(board.author);
-  const { data: reactions } = useBoardReactions(board);
-  const { mutate: like } = useMutateBoardLike(board);
 
   const { pubkey } = useUser();
   const selfBoard = pubkey ? pubkey == board.author : false;
-
-  const likedByUser = useMemo(
-    () => !!reactions?.likes.find((event) => event.pubkey == pubkey),
-    [reactions?.likes, pubkey]
-  );
-  const zapedByUser = useMemo(
-    () => !!reactions?.zaps.find((event) => event.pubkey == pubkey),
-    [reactions?.zaps, pubkey]
-  );
 
   const location = useLocation();
 
@@ -114,37 +102,9 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
 
             {!hideAuthor && author && <AuthorOverview author={author} />}
           </div>
-          <div className="ml-4 mt-[2px] flex">
-            <button
-              type="button"
-              onClick={() => !likedByUser && like()}
-              className={joinClassNames(
-                'inline-flex justify-center text-xs font-semibold',
-                likedByUser
-                  ? 'text-red-600 hover:cursor-default'
-                  : 'text-gray-600 hover:text-gray-900'
-              )}
-            >
-              <HeartIcon className="h-4 w-4" aria-hidden="true" />
-              <span className="ml-1">
-                {reactions && reactions.likes.length > 0 ? reactions.likes.length : 0}
-              </span>
-            </button>
-            <button
-              type="button"
-              // onClick={() => zap()}
-              className={joinClassNames(
-                'ml-4 inline-flex justify-center text-xs font-semibold',
-                zapedByUser
-                  ? 'text-yellow-600 hover:text-yellow-700'
-                  : 'text-gray-600 hover:text-gray-900'
-              )}
-            >
-              <BoltIcon className="h-4 w-4" aria-hidden="true" />
-              <span className="ml-1">
-                {reactions && reactions.zaps.length > 0 ? reactions.zaps.length : 0}
-              </span>
-            </button>
+          <div className="ml-4 mt-[2px] flex gap-4">
+            <BoardLikeButton board={board} />
+            <BoardZapButton board={board} />
           </div>
         </div>
       </div>

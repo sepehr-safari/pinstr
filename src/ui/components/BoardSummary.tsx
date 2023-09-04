@@ -1,27 +1,19 @@
-import { HeartIcon } from '@heroicons/react/20/solid';
 import { PaperClipIcon, PencilIcon } from '@heroicons/react/24/outline';
-import { BoltIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/solid';
 import { Link } from 'react-router-dom';
 
 import { useBoardSummary } from '@/logic/hooks';
-import { formatRelativeTime, joinClassNames, loader } from '@/logic/utils';
+import { formatRelativeTime, loader } from '@/logic/utils';
 
 import { Spinner } from '@/ui/components';
+import {
+  BoardCommentButton,
+  BoardLikeButton,
+  BoardZapButton,
+} from '@/ui/components/ReactionButtons';
 
 export const BoardSummary = () => {
-  const {
-    status,
-    board,
-    title,
-    reactions,
-    setCreatePinParams,
-    setEditBoardParams,
-    like,
-    likedByUser,
-    selfBoard,
-    zapedByUser,
-    toggleCommentsParams,
-  } = useBoardSummary();
+  const { status, board, title, setCreatePinParams, setEditBoardParams, selfBoard } =
+    useBoardSummary();
 
   if (status == 'loading') {
     return (
@@ -107,40 +99,9 @@ export const BoardSummary = () => {
         </div>
 
         <div className="grid grid-cols-3 w-full h-10 divide-x border-t">
-          <button
-            type="button"
-            onClick={() => !likedByUser && like()}
-            className={joinClassNames(
-              'inline-flex justify-center items-center text-xs font-semibold',
-              likedByUser
-                ? 'text-red-600 hover:cursor-default'
-                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-            )}
-          >
-            <HeartIcon className="mr-2 h-4 w-4" />
-            <span>{reactions ? reactions.likes.length : 0}</span>
-          </button>
-          <button
-            type="button"
-            // onClick={() => zap()}
-            className={joinClassNames(
-              'inline-flex justify-center items-center text-xs font-semibold',
-              zapedByUser
-                ? 'text-yellow-600 hover:text-yellow-700'
-                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-            )}
-          >
-            <BoltIcon className="mr-2 h-4 w-4" />
-            <span>{reactions ? reactions.zaps.length : 0}</span>
-          </button>
-          <button
-            type="button"
-            onClick={toggleCommentsParams}
-            className="inline-flex justify-center items-center text-xs font-semibold duration-200 text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-          >
-            <ChatBubbleLeftIcon className="mr-2 h-4 w-4" />
-            <span>{reactions ? reactions.comments.length : 0}</span>
-          </button>
+          <BoardLikeButton board={board} />
+          <BoardZapButton board={board} />
+          <BoardCommentButton board={board} />
         </div>
       </div>
     </div>
