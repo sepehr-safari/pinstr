@@ -6,8 +6,11 @@ import { Link } from 'react-router-dom';
 import { useBoardSummary } from '@/logic/hooks';
 import { formatRelativeTime, joinClassNames, loader } from '@/logic/utils';
 
+import { Spinner } from '@/ui/components';
+
 export const BoardSummary = () => {
   const {
+    status,
     board,
     title,
     reactions,
@@ -19,6 +22,14 @@ export const BoardSummary = () => {
     zapedByUser,
     toggleCommentsParams,
   } = useBoardSummary();
+
+  if (status == 'loading') {
+    return (
+      <div className="h-32 flex justify-center items-center overflow-hidden bg-white shadow-md text-xs xl:rounded-xl">
+        <Spinner />
+      </div>
+    );
+  }
 
   if (!board) {
     return null;

@@ -10,7 +10,7 @@ export const useBoardSummary = () => {
   const { npub, title } = useParams();
   const hex = npub ? nip19.decode(npub).data.toString() : '';
 
-  const { data: board } = useBoard({ author: hex, title: title! });
+  const { data: board, status } = useBoard({ author: hex, title: title! });
 
   const { data: reactions } = useBoardReactions(board);
   const { mutate: like } = useMutateBoardLike(board);
@@ -32,6 +32,7 @@ export const useBoardSummary = () => {
   const { toggleCommentsParams } = useCommentsParams();
 
   return {
+    status,
     board,
     title,
     reactions,

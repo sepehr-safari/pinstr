@@ -5,13 +5,23 @@ import { useParams } from 'react-router-dom';
 import { useAuthor } from '@/logic/queries';
 import { loader } from '@/logic/utils';
 
+import { Spinner } from '@/ui/components';
+
 export const ProfileCard = () => {
   const { npub } = useParams();
 
   const hex = npub ? nip19.decode(npub).data.toString() : undefined;
 
-  const { data: author } = useAuthor(hex);
+  const { data: author, status } = useAuthor(hex);
   const { displayName, picture, nip05, about } = author || {};
+
+  if (status == 'loading') {
+    return (
+      <div className="h-32 flex justify-center items-center overflow-hidden bg-white shadow-md text-xs xl:rounded-xl">
+        <Spinner />
+      </div>
+    );
+  }
 
   return (
     <div className="p-6 flex flex-col items-center bg-white shadow-md z-[1] rounded-none xl:rounded-xl xl:items-start">
