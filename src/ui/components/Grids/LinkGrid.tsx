@@ -34,9 +34,11 @@ export const LinkGrid = ({ board }: { board: Board }) => {
               alt={linkPin[1]}
               loading="lazy"
             />
-            <div className="flex items-center px-4 truncate group-hover/top:underline">
+            <div className="flex items-center pl-4 pr-12 truncate group-hover/top:underline">
               <h3 className="truncate text-sm font-medium text-gray-900">{linkPin[1]}</h3>
-              <ArrowRightIcon className="ml-1 w-4 h-4 duration-300 -translate-x-1 opacity-0 group-hover/top:opacity-100 group-hover/top:translate-x-0" />
+              <div>
+                <ArrowRightIcon className="ml-1 w-4 h-4 duration-300 -translate-x-1 opacity-0 group-hover/top:opacity-100 group-hover/top:translate-x-0" />
+              </div>
             </div>
           </button>
           <div className="p-6 relative">
