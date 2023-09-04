@@ -20,7 +20,7 @@ export const SlideoverLayout = () => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black/80 duration-500" />
+          <div className="fixed inset-0 bg-black/80 duration-300" />
         </Transition.Child>
 
         <div
@@ -31,12 +31,12 @@ export const SlideoverLayout = () => {
           <div className="pointer-events-none w-full h-full flex px-0 pt-40 md:px-10">
             <Transition.Child
               as={Fragment}
-              enterFrom="translate-y-full"
-              enterTo="translate-y-0"
-              leaveFrom="translate-y-0"
-              leaveTo="translate-y-full"
+              enterFrom="translate-y-40 opacity-0"
+              enterTo="translate-y-0 opacity-100"
+              leaveFrom="translate-y-0 opacity-100"
+              leaveTo="translate-y-40 opacity-0"
             >
-              <Dialog.Panel className="pointer-events-auto w-full duration-500">
+              <Dialog.Panel className="pointer-events-auto w-full duration-300">
                 <div className="flex h-full w-full flex-col bg-white shadow-xl rounded-t-md">
                   <div className="min-h-full">
                     <Outlet />
