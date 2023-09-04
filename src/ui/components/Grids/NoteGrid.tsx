@@ -2,9 +2,10 @@ import { nip19 } from 'nostr-tools';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import { useCommentsParams } from '@/logic/hooks';
 import { useAuthor, useNote, useUser } from '@/logic/queries';
 import { Board } from '@/logic/types';
-import { loader } from '@/logic/utils';
+import { joinClassNames, loader } from '@/logic/utils';
 
 import { Spinner } from '@/ui/components';
 import { EllipsisPopover } from '@/ui/components/Popovers';
@@ -16,26 +17,38 @@ export const NoteGrid = ({ board }: { board: Board }) => {
   const { pubkey } = useUser();
   const selfBoard = pubkey ? pubkey == board.author : false;
 
+  const { commentsParam } = useCommentsParams();
+
   return (
     <>
-      {(board.pins || []).map((pin, index) => (
-        <li
-          key={pin[0] + index}
-          className="group relative overflow-hidden flex flex-col h-full justify-between rounded-lg bg-white shadow duration-300 hover:shadow-md"
-        >
-          <EllipsisPopover
-            board={board}
-            selfBoard={selfBoard}
-            pinIndex={index}
-            externalLinks={[
-              [`https://primal.net/e/${nip19.noteEncode(pin[0])}`, 'Open With Primal'],
-            ]}
-            editType="pin"
-          />
+      <ul
+        role="list"
+        className={joinClassNames(
+          'grid gap-4 grid-cols-1 sm:grid-cols-2',
+          commentsParam == null
+            ? 'md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-3 4xl:grid-cols-4 5xl:grid-cols-5'
+            : 'md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-1 2xl:grid-cols-2 3xl:grid-cols-2 4xl:grid-cols-3 5xl:grid-cols-4'
+        )}
+      >
+        {(board.pins || []).map((pin, index) => (
+          <li
+            key={pin[0] + index}
+            className="group relative overflow-hidden flex flex-col h-full justify-between rounded-lg bg-white shadow duration-300 hover:shadow-md"
+          >
+            <EllipsisPopover
+              board={board}
+              selfBoard={selfBoard}
+              pinIndex={index}
+              externalLinks={[
+                [`https://primal.net/e/${nip19.noteEncode(pin[0])}`, 'Open With Primal'],
+              ]}
+              editType="pin"
+            />
 
-          <NoteDetails noteId={pin[0]} setPinIndex={() => setPinIndex(index)} summary />
-        </li>
-      ))}
+            <NoteDetails noteId={pin[0]} setPinIndex={() => setPinIndex(index)} summary />
+          </li>
+        ))}
+      </ul>
 
       <DetailsSlideover board={board} pinIndex={pinIndex} setPinIndex={setPinIndex}>
         {pinIndex > -1 && <NoteDetails key={pinIndex} noteId={board.pins[pinIndex][0]} />}

@@ -2,6 +2,7 @@ import { PlusIcon } from '@heroicons/react/20/solid';
 import { nip19 } from 'nostr-tools';
 import { useState } from 'react';
 
+import { useCommentsParams } from '@/logic/hooks';
 import { useAuthor, useUser } from '@/logic/queries';
 import { Board } from '@/logic/types';
 import { joinClassNames, loader } from '@/logic/utils';
@@ -16,34 +17,46 @@ export const ProfileGrid = ({ board }: { board: Board }) => {
   const { pubkey } = useUser();
   const selfBoard = pubkey ? pubkey == board.author : false;
 
+  const { commentsParam } = useCommentsParams();
+
   return (
     <>
-      {(board.pins || []).map((pin, index) => (
-        <li
-          key={pin[0] + index}
-          className="relative group overflow-hidden flex flex-col justify-between rounded-lg ease-in-out duration-500 hover:shadow-md hover:bg-gray-50"
-        >
-          <EllipsisPopover
-            board={board}
-            selfBoard={selfBoard}
-            pinIndex={index}
-            internalLinks={[[`/p/${nip19.npubEncode(pin[0])}`, 'Open Profile']]}
-            externalLinks={[
-              [`https://primal.net/p/${nip19.npubEncode(pin[0])}`, 'Open With Primal'],
-            ]}
-            editType="pin"
-            className="bottom-4 right-4"
-          />
-
-          <button
-            type="button"
-            onClick={() => setPinIndex(index)}
-            className="flex flex-col grow justify-stretch items-stretch"
+      <ul
+        role="list"
+        className={joinClassNames(
+          'grid gap-4 grid-cols-1 sm:grid-cols-2',
+          commentsParam == null
+            ? 'md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 4xl:grid-cols-5 5xl:grid-cols-6'
+            : 'md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-1 2xl:grid-cols-2 3xl:grid-cols-3 4xl:grid-cols-3 5xl:grid-cols-4'
+        )}
+      >
+        {(board.pins || []).map((pin, index) => (
+          <li
+            key={pin[0] + index}
+            className="relative group overflow-hidden flex flex-col justify-between rounded-lg ease-in-out duration-500 hover:shadow-md hover:bg-gray-50"
           >
-            <ProfileDetails pubkey={pin[0]} summary />
-          </button>
-        </li>
-      ))}
+            <EllipsisPopover
+              board={board}
+              selfBoard={selfBoard}
+              pinIndex={index}
+              internalLinks={[[`/p/${nip19.npubEncode(pin[0])}`, 'Open Profile']]}
+              externalLinks={[
+                [`https://primal.net/p/${nip19.npubEncode(pin[0])}`, 'Open With Primal'],
+              ]}
+              editType="pin"
+              className="bottom-4 right-4"
+            />
+
+            <button
+              type="button"
+              onClick={() => setPinIndex(index)}
+              className="flex flex-col grow justify-stretch items-stretch"
+            >
+              <ProfileDetails pubkey={pin[0]} summary />
+            </button>
+          </li>
+        ))}
+      </ul>
 
       <DetailsSlideover board={board} pinIndex={pinIndex} setPinIndex={setPinIndex}>
         {pinIndex > -1 && <ProfileDetails key={pinIndex} pubkey={board.pins[pinIndex][0]} />}
