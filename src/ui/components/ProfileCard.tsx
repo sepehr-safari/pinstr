@@ -45,7 +45,7 @@ export const ProfileCard = () => {
         </a>
 
         <div className="mt-12 w-full text-center xl:text-start xl:mt-0 xl:flex xl:flex-col xl:justify-around">
-          <Link to={`/p/${npub}`} className="text-start max-w-fit hover:underline">
+          <Link to={`/p/${npub}`} className="max-w-fit hover:underline">
             <h2 className="text-lg font-semibold xl:leading-none">{displayName || ''}</h2>
           </Link>
 
