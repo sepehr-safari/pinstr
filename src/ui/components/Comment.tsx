@@ -3,7 +3,7 @@ import { Event } from 'nostr-tools';
 import { useState } from 'react';
 
 import { useMutateNoteComment } from '@/logic/mutations';
-import { useAuthor, useNoteReactions } from '@/logic/queries';
+import { useAuthor, useNoteReactions, useUser } from '@/logic/queries';
 import { formatRelativeTime, loader } from '@/logic/utils';
 
 import { Spinner } from '@/ui/components';
@@ -12,6 +12,8 @@ import { NoteCommentButton, NoteLikeButton, NoteZapButton } from '@/ui/component
 export const Comment = ({ event }: { event: Event<1> }) => {
   const [inputText, setInputText] = useState('');
   const [showReply, setShowReply] = useState(false);
+
+  const { pubkey: selfPubkey } = useUser();
 
   const { data: author, status } = useAuthor(event.pubkey);
   const { data: reactions } = useNoteReactions(event.id);
@@ -56,7 +58,10 @@ export const Comment = ({ event }: { event: Event<1> }) => {
           <div className="flex gap-6 items-center">
             <NoteLikeButton note={event} />
             <NoteZapButton note={event} />
-            <NoteCommentButton note={event} onClick={() => setShowReply((prev) => !prev)} />
+            <NoteCommentButton
+              note={event}
+              onClick={() => !!selfPubkey && setShowReply((prev) => !prev)}
+            />
 
             <p className="ml-auto text-[0.6rem] font-light text-gray-500">
               {formatRelativeTime(event.created_at)}

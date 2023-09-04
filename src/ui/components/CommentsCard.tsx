@@ -1,12 +1,12 @@
+import { PaperAirplaneIcon } from '@heroicons/react/24/outline';
 import { nip19 } from 'nostr-tools';
-import { useParams } from 'react-router-dom';
-
-import { useBoard, useBoardReactions, useUser } from '@/logic/queries';
+import { useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 
 import { useMutateBoardComment } from '@/logic/mutations';
+import { useBoard, useBoardReactions, useUser } from '@/logic/queries';
+
 import { Comment, Spinner } from '@/ui/components';
-import { PaperAirplaneIcon } from '@heroicons/react/24/outline';
-import { useState } from 'react';
 
 export const CommentsCard = () => {
   const [inputText, setInputText] = useState('');
@@ -18,7 +18,7 @@ export const CommentsCard = () => {
 
   const { data: reactions, status: reactionsStatus } = useBoardReactions(board);
 
-  const { metadata: selfUser } = useUser();
+  const { metadata: selfUser, pubkey: selfPubkey } = useUser();
 
   const mutateBoardComment = useMutateBoardComment(board);
 
@@ -36,7 +36,7 @@ export const CommentsCard = () => {
         ) : reactions?.comments.length == 0 ? (
           <div className="py-2 text-center">
             <p className="text-sm font-semibold">No Comments yet!</p>
-            <p>Add one to start the conversation.</p>
+            <p className="font-light">Add one to start the conversation.</p>
           </div>
         ) : (
           reactions?.comments
@@ -45,37 +45,51 @@ export const CommentsCard = () => {
         )}
 
         <div className="flex gap-2 w-full border-t mt-2 p-2 pt-4">
-          <div className="h-9 w-9 rounded-full overflow-hidden">
-            <img className="" src={selfUser?.picture} alt="" />
-          </div>
+          {selfPubkey ? (
+            <>
+              <div className="h-9 w-9 rounded-full overflow-hidden">
+                <img className="" src={selfUser?.picture} alt="" />
+              </div>
 
-          <div className="flex items-center grow">
-            <label htmlFor="text" className="sr-only">
-              Text
-            </label>
-            <input
-              type="text"
-              name="text"
-              id="text"
-              className="block text-xs w-full rounded-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-gray-600"
-              placeholder="Add a comment"
-              value={inputText}
-              onChange={(e) => setInputText(e.target.value)}
-            />
-          </div>
+              <div className="flex items-center grow">
+                <label htmlFor="text" className="sr-only">
+                  Text
+                </label>
+                <input
+                  type="text"
+                  name="text"
+                  id="text"
+                  className="block text-xs w-full rounded-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-gray-600"
+                  placeholder="Add a comment"
+                  value={inputText}
+                  onChange={(e) => setInputText(e.target.value)}
+                />
+              </div>
 
-          <div className="flex justify-end">
-            <button
-              type="button"
-              className="text-xs text-gray-500 hover:text-gray-700"
-              onClick={() => {
-                mutateBoardComment.mutate(inputText);
-                setInputText('');
-              }}
-            >
-              <PaperAirplaneIcon className="h-5 w-5" />
-            </button>
-          </div>
+              <div className="flex justify-end">
+                <button
+                  type="button"
+                  className="text-xs text-gray-500 hover:text-gray-700"
+                  onClick={() => {
+                    mutateBoardComment.mutate(inputText);
+                    setInputText('');
+                  }}
+                >
+                  <PaperAirplaneIcon className="h-5 w-5" />
+                </button>
+              </div>
+            </>
+          ) : (
+            <div className="flex-grow flex gap-4 justify-center items-center">
+              <p className="text-xs font-semibold text-gray-600">Login to comment</p>
+              <Link
+                to="/login"
+                className="rounded-full bg-gray-900 px-8 py-2 text-xs font-semibold text-white shadow-sm hover:bg-gray-700"
+              >
+                Login
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </div>
