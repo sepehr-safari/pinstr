@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom';
 
 import { useCommentsParams } from '@/logic/hooks';
 
-import { BoardSummary, Comments, ProfileCard } from '@/ui/components';
+import { BoardSummary, CommentsCard, ProfileCard } from '@/ui/components';
 import { MainContainer, StickyContainer } from '@/ui/components/ProfileContainers';
 
 export const Layout = () => {
@@ -21,7 +21,7 @@ export const Layout = () => {
 
       {commentsParam != null && (
         <StickyContainer className="order-2 xl:order-3 xl:max-w-sm 2xl:max-w-xs">
-          <Comments />
+          <CommentsCard />
         </StickyContainer>
       )}
     </>
