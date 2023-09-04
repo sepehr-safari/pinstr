@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Filter } from 'nostr-tools';
 import { useCallback } from 'react';
 
@@ -9,6 +9,8 @@ import { parseReactionsFromEvents } from '@/logic/utils';
 export const useBoardReactions = (board: Board | undefined | null) => {
   const pool = useLocalStore((store) => store.pool);
   const relays = useLocalStore((store) => store.relays);
+
+  const queryClient = useQueryClient();
 
   const fetchReactions = useCallback(async () => {
     if (!pool || !relays || !board)
@@ -24,11 +26,19 @@ export const useBoardReactions = (board: Board | undefined | null) => {
 
       if (events.length == 0) return { likes: [], comments: [], zaps: [] } as Reactions;
 
-      return parseReactionsFromEvents(events);
+      const parsedReactions = parseReactionsFromEvents(events);
+
+      if (parsedReactions.comments.length > 0) {
+        parsedReactions.comments.forEach((event) =>
+          queryClient.setQueryData(['nostr', 'notes', event.id], event)
+        );
+      }
+
+      return parsedReactions;
     } catch (error) {
       throw new Error('Error in fetching board reactions');
     }
-  }, [pool, relays, board]);
+  }, [pool, relays, board, queryClient]);
 
   return useQuery({
     queryKey: ['nostr', 'boards', board?.author, board?.title, 'reactions'],
