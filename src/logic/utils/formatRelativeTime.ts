@@ -4,12 +4,12 @@ export const formatRelativeTime = (timestamp: number) => {
 
   const minutes = Math.floor(delta / 60000);
   if (minutes < 60) {
-    return `${minutes} minutes ago`;
+    return `${minutes} minutes`;
   }
 
   const hours = Math.floor(delta / 3600000);
   if (hours < 24) {
-    return `${hours} hours ago`;
+    return `${hours} hours`;
   }
 
   const date = new Date(timestamp * 1000);
