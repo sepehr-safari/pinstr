@@ -15,7 +15,7 @@ export const StickyContainer = ({
   return (
     <div
       className={joinClassNames(
-        'flex flex-col gap-4 w-full xl:max-w-xs',
+        'flex flex-col gap-4 w-full xl:max-w-sm',
         'xl:self-start xl:sticky',
         state?.backgroundLocation ? 'xl:top-10' : 'mt-24 xl:mt-12 xl:top-24',
         className
