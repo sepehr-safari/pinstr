@@ -8,7 +8,7 @@ export const FiltersNavbar = () => {
 
   return (
     <>
-      <div className="mb-2 px-4 pt-4 flex flex-wrap gap-4 sm:px-2">
+      <div className="mb-2 px-4 pt-4 flex flex-wrap gap-4 sm:px-2 pointer-events-none">
         <div className="flex-1 min-w-fit md:w-56 md:flex-none">
           <AuthorGroupMenu />
         </div>
