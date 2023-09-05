@@ -1,5 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, useEffect } from 'react';
+import { Fragment, useEffect, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { useRemoveBoardParams } from '@/logic/hooks';
@@ -17,6 +17,11 @@ export const BoardSlideover = () => {
 
   const board = useLocalStore((store) => store.board);
   const setBoardItem = useLocalStore((store) => store.setBoardItem);
+
+  const canSubmit = useMemo(
+    () => !!board.type && !!board.category && !!board.title && !!board.description && !!board.image,
+    [board]
+  );
 
   const { publishBoard, updateBoard, deleteBoard } = useMutateBoard();
 
@@ -297,7 +302,8 @@ export const BoardSlideover = () => {
                               <button
                                 type="button"
                                 onClick={() => publishBoard.mutate()}
-                                className="ml-4 inline-flex justify-center rounded-md bg-gray-800 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
+                                className="ml-4 inline-flex justify-center rounded-md bg-gray-800 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 disabled:bg-gray-300 disabled:hover:opacity-100"
+                                disabled={!canSubmit || publishBoard.status == 'loading'}
                               >
                                 Create Board
                               </button>
@@ -306,7 +312,8 @@ export const BoardSlideover = () => {
                             <button
                               type="button"
                               onClick={() => updateBoard.mutate()}
-                              className="ml-4 inline-flex justify-center rounded-md bg-gray-800 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
+                              className="ml-4 inline-flex justify-center rounded-md bg-gray-800 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 disabled:bg-gray-300 disabled:hover:opacity-100"
+                              disabled={!canSubmit || updateBoard.status == 'loading'}
                             >
                               Update Board
                             </button>
