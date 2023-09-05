@@ -104,7 +104,7 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
 
             {!hideAuthor && author && <AuthorOverview author={author} />}
           </div>
-          <div className="ml-4 mt-[2px] flex gap-4">
+          <div className="ml-4 mt-[2px] flex items-start gap-4">
             <BoardLikeButton board={board} />
             <BoardZapButton board={board} />
           </div>
