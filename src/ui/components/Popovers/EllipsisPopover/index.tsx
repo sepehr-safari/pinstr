@@ -1,5 +1,6 @@
 import { Popover } from '@headlessui/react';
 import { EllipsisVerticalIcon } from '@heroicons/react/24/outline';
+import { useMemo } from 'react';
 
 import { Board, PopoverButton } from '@/logic/types';
 import { joinClassNames } from '@/logic/utils';
@@ -35,7 +36,12 @@ export const EllipsisPopover = ({
   slideInFrom?: 'right' | 'left';
   buttonTheme?: 'light' | 'dark';
 }) => {
-  if (!actionButtons && !internalLinks && !externalLinks && !selfBoard) return null;
+  const hasPublicActionButtons = useMemo(
+    () => !!actionButtons && actionButtons.filter((btn) => !btn.private).length > 0,
+    [actionButtons]
+  );
+
+  if (!hasPublicActionButtons && !internalLinks && !externalLinks && !selfBoard) return null;
 
   return (
     <Popover>
@@ -60,7 +66,11 @@ export const EllipsisPopover = ({
           )}
         >
           {actionButtons &&
-            actionButtons.map((button) => <ActionButton button={button} key={button.title} />)}
+            actionButtons.map((button) => {
+              if (button.private && !selfBoard) return null;
+
+              return <ActionButton button={button} key={button.title} />;
+            })}
 
           {internalLinks &&
             internalLinks.map(([url, label]) => <InternalLink label={label} url={url} key={url} />)}

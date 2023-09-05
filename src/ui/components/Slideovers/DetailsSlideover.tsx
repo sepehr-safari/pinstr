@@ -3,6 +3,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { Dispatch, Fragment, SetStateAction, useCallback, useEffect } from 'react';
 
+import { useUser } from '@/logic/queries';
 import { Board } from '@/logic/types';
 
 import { EllipsisPopover } from '@/ui/components/Popovers';
@@ -18,6 +19,9 @@ export const DetailsSlideover = ({
   setPinIndex: Dispatch<SetStateAction<number>>;
   children: React.ReactNode;
 }) => {
+  const { pubkey } = useUser();
+  const selfBoard = pubkey ? pubkey == board.author : false;
+
   const previous = useCallback(
     () => setPinIndex((prev) => (prev > -1 ? prev - 1 : -1)),
     [setPinIndex]
@@ -81,7 +85,7 @@ export const DetailsSlideover = ({
                     <EllipsisPopover
                       board={board}
                       pinIndex={pinIndex}
-                      selfBoard={true}
+                      selfBoard={selfBoard}
                       editType="pin"
                       className="top-4 left-4"
                       overlay={false}

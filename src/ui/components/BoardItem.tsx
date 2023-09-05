@@ -37,7 +37,9 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
             board={board}
             pinIndex={0}
             selfBoard={selfBoard}
-            actionButtons={[{ title: 'Add Pin', icon: PaperClipIcon, onClick: setCreatePinParams }]}
+            actionButtons={[
+              { title: 'Add Pin', icon: PaperClipIcon, onClick: setCreatePinParams, private: true },
+            ]}
             editType="board"
             buttonTheme="dark"
             className="top-3 right-3"

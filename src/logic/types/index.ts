@@ -46,4 +46,5 @@ export interface PopoverButton {
   description?: string;
   color?: string;
   icon?: any;
+  private?: boolean;
 }
