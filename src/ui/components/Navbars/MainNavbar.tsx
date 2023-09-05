@@ -1,11 +1,11 @@
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid';
 import { nip19 } from 'nostr-tools';
-import { Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import { Fragment, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { useUser } from '@/logic/queries';
-import { joinClassNames, loader } from '@/logic/utils';
+import { capitalizeFirstLetter, joinClassNames, loader } from '@/logic/utils';
 
 import { CreatePopover } from '@/ui/components/Popovers';
 
@@ -16,6 +16,10 @@ const USER_NAVIGATION = [
 ];
 
 export const MainNavbar = () => {
+  const [searchInput, setSearchInput] = useState('');
+
+  const navigate = useNavigate();
+
   const { pubkey, metadata } = useUser();
 
   USER_NAVIGATION[0].link = pubkey ? `/p/${nip19.npubEncode(pubkey)}` : '#';
@@ -54,8 +58,12 @@ export const MainNavbar = () => {
                     id="search"
                     name="search"
                     className="block w-full rounded-full border-0 bg-opacity-30 bg-white py-3 pl-10 pr-3 text-xs text-gray-900 ring-1 ring-inset ring-gray-900/20 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-gray-500 focus:bg-opacity-50"
-                    placeholder="Search boards, tags, and people"
+                    // placeholder="Search boards, tags, and people"
+                    placeholder="Search tags"
                     autoComplete="off"
+                    value={searchInput}
+                    onChange={(e) => setSearchInput(capitalizeFirstLetter(e.target.value))}
+                    onKeyUp={(e) => e.key == 'Enter' && navigate(`/t/${searchInput}`)}
                   />
                 </div>
               </div>
@@ -105,7 +113,7 @@ export const MainNavbar = () => {
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0"
                       >
-                        <Menu.Items className="absolute right-0 z-10 mt-6 w-64 origin-top-right divide-y divide-gray-100 rounded-2xl bg-white py-1 shadow-lg ring-1 ring-gray-900/20 focus:outline-none">
+                        <Menu.Items className="absolute overflow-hidden right-0 z-10 mt-6 w-64 origin-top-right divide-y divide-gray-100 rounded-2xl bg-white py-1 shadow-lg ring-1 ring-gray-900/20 focus:outline-none">
                           <Menu.Item as="div">
                             <img
                               className="mt-4 mx-auto h-24 w-24 flex-shrink-0 rounded-full bg-gray-100 text-gray-100"
