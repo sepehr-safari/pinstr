@@ -20,13 +20,13 @@ export const LinkGrid = ({ board }: { board: Board }) => {
         role="list"
         className={joinClassNames(
           'grid gap-4 grid-cols-1 sm:grid-cols-2',
-          'md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-3 4xl:grid-cols-4 5xl:grid-cols-5'
+          'md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-3 4xl:grid-cols-4 5xl:grid-cols-4'
         )}
       >
         {(board.pins || []).map((linkPin, index) => (
           <li
             key={index}
-            className="group relative overflow-hidden rounded-lg bg-white shadow ease-in-out duration-200 hover:shadow-md"
+            className="group relative overflow-hidden flex flex-col justify-between rounded-lg bg-white shadow duration-200 hover:shadow-md"
           >
             <EllipsisPopover board={board} selfBoard={selfBoard} pinIndex={index} editType="pin" />
 
