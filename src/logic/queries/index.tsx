@@ -5,4 +5,5 @@ export * from './useBoardsByAuthor';
 export * from './useBoardsExplorer';
 export * from './useNote';
 export * from './useNoteReactions';
+export * from './useTag';
 export * from './useUser';
