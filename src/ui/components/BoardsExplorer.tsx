@@ -1,9 +1,17 @@
 import { useBoardsExplorer } from '@/logic/queries';
 
-import { MemoizedBoardItem } from '@/ui/components';
+import { MemoizedBoardItem, Spinner } from '@/ui/components';
 
 export const BoardsExplorer = () => {
-  const { data: boards } = useBoardsExplorer();
+  const { data: boards, status } = useBoardsExplorer();
+
+  if (status == 'loading') {
+    return (
+      <div className="h-full w-full flex justify-center items-center">
+        <Spinner />
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto pb-16 overflow-hidden max-w-md sm:max-w-none">
