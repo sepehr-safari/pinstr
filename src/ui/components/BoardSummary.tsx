@@ -12,8 +12,7 @@ import {
 } from '@/ui/components/ReactionButtons';
 
 export const BoardSummary = () => {
-  const { status, board, title, setCreatePinParams, setEditBoardParams, selfBoard } =
-    useBoardSummary();
+  const { status, board, setCreatePinParams, setEditBoardParams, selfBoard } = useBoardSummary();
 
   if (status == 'loading') {
     return (
@@ -45,7 +44,7 @@ export const BoardSummary = () => {
             <div className="mt-1 flex justify-center gap-4 flex-wrap">
               {board.tags.map((tag, index) => (
                 <Link
-                  to={`/t/${tag}`}
+                  to={`/?tag=${tag}`}
                   key={index}
                   className="text-xs font-light text-gray-400 hover:underline"
                 >
@@ -59,14 +58,14 @@ export const BoardSummary = () => {
             <div className="w-40 h-32 rounded-md overflow-hidden">
               <img
                 src={board ? loader(board?.image, { w: 500, h: 400 }) : ''}
-                alt={title}
+                alt={board?.title}
                 className="w-full h-full bg-gray-200 text-gray-200"
                 loading="lazy"
               />
             </div>
 
             <h3 className="mt-2 text-base font-semibold tracking-tight leading-5 text-gray-900">
-              {title}
+              {board.title}
             </h3>
 
             <div className="mt-2 flex text-xs font-light text-gray-600 text-center">

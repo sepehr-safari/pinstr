@@ -1,20 +1,17 @@
 import { PaperAirplaneIcon } from '@heroicons/react/24/outline';
-import { nip19 } from 'nostr-tools';
 import { useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { useMutateBoardComment } from '@/logic/mutations';
-import { useBoard, useBoardReactions, useUser } from '@/logic/queries';
+import { useBoardReactions, useBoards, useUser } from '@/logic/queries';
 
 import { Comment, Spinner } from '@/ui/components';
 
 export const CommentsCard = () => {
   const [inputText, setInputText] = useState('');
 
-  const { npub, title } = useParams();
-  const hex = npub ? nip19.decode(npub).data.toString() : undefined;
-
-  const { data: board, status: boardStatus } = useBoard({ author: hex, title: title });
+  const { data: boards, status: boardStatus } = useBoards();
+  const board = boards?.[0];
 
   const { data: reactions, status: reactionsStatus } = useBoardReactions(board);
 

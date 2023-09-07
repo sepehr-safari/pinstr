@@ -4,13 +4,14 @@ import { useParams } from 'react-router-dom';
 
 import { useCreatePinParams, useEditBoardParams } from '@/logic/hooks';
 import { useMutateBoardLike } from '@/logic/mutations';
-import { useBoard, useBoardReactions, useUser } from '@/logic/queries';
+import { useBoardReactions, useBoards, useUser } from '@/logic/queries';
 
 export const useBoardSummary = () => {
-  const { npub, title } = useParams();
-  const hex = npub ? nip19.decode(npub).data.toString() : '';
+  const { npub } = useParams();
+  const hex = npub ? nip19.decode(npub).data.toString() : undefined;
 
-  const { data: board, status } = useBoard({ author: hex, title: title! });
+  const { data: boards, status } = useBoards();
+  const board = boards?.[0];
 
   const { data: reactions } = useBoardReactions(board);
   const { mutate: like } = useMutateBoardLike(board);
@@ -33,7 +34,6 @@ export const useBoardSummary = () => {
   return {
     status,
     board,
-    title,
     reactions,
     setEditBoardParams,
     setCreatePinParams,

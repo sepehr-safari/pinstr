@@ -1,15 +1,9 @@
-import { nip19 } from 'nostr-tools';
-import { useParams } from 'react-router-dom';
-
-import { useBoardsByAuthor } from '@/logic/queries';
+import { useBoards } from '@/logic/queries';
 
 import { MemoizedBoardItem, Spinner } from '@/ui/components';
 
 export const BoardsByAuthor = () => {
-  const { npub } = useParams();
-  const hex = npub ? nip19.decode(npub).data.toString() : undefined;
-
-  const { data: boards, status } = useBoardsByAuthor({ author: hex });
+  const { data: boards, status } = useBoards();
 
   if (status == 'loading') {
     return (

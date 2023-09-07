@@ -4,11 +4,9 @@ import { FiltersNavbar } from '@/ui/components/Navbars';
 export const Page = () => {
   return (
     <>
-      <div className="mx-auto max-w-screen-4xl">
+      <div className="mx-auto max-w-md sm:max-w-screen-4xl p-4 flex flex-col gap-4">
         <FiltersNavbar />
-        <div className="p-2">
-          <BoardsExplorer />
-        </div>
+        <BoardsExplorer />
       </div>
     </>
   );

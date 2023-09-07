@@ -1,7 +1,4 @@
-import { nip19 } from 'nostr-tools';
-import { useParams } from 'react-router-dom';
-
-import { useBoard } from '@/logic/queries';
+import { useBoards } from '@/logic/queries';
 
 import { Spinner } from '@/ui/components';
 import {
@@ -14,10 +11,8 @@ import {
 } from '@/ui/components/Grids';
 
 export const Page = () => {
-  const { npub, title } = useParams();
-  const hex = npub ? nip19.decode(npub).data.toString() : undefined;
-
-  const { data: board, status } = useBoard({ author: hex, title: title });
+  const { data: boards, status } = useBoards();
+  const board = boards?.[0];
 
   if (status == 'loading') {
     return (
