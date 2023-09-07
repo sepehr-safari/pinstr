@@ -45,8 +45,8 @@ export const useMutateBoard = () => {
         tags: [
           ['d', title],
           ['description', description],
-          ['category', category],
-          ['type', type],
+          ['c', category],
+          ['T', type],
           ['image', image],
           headers && headers.length > 0
             ? ['headers', ...headers]

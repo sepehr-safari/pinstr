@@ -28,10 +28,10 @@ export const parseBoardsFromEvents = (events: Event[]) => {
         case 'description':
           description = t[1];
           continue;
-        case 'type':
+        case 'T':
           type = t[1];
           continue;
-        case 'category':
+        case 'c':
           category = t[1];
           continue;
         case 'headers':
