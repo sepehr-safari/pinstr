@@ -4,7 +4,7 @@ import { nip19 } from 'nostr-tools';
 import { memo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-import { useCreatePinParams } from '@/logic/hooks';
+import { useCreatePinParams, useFiltersParams } from '@/logic/hooks';
 import { useAuthor, useUser } from '@/logic/queries';
 import { Board } from '@/logic/types';
 import { loader } from '@/logic/utils';
@@ -24,6 +24,7 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
   const location = useLocation();
 
   const { setCreatePinParams } = useCreatePinParams(board);
+  const { type, category } = useFiltersParams();
 
   return (
     <>
@@ -56,9 +57,12 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
               leaveFrom="opacity-100 translate-x-0"
               leaveTo="opacity-0 -translate-x-2"
             >
-              <span className="inline-flex items-center rounded-full bg-black/30 px-3 py-1 text-xs font-medium text-white hover:bg-black/50 hover:text-gray-100">
+              <button
+                onClick={() => type.set(board.type)}
+                className="inline-flex items-center rounded-full bg-black/30 px-3 py-1 text-xs font-medium text-white hover:bg-black/50 hover:text-gray-100"
+              >
                 {board.type}
-              </span>
+              </button>
             </Transition.Child>
             <Transition.Child
               as="div"
@@ -70,9 +74,12 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
               leaveFrom="opacity-100 translate-x-0"
               leaveTo="opacity-0 translate-x-2"
             >
-              <span className="inline-flex items-center rounded-full bg-black/30 px-3 py-1 text-xs font-medium text-white hover:bg-black/50 hover:text-gray-100">
+              <button
+                onClick={() => category.set(board.category)}
+                className="inline-flex items-center rounded-full bg-black/30 px-3 py-1 text-xs font-medium text-white hover:bg-black/50 hover:text-gray-100"
+              >
                 {board.category}
-              </span>
+              </button>
             </Transition.Child>
             <Link
               to={`/p/${nip19.npubEncode(board.author)}/${board.title}`}
