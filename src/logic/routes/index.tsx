@@ -11,7 +11,6 @@ import {
   SlideoverLayout,
 } from '@/ui/pages';
 import { BoardLayout, BoardPage } from '@/ui/pages/Profile/Board';
-import { TagPage } from '@/ui/pages/Tag';
 
 export const AppRouter = () => {
   const location = useLocation();
@@ -33,12 +32,6 @@ export const AppRouter = () => {
                 <Route index element={<BoardPage />} />
               </Route>
             </Route>
-          </Route>
-
-          <Route path="t">
-            <Route index element={<NoMatch />} />
-
-            <Route path=":tag" element={<TagPage />} />
           </Route>
 
           <Route path="*" element={<NoMatch />} />
