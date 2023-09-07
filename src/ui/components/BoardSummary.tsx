@@ -53,7 +53,7 @@ export const BoardSummary = () => {
           )}
         </div>
 
-        <div className="border-t pt-4 flex flex-col w-full items-center text-center">
+        <div className="pt-4 flex flex-col gap-4 w-full items-center text-center">
           <div className="w-40 h-32 rounded-md overflow-hidden">
             <img
               src={board ? loader(board?.image, { w: 500, h: 400 }) : ''}
@@ -63,17 +63,17 @@ export const BoardSummary = () => {
             />
           </div>
 
-          <h3 className="mt-2 text-base font-semibold tracking-tight leading-5 text-gray-900">
+          <h3 className="text-base font-semibold tracking-tight leading-5 text-gray-900">
             {board.title}
           </h3>
 
-          <div className="mt-2 flex text-xs font-light text-gray-600 text-center">
-            {board?.description}
+          <div className="px-4 flex text-xs font-light text-gray-600 text-center">
+            {board.description}
           </div>
 
           {selfBoard && (
             <>
-              <div className="mt-6 mb-2 flex gap-2 shrink-0 w-full max-w-xs">
+              <div className="flex gap-2 shrink-0 w-full max-w-xs">
                 <button
                   type="button"
                   className="flex items-center justify-center rounded-md bg-gray-100 w-full py-2 text-xs font-semibold text-gray-600 hover:bg-gray-200 hover:text-gray-900"
