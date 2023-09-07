@@ -29,15 +29,15 @@ export const BoardSummary = () => {
   return (
     <div className="overflow-hidden bg-white shadow-md text-xs xl:rounded-xl">
       <div className="w-full flex flex-col gap-4 pt-4 justify-between items-center divide-y">
-        <div className="flex flex-col gap-2">
-          <div className="flex w-full justify-center items-center gap-4 text-xs font-light text-gray-400">
+        <div className="flex flex-col gap-2 text-xs font-light text-gray-400">
+          <div className="flex w-full justify-center items-center gap-4">
             <span>{board && formatRelativeTime(board.timestamp)}</span>
 
             <span>|</span>
 
             <span className="flex items-center">
-              <Link to={`/c/${undefined}`} className="hover:underline">
-                {board?.category}
+              <Link to={`/?category=${board.category}`} className="hover:underline">
+                {board.category}
               </Link>
             </span>
           </div>
@@ -45,11 +45,7 @@ export const BoardSummary = () => {
           {board && board.tags.length > 0 && (
             <div className="px-4 flex justify-center gap-x-4 gap-y-2 flex-wrap">
               {board.tags.map((tag, index) => (
-                <Link
-                  to={`/?tag=${tag}`}
-                  key={index}
-                  className="text-xs font-light text-gray-400 hover:underline"
-                >
+                <Link to={`/?tag=${tag}`} key={index} className="hover:underline">
                   {tag}
                 </Link>
               ))}
