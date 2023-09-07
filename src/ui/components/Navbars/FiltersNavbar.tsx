@@ -1,22 +1,20 @@
-import { useState } from 'react';
-
-import { AuthorGroupMenu, BoardTypeMenu, CategoryMenu } from '@/ui/components/Menus';
+import { useFiltersParams } from '@/logic/hooks';
+import { BoardTypeMenu, CategoryMenu } from '@/ui/components/Menus';
 
 export const FiltersNavbar = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string | undefined>(undefined);
-  const [selectedBoardType, setSelectedBoardType] = useState<string | undefined>(undefined);
+  const { category, type } = useFiltersParams();
 
   return (
     <>
-      <div className="mb-2 px-4 pt-4 flex flex-wrap gap-4 sm:px-2 pointer-events-none">
-        <div className="flex-1 min-w-fit md:w-56 md:flex-none">
+      <div className="flex flex-wrap gap-2 justify-center items-center xl:justify-start">
+        {/* <div className="flex-1 max-w-xs">
           <AuthorGroupMenu />
+        </div> */}
+        <div className="flex-1 max-w-sm min-w-[20rem]">
+          <CategoryMenu selected={category.value} setSelected={category.set} />
         </div>
-        <div className="w-full order-last md:w-72 md:order-none lg:w-96">
-          <CategoryMenu selected={selectedCategory} setSelected={setSelectedCategory} />
-        </div>
-        <div className="ml-auto flex-1 min-w-fit md:w-72 md:flex-none">
-          <BoardTypeMenu selected={selectedBoardType} setSelected={setSelectedBoardType} />
+        <div className="flex-1 max-w-sm min-w-[20rem]">
+          <BoardTypeMenu selected={type.value} setSelected={type.set} />
         </div>
       </div>
     </>

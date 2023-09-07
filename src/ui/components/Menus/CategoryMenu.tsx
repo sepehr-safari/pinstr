@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 import { MenuItem, MenuTemplate } from '@/ui/components/Menus';
 
 export const categories: MenuItem[] = [
@@ -19,53 +17,57 @@ export const categories: MenuItem[] = [
     description: 'Free and Open Source Software, Bitcoin, Nostr, and more',
   },
   {
-    title: 'Global Perspectives',
+    title: 'Worldview',
     description: 'Economics, Politics, Environment, Society, Governance, and more',
   },
   {
-    title: 'Fashion & Style',
+    title: 'Fashion',
     description: 'Fashion Trends, Outfits, Accessories, and more',
   },
   {
-    title: 'Food & Cooking',
+    title: 'Food',
     description: 'Recipes, Cooking Tips, Foodie Culture, and more',
   },
   {
-    title: 'Arts & Creativity',
+    title: 'Arts',
     description: 'Visual Arts, Graphic Design, Photography, Crafts, DIY Projects, and more',
   },
   {
-    title: 'Sports & Fitness',
-    description: 'Fitness Routines, Sports, and more',
+    title: 'Sports',
+    description: 'Fitness, Sports, and more',
   },
   {
-    title: 'Home & Decor',
-    description: 'Home Decor Ideas, Interior Design, and more',
+    title: 'Architecture',
+    description: 'Architectural designs, interior spaces, home decor ideas, and more.',
   },
   {
-    title: 'Travel & Nature',
+    title: 'Adventure',
     description: 'Travel Destinations, Nature, Outdoor Adventures, and more',
   },
   {
-    title: 'Science & Education',
+    title: 'Science',
     description: 'Science, Education, Engineering, Medicine, and more',
   },
   {
-    title: 'Business & Entrepreneurship',
+    title: 'History',
+    description: 'Historical Events, Culture Trends, and more',
+  },
+  {
+    title: 'Business',
     description: 'Business, Entrepreneurship, Startups, and more',
   },
   {
-    title: 'Jobs & Career',
+    title: 'Jobs',
     description:
       'Job Opportunities, Career Tips, Industry Insights, Professional Development, and more',
   },
   {
-    title: 'Family & Mindfulness',
-    description: 'Parenting Tips, Family Life, Relationships, Mindfulness, Wellness, and more',
+    title: 'Family',
+    description: 'Parenting Tips, Family Life, Relationships, and more',
   },
   {
-    title: 'History & Culture',
-    description: 'Historical Events, Culture Trends, and more',
+    title: 'Mindfulness',
+    description: 'Mindfulness Techniques, Wellness, Stress Management, and more',
   },
 ];
 
@@ -78,10 +80,6 @@ export const CategoryMenu = ({
   setSelected: (item: string) => void;
   hideFirstOption?: boolean;
 }) => {
-  useEffect(() => {
-    setSelected(!hideFirstOption ? categories[0].title : categories[1].title);
-  }, []);
-
   return (
     <>
       <MenuTemplate

@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import { MenuItem, MenuTemplate } from '@/ui/components/Menus';
 
 const groups: MenuItem[] = [
@@ -13,9 +11,13 @@ const groups: MenuItem[] = [
   },
 ];
 
-export const AuthorGroupMenu = () => {
-  const [selected, setSelected] = useState(groups[0].title);
-
+export const AuthorGroupMenu = ({
+  selected,
+  setSelected,
+}: {
+  selected: string | undefined;
+  setSelected: (item: string) => void;
+}) => {
   return (
     <>
       <MenuTemplate items={groups} selected={selected} setSelected={setSelected} />

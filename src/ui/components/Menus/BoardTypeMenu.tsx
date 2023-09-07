@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 import { MenuItem, MenuTemplate } from '@/ui/components/Menus';
 
 const boardTypeMenuItems: MenuItem[] = [
@@ -7,22 +5,22 @@ const boardTypeMenuItems: MenuItem[] = [
     title: 'All Board Types',
   },
   {
-    title: 'Plain Texts',
+    title: 'Text',
   },
   {
-    title: 'Links',
+    title: 'Link',
   },
   {
-    title: 'Images',
+    title: 'Image',
   },
   {
-    title: 'Videos',
+    title: 'Video',
   },
   {
-    title: 'NOSTR Profiles',
+    title: 'Profile',
   },
   {
-    title: 'NOSTR Notes',
+    title: 'Note',
   },
 ];
 
@@ -33,10 +31,6 @@ export const BoardTypeMenu = ({
   selected: string | undefined;
   setSelected: (item: string) => void;
 }) => {
-  useEffect(() => {
-    setSelected(boardTypeMenuItems[0].title);
-  }, []);
-
   return (
     <>
       <MenuTemplate items={boardTypeMenuItems} selected={selected} setSelected={setSelected} />

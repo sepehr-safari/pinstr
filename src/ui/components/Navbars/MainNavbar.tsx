@@ -1,9 +1,10 @@
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid';
 import { nip19 } from 'nostr-tools';
-import { Fragment, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Fragment, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
+import { useFiltersParams } from '@/logic/hooks';
 import { useUser } from '@/logic/queries';
 import { capitalizeFirstLetter, joinClassNames, loader } from '@/logic/utils';
 
@@ -18,11 +19,13 @@ const USER_NAVIGATION = [
 export const MainNavbar = () => {
   const [searchInput, setSearchInput] = useState('');
 
-  const navigate = useNavigate();
+  const { tag } = useFiltersParams();
 
   const { pubkey, metadata } = useUser();
 
   USER_NAVIGATION[0].link = pubkey ? `/p/${nip19.npubEncode(pubkey)}` : '#';
+
+  useEffect(() => setSearchInput(tag.value || ''), [tag.value, setSearchInput]);
 
   return (
     <Disclosure
@@ -63,7 +66,7 @@ export const MainNavbar = () => {
                     autoComplete="off"
                     value={searchInput}
                     onChange={(e) => setSearchInput(capitalizeFirstLetter(e.target.value))}
-                    onKeyUp={(e) => e.key == 'Enter' && navigate(`/t/${searchInput}`)}
+                    onKeyUp={(e) => e.key == 'Enter' && tag.set(searchInput)}
                   />
                 </div>
               </div>
