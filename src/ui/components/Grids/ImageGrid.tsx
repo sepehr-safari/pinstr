@@ -19,14 +19,11 @@ export const ImageGrid = ({ board }: { board: Board }) => {
         role="list"
         className={joinClassNames(
           'grid gap-4 grid-cols-1 sm:grid-cols-2',
-          'md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-3 4xl:grid-cols-4 5xl:grid-cols-5'
+          'md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-4 4xl:grid-cols-5 5xl:grid-cols-6'
         )}
       >
         {(board.pins || []).map((imagePin, index) => (
-          <li
-            key={index}
-            className="group aspect-w-5 aspect-h-4 relative block overflow-hidden rounded-md"
-          >
+          <li key={index} className="group relative overflow-hidden rounded-md">
             <EllipsisPopover
               board={board}
               selfBoard={selfBoard}
@@ -41,7 +38,7 @@ export const ImageGrid = ({ board }: { board: Board }) => {
               className="z-[3] absolute inset-0 flex items-end"
               onClick={() => setPinIndex(index)}
             >
-              <p className="w-full p-2 pt-6 block truncate text-start text-xs font-medium text-white md:text-sm bg-gradient-to-t from-black/60 to-transparent">
+              <p className="w-full p-2 pt-6 truncate text-start text-xs font-medium text-white md:text-sm bg-gradient-to-t from-black/60 to-transparent">
                 {imagePin[1]}
               </p>
             </button>

@@ -5,17 +5,19 @@ import { MainContainer, StickyContainer } from '@/ui/components/ProfileContainer
 export const Page = () => {
   return (
     <>
-      <StickyContainer>
-        <ProfileCard />
+      <div className="relative gap-y-6 gap-x-8 flex flex-col xl:flex-row xl:p-8">
+        <StickyContainer>
+          <ProfileCard />
 
-        <div className="px-4 xl:px-0">
-          <FiltersNavbar />
-        </div>
-      </StickyContainer>
+          <div className="px-4 xl:px-0">
+            <FiltersNavbar />
+          </div>
+        </StickyContainer>
 
-      <MainContainer>
-        <BoardsByAuthor />
-      </MainContainer>
+        <MainContainer>
+          <BoardsByAuthor />
+        </MainContainer>
+      </div>
     </>
   );
 };

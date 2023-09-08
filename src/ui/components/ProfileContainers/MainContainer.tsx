@@ -15,7 +15,8 @@ export const MainContainer = ({
   return (
     <div
       className={joinClassNames(
-        'w-full h-full px-8 pb-6 xl:px-0 xl:pt-4',
+        'w-full h-full px-4 pb-6 xl:px-0 xl:pt-4',
+        'mx-auto max-w-sm sm:max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg xl:max-w-none',
         state?.backgroundLocation ? 'xl:mt-16' : 'xl:mt-28',
         className
       )}

@@ -10,10 +10,10 @@ export const FiltersNavbar = () => {
         {/* <div className="flex-1 max-w-xs">
           <AuthorGroupMenu />
         </div> */}
-        <div className="flex-1 max-w-sm min-w-[20rem]">
+        <div className="flex-1 sm:max-w-sm min-w-[20rem]">
           <CategoryMenu selected={category.value} setSelected={category.set} />
         </div>
-        <div className="flex-1 max-w-sm min-w-[20rem]">
+        <div className="flex-1 sm:max-w-sm min-w-[20rem]">
           <BoardTypeMenu selected={type.value} setSelected={type.set} />
         </div>
       </div>

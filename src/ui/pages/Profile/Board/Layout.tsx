@@ -10,15 +10,17 @@ export const Layout = () => {
 
   return (
     <>
-      <StickyContainer>
-        <ProfileCard />
-        <BoardSummary />
-        {commentsParam != null && <CommentsCard />}
-      </StickyContainer>
+      <div className="relative gap-y-6 gap-x-8 flex flex-col xl:flex-row xl:p-8">
+        <StickyContainer>
+          <ProfileCard />
+          <BoardSummary />
+          {commentsParam != null && <CommentsCard />}
+        </StickyContainer>
 
-      <MainContainer>
-        <Outlet />
-      </MainContainer>
+        <MainContainer>
+          <Outlet />
+        </MainContainer>
+      </div>
     </>
   );
 };

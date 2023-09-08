@@ -15,7 +15,7 @@ export const BoardsExplorer = () => {
 
   return (
     <div className="pb-16 overflow-hidden">
-      <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+      <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 4xl:grid-cols-5">
         {(boards || []).map((board) => (
           <MemoizedBoardItem key={board.id} board={board} />
         ))}
