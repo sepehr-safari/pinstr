@@ -1,8 +1,9 @@
 import { useFiltersParams } from '@/logic/hooks';
-import { BoardTypeMenu, CategoryMenu } from '@/ui/components/Menus';
+
+import { CategoryMenu, FormatMenu } from '@/ui/components/Menus';
 
 export const FiltersNavbar = () => {
-  const { category, type } = useFiltersParams();
+  const { category, format } = useFiltersParams();
 
   return (
     <>
@@ -14,7 +15,7 @@ export const FiltersNavbar = () => {
           <CategoryMenu selected={category.value} setSelected={category.set} />
         </div>
         <div className="flex-1 sm:max-w-sm min-w-[20rem]">
-          <BoardTypeMenu selected={type.value} setSelected={type.set} />
+          <FormatMenu selected={format.value} setSelected={format.set} />
         </div>
       </div>
     </>

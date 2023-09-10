@@ -1,5 +1,4 @@
 import { nip19 } from 'nostr-tools';
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useAuthor, useNote, useUser } from '@/logic/queries';
@@ -8,11 +7,14 @@ import { joinClassNames, loader } from '@/logic/utils';
 
 import { Spinner } from '@/ui/components';
 import { EllipsisPopover } from '@/ui/components/Popovers';
-import { DetailsSlideover } from '@/ui/components/Slideovers';
 
-export const NoteGrid = ({ board }: { board: Board }) => {
-  const [pinIndex, setPinIndex] = useState<number>(-1);
-
+export const NoteGrid = ({
+  board,
+  setPinIndex,
+}: {
+  board: Board;
+  setPinIndex: (index: number) => void;
+}) => {
   const { pubkey } = useUser();
   const selfBoard = pubkey ? pubkey == board.author : false;
 
@@ -44,15 +46,11 @@ export const NoteGrid = ({ board }: { board: Board }) => {
           </li>
         ))}
       </ul>
-
-      <DetailsSlideover board={board} pinIndex={pinIndex} setPinIndex={setPinIndex}>
-        {pinIndex > -1 && <NoteDetails key={pinIndex} noteId={board.pins[pinIndex][0]} />}
-      </DetailsSlideover>
     </>
   );
 };
 
-const NoteDetails = ({
+export const NoteDetails = ({
   noteId,
   summary = false,
   setPinIndex,

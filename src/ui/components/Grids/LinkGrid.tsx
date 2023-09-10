@@ -1,16 +1,18 @@
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
-import { useState } from 'react';
 
 import { useUser } from '@/logic/queries';
 import { Board } from '@/logic/types';
 import { joinClassNames, loader } from '@/logic/utils';
 
 import { EllipsisPopover } from '@/ui/components/Popovers';
-import { DetailsSlideover } from '@/ui/components/Slideovers';
 
-export const LinkGrid = ({ board }: { board: Board }) => {
-  const [pinIndex, setPinIndex] = useState<number>(-1);
-
+export const LinkGrid = ({
+  board,
+  setPinIndex,
+}: {
+  board: Board;
+  setPinIndex: (index: number) => void;
+}) => {
   const { pubkey } = useUser();
   const selfBoard = pubkey ? pubkey == board.author : false;
 
@@ -63,40 +65,6 @@ export const LinkGrid = ({ board }: { board: Board }) => {
           </li>
         ))}
       </ul>
-
-      <DetailsSlideover board={board} pinIndex={pinIndex} setPinIndex={setPinIndex}>
-        {pinIndex > -1 && (
-          <>
-            <a
-              key={pinIndex}
-              href={board.pins[pinIndex][2]}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-96 h-auto aspect-1 bg-gray-200 text-gray-200 hover:cursor-zoom-in hover:opacity-80"
-            >
-              <img
-                className="w-full h-full"
-                src={loader(board.pins[pinIndex][2], { w: 400, h: 400 })}
-                alt={board.pins[pinIndex][1]}
-                loading="lazy"
-              />
-            </a>
-            <div className="p-4">
-              <a
-                href={board.pins[pinIndex][0]}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group/link"
-              >
-                <div className="text-sm font-medium text-gray-900">{board.pins[pinIndex][1]}</div>
-                <div className="mt-2 text-xs font-light text-blue-700 group-hover/link:underline group-hover/link:text-blue-900">
-                  {board.pins[pinIndex][0]}
-                </div>
-              </a>
-            </div>
-          </>
-        )}
-      </DetailsSlideover>
     </>
   );
 };

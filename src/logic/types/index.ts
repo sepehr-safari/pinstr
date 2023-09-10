@@ -2,7 +2,16 @@ import { Event } from 'nostr-tools';
 
 export type Pin = string[];
 
-export type ParsedPin = { [key: string]: string };
+export enum Format {
+  'Text' = 'Text',
+  'Link' = 'Link',
+  'Image' = 'Image',
+  'Video' = 'Video',
+  'Profile' = 'Profile',
+  'Note' = 'Note',
+}
+
+export type Features = Map<Format, [string, string]>;
 
 export interface Board {
   id: string;
@@ -12,10 +21,10 @@ export interface Board {
   description: string;
   category: string;
   tags: string[];
-  type: string;
   image: string;
   headers: string[];
   pins: Pin[];
+  format: Format;
 }
 
 export interface Author {

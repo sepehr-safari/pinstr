@@ -1,15 +1,16 @@
-import { useState } from 'react';
-
 import { useUser } from '@/logic/queries';
 import { Board } from '@/logic/types';
 import { joinClassNames, loader } from '@/logic/utils';
 
 import { EllipsisPopover } from '@/ui/components/Popovers';
-import { DetailsSlideover } from '@/ui/components/Slideovers';
 
-export const ImageGrid = ({ board }: { board: Board }) => {
-  const [pinIndex, setPinIndex] = useState<number>(-1);
-
+export const ImageGrid = ({
+  board,
+  setPinIndex,
+}: {
+  board: Board;
+  setPinIndex: (index: number) => void;
+}) => {
   const { pubkey } = useUser();
   const selfBoard = pubkey ? pubkey == board.author : false;
 
@@ -54,24 +55,6 @@ export const ImageGrid = ({ board }: { board: Board }) => {
           </li>
         ))}
       </ul>
-
-      <DetailsSlideover board={board} pinIndex={pinIndex} setPinIndex={setPinIndex}>
-        {pinIndex > -1 && (
-          <div
-            key={pinIndex}
-            className="aspect-w-5 aspect-h-4 block w-full overflow-hidden rounded-md bg-gray-200 text-gray-200"
-          >
-            <a href={board.pins[pinIndex][0]} target="_blank" rel="noreferrer">
-              <img
-                src={loader(board.pins[pinIndex][0], { w: 500, h: 400 })}
-                alt={board.pins[pinIndex][1]}
-                className="hover:opacity-75 hover:cursor-zoom-in"
-                loading="lazy"
-              />
-            </a>
-          </div>
-        )}
-      </DetailsSlideover>
     </>
   );
 };

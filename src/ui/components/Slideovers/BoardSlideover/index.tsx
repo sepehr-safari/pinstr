@@ -7,8 +7,8 @@ import { useMutateBoard } from '@/logic/mutations';
 import { useLocalStore } from '@/logic/store';
 import { capitalizeFirstLetter } from '@/logic/utils';
 
-import { SelectableBoardTypes } from '@/ui/components';
 import { CategoryMenu, ImageMenu } from '@/ui/components/Menus';
+import { FormatSelector } from './FormatSelector';
 
 export const BoardSlideover = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -19,8 +19,13 @@ export const BoardSlideover = () => {
   const setBoardItem = useLocalStore((store) => store.setBoardItem);
 
   const canSubmit = useMemo(
-    () => !!board.type && !!board.category && !!board.title && !!board.description && !!board.image,
-    [board]
+    () =>
+      board.format != undefined &&
+      board.category != undefined &&
+      board.title != undefined &&
+      board.description != undefined &&
+      board.image != undefined,
+    [board.format, board.category, board.title, board.description, board.image]
   );
 
   const { publishBoard, updateBoard, deleteBoard } = useMutateBoard();
@@ -81,10 +86,10 @@ export const BoardSlideover = () => {
                         <div className="flex items-center justify-between">
                           <Dialog.Title className="text-base font-semibold leading-6 text-white">
                             {action === 'create-board' ? (
-                              !board.type ? (
+                              board.format == undefined ? (
                                 <span>Create a new board</span>
                               ) : (
-                                <span>{board.type}</span>
+                                <span>{board.format}</span>
                               )
                             ) : (
                               <span>Edit your board</span>
@@ -94,7 +99,7 @@ export const BoardSlideover = () => {
                         <div className="mt-1">
                           <p className="text-sm font-light text-gray-300">
                             {action === 'create-board' ? (
-                              !board.type ? (
+                              board.format == undefined ? (
                                 <span>Get started by choosing a board type.</span>
                               ) : (
                                 <span>Fill in the details below to create your desired board.</span>
@@ -106,9 +111,9 @@ export const BoardSlideover = () => {
                         </div>
                       </div>
 
-                      {!board.type ? (
+                      {board.format == undefined ? (
                         <div className="p-6">
-                          <SelectableBoardTypes />
+                          <FormatSelector />
                         </div>
                       ) : (
                         <div className="flex flex-1 flex-col justify-between">
@@ -116,9 +121,12 @@ export const BoardSlideover = () => {
                             <div className="space-y-4 pb-4 pt-4">
                               <div>
                                 <label htmlFor="title" className="flex flex-col">
-                                  <span className="text-sm font-medium leading-6 text-gray-900">
-                                    Title
-                                  </span>
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-sm font-medium leading-6 text-gray-900">
+                                      Title
+                                    </span>
+                                    <span className="text-xs ml-auto">{`(Required)`}</span>
+                                  </div>
                                   <span className="text-xs font-light text-gray-500">
                                     Choose a fancy title for your board.
                                   </span>
@@ -138,9 +146,12 @@ export const BoardSlideover = () => {
                               </div>
                               <div>
                                 <label htmlFor="description" className="flex flex-col">
-                                  <span className="text-sm font-medium leading-6 text-gray-900">
-                                    Description
-                                  </span>
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-sm font-medium leading-6 text-gray-900">
+                                      Description
+                                    </span>
+                                    <span className="text-xs ml-auto">{`(Required)`}</span>
+                                  </div>
                                   <span className="text-xs font-light text-gray-500">
                                     Explain what this board is about in a few words.
                                   </span>
@@ -159,9 +170,12 @@ export const BoardSlideover = () => {
                               </div>
                               <div>
                                 <span className="flex flex-col">
-                                  <span className="text-sm font-medium leading-6 text-gray-900">
-                                    Category
-                                  </span>
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-sm font-medium leading-6 text-gray-900">
+                                      Category
+                                    </span>
+                                    <span className="text-xs ml-auto">{`(Required)`}</span>
+                                  </div>
                                   <span className="text-xs font-light text-gray-500">
                                     Choose a suitable category for your board.
                                   </span>
@@ -176,9 +190,12 @@ export const BoardSlideover = () => {
                               </div>
                               <div>
                                 <label htmlFor="board.tags" className="flex flex-col">
-                                  <span className="text-sm font-medium leading-6 text-gray-900">
-                                    Tags
-                                  </span>
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-sm font-medium leading-6 text-gray-900">
+                                      Tags
+                                    </span>
+                                    <span className="text-xs ml-auto">{`(Optional)`}</span>
+                                  </div>
                                   <span className="text-xs font-light text-gray-500">
                                     Add a few space separated tags to help people find your board
                                     easier.
@@ -222,9 +239,12 @@ export const BoardSlideover = () => {
 
                               <div>
                                 <span className="flex flex-col">
-                                  <span className="text-sm font-medium leading-6 text-gray-900">
-                                    Cover Image
-                                  </span>
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-sm font-medium leading-6 text-gray-900">
+                                      Cover Image
+                                    </span>
+                                    <span className="text-xs ml-auto">{`(Required)`}</span>
+                                  </div>
                                   <span className="text-xs font-light text-gray-500">
                                     Select an option and choose a high quality image that represents
                                     your board.
@@ -270,7 +290,7 @@ export const BoardSlideover = () => {
                       <div>
                         <button
                           type="button"
-                          className="rounded-md bg-white px-3 py-2 text-xs font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                          className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                           onClick={() =>
                             setSearchParams(
                               (searchParams) => {
@@ -287,14 +307,17 @@ export const BoardSlideover = () => {
                         </button>
                       </div>
 
-                      {!!board.type && (
+                      {board.format != undefined && (
                         <div className="flex">
                           {action === 'create-board' ? (
                             <>
                               <button
                                 type="button"
-                                onClick={() => setBoardItem('type', undefined)}
-                                className="flex items-center rounded-md bg-white px-3 py-2 text-xs font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                onClick={() => {
+                                  setBoardItem('headers', undefined);
+                                  setBoardItem('format', undefined);
+                                }}
+                                className="flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                               >
                                 <span aria-hidden="true">&larr;</span>
                                 <span className="ml-2">Back</span>
@@ -302,7 +325,7 @@ export const BoardSlideover = () => {
                               <button
                                 type="button"
                                 onClick={() => publishBoard.mutate()}
-                                className="ml-4 inline-flex justify-center rounded-md bg-gray-800 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 disabled:bg-gray-300 disabled:hover:opacity-100"
+                                className="ml-4 inline-flex justify-center rounded-md bg-gray-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 disabled:bg-gray-300 disabled:hover:opacity-100"
                                 disabled={!canSubmit || publishBoard.status == 'loading'}
                               >
                                 Create Board
@@ -312,7 +335,7 @@ export const BoardSlideover = () => {
                             <button
                               type="button"
                               onClick={() => updateBoard.mutate()}
-                              className="ml-4 inline-flex justify-center rounded-md bg-gray-800 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 disabled:bg-gray-300 disabled:hover:opacity-100"
+                              className="ml-4 inline-flex justify-center rounded-md bg-gray-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 disabled:bg-gray-300 disabled:hover:opacity-100"
                               disabled={!canSubmit || updateBoard.status == 'loading'}
                             >
                               Update Board

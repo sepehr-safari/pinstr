@@ -1,32 +1,33 @@
 import { nip05, nip19 } from 'nostr-tools';
 
+import { Format } from '@/logic/types';
 import { typeOfProfileAddress } from '@/logic/utils';
 
 export const normalizePinContent = async ({
   content,
-  boardType,
+  format,
 }: {
   content: string;
-  boardType: string;
+  format: Format;
 }): Promise<string> => {
-  switch (boardType) {
-    case 'Text':
+  switch (format) {
+    case Format.Text:
       return content;
-    case 'Note':
+    case Format.Note:
       if (content.startsWith('note1')) {
         return nip19.decode(content).data.toString();
       } else {
         throw new Error('Invalid note id for content');
       }
-    case 'Link':
-    case 'Image':
-    case 'Video':
+    case Format.Link:
+    case Format.Image:
+    case Format.Video:
       if (content.startsWith('http')) {
         return content;
       } else {
-        throw new Error('Invalid URL for pin content of type ' + boardType);
+        throw new Error('Invalid URL for pin content of type ' + format);
       }
-    case 'Profile':
+    case Format.Profile:
       switch (typeOfProfileAddress(content)) {
         case 'nip19':
           return nip19.decode(content).data.toString();
@@ -47,6 +48,6 @@ export const normalizePinContent = async ({
           throw new Error('Unknown profile scheme ' + content);
       }
     default:
-      throw new Error('Invalid board type ' + boardType);
+      throw new Error('Invalid board type'); // never happens
   }
 };

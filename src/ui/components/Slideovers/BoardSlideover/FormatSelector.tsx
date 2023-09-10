@@ -10,65 +10,57 @@ import {
 import { useLocalStore } from '@/logic/store';
 import { joinClassNames } from '@/logic/utils';
 
-export const boardTypes: {
-  [type: string]: {
-    headers: string[];
-    title: string;
-    description: string;
-    icon: any;
-    background: string;
-  };
-} = {
-  Text: {
-    headers: ['Content', 'Title', 'Image'],
+const items = [
+  {
+    headers: ['Text:Content', 'Text:Title', 'Image:Image'],
     title: 'Create a new board of plain texts',
     description: 'e.g. a board of your favorite quotes',
     icon: DocumentTextIcon,
     background: 'bg-pink-600',
   },
-  Link: {
+  {
+    headers: ['Link:Content', 'Text:Title', 'Image:Image'],
     title: 'Create a new board of links',
     description: 'e.g. a board of your favorite blog posts',
     icon: LinkIcon,
     background: 'bg-indigo-600',
-    headers: ['Content', 'Title', 'Image'],
   },
-  Image: {
+  {
+    headers: ['Image:Content', 'Text:Title'],
     title: 'Create a new board of images',
     description: 'e.g. a board of your favorite memes or gifs',
     icon: PhotoIcon,
     background: 'bg-green-600',
-    headers: ['Content', 'Title'],
   },
-  Video: {
+  {
+    headers: ['Video:Content', 'Text:Title'],
     title: 'Create a new board of videos',
     description: 'e.g. a board of your favorite YouTube videos',
     icon: VideoCameraIcon,
     background: 'bg-blue-600',
-    headers: ['Content', 'Title'],
   },
-  Profile: {
+  {
+    headers: ['Profile:Content'],
     title: 'Create a new board of NOSTR profiles',
     description: 'e.g. a board of nostr developers you admire',
     icon: UserIcon,
     background: 'bg-yellow-600',
-    headers: ['Content'],
   },
-  Note: {
+  {
+    headers: ['Note:Content'],
     title: 'Create a new board of NOSTR notes',
     description: 'e.g. a board of your favorite notes about bitcoin',
     icon: ChatBubbleLeftIcon,
     background: 'bg-purple-600',
-    headers: ['Content'],
   },
-};
+];
 
-export const SelectableBoardTypes = () => {
+export const FormatSelector = () => {
   const setBoardItem = useLocalStore((store) => store.setBoardItem);
 
   return (
     <ul role="list" className="grid grid-cols-1 gap-6">
-      {Object.entries(boardTypes).map(([type, item]) => (
+      {items.map((item) => (
         <li key={item.title} className="flow-root">
           <div className="relative group -m-2 flex items-center space-x-4 rounded-xl p-2 focus-within:ring-2 focus-within:ring-gray-500 hover:bg-gray-100 hover:cursor-pointer">
             <div
@@ -84,7 +76,12 @@ export const SelectableBoardTypes = () => {
             </div>
             <div>
               <h3 className="text-sm font-medium text-gray-900">
-                <div onClick={() => setBoardItem('type', type)}>
+                <div
+                  onClick={() => {
+                    setBoardItem('headers', item.headers);
+                    setBoardItem('format', item.headers[0].split(':')[0]);
+                  }}
+                >
                   <span className="absolute inset-0" aria-hidden="true" />
                   <span>{item.title}</span>
                 </div>

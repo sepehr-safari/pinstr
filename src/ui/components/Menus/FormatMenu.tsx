@@ -1,8 +1,8 @@
 import { MenuItem, MenuTemplate } from '@/ui/components/Menus';
 
-const boardTypeMenuItems: MenuItem[] = [
+const formatMenuItems: MenuItem[] = [
   {
-    title: 'All Board Types',
+    title: 'All Formats',
   },
   {
     title: 'Text',
@@ -24,7 +24,7 @@ const boardTypeMenuItems: MenuItem[] = [
   },
 ];
 
-export const BoardTypeMenu = ({
+export const FormatMenu = ({
   selected,
   setSelected,
 }: {
@@ -33,7 +33,7 @@ export const BoardTypeMenu = ({
 }) => {
   return (
     <>
-      <MenuTemplate items={boardTypeMenuItems} selected={selected} setSelected={setSelected} />
+      <MenuTemplate items={formatMenuItems} selected={selected} setSelected={setSelected} />
     </>
   );
 };

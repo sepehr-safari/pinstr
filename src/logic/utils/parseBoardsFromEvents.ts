@@ -1,6 +1,6 @@
 import { Event } from 'nostr-tools';
 
-import { Board, Pin } from '@/logic/types';
+import { Board, Format, Pin } from '@/logic/types';
 
 export const parseBoardsFromEvents = (events: Event[]) => {
   const boards: Board[] = [];
@@ -10,8 +10,8 @@ export const parseBoardsFromEvents = (events: Event[]) => {
     let title: string = '';
     let image: string = '';
     let description: string = '';
-    let type: string = '';
     let category: string = '';
+    let format: string = '';
     let headers: string[] = [];
     let tags: string[] = [];
     let pins: Pin[] = [];
@@ -28,11 +28,11 @@ export const parseBoardsFromEvents = (events: Event[]) => {
         case 'description':
           description = t[1];
           continue;
-        case 'T':
-          type = t[1];
-          continue;
         case 'c':
           category = t[1];
+          continue;
+        case 'f':
+          format = t[1];
           continue;
         case 'headers':
           headers = t.slice(1);
@@ -48,7 +48,11 @@ export const parseBoardsFromEvents = (events: Event[]) => {
       }
     }
 
-    if (!title || !image || !description || !type || !category || headers.length == 0) {
+    if (!format || !title || !image || !description || !category || headers.length == 0) {
+      continue;
+    }
+
+    if (format in Format == false) {
       continue;
     }
 
@@ -59,11 +63,11 @@ export const parseBoardsFromEvents = (events: Event[]) => {
       title,
       image,
       description,
-      type,
       category,
       headers,
       tags,
       pins,
+      format: format as Format,
     });
   }
 

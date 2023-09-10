@@ -9,6 +9,5 @@ export * from './Footer';
 export * from './ImageModal';
 export * from './ProfileBanner';
 export * from './ProfileCard';
-export * from './SelectableBoardTypes';
 export * from './Spinner';
 export * from './WarnModal';

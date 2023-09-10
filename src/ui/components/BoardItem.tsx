@@ -24,7 +24,7 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
   const location = useLocation();
 
   const { setCreatePinParams } = useCreatePinParams(board);
-  const { type, category } = useFiltersParams();
+  const { format, category } = useFiltersParams();
 
   return (
     <>
@@ -58,10 +58,10 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
               leaveTo="opacity-0 -translate-x-2"
             >
               <button
-                onClick={() => type.set(board.type)}
+                onClick={() => format.set(board.format)}
                 className="inline-flex items-center rounded-full bg-black/30 px-3 py-1 text-xs font-medium text-white hover:bg-black/50 hover:text-gray-100"
               >
-                {board.type}
+                {board.format}
               </button>
             </Transition.Child>
             <Transition.Child

@@ -8,14 +8,12 @@ import { useLocalStore } from '@/logic/store';
 import { Board } from '@/logic/types';
 import { normalizePinContent } from '@/logic/utils';
 
-import { boardTypes } from '@/ui/components';
-
 export const useMutateBoard = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const action = searchParams.get('action');
   const pinIndex = searchParams.get('i');
 
-  const { category, description, headers, image, pins, tags, title, type, id, author } =
+  const { category, description, headers, image, pins, tags, title, format, id, author } =
     useLocalStore((store) => store.board);
   const setBoard = useLocalStore((store) => store.setBoard);
 
@@ -27,7 +25,7 @@ export const useMutateBoard = () => {
 
   const publishBoardFn = useCallback(
     async (overridePins?: string[][] | undefined) => {
-      if (!type || !category || !title || !description || !image) {
+      if (!format || !category || !title || !description || !image || !headers) {
         throw new Error('Missing required fields');
       }
 
@@ -35,7 +33,7 @@ export const useMutateBoard = () => {
       if (pinIndex != null && newPins.length > +pinIndex && action != 'remove-pin') {
         const normalizedContent = await normalizePinContent({
           content: newPins[+pinIndex]?.[0],
-          boardType: type,
+          format,
         });
         newPins[+pinIndex][0] = normalizedContent;
       }
@@ -46,11 +44,9 @@ export const useMutateBoard = () => {
           ['d', title],
           ['description', description],
           ['c', category],
-          ['T', type],
+          ['f', format],
           ['image', image],
-          headers && headers.length > 0
-            ? ['headers', ...headers]
-            : ['headers', ...boardTypes[type].headers],
+          ['headers', ...headers],
           ...(tags || [])
             .filter((t, i, a) => t.length > 0 && a.indexOf(t) === i)
             .map((t) => ['t', t]),
@@ -58,7 +54,7 @@ export const useMutateBoard = () => {
         ],
       });
     },
-    [publish, title, description, image, category, type, tags, pins, headers, pinIndex]
+    [publish, title, description, image, category, format, tags, pins, headers, pinIndex]
   );
 
   const deleteBoardFn = useCallback(() => {

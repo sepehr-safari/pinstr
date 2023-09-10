@@ -1,5 +1,4 @@
 import { DocumentTextIcon } from '@heroicons/react/24/outline';
-import { useState } from 'react';
 import ReactPlayer from 'react-player';
 
 import { useUser } from '@/logic/queries';
@@ -7,11 +6,14 @@ import { Board } from '@/logic/types';
 import { joinClassNames } from '@/logic/utils';
 
 import { EllipsisPopover } from '@/ui/components/Popovers';
-import { DetailsSlideover } from '@/ui/components/Slideovers';
 
-export const VideoGrid = ({ board }: { board: Board }) => {
-  const [pinIndex, setPinIndex] = useState<number>(-1);
-
+export const VideoGrid = ({
+  board,
+  setPinIndex,
+}: {
+  board: Board;
+  setPinIndex: (index: number) => void;
+}) => {
   const { pubkey } = useUser();
   const selfBoard = pubkey ? pubkey == board.author : false;
 
@@ -42,7 +44,7 @@ export const VideoGrid = ({ board }: { board: Board }) => {
               className="right-0 bottom-0"
             />
 
-            <div className="aspect-w-5 aspect-h-3 overflow-hidden rounded-md bg-black">
+            <div className="w-full aspect-w-16 aspect-h-9 overflow-hidden rounded-md bg-black">
               <ReactPlayer url={videoPin[0]} width="100%" height="100%" controls />
             </div>
 
@@ -52,17 +54,6 @@ export const VideoGrid = ({ board }: { board: Board }) => {
           </li>
         ))}
       </ul>
-
-      <DetailsSlideover board={board} pinIndex={pinIndex} setPinIndex={setPinIndex}>
-        {pinIndex > -1 && (
-          <div
-            key={pinIndex}
-            className="aspect-w-10 aspect-h-7 overflow-hidden rounded-md bg-black"
-          >
-            <ReactPlayer url={board.pins[pinIndex][0]} width="100%" height="100%" controls />
-          </div>
-        )}
-      </DetailsSlideover>
     </>
   );
 };

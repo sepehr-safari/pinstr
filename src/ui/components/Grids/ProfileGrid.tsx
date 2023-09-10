@@ -1,6 +1,5 @@
 import { PlusIcon } from '@heroicons/react/20/solid';
 import { nip19 } from 'nostr-tools';
-import { useState } from 'react';
 
 import { useAuthor, useUser } from '@/logic/queries';
 import { Board } from '@/logic/types';
@@ -8,11 +7,14 @@ import { joinClassNames, loader } from '@/logic/utils';
 
 import { Spinner } from '@/ui/components';
 import { EllipsisPopover } from '@/ui/components/Popovers';
-import { DetailsSlideover } from '@/ui/components/Slideovers';
 
-export const ProfileGrid = ({ board }: { board: Board }) => {
-  const [pinIndex, setPinIndex] = useState<number>(-1);
-
+export const ProfileGrid = ({
+  board,
+  setPinIndex,
+}: {
+  board: Board;
+  setPinIndex: (index: number) => void;
+}) => {
   const { pubkey } = useUser();
   const selfBoard = pubkey ? pubkey == board.author : false;
 
@@ -52,15 +54,17 @@ export const ProfileGrid = ({ board }: { board: Board }) => {
           </li>
         ))}
       </ul>
-
-      <DetailsSlideover board={board} pinIndex={pinIndex} setPinIndex={setPinIndex}>
-        {pinIndex > -1 && <ProfileDetails key={pinIndex} pubkey={board.pins[pinIndex][0]} />}
-      </DetailsSlideover>
     </>
   );
 };
 
-const ProfileDetails = ({ pubkey, summary = false }: { pubkey: string; summary?: boolean }) => {
+export const ProfileDetails = ({
+  pubkey,
+  summary = false,
+}: {
+  pubkey: string;
+  summary?: boolean;
+}) => {
   const { data: profile, status } = useAuthor(pubkey);
 
   if (status == 'loading') {

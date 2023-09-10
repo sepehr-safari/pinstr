@@ -10,6 +10,7 @@ import { MenuItem, MenuTemplate } from '@/ui/components/Menus';
 interface Props {
   image: string | undefined;
   setImage: (image: string) => void;
+  required?: boolean;
 }
 
 const coverImageMenuItems: MenuItem[] = [
@@ -27,7 +28,7 @@ const coverImageMenuItems: MenuItem[] = [
   },
 ];
 
-export const ImageMenu = ({ image, setImage }: Props) => {
+export const ImageMenu = ({ image, setImage, required = false }: Props) => {
   const [selectedMenuItem, setSelectedMenuItem] = useState(coverImageMenuItems[0].title);
   const [searchKeyword, setSearchKeyword] = useState('');
   const [searchResult, setSearchResult] = useState<string[]>([]);
@@ -113,7 +114,10 @@ export const ImageMenu = ({ image, setImage }: Props) => {
 
       {!image && selectedMenuItem === 'Upload' && (
         <div className="mt-4">
-          <span className="block text-sm font-medium leading-6 text-gray-900">Image / Upload</span>
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-medium leading-6 text-gray-900">Image / Upload</span>
+            {required && <span className="text-xs ml-auto">{`(Required)`}</span>}
+          </div>
 
           <div className="mt-2 flex justify-center rounded-lg border border-gray-300 px-4 py-6">
             <div className="text-center" {...getRootProps()}>
@@ -152,9 +156,12 @@ export const ImageMenu = ({ image, setImage }: Props) => {
 
       {!image && selectedMenuItem === 'Stock Images' && (
         <>
-          <span className="mt-4 block text-sm font-medium leading-6 text-gray-900">
-            Image / Search From Stock Images
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-medium leading-6 text-gray-900">
+              Image / Search From Stock Images
+            </span>
+            {required && <span className="text-xs ml-auto">{`(Required)`}</span>}
+          </div>
 
           <div className="mt-2 relative">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
@@ -271,9 +278,12 @@ export const ImageMenu = ({ image, setImage }: Props) => {
 
       {!!image && (
         <div className="mt-4">
-          <span className="block text-sm font-medium leading-6 text-gray-900">
-            Image / Selected Image
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-medium leading-6 text-gray-900">
+              Image / Selected Image
+            </span>
+            {required && <span className="text-xs ml-auto">{`(Required)`}</span>}
+          </div>
 
           <div className="mt-2 flex justify-center rounded-lg border border-gray-300 px-4 py-4">
             <div className="text-center">

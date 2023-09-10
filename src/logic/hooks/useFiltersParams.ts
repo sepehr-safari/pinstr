@@ -20,11 +20,11 @@ export const useFiltersParams = () => {
           return prev;
         }),
     },
-    type: {
-      value: searchParams.get('type') || undefined,
-      set: (type: string) =>
+    format: {
+      value: searchParams.get('format') || undefined,
+      set: (format: string) =>
         setSearchParams((prev) => {
-          type.startsWith('All') ? prev.delete('type') : prev.set('type', type);
+          format.startsWith('All') ? prev.delete('format') : prev.set('format', format);
           return prev;
         }),
     },

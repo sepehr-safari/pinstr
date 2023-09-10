@@ -1,4 +1,7 @@
+import { useState } from 'react';
+
 import { useBoards } from '@/logic/queries';
+import { Format } from '@/logic/types';
 
 import { Spinner } from '@/ui/components';
 import {
@@ -9,8 +12,11 @@ import {
   TextGrid,
   VideoGrid,
 } from '@/ui/components/Grids';
+import { DetailsSlideover } from '@/ui/components/Slideovers';
 
 export const Page = () => {
+  const [pinIndex, setPinIndex] = useState<number>(-1);
+
   const { data: boards, status } = useBoards();
   const board = boards?.[0];
 
@@ -32,12 +38,14 @@ export const Page = () => {
 
   return (
     <>
-      {board.type == 'Text' && <TextGrid board={board} />}
-      {board.type == 'Link' && <LinkGrid board={board} />}
-      {board.type == 'Image' && <ImageGrid board={board} />}
-      {board.type == 'Video' && <VideoGrid board={board} />}
-      {board.type == 'Profile' && <ProfileGrid board={board} />}
-      {board.type == 'Note' && <NoteGrid board={board} />}
+      {board.format == Format.Text && <TextGrid board={board} setPinIndex={setPinIndex} />}
+      {board.format == Format.Link && <LinkGrid board={board} setPinIndex={setPinIndex} />}
+      {board.format == Format.Image && <ImageGrid board={board} setPinIndex={setPinIndex} />}
+      {board.format == Format.Video && <VideoGrid board={board} setPinIndex={setPinIndex} />}
+      {board.format == Format.Profile && <ProfileGrid board={board} setPinIndex={setPinIndex} />}
+      {board.format == Format.Note && <NoteGrid board={board} setPinIndex={setPinIndex} />}
+
+      <DetailsSlideover board={board} pinIndex={pinIndex} setPinIndex={setPinIndex} />
     </>
   );
 };
