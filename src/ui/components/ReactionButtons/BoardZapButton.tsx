@@ -6,6 +6,7 @@ import { useMemo } from 'react';
 
 import { useBoardReactions, useUser } from '@/logic/queries';
 import { Board } from '@/logic/types';
+import { toast } from 'react-toastify';
 
 export const BoardZapButton = ({ board }: { board: Board }) => {
   const { data: reactions } = useBoardReactions(board);
@@ -21,7 +22,7 @@ export const BoardZapButton = ({ board }: { board: Board }) => {
     <>
       <button
         type="button"
-        // onClick={() => zap()}
+        onClick={() => toast('Zaps are still under developement!', { type: 'warning' })}
         className={joinClassNames(
           'inline-flex justify-center items-center text-xs font-semibold',
           zapedByUser
