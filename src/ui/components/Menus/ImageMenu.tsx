@@ -156,7 +156,7 @@ export const ImageMenu = ({ image, setImage, required = false }: Props) => {
 
       {!image && selectedMenuItem === 'Stock Images' && (
         <>
-          <div className="flex items-center gap-2">
+          <div className="mt-4 flex items-center gap-2">
             <span className="text-sm font-medium leading-6 text-gray-900">
               Image / Search From Stock Images
             </span>

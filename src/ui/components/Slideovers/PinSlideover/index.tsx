@@ -1,7 +1,8 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { useRemovePinParams } from '@/logic/hooks';
 import { useMutateBoard } from '@/logic/mutations';
@@ -116,6 +117,27 @@ export const PinSlideover = () => {
     board,
     pinIndex != null ? +pinIndex : undefined
   );
+
+  const canSubmit = useMemo(() => {
+    if (!board.headers || !board.pins || pinIndex == null) {
+      return false;
+    }
+
+    return board.headers.every((header, hIndex) => {
+      const title = header.split(':')[1];
+
+      if (PRESERVED_TITLES.includes(title) == false) {
+        return true;
+      }
+
+      return (
+        board.pins != undefined &&
+        board.pins.length > +pinIndex &&
+        board.pins[+pinIndex][hIndex] != undefined &&
+        board.pins[+pinIndex][hIndex] != ''
+      );
+    });
+  }, [board.headers, board.pins, pinIndex]);
 
   useEffect(() => {
     if (action === 'remove-pin' && pinIndex != null && confirm === 'true') {
@@ -288,9 +310,15 @@ export const PinSlideover = () => {
                               onClick={() => {
                                 if (
                                   !featureTitleInput ||
-                                  PRESERVED_TITLES.includes(featureTitleInput)
-                                )
+                                  PRESERVED_TITLES.includes(featureTitleInput) ||
+                                  board.headers
+                                    ?.map((h) => h.split(':')[1])
+                                    .includes(featureTitleInput)
+                                ) {
+                                  toast('Invalid title! Try a unique one!', { type: 'error' });
+
                                   return;
+                                }
 
                                 setBoardItem('headers', [
                                   ...(board.headers || []),
@@ -381,7 +409,8 @@ export const PinSlideover = () => {
                               <button
                                 type="button"
                                 onClick={() => publishBoard.mutate()}
-                                className="ml-4 inline-flex justify-center rounded-md bg-gray-800 px-6 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
+                                className="ml-4 inline-flex justify-center rounded-md bg-gray-800 px-6 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 disabled:bg-gray-300 disabled:hover:opacity-100"
+                                disabled={!canSubmit || publishBoard.status == 'loading'}
                               >
                                 Add Pin
                               </button>
@@ -390,7 +419,8 @@ export const PinSlideover = () => {
                             <button
                               type="button"
                               onClick={() => publishBoard.mutate()}
-                              className="ml-4 inline-flex justify-center rounded-md bg-gray-800 px-6 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
+                              className="ml-4 inline-flex justify-center rounded-md bg-gray-800 px-6 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 disabled:bg-gray-300 disabled:hover:opacity-100"
+                              disabled={!canSubmit || publishBoard.status == 'loading'}
                             >
                               Update Pin
                             </button>

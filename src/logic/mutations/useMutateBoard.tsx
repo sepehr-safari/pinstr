@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { nip19 } from 'nostr-tools';
 import { useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { usePublish } from '@/logic/mutations';
 import { useLocalStore } from '@/logic/store';
@@ -77,14 +78,20 @@ export const useMutateBoard = () => {
 
   return {
     publishBoard: useMutation({
-      mutationFn: () => publishBoardFn(),
+      mutationFn: () =>
+        toast.promise(publishBoardFn, {
+          pending: 'Publishing...',
+          error: 'Error publishing!',
+          success: 'Successfully published!',
+        }),
       onSuccess: (event) => {
-        queryClient.invalidateQueries({ queryKey: ['nostr', 'boards'] });
+        queryClient.invalidateQueries({
+          queryKey: ['nostr', 'boards', { author: event.pubkey, title }],
+        });
 
         setBoard({});
-        navigate('/p/' + nip19.npubEncode(event.pubkey) + '/' + title, {
-          replace: true,
-        });
+
+        navigate('/p/' + nip19.npubEncode(event.pubkey) + '/' + title, { replace: true });
       },
       onError: () => {
         setBoard({});
@@ -99,14 +106,20 @@ export const useMutateBoard = () => {
       },
     }),
     updateBoard: useMutation({
-      mutationFn: updateBoardFn,
+      mutationFn: () =>
+        toast.promise(updateBoardFn, {
+          pending: 'Publishing...',
+          error: 'Error Publishing!',
+          success: 'Successfully Published!',
+        }),
       onSuccess: (event) => {
-        queryClient.invalidateQueries({ queryKey: ['nostr', 'boards'] });
+        queryClient.invalidateQueries({
+          queryKey: ['nostr', 'boards', { author: event.pubkey, title }],
+        });
 
         setBoard({});
-        navigate('/p/' + nip19.npubEncode(event.pubkey) + '/' + title, {
-          replace: true,
-        });
+
+        navigate('/p/' + nip19.npubEncode(event.pubkey) + '/' + title, { replace: true });
       },
       onError: () => {
         setBoard({});
@@ -120,12 +133,18 @@ export const useMutateBoard = () => {
       },
     }),
     deleteBoard: useMutation({
-      mutationFn: deleteBoardFn,
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['nostr', 'boards'] });
+      mutationFn: () =>
+        toast.promise(deleteBoardFn, {
+          pending: 'Deleting board...',
+          error: 'Error deleting board!',
+          success: 'Successfully deleted!',
+        }),
+      onSuccess: (event) => {
+        queryClient.invalidateQueries({ queryKey: ['nostr', 'boards', { author: event.pubkey }] });
 
         setBoard({});
-        navigate('/p/' + nip19.npubEncode(author!), {
+
+        navigate('/p/' + nip19.npubEncode(event.pubkey), {
           replace: true,
         });
       },
@@ -148,20 +167,21 @@ export const useMutateBoard = () => {
         if (pinIndex != null && newPins.length > 0) {
           newPins.splice(parseInt(pinIndex), 1);
 
-          return publishBoardFn(newPins);
+          return toast.promise(publishBoardFn(newPins), {
+            pending: 'Removing pin...',
+            error: 'Error removing pin!',
+            success: 'Successfully removed!',
+          });
         } else {
           throw new Error('Unexpected remove action');
         }
       },
       onSuccess: () => {
-        queryClient.invalidateQueries({
-          queryKey: ['nostr', 'boards', author, title],
-        });
+        queryClient.invalidateQueries({ queryKey: ['nostr', 'boards', { author, title }] });
 
         setBoard({});
-        navigate('/p/' + nip19.npubEncode(author!) + '/' + title, {
-          replace: true,
-        });
+
+        navigate('/p/' + nip19.npubEncode(author!) + '/' + title, { replace: true });
       },
       onError: () => {
         setBoard({});

@@ -10,4 +10,5 @@ export * from './ImageModal';
 export * from './ProfileBanner';
 export * from './ProfileCard';
 export * from './Spinner';
+export * from './Toast';
 export * from './WarnModal';

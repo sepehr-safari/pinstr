@@ -1,5 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Event } from 'nostr-tools';
+import { useCallback } from 'react';
+import { toast } from 'react-toastify';
 
 import { usePublish } from '@/logic/mutations';
 
@@ -7,8 +9,8 @@ export const useMutateNoteComment = (note: Event<1> | undefined | null) => {
   const publish = usePublish();
   const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: (text: string) => {
+  const publishCommentFn = useCallback(
+    (text: string) => {
       if (!note) throw new Error('Note is undefined');
 
       return publish({
@@ -17,6 +19,16 @@ export const useMutateNoteComment = (note: Event<1> | undefined | null) => {
         tags: [['e', note.id], ['p', note.pubkey], ...note.tags],
       });
     },
+    [note, publish]
+  );
+
+  return useMutation({
+    mutationFn: (text: string) =>
+      toast.promise(() => publishCommentFn(text), {
+        pending: 'Publishing Your Comment...',
+        error: 'Error Publishing Comment!',
+        success: 'Your Comment Published Successfully!',
+      }),
     onSuccess: (comment) => {
       queryClient.setQueryData(['nostr', 'notes', comment.id], comment);
       queryClient.invalidateQueries(['nostr', 'notes', note?.id, 'reactions']);
