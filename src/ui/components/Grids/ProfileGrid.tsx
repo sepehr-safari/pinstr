@@ -1,5 +1,6 @@
 import { PlusIcon } from '@heroicons/react/20/solid';
 import { nip19 } from 'nostr-tools';
+import { useNavigate } from 'react-router-dom';
 
 import { useAuthor, useUser } from '@/logic/queries';
 import { Board } from '@/logic/types';
@@ -59,8 +60,10 @@ export const ProfileDetails = ({
 }: {
   pubkey: string;
   summary?: boolean;
-  setOpenDetails: () => void;
+  setOpenDetails?: () => void;
 }) => {
+  const navigate = useNavigate();
+
   const { data: profile, status } = useAuthor(pubkey);
 
   if (status == 'loading') {
@@ -79,7 +82,7 @@ export const ProfileDetails = ({
     <>
       <button
         type="button"
-        onClick={summary ? setOpenDetails : undefined}
+        onClick={summary ? setOpenDetails : () => navigate('/p/' + profile.npub)}
         className="w-full absolute top-0"
       >
         <div
@@ -103,8 +106,8 @@ export const ProfileDetails = ({
       </button>
       <button
         type="button"
-        onClick={summary ? setOpenDetails : undefined}
-        className="flex flex-col pt-16 grow items-center text-center"
+        onClick={summary ? setOpenDetails : () => navigate('/p/' + profile.npub)}
+        className="w-full flex flex-col pt-16 grow items-center text-center"
       >
         <div className="mx-auto rounded-full bg-gray-300 text-gray-300 z-[1]">
           {!!profile.picture && (

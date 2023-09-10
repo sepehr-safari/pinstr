@@ -219,7 +219,7 @@ export const DetailsSlideover = ({
                                       <span className="text-sm font-semibold">{title}</span>
                                     )}
 
-                                    <div className="relative overflow-hidden w-full max-w-sm rounded-lg shadow-md border bg-white">
+                                    <div className="relative flex flex-col items-center overflow-hidden w-full max-w-sm rounded-lg shadow-md border bg-white">
                                       <ProfileDetails pubkey={value} />
                                     </div>
                                   </div>
