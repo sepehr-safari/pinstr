@@ -13,9 +13,7 @@ export interface PopoverProps {
 export const PopoverTemplate = ({ children, buttons }: PopoverProps) => {
   const [referenceElement, setReferenceElement] = useState<HTMLButtonElement | null>(null);
   const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null);
-  const { styles, attributes } = usePopper(referenceElement, popperElement, {
-    placement: 'bottom',
-  });
+  const { styles, attributes } = usePopper(referenceElement, popperElement);
 
   return (
     <Popover className="relative">
@@ -32,12 +30,12 @@ export const PopoverTemplate = ({ children, buttons }: PopoverProps) => {
         leaveTo="opacity-0 -translate-y-2"
       >
         <Popover.Panel
-          className="absolute left-1/2 z-10 mt-4 flex w-screen max-w-max -translate-x-1/2 px-4"
+          className="my-4 absolute z-10 flex w-screen max-w-max px-4"
           ref={setPopperElement}
           style={styles.popper}
           {...attributes.popper}
         >
-          <div className=" max-w-xs flex-auto rounded-xl bg-white p-2 text-sm shadow-lg ring-1 ring-gray-900/20">
+          <div className="max-w-sm flex-auto rounded-xl bg-white p-2 text-sm shadow-lg ring-1 ring-gray-900/20">
             {buttons.map((item, index) => (
               <div
                 key={index}
