@@ -91,7 +91,7 @@ export const NoteDetails = ({
 
           <div className="flex-1 truncate">
             <div className="flex items-center space-x-3">
-              <Link to={`/p/${author?.npub}`} className="z-[4] hover:cursor-zoom-in">
+              <Link to={`/p/${author?.npub}`} className="z-[4]">
                 <h3 className="inline-flex items-center truncate text-sm font-medium text-gray-900 hover:underline">
                   {author?.displayName}
                 </h3>
