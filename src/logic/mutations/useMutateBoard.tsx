@@ -16,7 +16,6 @@ export const useMutateBoard = () => {
 
   const { category, description, headers, image, pins, tags, title, format, id, author } =
     useLocalStore((store) => store.board);
-  const setBoard = useLocalStore((store) => store.setBoard);
 
   const queryClient = useQueryClient();
 
@@ -91,12 +90,9 @@ export const useMutateBoard = () => {
           queryKey: ['nostr', 'boards', { author: event.pubkey, title }],
         });
 
-        setBoard({});
-
         navigate('/p/' + nip19.npubEncode(event.pubkey) + '/' + title, { replace: true });
       },
       onError: () => {
-        setBoard({});
         setSearchParams(
           (searchParams) => {
             searchParams.delete('action');
@@ -119,12 +115,9 @@ export const useMutateBoard = () => {
           queryKey: ['nostr', 'boards', { author: event.pubkey, title }],
         });
 
-        setBoard({});
-
         navigate('/p/' + nip19.npubEncode(event.pubkey) + '/' + title, { replace: true });
       },
       onError: () => {
-        setBoard({});
         setSearchParams(
           (searchParams) => {
             searchParams.delete('action');
@@ -144,14 +137,11 @@ export const useMutateBoard = () => {
       onSuccess: (event) => {
         queryClient.invalidateQueries({ queryKey: ['nostr', 'boards', { author: event.pubkey }] });
 
-        setBoard({});
-
         navigate('/p/' + nip19.npubEncode(event.pubkey), {
           replace: true,
         });
       },
       onError: () => {
-        setBoard({});
         setSearchParams(
           (searchParams) => {
             searchParams.delete('action');
@@ -181,12 +171,9 @@ export const useMutateBoard = () => {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['nostr', 'boards', { author, title }] });
 
-        setBoard({});
-
         navigate('/p/' + nip19.npubEncode(author!) + '/' + title, { replace: true });
       },
       onError: () => {
-        setBoard({});
         setSearchParams(
           (searchParams) => {
             searchParams.delete('action');
