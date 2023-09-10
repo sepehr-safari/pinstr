@@ -8,11 +8,11 @@ import {
   VideoCameraIcon,
 } from '@heroicons/react/24/outline';
 import { useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import { PopoverButton } from '@/logic/types';
 
-import { useSearchParams } from 'react-router-dom';
-import { PopoverTemplate } from '.';
+import { PopoverTemplate } from './';
 
 export const InsertFeaturePopover = () => {
   const [_, setSearchParams] = useSearchParams();
