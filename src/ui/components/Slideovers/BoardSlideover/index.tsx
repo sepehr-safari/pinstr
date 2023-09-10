@@ -189,7 +189,7 @@ export const BoardSlideover = () => {
                                 </div>
                               </div>
                               <div>
-                                <label htmlFor="board.tags" className="flex flex-col">
+                                <label htmlFor="tags" className="flex flex-col">
                                   <div className="flex items-center gap-2">
                                     <span className="text-sm font-medium leading-6 text-gray-900">
                                       Tags
