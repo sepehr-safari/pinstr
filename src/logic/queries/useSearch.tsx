@@ -25,7 +25,10 @@ export const useSearch = (text: string | undefined) => {
       const parsedBoards = parseBoardsFromEvents(events);
 
       parsedBoards.forEach((board) =>
-        queryClient.setQueryData(['nostr', 'boards', board.author, board.title], board)
+        queryClient.setQueryData(
+          ['nostr', 'boards', { author: board.author, title: board.title }],
+          board
+        )
       );
 
       return parsedBoards;

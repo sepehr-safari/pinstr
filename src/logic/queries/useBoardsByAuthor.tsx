@@ -28,7 +28,7 @@ export const useBoardsByAuthor = ({ author }: { author: string | undefined }) =>
       if (parsedBoards.length == 0) throw new Error('No boards found');
 
       parsedBoards.forEach((board) =>
-        queryClient.setQueryData(['nostr', 'boards', author, board.title], board)
+        queryClient.setQueryData(['nostr', 'boards', { author, title: board.title }], board)
       );
 
       return parsedBoards;
@@ -38,11 +38,11 @@ export const useBoardsByAuthor = ({ author }: { author: string | undefined }) =>
   }, [pool, relays, author]);
 
   return useQuery({
-    queryKey: ['nostr', 'boards', author],
+    queryKey: ['nostr', 'boards', { author }],
     queryFn: fetchBoard,
     placeholderData: () =>
       queryClient
-        .getQueryData<Board[]>(['nostr', 'boards'])
+        .getQueryData<Board[]>(['nostr', 'boards'], { exact: false })
         ?.filter((board) => board.author == author),
     staleTime: 1000, // 1 second
     enabled: !!pool && !!relays && !!author,

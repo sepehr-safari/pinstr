@@ -67,7 +67,9 @@ export const useMutateBoard = () => {
   }, [id, publish]);
 
   const updateBoardFn = useCallback(async () => {
-    const cachedBoard = queryClient.getQueryData<Board>(['nostr', 'boards', author, title]);
+    const cachedBoard = queryClient.getQueryData<Board>(['nostr', 'boards', { author, title }], {
+      exact: false,
+    });
 
     if (!cachedBoard) {
       await deleteBoardFn();

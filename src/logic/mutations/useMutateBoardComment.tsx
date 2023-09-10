@@ -36,7 +36,12 @@ export const useMutateBoardComment = (board: Board | undefined | null) => {
       }),
     onSuccess: (event) => {
       queryClient.setQueryData(['nostr', 'notes', event.id], event);
-      queryClient.invalidateQueries(['nostr', 'boards', board?.author, board?.title, 'reactions']);
+      queryClient.invalidateQueries([
+        'nostr',
+        'boards',
+        { author: board?.author, title: board?.title },
+        'reactions',
+      ]);
     },
   });
 };
