@@ -27,7 +27,7 @@ export const useSearch = (text: string | undefined) => {
       parsedBoards.forEach((board) =>
         queryClient.setQueryData(
           ['nostr', 'boards', { author: board.author, title: board.title }],
-          board
+          [board]
         )
       );
 

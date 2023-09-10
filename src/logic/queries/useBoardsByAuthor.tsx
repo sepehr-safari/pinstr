@@ -28,7 +28,7 @@ export const useBoardsByAuthor = ({ author }: { author: string | undefined }) =>
       if (parsedBoards.length == 0) throw new Error('No boards found');
 
       parsedBoards.forEach((board) =>
-        queryClient.setQueryData(['nostr', 'boards', { author, title: board.title }], board)
+        queryClient.setQueryData(['nostr', 'boards', { author, title: board.title }], [board])
       );
 
       return parsedBoards;
