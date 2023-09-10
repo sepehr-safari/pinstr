@@ -19,7 +19,7 @@ export const useCommentsParams = () => {
 
           return searchParams;
         },
-        { replace: true, state: { backgroundLocation: location } }
+        { replace: true, state: { backgroundLocation: location.state.backgroundLocation } }
       );
     },
   };
