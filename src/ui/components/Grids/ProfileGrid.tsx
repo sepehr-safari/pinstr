@@ -68,7 +68,7 @@ export const ProfileDetails = ({
 
   if (status == 'loading') {
     return (
-      <div className="w-full h-32 bg-white flex justify-center items-center">
+      <div className="w-full h-full bg-white flex justify-center items-center">
         <Spinner />
       </div>
     );
