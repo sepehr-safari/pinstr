@@ -12,7 +12,7 @@ import { CreatePopover } from '@/ui/components/Popovers';
 
 const USER_NAVIGATION = [
   { title: 'Open Profile', link: '#' },
-  { title: 'Settings', link: '#' },
+  // { title: 'Settings', link: '#' },
   { title: 'Sign out', link: '/logout' },
 ];
 
