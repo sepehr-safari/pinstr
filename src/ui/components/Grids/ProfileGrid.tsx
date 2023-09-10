@@ -44,13 +44,7 @@ export const ProfileGrid = ({
               className="bottom-4 right-4"
             />
 
-            <button
-              type="button"
-              onClick={() => setPinIndex(index)}
-              className="flex flex-col grow justify-stretch items-stretch"
-            >
-              <ProfileDetails pubkey={pin[0]} summary />
-            </button>
+            <ProfileDetails pubkey={pin[0]} setOpenDetails={() => setPinIndex(index)} summary />
           </li>
         ))}
       </ul>
@@ -61,9 +55,11 @@ export const ProfileGrid = ({
 export const ProfileDetails = ({
   pubkey,
   summary = false,
+  setOpenDetails,
 }: {
   pubkey: string;
   summary?: boolean;
+  setOpenDetails: () => void;
 }) => {
   const { data: profile, status } = useAuthor(pubkey);
 
@@ -81,7 +77,11 @@ export const ProfileDetails = ({
 
   return (
     <>
-      <div className="w-full absolute top-0">
+      <button
+        type="button"
+        onClick={summary ? setOpenDetails : undefined}
+        className="w-full absolute top-0"
+      >
         <div
           className={joinClassNames(
             'w-full h-24 bg-gradient-to-br from-purple-800 to-purple-500 text-gray-200 duration-500 group-hover:rounded-b-none',
@@ -100,8 +100,12 @@ export const ProfileDetails = ({
             />
           )}
         </div>
-      </div>
-      <div className="flex flex-col pt-16 grow items-center text-center">
+      </button>
+      <button
+        type="button"
+        onClick={summary ? setOpenDetails : undefined}
+        className="flex flex-col pt-16 grow items-center text-center"
+      >
         <div className="mx-auto rounded-full bg-gray-300 text-gray-300 z-[1]">
           {!!profile.picture && (
             <img
@@ -112,17 +116,17 @@ export const ProfileDetails = ({
             />
           )}
         </div>
-        <h3 className="mt-4 truncate text-base font-semibold leading-7 tracking-tight text-gray-900">
+        <h3 className="mt-4 w-full truncate text-base font-semibold leading-7 tracking-tight text-gray-900">
           {summary && profile.displayName.length > 20
             ? profile.displayName.slice(0, 20) + '...'
             : profile.displayName}
         </h3>
-        <p className="mt-2 text-xs font-light text-gray-700 px-4 max-w-xs">
+        <p className="mt-2 w-full text-xs font-light text-gray-700 px-4 max-w-xs">
           {summary && profile.about.length > 100
             ? profile.about.slice(0, 100) + '...'
             : profile.about}
         </p>
-      </div>
+      </button>
 
       {summary ? (
         <div className="my-4 mx-auto max-w-fit">
