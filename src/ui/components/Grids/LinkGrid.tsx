@@ -55,7 +55,7 @@ export const LinkGrid = ({
                 <a
                   className="z-[4] truncate text-xs font-light text-blue-700 hover:underline hover:text-blue-900"
                   href={linkPin[0]}
-                  target="_blank"
+                  target={linkPin[0].includes(location.origin) ? undefined : '_blank'}
                   rel="noopener noreferrer"
                 >
                   {linkPin[0]}
