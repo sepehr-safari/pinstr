@@ -3,6 +3,7 @@ import { PlusIcon, UserIcon } from '@heroicons/react/20/solid';
 import { useState } from 'react';
 import { usePopper } from 'react-popper';
 import { Link, useLocation } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { Author } from '@/logic/types';
 import { loader } from '@/logic/utils';
@@ -75,13 +76,15 @@ export const AuthorOverview = ({ author }: { author: Author }) => {
                       </Link>
                     </div>
                     <div className="-ml-px flex w-0 flex-1">
-                      <a
-                        href={''}
+                      <button
+                        onClick={() =>
+                          toast('This feature is still under development.', { type: 'warning' })
+                        }
                         className="relative inline-flex w-0 flex-1 items-center justify-center gap-x-2 rounded-br-lg border border-transparent py-2 text-xs font-semibold text-gray-900 hover:underline"
                       >
                         <PlusIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
                         Follow
-                      </a>
+                      </button>
                     </div>
                   </div>
                 </div>

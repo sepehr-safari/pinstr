@@ -1,6 +1,7 @@
 import { PlusIcon } from '@heroicons/react/20/solid';
 import { nip19 } from 'nostr-tools';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { useAuthor, useUser } from '@/logic/queries';
 import { Board } from '@/logic/types';
@@ -133,7 +134,10 @@ export const ProfileDetails = ({
 
       {summary ? (
         <div className="my-4 mx-auto max-w-fit">
-          <button className="flex justify-center items-center rounded-full bg-gray-200 px-6 py-2.5 text-xs font-semibold text-gray-600 duration-200 hover:text-gray-900 hover:bg-gray-300">
+          <button
+            onClick={() => toast('This feature is still under development.', { type: 'warning' })}
+            className="flex justify-center items-center rounded-full bg-gray-200 px-6 py-2.5 text-xs font-semibold text-gray-600 duration-200 hover:text-gray-900 hover:bg-gray-300"
+          >
             <PlusIcon className="-ml-1 w-4 h-4" />
             <span className="ml-1">Follow</span>
           </button>
@@ -149,7 +153,10 @@ export const ProfileDetails = ({
             Open with Primal
           </a>
 
-          <button className="flex w-full items-center justify-center py-2 text-xs text-gray-700 font-medium ease-in-out duration-300 hover:bg-gray-200 hover:text-gray-900">
+          <button
+            onClick={() => toast('This feature is still under development.', { type: 'warning' })}
+            className="flex w-full items-center justify-center py-2 text-xs text-gray-700 font-medium ease-in-out duration-300 hover:bg-gray-200 hover:text-gray-900"
+          >
             <PlusIcon className="-ml-1 w-4 h-4" />
             <span className="ml-1">Follow</span>
           </button>
