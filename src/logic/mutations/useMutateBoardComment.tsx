@@ -30,9 +30,9 @@ export const useMutateBoardComment = (board: Board | undefined | null) => {
   return useMutation({
     mutationFn: (text: string) =>
       toast.promise(() => publishCommentFn(text), {
-        pending: 'Publishing Your Comment...',
-        error: 'Error Publishing Comment!',
-        success: 'Your Comment Published Successfully!',
+        pending: 'Publishing your comment...',
+        error: 'An error has been occured! Please try again.',
+        success: 'Successfully published!',
       }),
     onSuccess: (event) => {
       queryClient.setQueryData(['nostr', 'notes', event.id], event);

@@ -1,6 +1,7 @@
 import { CogIcon, MagnifyingGlassIcon, PhotoIcon } from '@heroicons/react/20/solid';
 import { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { toast } from 'react-toastify';
 
 import { loader } from '@/logic/utils';
 
@@ -68,11 +69,11 @@ export const ImageMenu = ({ image, setImage, required = false }: Props) => {
             setIsUploading(false);
             setImage(url);
           } else {
-            console.error('upload error');
+            toast('Upload Error!', { type: 'error' });
           }
         })
-        .catch((error) => {
-          console.error('upload error', error);
+        .catch(() => {
+          toast('Upload Error!', { type: 'error' });
         });
     }
   }, []);

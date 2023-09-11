@@ -28,7 +28,7 @@ export const useMutateUser = () => {
         toast('Successfully logged in!', { type: 'success' });
       },
       onError: () => {
-        toast('Error logging in!', { type: 'error' });
+        toast('An error has been occured! Please try again.', { type: 'error' });
       },
     }),
     loginWithSeckey: useMutation({
@@ -50,7 +50,7 @@ export const useMutateUser = () => {
         toast('Successfully logged in!', { type: 'success' });
       },
       onError: () => {
-        toast('Error logging in!', { type: 'error' });
+        toast('An error has been occured! Please try again.', { type: 'error' });
       },
     }),
     logout: useMutation({

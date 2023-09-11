@@ -82,7 +82,7 @@ export const useMutateBoard = () => {
       mutationFn: () =>
         toast.promise(publishBoardFn, {
           pending: 'Publishing...',
-          error: 'Error publishing!',
+          error: 'An error has been occured! Please try again.',
           success: 'Successfully published!',
         }),
       onSuccess: (event) => {
@@ -107,7 +107,7 @@ export const useMutateBoard = () => {
       mutationFn: () =>
         toast.promise(updateBoardFn, {
           pending: 'Publishing...',
-          error: 'Error Publishing!',
+          error: 'An error has been occured! Please try again.',
           success: 'Successfully Published!',
         }),
       onSuccess: (event) => {
@@ -131,7 +131,7 @@ export const useMutateBoard = () => {
       mutationFn: () =>
         toast.promise(deleteBoardFn, {
           pending: 'Deleting board...',
-          error: 'Error deleting board!',
+          error: 'An error has been occured! Please try again.',
           success: 'Successfully deleted!',
         }),
       onSuccess: (event) => {
@@ -161,7 +161,7 @@ export const useMutateBoard = () => {
 
           return toast.promise(publishBoardFn(newPins), {
             pending: 'Removing pin...',
-            error: 'Error removing pin!',
+            error: 'An error has been occured! Please try again.',
             success: 'Successfully removed!',
           });
         } else {
@@ -174,6 +174,8 @@ export const useMutateBoard = () => {
         navigate('/p/' + nip19.npubEncode(author!) + '/' + title, { replace: true });
       },
       onError: () => {
+        toast('An error has been occured! Please try again.', { type: 'error' });
+
         setSearchParams(
           (searchParams) => {
             searchParams.delete('action');

@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Event } from 'nostr-tools';
+import { toast } from 'react-toastify';
 
 import { usePublish } from '@/logic/mutations';
 
@@ -22,6 +23,9 @@ export const useMutateNoteLike = (note: Event<1> | undefined | null) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries(['nostr', 'notes', note?.id, 'reactions']);
+    },
+    onError: () => {
+      toast('An error has been occured! Please try again.', { type: 'error' });
     },
   });
 };

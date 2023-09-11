@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
 
 import { usePublish } from '@/logic/mutations';
 import { Board } from '@/logic/types';
@@ -27,6 +28,9 @@ export const useMutateBoardLike = (board: Board | undefined | null) => {
         { author: board?.author, title: board?.title },
         'reactions',
       ]);
+    },
+    onError: () => {
+      toast('An error has been occured! Please try again.', { type: 'error' });
     },
   });
 };
