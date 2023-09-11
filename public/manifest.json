@@ -23,6 +23,11 @@
       "type": "image/png"
     },
     {
+      "src": "/assets/pinstr120.png",
+      "sizes": "120x120",
+      "type": "image/png"
+    },
+    {
       "src": "/assets/pinstr144.png",
       "sizes": "144x144",
       "type": "image/png"
@@ -30,6 +35,11 @@
     {
       "src": "/assets/pinstr168.png",
       "sizes": "168x168",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/pinstr180.png",
+      "sizes": "180x180",
       "type": "image/png"
     },
     {
