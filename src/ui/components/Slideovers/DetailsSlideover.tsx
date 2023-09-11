@@ -123,7 +123,7 @@ export const DetailsSlideover = ({
                               case Format.Image:
                                 return (
                                   <div
-                                    key={hIndex}
+                                    key={`${pinIndex} ${hIndex} ${title}`}
                                     className="flex flex-col items-center gap-2 w-full pb-4 sm:w-3/4"
                                   >
                                     {title != 'Content' && title != 'Image' && (
@@ -145,7 +145,7 @@ export const DetailsSlideover = ({
                               case Format.Video:
                                 return (
                                   <div
-                                    key={hIndex}
+                                    key={`${pinIndex} ${hIndex} ${title}`}
                                     className="flex flex-col items-center gap-2 w-full pb-4 sm:w-3/4"
                                   >
                                     {title != 'Content' && (
@@ -165,7 +165,7 @@ export const DetailsSlideover = ({
                               case Format.Text:
                                 return (
                                   <div
-                                    key={hIndex}
+                                    key={`${pinIndex} ${hIndex} ${title}`}
                                     className="flex flex-col gap-2 items-center w-full pb-4 sm:w-3/4"
                                   >
                                     {title == 'Title' ? (
@@ -185,13 +185,15 @@ export const DetailsSlideover = ({
                               case Format.Link:
                                 return (
                                   <div
-                                    key={hIndex}
+                                    key={`${pinIndex} ${hIndex} ${title}`}
                                     className="flex flex-col items-center w-full pb-4 sm:w-3/4"
                                   >
                                     {title == 'Content' ? (
                                       <a
                                         href={value}
-                                        target="_blank"
+                                        target={
+                                          value.includes(location.origin) ? undefined : '_blank'
+                                        }
                                         rel="noopener noreferrer"
                                         className="text-blue-500"
                                       >
@@ -200,7 +202,9 @@ export const DetailsSlideover = ({
                                     ) : (
                                       <a
                                         href={value}
-                                        target="_blank"
+                                        target={
+                                          value.includes(location.origin) ? undefined : '_blank'
+                                        }
                                         rel="noopener noreferrer"
                                         className="inline-flex rounded-full bg-gray-900 px-10 py-3 text-xs text-center font-semibold text-white shadow-sm hover:bg-gray-700"
                                       >
@@ -212,7 +216,7 @@ export const DetailsSlideover = ({
                               case Format.Profile:
                                 return (
                                   <div
-                                    key={hIndex}
+                                    key={`${pinIndex} ${hIndex} ${title}`}
                                     className="flex flex-col gap-2 items-center w-full pb-4 sm:w-3/4"
                                   >
                                     {title != 'Content' && (
@@ -226,7 +230,7 @@ export const DetailsSlideover = ({
                                 );
                               case Format.Note:
                                 return (
-                                  <div key={hIndex} className="pb-4">
+                                  <div key={`${pinIndex} ${hIndex} ${title}`} className="pb-4">
                                     {title != 'Content' && (
                                       <div className="w-full">
                                         <span className="text-start text-sm font-semibold">
