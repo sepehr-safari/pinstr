@@ -16,6 +16,8 @@ export const normalizePinContent = async ({
     case Format.Note:
       if (content.startsWith('note1')) {
         return nip19.decode(content).data.toString();
+      } else if (content.length == 64) {
+        return content; // hex
       } else {
         throw new Error('Invalid note id for content');
       }
