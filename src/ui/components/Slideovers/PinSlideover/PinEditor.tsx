@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { useLocalStore } from '@/logic/store';
@@ -9,11 +10,22 @@ const REQUIRED_TITLES = ['Content', 'Title', 'Image'];
 
 export const PinEditor = () => {
   const [searchParams, _] = useSearchParams();
+  const action = searchParams.get('action');
   const pinIndex = searchParams.get('i');
 
   const headers = useLocalStore((store) => store.board.headers);
   const pins = useLocalStore((store) => store.board.pins);
   const setPin = useLocalStore((store) => store.setPin);
+
+  useEffect(() => {
+    if (!headers || !action || action != 'create-pin' || pinIndex == null) return;
+
+    if (!pins || pins.length == +pinIndex) {
+      headers.forEach((_, hIndex) => {
+        setPin(+pinIndex, hIndex, '');
+      });
+    }
+  }, [pins, headers, setPin, pinIndex, action]);
 
   return (
     <>
