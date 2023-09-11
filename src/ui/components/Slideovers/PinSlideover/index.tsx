@@ -270,7 +270,7 @@ export const PinSlideover = () => {
                     <div className="p-4">
                       <div className="w-full relative h-12">
                         <Transition
-                          show={insertFeature == null}
+                          show={insertFeature == null && !!board.title}
                           enter="duration-100"
                           enterFrom="opacity-0 translate-x-1/4"
                           enterTo="opacity-100 translate-x-0"
