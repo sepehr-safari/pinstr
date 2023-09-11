@@ -1,6 +1,5 @@
 # Ignore artifacts:
-.vscode
-.next
 build
 coverage
-out
+public
+node_modules

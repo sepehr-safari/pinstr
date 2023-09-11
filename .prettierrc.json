@@ -4,7 +4,7 @@
   "tabWidth": 2,
   "useTabs": false,
   "endOfLine": "lf",
-  "printWidth": 80,
+  "printWidth": 100,
   "trailingComma": "es5",
   "singleAttributePerLine": false,
   "jsxSingleQuote": false,
