@@ -13,6 +13,10 @@ export const BoardsByAuthor = () => {
     );
   }
 
+  if (!boards || boards.length == 0) {
+    return <div>No Boards Found!</div>;
+  }
+
   return (
     <div className="pb-16 overflow-hidden">
       <div
