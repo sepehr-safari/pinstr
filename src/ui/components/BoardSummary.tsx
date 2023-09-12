@@ -46,7 +46,7 @@ export const BoardSummary = () => {
             <div className="px-4 flex justify-center gap-x-4 gap-y-2 flex-wrap">
               {board.tags.map((tag, index) => (
                 <Link to={`/?tag=${tag}`} key={index} className="hover:underline">
-                  {tag}
+                  {tag.length > 15 ? tag.slice(0, 15) + '...' : tag}
                 </Link>
               ))}
             </div>
@@ -67,8 +67,8 @@ export const BoardSummary = () => {
             {board.title}
           </h3>
 
-          <div className="px-4 flex text-xs font-light text-gray-600 text-center">
-            {board.description}
+          <div className="break-words text-xs font-light text-gray-600">
+            <p className="max-w-lg"> {board.description}</p>
           </div>
 
           {selfBoard && (

@@ -25,7 +25,7 @@ export const ProfileCard = () => {
   }
 
   return (
-    <div className="p-6 flex flex-col items-center bg-white shadow-md z-[1] rounded-none xl:rounded-xl xl:items-start">
+    <div className="p-6 flex flex-col bg-white shadow-md z-[1] rounded-none xl:rounded-xl">
       <div className="flex flex-col gap-4 w-full items-center xl:flex-row xl:items-stretch">
         <a
           href={`https://primal.net/p/${npub}`}
@@ -52,25 +52,31 @@ export const ProfileCard = () => {
 
           <span className="mt-1 text-xs font-light text-gray-500">{nip05 || ''}</span>
 
-          <button
-            onClick={() => toast('This feature is still under development.', { type: 'warning' })}
-            className="mt-1 hidden w-full xl:inline-flex justify-center items-center rounded-full bg-gray-900 py-2 text-xs font-semibold text-white shadow-sm hover:bg-gray-700"
-          >
-            <PlusIcon className="-ml-1 w-4 h-4" />
-            <span className="ml-1">Follow</span>
-          </button>
+          <div className="flex justify-center">
+            <button
+              onClick={() => toast('This feature is still under development.', { type: 'warning' })}
+              className="mt-1 hidden w-full xl:inline-flex justify-center items-center rounded-full bg-gray-900 py-2 text-xs font-semibold text-white shadow-sm hover:bg-gray-700"
+            >
+              <PlusIcon className="-ml-1 w-4 h-4" />
+              <span className="ml-1">Follow</span>
+            </button>
+          </div>
         </div>
       </div>
 
-      <span className="mt-4 text-xs font-light text-gray-700 xl:mt-6">{about || ''}</span>
+      <div className="mt-4 mx-auto text-center break-words text-xs font-light text-gray-700 xl:mt-6 xl:mx-0">
+        <p className="max-w-lg">{about || ''}</p>
+      </div>
 
-      <button
-        onClick={() => toast('This feature is still under development.', { type: 'warning' })}
-        className="mt-4 inline-flex xl:hidden justify-center items-center rounded-full bg-gray-900 px-6 py-2 text-xs font-semibold text-white shadow-sm hover:bg-gray-700"
-      >
-        <PlusIcon className="-ml-1 w-4 h-4" />
-        <span className="ml-1">Follow</span>
-      </button>
+      <div className="flex justify-center">
+        <button
+          onClick={() => toast('This feature is still under development.', { type: 'warning' })}
+          className="mt-4 inline-flex xl:hidden justify-center items-center rounded-full bg-gray-900 px-6 py-2 text-xs font-semibold text-white shadow-sm hover:bg-gray-700"
+        >
+          <PlusIcon className="-ml-1 w-4 h-4" />
+          <span className="ml-1">Follow</span>
+        </button>
+      </div>
     </div>
   );
 };

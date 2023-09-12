@@ -59,7 +59,9 @@ export const AuthorOverview = ({ author }: { author: Author }) => {
                     <h3 className="mt-4 text-sm font-semibold">{author.displayName}</h3>
                     <dl className="mt-1 flex flex-grow flex-col justify-between">
                       <dt className="sr-only">Title</dt>
-                      <dd className="text-xs font-light text-gray-500">{author.about}</dd>
+                      <dd className="text-xs font-light text-gray-500 px-4 break-words">
+                        {author.about}
+                      </dd>
                     </dl>
                   </div>
                 </div>
