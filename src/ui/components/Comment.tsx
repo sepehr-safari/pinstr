@@ -1,6 +1,6 @@
 import { PaperAirplaneIcon } from '@heroicons/react/24/outline';
 import { Event } from 'nostr-tools';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { useMutateNoteComment } from '@/logic/mutations';
 import { useAuthor, useNoteReactions, useUser } from '@/logic/queries';
@@ -17,6 +17,20 @@ export const Comment = ({ event }: { event: Event<1> }) => {
 
   const { data: author, status } = useAuthor(event.pubkey);
   const { data: reactions } = useNoteReactions(event.id);
+
+  const comments = useMemo(() => {
+    if (!reactions || !reactions.comments || reactions.comments.length == 0) {
+      return [];
+    }
+
+    return reactions.comments.filter((commentEvent) => {
+      const lastETag = commentEvent.tags.reverse().find((tag) => tag[0] == 'e');
+
+      if (lastETag?.[1] == event.id) return true;
+
+      return false;
+    });
+  }, [reactions, event.id]);
 
   const mutateNoteComment = useMutateNoteComment(event);
 
@@ -103,9 +117,9 @@ export const Comment = ({ event }: { event: Event<1> }) => {
       </div>
 
       <div className="ml-4">
-        {reactions &&
-          reactions.comments.length > 0 &&
-          reactions?.comments.map((event) => <Comment key={event.id} event={event} />)}
+        {comments.map((event) => (
+          <Comment key={event.id} event={event} />
+        ))}
       </div>
     </div>
   );

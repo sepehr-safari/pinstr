@@ -36,9 +36,7 @@ export const CommentsCard = () => {
             <p className="font-light">Add one to start the conversation.</p>
           </div>
         ) : (
-          reactions?.comments
-            .filter((event) => event.tags[0][0] == 'a')
-            .map((event) => <Comment key={event.id} event={event} />)
+          reactions?.comments.map((event) => <Comment key={event.id} event={event} />)
         )}
 
         <div className="flex gap-2 w-full border-t mt-2 p-2 pt-4">
