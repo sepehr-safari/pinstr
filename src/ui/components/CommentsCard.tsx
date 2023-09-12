@@ -36,7 +36,17 @@ export const CommentsCard = () => {
             <p className="font-light">Add one to start the conversation.</p>
           </div>
         ) : (
-          reactions?.comments.map((event) => <Comment key={event.id} event={event} />)
+          reactions?.comments
+            .filter((event) => {
+              const firstTag = event.tags[0];
+
+              if (firstTag[0] != 'a' || !board) {
+                return false;
+              }
+
+              if (firstTag[1] == `33889:${board.author}:${board.title}`) return true;
+            })
+            .map((event) => <Comment key={event.id} event={event} />)
         )}
 
         <div className="flex gap-2 w-full border-t mt-2 p-2 pt-4">
