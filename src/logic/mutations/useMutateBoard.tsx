@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 
 import { usePublish } from '@/logic/mutations';
 import { useLocalStore } from '@/logic/store';
-import { Board } from '@/logic/types';
+import { Board, Format } from '@/logic/types';
 import { normalizePinContent } from '@/logic/utils';
 
 export const useMutateBoard = () => {
@@ -31,11 +31,16 @@ export const useMutateBoard = () => {
 
       const newPins = [...(overridePins || pins || [])];
       if (pinIndex != null && newPins.length > +pinIndex && action != 'remove-pin') {
-        const normalizedContent = await normalizePinContent({
-          content: newPins[+pinIndex]?.[0],
-          format,
-        });
-        newPins[+pinIndex][0] = normalizedContent;
+        for (let hIndex = 0; hIndex < headers.length; hIndex++) {
+          if (newPins[+pinIndex][hIndex] !== '') {
+            const normalizedContent = await normalizePinContent({
+              content: newPins[+pinIndex][hIndex],
+              format: headers[hIndex].split(':')[0] as Format,
+            });
+
+            newPins[+pinIndex][hIndex] = normalizedContent;
+          }
+        }
       }
 
       return publish({
