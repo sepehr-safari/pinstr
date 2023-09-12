@@ -81,7 +81,7 @@ export const DetailsSlideover = ({
                 leaveFrom="translate-x-0"
                 leaveTo="translate-x-full"
               >
-                <Dialog.Panel className="group relative py-16 bg-white  shadow-xl pointer-events-auto w-screen max-w-lg">
+                <Dialog.Panel className="group relative py-16 bg-white  shadow-xl pointer-events-auto w-screen max-w-3xl">
                   <div className="flex h-full flex-col overflow-y-scroll">
                     <EllipsisPopover
                       board={board}
@@ -130,10 +130,10 @@ export const DetailsSlideover = ({
                                       <span className="text-sm font-semibold">{title}</span>
                                     )}
 
-                                    <div className="overflow-hidden rounded-md bg-gray-200 text-gray-200">
+                                    <div className="overflow-hidden rounded-md min-w-[20rem] min-h-[20rem] bg-gray-200 text-gray-200">
                                       <a href={value} target="_blank" rel="noreferrer">
                                         <img
-                                          src={loader(value, { w: 500, h: 400 })}
+                                          src={loader(value, { w: 700 })}
                                           alt={title}
                                           className="hover:opacity-75 hover:cursor-zoom-in"
                                           loading="lazy"
