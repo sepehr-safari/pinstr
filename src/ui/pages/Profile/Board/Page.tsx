@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useBoards } from '@/logic/queries';
 import { Format } from '@/logic/types';
@@ -15,7 +15,12 @@ import {
 import { DetailsSlideover } from '@/ui/components/Slideovers';
 
 export const Page = () => {
+  const [openDetails, setOpenDetails] = useState(false);
   const [pinIndex, setPinIndex] = useState<number>(-1);
+
+  useEffect(() => {
+    setOpenDetails(pinIndex > -1);
+  }, [pinIndex]);
 
   const { data: boards, status } = useBoards();
   const board = boards?.[0];
@@ -45,7 +50,13 @@ export const Page = () => {
       {board.format == Format.Profile && <ProfileGrid board={board} setPinIndex={setPinIndex} />}
       {board.format == Format.Note && <NoteGrid board={board} setPinIndex={setPinIndex} />}
 
-      <DetailsSlideover board={board} pinIndex={pinIndex} setPinIndex={setPinIndex} />
+      <DetailsSlideover
+        board={board}
+        pinIndex={pinIndex}
+        setPinIndex={setPinIndex}
+        isOpen={openDetails}
+        onClose={() => setOpenDetails(false)}
+      />
     </>
   );
 };

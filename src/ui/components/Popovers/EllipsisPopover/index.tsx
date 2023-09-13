@@ -23,6 +23,7 @@ export const EllipsisPopover = ({
   overlay = true,
   slideInFrom = 'right',
   buttonTheme = 'light',
+  onClick,
 }: {
   board: Board;
   pinIndex?: number;
@@ -35,6 +36,7 @@ export const EllipsisPopover = ({
   overlay?: boolean;
   slideInFrom?: 'right' | 'left';
   buttonTheme?: 'light' | 'dark';
+  onClick?: () => void;
 }) => {
   const hasPublicActionButtons = useMemo(
     () => !!actionButtons && actionButtons.filter((btn) => !btn.private).length > 0,
@@ -60,6 +62,7 @@ export const EllipsisPopover = ({
 
       <TransitionWrapper overlay={overlay}>
         <Popover.Panel
+          onClick={onClick}
           className={joinClassNames(
             'm-4 absolute w-40 z-[5] rounded bg-white p-2 text-xs ring-1 ring-gray-900/20',
             className

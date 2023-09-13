@@ -6,7 +6,7 @@ import ReactPlayer from 'react-player';
 
 import { useUser } from '@/logic/queries';
 import { Board, Format } from '@/logic/types';
-import { loader } from '@/logic/utils';
+import { ellipsis, loader } from '@/logic/utils';
 
 import { NoteDetails, ProfileDetails } from '@/ui/components/Grids';
 import { EllipsisPopover } from '@/ui/components/Popovers';
@@ -15,10 +15,14 @@ export const DetailsSlideover = ({
   board,
   pinIndex,
   setPinIndex,
+  isOpen,
+  onClose,
 }: {
   board: Board;
   pinIndex: number;
   setPinIndex: Dispatch<SetStateAction<number>>;
+  isOpen: boolean;
+  onClose: () => void;
 }) => {
   const { pubkey } = useUser();
   const selfBoard = pubkey ? pubkey == board.author : false;
@@ -53,7 +57,7 @@ export const DetailsSlideover = ({
   }, [handleKeyUp]);
 
   return (
-    <Transition.Root show={pinIndex > -1} as={Fragment}>
+    <Transition.Root show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={close}>
         <Transition.Child
           as={Fragment}
@@ -91,6 +95,7 @@ export const DetailsSlideover = ({
                       className="top-3 left-3"
                       overlay={false}
                       slideInFrom="left"
+                      onClick={onClose}
                     />
 
                     <div className="px-4 py-4 sm:px-6 border-b bg-white absolute top-0 left-0 right-0">
@@ -127,7 +132,9 @@ export const DetailsSlideover = ({
                                     className="flex flex-col items-center gap-2 w-full pb-4 sm:w-3/4"
                                   >
                                     {title != 'Content' && title != 'Image' && (
-                                      <span className="text-sm font-semibold">{title}</span>
+                                      <span className="text-sm font-semibold">
+                                        {ellipsis(title, 40)}
+                                      </span>
                                     )}
 
                                     <div className="overflow-hidden rounded-md min-w-[20rem] min-h-[20rem] bg-gray-200 text-gray-200">
@@ -135,7 +142,7 @@ export const DetailsSlideover = ({
                                         <img
                                           src={loader(value, { w: 700 })}
                                           alt={title}
-                                          className="hover:opacity-75 hover:cursor-zoom-in"
+                                          className="w-full h-full object-cover hover:opacity-75 hover:cursor-zoom-in"
                                           loading="lazy"
                                         />
                                       </a>
@@ -149,7 +156,9 @@ export const DetailsSlideover = ({
                                     className="flex flex-col items-center gap-2 w-full pb-4 sm:w-3/4"
                                   >
                                     {title != 'Content' && (
-                                      <span className="text-sm font-semibold">{title}</span>
+                                      <span className="text-sm font-semibold">
+                                        {ellipsis(title, 40)}
+                                      </span>
                                     )}
 
                                     <div className="w-full aspect-w-16 aspect-h-9 overflow-hidden rounded-md bg-black">
@@ -170,14 +179,18 @@ export const DetailsSlideover = ({
                                   >
                                     {title == 'Title' ? (
                                       <span className="text-xl font-semibold leading-5">
-                                        {value}
+                                        {ellipsis(value, 30)}
                                       </span>
                                     ) : title == 'Content' ? (
-                                      <span className="font-light">{value}</span>
+                                      <span className="font-light">{ellipsis(value, 500)}</span>
                                     ) : (
                                       <>
-                                        <span className="text-sm font-semibold">{title}: </span>
-                                        <span className="text-sm font-light">{value}</span>
+                                        <span className="text-sm font-semibold">
+                                          {ellipsis(title, 30)}
+                                        </span>
+                                        <span className="text-sm font-light">
+                                          {ellipsis(value, 500)}
+                                        </span>
                                       </>
                                     )}
                                   </div>
@@ -197,7 +210,7 @@ export const DetailsSlideover = ({
                                         rel="noopener noreferrer"
                                         className="text-blue-500"
                                       >
-                                        <span>{value}</span>
+                                        <span>{ellipsis(value, 200)}</span>
                                       </a>
                                     ) : (
                                       <a
@@ -208,7 +221,7 @@ export const DetailsSlideover = ({
                                         rel="noopener noreferrer"
                                         className="inline-flex rounded-full bg-gray-900 px-10 py-3 text-xs text-center font-semibold text-white shadow-sm hover:bg-gray-700"
                                       >
-                                        <span>{title}</span>
+                                        <span>{ellipsis(title, 40)}</span>
                                       </a>
                                     )}
                                   </div>
@@ -220,7 +233,9 @@ export const DetailsSlideover = ({
                                     className="flex flex-col gap-2 items-center w-full pb-4 sm:w-3/4"
                                   >
                                     {title != 'Content' && (
-                                      <span className="text-sm font-semibold">{title}</span>
+                                      <span className="text-sm font-semibold">
+                                        {ellipsis(title, 40)}
+                                      </span>
                                     )}
 
                                     <div className="relative flex flex-col items-center overflow-hidden w-full max-w-sm rounded-lg shadow-md border bg-white">
@@ -232,14 +247,14 @@ export const DetailsSlideover = ({
                                 return (
                                   <div key={`${pinIndex} ${hIndex} ${title}`} className="pb-4">
                                     {title != 'Content' && (
-                                      <div className="w-full">
-                                        <span className="text-start text-sm font-semibold">
-                                          {title}:
+                                      <div className="w-full text-center">
+                                        <span className="text-sm font-semibold">
+                                          {ellipsis(title, 40)}
                                         </span>
                                       </div>
                                     )}
 
-                                    <div className="relative overflow-hidden w-full max-w-sm rounded-lg shadow-md border bg-white">
+                                    <div className="mt-2 relative overflow-hidden w-full max-w-sm rounded-lg shadow-md border bg-white">
                                       <NoteDetails noteId={value} />
                                     </div>
                                   </div>
