@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { useAuthor, useNote, useUser } from '@/logic/queries';
 import { Board } from '@/logic/types';
-import { joinClassNames, loader } from '@/logic/utils';
+import { ellipsis, joinClassNames, loader } from '@/logic/utils';
 
 import { Spinner } from '@/ui/components';
 import { EllipsisPopover } from '@/ui/components/Popovers';
@@ -93,11 +93,13 @@ export const NoteDetails = ({
             <div className="flex items-center space-x-3">
               <Link to={`/p/${author?.npub}`} className="z-[4]">
                 <h3 className="inline-flex items-center truncate text-sm font-medium text-gray-900 hover:underline">
-                  {author?.displayName}
+                  {author ? ellipsis(author.displayName, 20) : ''}
                 </h3>
               </Link>
             </div>
-            <p className="mt-1 truncate text-xs text-gray-500">{author?.nip05}</p>
+            <p className="mt-1 truncate text-xs text-gray-500">
+              {author ? ellipsis(author.nip05, 20) : ''}
+            </p>
           </div>
         </div>
 
@@ -108,17 +110,13 @@ export const NoteDetails = ({
             onClick={setPinIndex}
           >
             <p className="whitespace-break-spaces break-words">
-              {summary && note.content.length > 100
-                ? note.content.slice(0, 100) + '...'
-                : note.content}
+              {summary ? ellipsis(note.content, 100) : ellipsis(note.content, 500)}
             </p>
           </button>
         ) : (
           <div className="p-4 border-t text-xs text-gray-500 grow w-full text-left">
             <p className="whitespace-break-spaces break-words">
-              {summary && note.content.length > 100
-                ? note.content.slice(0, 100) + '...'
-                : note.content}
+              {summary ? ellipsis(note.content, 100) : ellipsis(note.content, 500)}
             </p>
           </div>
         )}

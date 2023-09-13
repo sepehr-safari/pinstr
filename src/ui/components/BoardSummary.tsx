@@ -2,7 +2,7 @@ import { PaperClipIcon, PencilIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
 
 import { useBoardSummary } from '@/logic/hooks';
-import { formatRelativeTime, loader } from '@/logic/utils';
+import { ellipsis, formatRelativeTime, loader } from '@/logic/utils';
 
 import { Spinner } from '@/ui/components';
 import {
@@ -46,14 +46,14 @@ export const BoardSummary = () => {
             <div className="px-4 flex justify-center gap-x-4 gap-y-2 flex-wrap">
               {board.tags.map((tag, index) => (
                 <Link to={`/?tag=${tag}`} key={index} className="hover:underline">
-                  {tag.length > 15 ? tag.slice(0, 15) + '...' : tag}
+                  {ellipsis(tag, 15)}
                 </Link>
               ))}
             </div>
           )}
         </div>
 
-        <div className="pt-4 flex flex-col gap-4 w-full items-center text-center">
+        <div className="pt-4 px-6 flex flex-col gap-4 w-full items-center text-center">
           <div className="w-40 h-32 rounded-md overflow-hidden">
             <img
               src={board ? loader(board?.image, { w: 500, h: 400 }) : ''}
@@ -64,11 +64,11 @@ export const BoardSummary = () => {
           </div>
 
           <h3 className="text-base font-semibold tracking-tight leading-5 text-gray-900">
-            {board.title}
+            {ellipsis(board.title, 100)}
           </h3>
 
           <div className="break-words text-xs font-light text-gray-600">
-            <p className="max-w-lg"> {board.description}</p>
+            <p className="max-w-lg">{ellipsis(board.description, 500)}</p>
           </div>
 
           {selfBoard && (

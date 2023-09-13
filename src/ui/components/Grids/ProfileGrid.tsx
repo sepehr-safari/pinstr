@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 
 import { useAuthor, useUser } from '@/logic/queries';
 import { Board } from '@/logic/types';
-import { joinClassNames, loader } from '@/logic/utils';
+import { ellipsis, joinClassNames, loader } from '@/logic/utils';
 
 import { Spinner } from '@/ui/components';
 import { EllipsisPopover } from '@/ui/components/Popovers';
@@ -121,14 +121,10 @@ export const ProfileDetails = ({
           )}
         </div>
         <h3 className="mt-4 w-full truncate text-base font-semibold leading-7 tracking-tight text-gray-900">
-          {summary && profile.displayName.length > 20
-            ? profile.displayName.slice(0, 20) + '...'
-            : profile.displayName}
+          {summary ? ellipsis(profile.displayName, 20) : ellipsis(profile.displayName, 30)}
         </h3>
         <p className="mt-2 w-full text-xs font-light text-gray-700 px-4 max-w-xs">
-          {summary && profile.about.length > 100
-            ? profile.about.slice(0, 100) + '...'
-            : profile.about}
+          {summary ? ellipsis(profile.about, 100) : ellipsis(profile.about, 500)}
         </p>
       </button>
 

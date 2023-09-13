@@ -7,7 +7,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useCreatePinParams, useFiltersParams } from '@/logic/hooks';
 import { useAuthor, useUser } from '@/logic/queries';
 import { Board } from '@/logic/types';
-import { loader } from '@/logic/utils';
+import { ellipsis, loader } from '@/logic/utils';
 
 import { AuthorOverview } from '@/ui/components';
 import { EllipsisPopover } from '@/ui/components/Popovers';
@@ -107,7 +107,9 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
 
         <div className="mt-2 flex justify-between">
           <div>
-            <h3 className="text-sm font-semibold text-gray-900 hover:underline">{board.title}</h3>
+            <h3 className="text-sm font-semibold text-gray-900 hover:underline">
+              {ellipsis(board.title, 50)}
+            </h3>
 
             {!hideAuthor && author && <AuthorOverview author={author} />}
           </div>

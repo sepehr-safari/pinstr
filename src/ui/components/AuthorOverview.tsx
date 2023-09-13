@@ -6,7 +6,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { Author } from '@/logic/types';
-import { loader } from '@/logic/utils';
+import { ellipsis, loader } from '@/logic/utils';
 
 export const AuthorOverview = ({ author }: { author: Author }) => {
   const location = useLocation();
@@ -26,7 +26,7 @@ export const AuthorOverview = ({ author }: { author: Author }) => {
             className="text-xs text-gray-500 focus:border-none focus:outline-none"
             onMouseEnter={({ currentTarget }) => !open && currentTarget.click()}
           >
-            {author.displayName}
+            {ellipsis(author.displayName, 30)}
           </Popover.Button>
 
           <Popover.Panel
@@ -56,11 +56,13 @@ export const AuthorOverview = ({ author }: { author: Author }) => {
                         loading="lazy"
                       />
                     </div>
-                    <h3 className="mt-4 text-sm font-semibold">{author.displayName}</h3>
+                    <h3 className="mt-4 text-sm font-semibold">
+                      {ellipsis(author.displayName, 30)}
+                    </h3>
                     <dl className="mt-1 flex flex-grow flex-col justify-between">
                       <dt className="sr-only">Title</dt>
                       <dd className="text-xs font-light text-gray-500 px-4 break-words">
-                        {author.about}
+                        {ellipsis(author.about, 100)}
                       </dd>
                     </dl>
                   </div>

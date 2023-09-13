@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import { useMutateBoardLike } from '@/logic/mutations';
 import { useBoardReactions, useUser } from '@/logic/queries';
 import { Board } from '@/logic/types';
-import { joinClassNames } from '@/logic/utils';
+import { joinClassNames, numberEllipsis } from '@/logic/utils';
 
 export const BoardLikeButton = ({ board }: { board: Board }) => {
   const { data: reactions } = useBoardReactions(board);
@@ -29,7 +29,9 @@ export const BoardLikeButton = ({ board }: { board: Board }) => {
       >
         <HeartIcon className="h-4 w-4" aria-hidden="true" />
         <span className="ml-1">
-          {reactions && reactions.likes.length > 0 ? reactions.likes.length : 0}
+          {reactions && reactions.likes.length > 0
+            ? numberEllipsis(reactions.likes.length.toString(), 4)
+            : 0}
         </span>
       </button>
     </>

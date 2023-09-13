@@ -4,7 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { useAuthor } from '@/logic/queries';
-import { loader } from '@/logic/utils';
+import { ellipsis, loader } from '@/logic/utils';
 
 import { Spinner } from '@/ui/components';
 
@@ -47,10 +47,14 @@ export const ProfileCard = () => {
 
         <div className="mt-12 w-full text-center xl:text-start xl:mt-0 xl:flex xl:flex-col xl:justify-around">
           <Link to={`/p/${npub}`} className="max-w-fit hover:underline">
-            <h2 className="text-lg font-semibold xl:leading-none">{displayName || ''}</h2>
+            <h2 className="text-lg font-semibold xl:leading-none">
+              {displayName ? ellipsis(displayName, 30) : ''}
+            </h2>
           </Link>
 
-          <span className="mt-1 text-xs font-light text-gray-500">{nip05 || ''}</span>
+          <span className="mt-1 text-xs font-light text-gray-500">
+            {nip05 ? ellipsis(nip05, 30) : ''}
+          </span>
 
           <div className="flex justify-center">
             <button
@@ -65,7 +69,7 @@ export const ProfileCard = () => {
       </div>
 
       <div className="mt-4 mx-auto text-center break-words text-xs font-light text-gray-700 xl:mt-6 xl:mx-0">
-        <p className="max-w-lg">{about || ''}</p>
+        <p className="max-w-lg">{about ? ellipsis(about, 500) : ''}</p>
       </div>
 
       <div className="flex justify-center">

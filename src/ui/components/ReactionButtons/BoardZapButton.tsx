@@ -1,12 +1,10 @@
 import { BoltIcon } from '@heroicons/react/20/solid';
-
-import { joinClassNames } from '@/logic/utils';
-
 import { useMemo } from 'react';
+import { toast } from 'react-toastify';
 
 import { useBoardReactions, useUser } from '@/logic/queries';
 import { Board } from '@/logic/types';
-import { toast } from 'react-toastify';
+import { joinClassNames, numberEllipsis } from '@/logic/utils';
 
 export const BoardZapButton = ({ board }: { board: Board }) => {
   const { data: reactions } = useBoardReactions(board);
@@ -32,7 +30,9 @@ export const BoardZapButton = ({ board }: { board: Board }) => {
       >
         <BoltIcon className="h-4 w-4" aria-hidden="true" />
         <span className="ml-1">
-          {reactions && reactions.zaps.length > 0 ? reactions.zaps.length : 0}
+          {reactions && reactions.zaps.length > 0
+            ? numberEllipsis(reactions.zaps.length.toString(), 4)
+            : 0}
         </span>
       </button>
     </>

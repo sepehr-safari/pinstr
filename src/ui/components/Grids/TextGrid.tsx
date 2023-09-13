@@ -2,7 +2,7 @@ import { ArrowRightIcon } from '@heroicons/react/20/solid';
 
 import { useUser } from '@/logic/queries';
 import { Board } from '@/logic/types';
-import { joinClassNames, loader } from '@/logic/utils';
+import { ellipsis, joinClassNames, loader } from '@/logic/utils';
 
 import { EllipsisPopover } from '@/ui/components/Popovers';
 
@@ -51,9 +51,7 @@ export const TextGrid = ({
               </div>
             </button>
             <div className="p-4 flex flex-grow items-center">
-              <div className="text-xs font-light">
-                {textPin[0].length < 120 ? textPin[0] : textPin[0].slice(0, 120) + '...'}
-              </div>
+              <div className="text-xs font-light">{ellipsis(textPin[0], 120)}</div>
             </div>
           </li>
         ))}
