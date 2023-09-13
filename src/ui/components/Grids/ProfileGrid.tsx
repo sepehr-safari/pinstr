@@ -110,10 +110,10 @@ export const ProfileDetails = ({
         onClick={summary ? setOpenDetails : () => navigate('/p/' + profile.npub)}
         className="w-full flex flex-col pt-16 grow items-center text-center"
       >
-        <div className="mx-auto rounded-full bg-gray-300 text-gray-300 z-[1]">
+        <div className="mx-auto rounded-full overflow-hidden w-24 h-24 bg-gradient-to-tl from-purple-800 to-purple-500 text-gray-300 z-[1] duration-500 group-hover:-translate-y-0 group-hover:scale-110">
           {!!profile.picture && (
             <img
-              className="w-24 h-24 rounded-full duration-500 group-hover:-translate-y-1 group-hover:scale-105 group-hover:shadow-md"
+              className="w-full h-full"
               src={loader(profile.picture, { w: 96, h: 96 })}
               alt={profile.displayName + ' avatar'}
               loading="lazy"
