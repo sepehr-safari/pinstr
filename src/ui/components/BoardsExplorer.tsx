@@ -13,7 +13,7 @@ export const BoardsExplorer = () => {
     );
   }
 
-  if (!data || data.pages.length == 0) {
+  if (!data || !data.pages || data.pages.length == 0) {
     return <div>No Boards Found!</div>;
   }
 
