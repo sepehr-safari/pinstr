@@ -10,8 +10,8 @@ export const useBoardSummary = () => {
   const { npub } = useParams();
   const hex = npub ? nip19.decode(npub).data.toString() : undefined;
 
-  const { data: boards, status } = useBoards();
-  const board = boards?.[0];
+  const { data, status } = useBoards();
+  const board = data ? data.pages?.[0]?.[0] : undefined;
 
   const { data: reactions } = useBoardReactions(board);
   const { mutate: like } = useMutateBoardLike(board);

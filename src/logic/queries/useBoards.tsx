@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { Filter, nip19 } from 'nostr-tools';
 import { useCallback } from 'react';
 import { useParams } from 'react-router-dom';
@@ -22,33 +22,43 @@ export const useBoards = () => {
 
   const queryClient = useQueryClient();
 
-  const fetchBoards = useCallback(async () => {
-    if (!pool || !relays) throw new Error('Missing dependencies in fetching boards');
+  const fetchBoards = useCallback(
+    async ({ pageParam = undefined }: { pageParam?: number | undefined }) => {
+      if (!pool || !relays) throw new Error('Missing dependencies in fetching boards');
 
-    const filter: Filter = { kinds: [33889 as number], limit: 10 };
-    if (!!author) filter['authors'] = [author];
-    if (!!title) filter['#d'] = [title];
-    if (!!c) filter['#c'] = [c];
-    if (!!f) filter['#f'] = [f];
-    if (!!t) filter['#t'] = [t];
+      const filter: Filter = { kinds: [33889 as number], limit: 10, until: pageParam };
+      if (!!author) filter['authors'] = [author];
+      if (!!title) filter['#d'] = [title];
+      if (!!c) filter['#c'] = [c];
+      if (!!f) filter['#f'] = [f];
+      if (!!t) filter['#t'] = [t];
 
-    try {
-      const events = await pool.list(relays, [filter]);
-      const parsedBoards = parseBoardsFromEvents(events);
+      try {
+        const events = await pool.list(relays, [filter]);
+        const parsedBoards = parseBoardsFromEvents(events);
 
-      if (parsedBoards.length == 0) throw new Error('No boards found');
+        if (parsedBoards.length == 0) throw new Error('No boards found');
 
-      return parsedBoards;
-    } catch (error) {
-      throw new Error('Error in fetching boards');
-    }
-  }, [pool, relays, author, title, c, f, t]);
+        return parsedBoards;
+      } catch (error) {
+        throw new Error('Error in fetching boards');
+      }
+    },
+    [pool, relays, author, title, c, f, t]
+  );
 
-  return useQuery({
+  return useInfiniteQuery({
     queryKey: ['nostr', 'boards', { author, title, category: c, format: f, tag: t }],
     queryFn: fetchBoards,
-    placeholderData: () =>
-      queryClient.getQueryData<Board[]>(['nostr', 'boards'], { exact: false })?.filter((board) => {
+    placeholderData: () => {
+      const query = queryClient.getQueryData<{ pages: Board[][]; pageParams: number | undefined }>(
+        ['nostr', 'boards'],
+        { exact: false }
+      );
+
+      const boards = query?.pages?.flat() || [];
+
+      const matchingBoards = boards.filter((board) => {
         let matchAuthor = true;
         let matchTitle = true;
         let matchCategory = true;
@@ -62,8 +72,19 @@ export const useBoards = () => {
         if (!!t && !board.tags.includes(t)) matchTag = false;
 
         return matchAuthor && matchTitle && matchCategory && matchFormat && matchTag;
-      }),
+      });
+
+      return {
+        pages: [matchingBoards],
+        pageParams: [undefined],
+      };
+    },
     staleTime: 1000, // 1 second
     enabled: !!pool && !!relays,
+    getNextPageParam: (lastPage) => {
+      if (lastPage.length < 10) return undefined;
+
+      return lastPage[lastPage.length - 1].timestamp - 1;
+    },
   });
 };

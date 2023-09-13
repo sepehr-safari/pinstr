@@ -22,8 +22,8 @@ export const Page = () => {
     setOpenDetails(pinIndex > -1);
   }, [pinIndex]);
 
-  const { data: boards, status } = useBoards();
-  const board = boards?.[0];
+  const { data, status } = useBoards();
+  const board = data ? data.pages?.[0]?.[0] : undefined;
 
   if (status == 'loading') {
     return (

@@ -10,8 +10,8 @@ import { Comment, Spinner } from '@/ui/components';
 export const CommentsCard = () => {
   const [inputText, setInputText] = useState('');
 
-  const { data: boards, status: boardStatus } = useBoards();
-  const board = boards?.[0];
+  const { data, status: boardStatus } = useBoards();
+  const board = data ? data.pages?.[0]?.[0] : undefined;
 
   const { data: reactions, status: reactionsStatus } = useBoardReactions(board);
 

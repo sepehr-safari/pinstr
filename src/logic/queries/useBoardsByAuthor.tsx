@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { Filter } from 'nostr-tools';
 import { useCallback } from 'react';
 
@@ -12,39 +12,55 @@ export const useBoardsByAuthor = ({ author }: { author: string | undefined }) =>
 
   const queryClient = useQueryClient();
 
-  const fetchBoard = useCallback(async () => {
-    if (!pool || !relays || !author) throw new Error('Missing dependencies in fetching boards');
+  const fetchBoard = useCallback(
+    async ({ pageParam = undefined }: { pageParam?: number | undefined }) => {
+      if (!pool || !relays || !author) throw new Error('Missing dependencies in fetching boards');
 
-    const filter: Filter = {
-      kinds: [33889 as number],
-      limit: 10,
-      authors: [author],
-    };
+      const filter: Filter = {
+        kinds: [33889 as number],
+        limit: 10,
+        authors: [author],
+        until: pageParam,
+      };
 
-    try {
-      const events = await pool.list(relays, [filter]);
-      const parsedBoards = parseBoardsFromEvents(events);
+      try {
+        const events = await pool.list(relays, [filter]);
+        const parsedBoards = parseBoardsFromEvents(events);
 
-      if (parsedBoards.length == 0) throw new Error('No boards found');
+        if (parsedBoards.length == 0) throw new Error('No boards found');
 
-      parsedBoards.forEach((board) =>
-        queryClient.setQueryData(['nostr', 'boards', { author, title: board.title }], [board])
-      );
+        return parsedBoards;
+      } catch (error) {
+        throw new Error('Error in fetching boards');
+      }
+    },
+    [pool, relays, author]
+  );
 
-      return parsedBoards;
-    } catch (error) {
-      throw new Error('Error in fetching boards');
-    }
-  }, [pool, relays, author]);
-
-  return useQuery({
+  return useInfiniteQuery({
     queryKey: ['nostr', 'boards', { author }],
     queryFn: fetchBoard,
-    placeholderData: () =>
-      queryClient
-        .getQueryData<Board[]>(['nostr', 'boards'], { exact: false })
-        ?.filter((board) => board.author == author),
+    placeholderData: () => {
+      const query = queryClient.getQueryData<{ pages: Board[][]; pageParams: number | undefined }>(
+        ['nostr', 'boards'],
+        { exact: false }
+      );
+
+      const boards = query?.pages?.flat() || [];
+
+      const matchingBoards = boards.filter((board) => board.author == author);
+
+      return {
+        pages: [matchingBoards],
+        pageParams: [undefined],
+      };
+    },
     staleTime: 1000, // 1 second
     enabled: !!pool && !!relays && !!author,
+    getNextPageParam: (lastPage) => {
+      if (lastPage.length < 10) return undefined;
+
+      return lastPage[lastPage.length - 1].timestamp - 1;
+    },
   });
 };
