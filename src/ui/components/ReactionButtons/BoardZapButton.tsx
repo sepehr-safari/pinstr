@@ -6,7 +6,12 @@ import { useBoardReactions, useUser } from '@/logic/queries';
 import { Board } from '@/logic/types';
 import { joinClassNames, numberEllipsis } from '@/logic/utils';
 
-export const BoardZapButton = ({ board }: { board: Board }) => {
+interface Params {
+  board: Board;
+  bgHover?: boolean;
+}
+
+export const BoardZapButton = ({ board, bgHover = false }: Params) => {
   const { data: reactions } = useBoardReactions(board);
 
   const { pubkey } = useUser();
@@ -25,7 +30,8 @@ export const BoardZapButton = ({ board }: { board: Board }) => {
           'inline-flex justify-center items-center text-xs font-semibold',
           zapedByUser
             ? 'text-yellow-600 hover:text-yellow-700'
-            : 'text-gray-600 hover:text-gray-900'
+            : 'text-gray-600 hover:text-gray-900',
+          bgHover ? 'hover:bg-gray-200' : ''
         )}
       >
         <BoltIcon className="h-4 w-4" aria-hidden="true" />
