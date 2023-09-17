@@ -11,6 +11,21 @@ import { ExternalLink } from './ExternalLink';
 import { InternalLink } from './InternalLink';
 import { TransitionWrapper } from './TransitionWrapper';
 
+interface Params {
+  board: Board;
+  pinIndex?: number;
+  actionButtons?: PopoverButton[];
+  internalLinks?: string[][];
+  externalLinks?: string[][];
+  selfBoard?: boolean;
+  editType?: 'pin' | 'board';
+  className?: string;
+  overlay?: boolean;
+  slideInFrom?: 'right' | 'left';
+  buttonTheme?: 'light' | 'dark';
+  onClick?: () => void;
+}
+
 export const EllipsisPopover = ({
   board,
   pinIndex,
@@ -24,20 +39,7 @@ export const EllipsisPopover = ({
   slideInFrom = 'right',
   buttonTheme = 'light',
   onClick,
-}: {
-  board: Board;
-  pinIndex?: number;
-  actionButtons?: PopoverButton[];
-  internalLinks?: string[][];
-  externalLinks?: string[][];
-  selfBoard: boolean;
-  editType: 'pin' | 'board';
-  className?: string;
-  overlay?: boolean;
-  slideInFrom?: 'right' | 'left';
-  buttonTheme?: 'light' | 'dark';
-  onClick?: () => void;
-}) => {
+}: Params) => {
   const hasPublicActionButtons = useMemo(
     () => !!actionButtons && actionButtons.filter((btn) => !btn.private).length > 0,
     [actionButtons]
@@ -81,7 +83,9 @@ export const EllipsisPopover = ({
           {externalLinks &&
             externalLinks.map(([url, label]) => <ExternalLink label={label} url={url} key={url} />)}
 
-          {selfBoard && <EditButtons editType={editType} board={board} pinIndex={pinIndex} />}
+          {selfBoard && editType && (
+            <EditButtons editType={editType} board={board} pinIndex={pinIndex} />
+          )}
         </Popover.Panel>
       </TransitionWrapper>
     </Popover>
