@@ -25,6 +25,7 @@ export interface Board {
   headers: string[];
   pins: Pin[];
   format: Format;
+  event: Event<33889>;
 }
 
 export interface Author {
@@ -39,6 +40,7 @@ export interface Author {
   lud16: string;
   website: string;
   npub: string;
+  event: Event<0>;
 }
 
 export interface Reactions {

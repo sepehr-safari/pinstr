@@ -19,6 +19,7 @@ export const parseAuthorsFromEvents = (events: Event[]) => {
       website: eventContent.website || '',
       displayName: eventContent.display_name || eventContent.name,
       npub: nip19.npubEncode(event.pubkey),
+      event: event as Event<0>,
     });
   }
 

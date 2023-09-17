@@ -68,6 +68,7 @@ export const parseBoardsFromEvents = (events: Event[]) => {
       tags,
       pins,
       format: format as Format,
+      event: event as Event<33889>,
     });
   }
 
