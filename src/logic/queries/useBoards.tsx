@@ -1,11 +1,10 @@
-import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { Filter, nip19 } from 'nostr-tools';
 import { useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useFiltersParams } from '@/logic/hooks';
 import { useLocalStore } from '@/logic/store';
-import { Board } from '@/logic/types';
 import { parseBoardsFromEvents } from '@/logic/utils';
 
 export const useBoards = () => {
@@ -19,8 +18,6 @@ export const useBoards = () => {
 
   const pool = useLocalStore((state) => state.pool);
   const relays = useLocalStore((state) => state.relays);
-
-  const queryClient = useQueryClient();
 
   const fetchBoards = useCallback(
     async ({ pageParam = undefined }: { pageParam?: number | undefined }) => {

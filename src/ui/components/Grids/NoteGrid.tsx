@@ -6,7 +6,6 @@ import { useAuthor, useNote, useUser } from '@/logic/queries';
 import { Board } from '@/logic/types';
 import { ellipsis, joinClassNames, loader } from '@/logic/utils';
 
-import { Spinner } from '@/ui/components';
 import { EllipsisPopover } from '@/ui/components/Popovers';
 
 export const NoteGrid = ({
