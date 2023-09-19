@@ -13,7 +13,7 @@ export const BoardsByAuthor = () => {
     );
   }
 
-  if (!data || !data.pages || data.pages.length == 0) {
+  if (!data || data.pages[0].length == 0) {
     return <div>No Boards Found!</div>;
   }
 
@@ -24,7 +24,7 @@ export const BoardsByAuthor = () => {
           'grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 3xl:grid-cols-4 5xl:grid-cols-5'
         }
       >
-        {(data.pages || []).map((page) =>
+        {data.pages.map((page) =>
           page.map((board) => <MemoizedBoardItem key={board.id} board={board} />)
         )}
       </div>

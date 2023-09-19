@@ -8,7 +8,6 @@ import { useAuthor, useUser } from '@/logic/queries';
 import { Board } from '@/logic/types';
 import { ellipsis, joinClassNames, loader } from '@/logic/utils';
 
-import { Spinner } from '@/ui/components';
 import { EllipsisPopover } from '@/ui/components/Popovers';
 
 export const ProfileGrid = ({
@@ -80,34 +79,34 @@ export const ProfileDetails = ({
 }) => {
   const navigate = useNavigate();
 
-  const { data: profile, status } = useAuthor(pubkey);
+  const { data: profile, isLoading } = useAuthor(pubkey);
 
-  if (status == 'loading') {
+  if (!profile && !isLoading) {
     return (
-      <div className="w-full h-full bg-white flex justify-center items-center">
-        <Spinner />
+      <div className="w-full h-full flex items-center justify-center text-xs text-gray-400 bg-white rounded-lg min-h-[20rem]">
+        Profile not found!
       </div>
     );
-  }
-
-  if (!profile) {
-    return <div className="w-full h-full">Profile not found!</div>;
   }
 
   return (
     <>
       <button
         type="button"
-        onClick={summary ? setOpenDetails : () => navigate('/p/' + profile.npub)}
-        className="w-full absolute top-0"
+        onClick={summary ? setOpenDetails : () => navigate('/p/' + profile?.npub)}
+        disabled={isLoading}
+        className="w-full absolute top-0 disabled:pointer-events-none"
       >
         <div
           className={joinClassNames(
-            'w-full h-24 bg-gradient-to-br from-purple-800 to-purple-500 text-gray-200 duration-500 group-hover:rounded-b-none',
-            summary ? 'rounded-lg' : 'rounded-t-lg'
+            'w-full h-24 text-gray-200 duration-500 group-hover:rounded-b-none',
+            summary ? 'rounded-lg' : 'rounded-t-lg',
+            isLoading
+              ? 'animate-pulse bg-gray-300'
+              : 'bg-gradient-to-br from-purple-800 to-purple-500'
           )}
         >
-          {!!profile.banner && (
+          {!!profile?.banner && (
             <img
               className={joinClassNames(
                 'w-full h-full object-cover duration-500 group-hover:rounded-b-none',
@@ -122,11 +121,19 @@ export const ProfileDetails = ({
       </button>
       <button
         type="button"
-        onClick={summary ? setOpenDetails : () => navigate('/p/' + profile.npub)}
-        className="w-full flex flex-col pt-16 grow items-center text-center"
+        onClick={summary ? setOpenDetails : () => navigate('/p/' + profile?.npub)}
+        disabled={isLoading}
+        className="w-full flex flex-col pt-16 grow items-center text-center disabled:pointer-events-none"
       >
-        <div className="mx-auto rounded-full overflow-hidden w-24 h-24 bg-gradient-to-tl from-purple-800 to-purple-500 text-gray-300 z-[1] duration-500 group-hover:-translate-y-0 group-hover:scale-110">
-          {!!profile.picture && (
+        <div
+          className={joinClassNames(
+            'mx-auto rounded-full overflow-hidden w-24 h-24 text-gray-300 z-[1] duration-500',
+            isLoading
+              ? 'bg-gray-200'
+              : 'bg-gradient-to-tl from-purple-800 to-purple-500 group-hover:scale-110'
+          )}
+        >
+          {!!profile?.picture && (
             <img
               className="w-full h-full"
               src={loader(profile.picture, { w: 96, h: 96 })}
@@ -136,23 +143,43 @@ export const ProfileDetails = ({
           )}
         </div>
         <h3 className="mt-4 w-full truncate text-base font-semibold leading-7 tracking-tight text-gray-900">
-          {summary ? ellipsis(profile.displayName, 20) : ellipsis(profile.displayName, 30)}
+          {profile ? (
+            summary ? (
+              ellipsis(profile.displayName, 20)
+            ) : (
+              ellipsis(profile.displayName, 30)
+            )
+          ) : (
+            <div className="animate-pulse mx-auto w-1/2 h-[2rem] rounded bg-gray-200" />
+          )}
         </h3>
         <p className="mt-2 w-full text-xs font-light text-gray-700 px-4 max-w-xs">
-          {summary ? ellipsis(profile.about, 100) : ellipsis(profile.about, 500)}
+          {profile ? (
+            summary ? (
+              ellipsis(profile.about, 100)
+            ) : (
+              ellipsis(profile.about, 500)
+            )
+          ) : (
+            <div className="animate-pulse h-[4rem] rounded bg-gray-200" />
+          )}
         </p>
       </button>
 
       {summary ? (
-        <div className="my-4 mx-auto max-w-fit">
-          <button
-            onClick={() => toast('This feature is still under development.', { type: 'warning' })}
-            className="flex justify-center items-center rounded-full bg-gray-200 px-6 py-2.5 text-xs font-semibold text-gray-600 duration-200 hover:text-gray-900 hover:bg-gray-300"
-          >
-            <PlusIcon className="-ml-1 w-4 h-4" />
-            <span className="ml-1">Follow</span>
-          </button>
-        </div>
+        profile ? (
+          <div className="my-4 mx-auto max-w-fit">
+            <button
+              onClick={() => toast('This feature is still under development.', { type: 'warning' })}
+              className="flex justify-center items-center rounded-full bg-gray-200 px-6 py-2.5 text-xs font-semibold text-gray-600 duration-200 hover:text-gray-900 hover:bg-gray-300"
+            >
+              <PlusIcon className="-ml-1 w-4 h-4" />
+              <span className="ml-1">Follow</span>
+            </button>
+          </div>
+        ) : (
+          <div className="animate-pulse mx-auto w-1/4 my-4 h-[2rem] rounded bg-gray-200" />
+        )
       ) : (
         <div className="mt-4 flex w-full border-t">
           <a

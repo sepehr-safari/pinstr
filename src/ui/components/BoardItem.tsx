@@ -111,7 +111,7 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
               {ellipsis(board.title, 50)}
             </h3>
 
-            {!hideAuthor && author && <AuthorOverview author={author} />}
+            {!hideAuthor && <AuthorOverview author={author} />}
           </div>
           <div className="ml-4 mt-[2px] flex items-start gap-4">
             <BoardLikeButton board={board} />

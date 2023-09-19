@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import { Author } from '@/logic/types';
 import { ellipsis, loader } from '@/logic/utils';
 
-export const AuthorOverview = ({ author }: { author: Author }) => {
+export const AuthorOverview = ({ author }: { author: Author | undefined }) => {
   const location = useLocation();
 
   const [referenceElement, setReferenceElement] = useState<HTMLButtonElement | null>(null);
@@ -16,6 +16,10 @@ export const AuthorOverview = ({ author }: { author: Author }) => {
   const { styles, attributes } = usePopper(referenceElement, popperElement, {
     placement: 'top',
   });
+
+  if (author == undefined) {
+    return <div className="animate-pulse w-1/2 mt-1 h-[0.8rem] rounded bg-gray-200" />;
+  }
 
   return (
     <Popover className="leading-none">

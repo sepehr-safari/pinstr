@@ -50,36 +50,7 @@ export const useBoards = () => {
   return useInfiniteQuery({
     queryKey: ['nostr', 'boards', { author, title, category: c, format: f, tag: t }],
     queryFn: fetchBoards,
-    placeholderData: () => {
-      const query = queryClient.getQueryData<{ pages: Board[][]; pageParams: number | undefined }>(
-        ['nostr', 'boards'],
-        { exact: false }
-      );
-
-      const boards = query?.pages?.flat() || [];
-
-      const matchingBoards = boards.filter((board) => {
-        let matchAuthor = true;
-        let matchTitle = true;
-        let matchCategory = true;
-        let matchFormat = true;
-        let matchTag = true;
-
-        if (!!author && board.author != author) matchAuthor = false;
-        if (!!title && board.title != title) matchTitle = false;
-        if (!!c && board.category != c) matchCategory = false;
-        if (!!f && board.format != f) matchFormat = false;
-        if (!!t && !board.tags.includes(t)) matchTag = false;
-
-        return matchAuthor && matchTitle && matchCategory && matchFormat && matchTag;
-      });
-
-      return {
-        pages: [matchingBoards],
-        pageParams: [undefined],
-      };
-    },
-    staleTime: 1000, // 1 second
+    staleTime: 4000, // 4 seconds
     enabled: !!pool && !!relays,
     getNextPageParam: (lastPage) => {
       if (lastPage.length < 10) return undefined;

@@ -40,7 +40,7 @@ export const useSearch = (text: string | undefined) => {
   return useQuery({
     queryKey: ['nostr', 'search', text],
     queryFn: fetchSearch,
-    staleTime: 1000, // 1 second
+    staleTime: 4000, // 4 seconds
     enabled: !!pool && !!relays && !!text,
   });
 };

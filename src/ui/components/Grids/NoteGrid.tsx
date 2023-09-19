@@ -74,26 +74,27 @@ export const NoteDetails = ({
   summary?: boolean;
   setPinIndex?: () => void;
 }) => {
-  const { data: note, status } = useNote(noteId);
+  const { data: note, isLoading } = useNote(noteId);
   const { data: author } = useAuthor(note?.pubkey);
 
-  if (status == 'loading') {
+  if (!note && !isLoading) {
     return (
-      <div className="h-32 flex justify-center items-center">
-        <Spinner />
+      <div className="w-full h-32 flex justify-center items-center text-xs bg-white rounded-lg text-gray-500">
+        Note not found!
       </div>
     );
-  }
-
-  if (!note) {
-    return <div className="w-full h-full">Note not found!</div>;
   }
 
   return (
     <>
       <div className="w-full h-full flex flex-col">
-        <div className="flex w-full items-center justify-between space-x-2 p-4">
-          <div className="h-12 w-12 rounded-full bg-gray-300 text-gray-300">
+        <div className="flex w-full items-center space-x-2 p-4">
+          <div
+            className={joinClassNames(
+              'h-12 w-12 rounded-full bg-gray-100 text-gray-100',
+              isLoading ? 'animate-pulse' : ''
+            )}
+          >
             {!!author && !!author.picture && (
               <img
                 className="rounded-full"
@@ -104,16 +105,22 @@ export const NoteDetails = ({
             )}
           </div>
 
-          <div className="flex-1 truncate">
-            <div className="flex items-center space-x-3">
-              <Link to={`/p/${author?.npub}`} className="z-[4]">
-                <h3 className="inline-flex items-center truncate text-sm font-medium text-gray-900 hover:underline">
-                  {author ? ellipsis(author.displayName, 20) : ''}
-                </h3>
-              </Link>
-            </div>
+          <div className="flex flex-col truncate">
+            <Link to={`/p/${author?.npub}`} className="z-[4]">
+              <h3 className="flex truncate text-sm font-medium text-gray-900 hover:underline">
+                {author ? (
+                  ellipsis(author.displayName, 20)
+                ) : (
+                  <div className="animate-pulse w-24 h-[1rem] rounded bg-gray-100" />
+                )}
+              </h3>
+            </Link>
             <p className="mt-1 truncate text-xs text-gray-500">
-              {author ? ellipsis(author.nip05, 20) : ''}
+              {author ? (
+                ellipsis(author.nip05, 20)
+              ) : (
+                <div className="animate-pulse w-14 h-[1rem] rounded bg-gray-100" />
+              )}
             </p>
           </div>
         </div>
@@ -125,13 +132,17 @@ export const NoteDetails = ({
             onClick={setPinIndex}
           >
             <p className="whitespace-break-spaces break-words">
-              {summary ? ellipsis(note.content, 100) : ellipsis(note.content, 500)}
+              {note ? (
+                ellipsis(note.content, 100)
+              ) : (
+                <div className="animate-pulse w-full h-[4rem] rounded bg-gray-100" />
+              )}
             </p>
           </button>
         ) : (
           <div className="p-4 border-t text-xs text-gray-500 grow w-full text-left">
             <p className="whitespace-break-spaces break-words">
-              {summary ? ellipsis(note.content, 100) : ellipsis(note.content, 500)}
+              {note && ellipsis(note.content, 500)}
             </p>
           </div>
         )}
