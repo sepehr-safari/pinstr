@@ -1,4 +1,5 @@
 import { nip19 } from 'nostr-tools';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useAuthor, useNote, useUser } from '@/logic/queries';
@@ -18,6 +19,13 @@ export const NoteGrid = ({
   const { pubkey } = useUser();
   const selfBoard = pubkey ? pubkey == board.author : false;
 
+  const [lastPinIndex, setLastPinIndex] = useState<number>(10);
+  const hasNextPage = board.pins.length > lastPinIndex;
+
+  if (board.pins.length == 0) {
+    return <div>Empty Board!</div>;
+  }
+
   return (
     <>
       <ul
@@ -27,18 +35,16 @@ export const NoteGrid = ({
           'md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-3 4xl:grid-cols-4 5xl:grid-cols-4'
         )}
       >
-        {(board.pins || []).map((pin, index) => (
+        {board.pins.slice(0, lastPinIndex).map((pin, index) => (
           <li
-            key={pin[0] + index}
+            key={pin[0]}
             className="group relative overflow-hidden flex flex-col h-full justify-between rounded-lg bg-white shadow duration-300 hover:shadow-md"
           >
             <EllipsisPopover
               board={board}
               selfBoard={selfBoard}
               pinIndex={index}
-              externalLinks={[
-                [`https://primal.net/e/${nip19.noteEncode(pin[0])}`, 'Open With Primal'],
-              ]}
+              externalLinks={[[`https://njump.me/${nip19.noteEncode(pin[0])}`, 'Open in njump']]}
               editType="pin"
             />
 
@@ -46,6 +52,15 @@ export const NoteGrid = ({
           </li>
         ))}
       </ul>
+
+      {hasNextPage && (
+        <button
+          className="mt-16 mx-auto block text-gray-700 bg-gray-200 text-xs px-10 py-1 rounded-md disabled:text-gray-300 disabled:bg-gray-50"
+          onClick={() => setLastPinIndex((index) => index + 10)}
+        >
+          Show More
+        </button>
+      )}
     </>
   );
 };
@@ -125,12 +140,12 @@ export const NoteDetails = ({
       {!summary && (
         <div className="border-t flex w-full">
           <a
-            href={`https://primal.net/e/${nip19.noteEncode(noteId)}`}
+            href={`https://njump.me/${nip19.noteEncode(noteId)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex w-full items-center justify-center py-2 text-xs text-gray-700 font-medium duration-300 hover:bg-gray-200 hover:text-gray-900"
           >
-            Open with Primal
+            Open in njump
           </a>
         </div>
       )}

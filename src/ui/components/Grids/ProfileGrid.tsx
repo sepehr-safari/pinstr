@@ -1,5 +1,6 @@
 import { PlusIcon } from '@heroicons/react/20/solid';
 import { nip19 } from 'nostr-tools';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -20,6 +21,13 @@ export const ProfileGrid = ({
   const { pubkey } = useUser();
   const selfBoard = pubkey ? pubkey == board.author : false;
 
+  const [lastPinIndex, setLastPinIndex] = useState<number>(10);
+  const hasNextPage = board.pins.length > lastPinIndex;
+
+  if (board.pins.length == 0) {
+    return <div>Empty Board!</div>;
+  }
+
   return (
     <>
       <ul
@@ -29,19 +37,17 @@ export const ProfileGrid = ({
           'md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-5 5xl:grid-cols-6'
         )}
       >
-        {(board.pins || []).map((pin, index) => (
+        {board.pins.slice(0, lastPinIndex).map((pin, index) => (
           <li
-            key={pin[0] + index}
+            key={pin[0]}
             className="relative group overflow-hidden flex flex-col justify-between rounded-lg ease-in-out duration-500 hover:shadow-md hover:bg-gray-50"
           >
             <EllipsisPopover
               board={board}
               selfBoard={selfBoard}
               pinIndex={index}
-              internalLinks={[[`/p/${nip19.npubEncode(pin[0])}`, 'Open Profile']]}
-              externalLinks={[
-                [`https://primal.net/p/${nip19.npubEncode(pin[0])}`, 'Open With Primal'],
-              ]}
+              internalLinks={[[`/p/${nip19.npubEncode(pin[0])}`, 'Open profile']]}
+              externalLinks={[[`https://njump.me/${nip19.npubEncode(pin[0])}`, 'Open in njump']]}
               editType="pin"
               className="bottom-4 right-4"
             />
@@ -50,6 +56,15 @@ export const ProfileGrid = ({
           </li>
         ))}
       </ul>
+
+      {hasNextPage && (
+        <button
+          className="mt-16 mx-auto block text-gray-700 bg-gray-200 text-xs px-10 py-1 rounded-md disabled:text-gray-300 disabled:bg-gray-50"
+          onClick={() => setLastPinIndex((index) => index + 10)}
+        >
+          Show More
+        </button>
+      )}
     </>
   );
 };
@@ -141,12 +156,12 @@ export const ProfileDetails = ({
       ) : (
         <div className="mt-4 flex w-full border-t">
           <a
-            href={`https://primal.net/p/${nip19.npubEncode(pubkey)}`}
+            href={`https://njump.me/${nip19.npubEncode(pubkey)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex w-full items-center justify-center py-2 text-xs text-gray-700 font-medium border-r border-gray-200 ease-in-out duration-300 hover:bg-gray-200 hover:text-gray-900"
           >
-            Open with Primal
+            Open in njump
           </a>
 
           <button
