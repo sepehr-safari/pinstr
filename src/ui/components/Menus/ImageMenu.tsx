@@ -107,7 +107,7 @@ export const ImageMenu = ({ image, setImage, required = false, disabled = false 
   }, [searchKeyword]);
 
   useEffect(() => {
-    if (image != undefined) {
+    if (image) {
       setSelectedMenuItem('URL');
     } else {
       setSelectedMenuItem(coverImageMenuItems[0].title);
