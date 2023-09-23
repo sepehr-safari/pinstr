@@ -53,7 +53,7 @@ export const useBoards = () => {
     queryKey: [
       'nostr',
       'boards',
-      { author, title, category: c, format: f, tag: t, muteList: settings?.muteList },
+      { author, title, category: c, format: f, tag: t, muteList: settings?.muteList.join(',') },
     ],
     queryFn: fetchBoards,
     retry: 1,

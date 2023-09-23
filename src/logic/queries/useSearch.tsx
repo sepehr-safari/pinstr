@@ -45,7 +45,7 @@ export const useSearch = (text: string | undefined) => {
   }, [pool, relays, text, settings]);
 
   return useQuery({
-    queryKey: ['nostr', 'search', { text, muteList: settings?.muteList }],
+    queryKey: ['nostr', 'search', { text, muteList: settings?.muteList.join(',') }],
     queryFn: fetchSearch,
     retry: 1,
     staleTime: 4000, // 4 seconds
