@@ -1,14 +1,18 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { useLocalStore } from '@/logic/store';
 import { Format } from '@/logic/types';
+import { OGloader } from '@/logic/utils';
 
 import { ImageMenu } from '@/ui/components/Menus';
 
 const REQUIRED_TITLES = ['Content', 'Title', 'Image'];
 
 export const PinEditor = () => {
+  const [isFetchingLinkPreview, setIsFetchingLinkPreview] = useState(false);
+
   const [searchParams, _] = useSearchParams();
   const action = searchParams.get('action');
   const pinIndex = searchParams.get('i');
@@ -26,6 +30,43 @@ export const PinEditor = () => {
       });
     }
   }, [pins, headers, setPin, pinIndex, action]);
+
+  const fetchLinkPreview = useCallback(() => {
+    if (pinIndex == null || !headers || !pins || headers.length == 0 || pins.length <= +pinIndex) {
+      return;
+    }
+
+    const [format] = headers[0].split(':') as [Format, string];
+    if (format != Format.Link) return;
+
+    if (pins[+pinIndex].length == 0) {
+      return;
+    }
+
+    const url = pins[+pinIndex][0];
+    if (!url || !url.startsWith('http')) return;
+
+    setIsFetchingLinkPreview(true);
+
+    toast.promise(
+      fetch(OGloader(url))
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.ogImage && data.ogImage.length > 0) {
+            setPin(+pinIndex, 2, data.ogImage[0].url);
+          }
+          if (data.ogTitle) {
+            setPin(+pinIndex, 1, data.ogTitle);
+          }
+        })
+        .finally(() => setIsFetchingLinkPreview(false)),
+      {
+        pending: 'Loading link preview...',
+        error: 'An error has been occured! Please try again.',
+        success: 'Successfully loaded!',
+      }
+    );
+  }, [pins, setPin, headers, pinIndex, setIsFetchingLinkPreview]);
 
   return (
     <>
@@ -51,8 +92,8 @@ export const PinEditor = () => {
                     id={title}
                     autoComplete="off"
                     tabIndex={hIndex + 1}
-                    autoFocus
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
+                    autoFocus={hIndex == 0}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 disabled:bg-gray-100 disabled:text-gray-300 sm:text-sm sm:leading-6"
                     placeholder={
                       format == Format.Link || format == Format.Video
                         ? 'https://'
@@ -66,12 +107,19 @@ export const PinEditor = () => {
                     onChange={(e) =>
                       pinIndex != null && setPin(parseInt(pinIndex), hIndex, e.target.value)
                     }
+                    onBlur={() => {
+                      if (hIndex == 0 && format == Format.Link) {
+                        fetchLinkPreview();
+                      }
+                    }}
+                    disabled={isFetchingLinkPreview}
                   />
                 ) : (
                   <ImageMenu
                     image={pins && pinIndex != null ? pins[parseInt(pinIndex)]?.[hIndex] : ''}
                     setImage={(url) => pinIndex != null && setPin(parseInt(pinIndex), hIndex, url)}
                     required={REQUIRED_TITLES.includes(title)}
+                    disabled={isFetchingLinkPreview}
                   />
                 )}
               </div>
