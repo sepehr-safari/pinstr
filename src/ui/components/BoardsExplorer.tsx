@@ -1,9 +1,19 @@
-import { useBoards } from '@/logic/queries';
+import { useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
 
+import { useBoards } from '@/logic/queries';
 import { MemoizedBoardItem, Spinner } from '@/ui/components';
 
 export const BoardsExplorer = () => {
-  const { data, status, fetchNextPage, hasNextPage, isFetchingNextPage } = useBoards();
+  const { ref, inView } = useInView();
+
+  const { data, status, fetchNextPage, isFetchingNextPage, hasNextPage } = useBoards();
+
+  useEffect(() => {
+    if (inView) {
+      fetchNextPage();
+    }
+  }, [inView]);
 
   if (status == 'loading') {
     return (
@@ -25,15 +35,18 @@ export const BoardsExplorer = () => {
         )}
       </div>
 
-      {hasNextPage && (
-        <button
-          className="mt-16 mx-auto block text-gray-700 bg-gray-100 text-xs px-4 py-1 rounded-md disabled:text-gray-300 disabled:bg-gray-50"
-          onClick={() => fetchNextPage()}
-          disabled={isFetchingNextPage}
-        >
-          {isFetchingNextPage ? 'Loading...' : 'Load More'}
-        </button>
-      )}
+      <button
+        ref={ref}
+        onClick={() => fetchNextPage()}
+        disabled={!hasNextPage || isFetchingNextPage}
+        className="mt-20 mx-auto block text-gray-700 bg-gray-100 text-xs px-4 py-1 rounded-md disabled:text-gray-300 disabled:bg-gray-50"
+      >
+        {isFetchingNextPage
+          ? 'Loading more...'
+          : hasNextPage
+          ? 'Load More'
+          : 'Nothing more to load'}
+      </button>
     </div>
   );
 };
