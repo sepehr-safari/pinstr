@@ -33,11 +33,11 @@ export const SelectBoard = () => {
                 <MagnifyingGlassIcon className="h-5 w-5 text-gray-500" aria-hidden="true" />
               </div>
               <input
-                type="search-boards"
+                type="search"
                 id="search-boards"
                 name="search-boards"
                 autoComplete="off"
-                className="block w-full rounded-md border-0 bg-opacity-30 bg-white py-2 pl-10 pr-3 text-xs text-gray-900 ring-1 ring-inset ring-gray-900/20 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-gray-500 focus:bg-opacity-50"
+                className="block w-full rounded-md border-0 bg-opacity-30 bg-white py-2 pl-10 pr-3 text-xs text-gray-900 ring-1 ring-inset ring-gray-900/20 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-gray-900/50"
                 placeholder="Search in your boards"
                 onChange={(e) => setSearchInput(e.target.value)}
                 value={searchInput}
