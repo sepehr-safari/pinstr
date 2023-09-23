@@ -2,12 +2,15 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Filter } from 'nostr-tools';
 import { useCallback } from 'react';
 
+import { useSettings } from '@/logic/queries';
 import { useLocalStore } from '@/logic/store';
-import { parseBoardsFromEvents } from '@/logic/utils';
+import { filterBoardsByMuteList, parseBoardsFromEvents } from '@/logic/utils';
 
 export const useSearch = (text: string | undefined) => {
   const pool = useLocalStore((state) => state.pool);
   const relays = useLocalStore((state) => state.relays);
+
+  const { data: settings } = useSettings();
 
   const queryClient = useQueryClient();
 
@@ -23,23 +26,28 @@ export const useSearch = (text: string | undefined) => {
     try {
       const events = await pool.list(['wss://relay.pinstr.app'], [filter]);
       const parsedBoards = parseBoardsFromEvents(events);
+      const filteredBoards =
+        settings && settings.muteList
+          ? filterBoardsByMuteList(parsedBoards, settings.muteList)
+          : parsedBoards;
 
-      parsedBoards.forEach((board) =>
+      filteredBoards.forEach((board) =>
         queryClient.setQueryData(
           ['nostr', 'boards', { author: board.author, title: board.title }],
           [board]
         )
       );
 
-      return parsedBoards;
+      return filteredBoards;
     } catch (error) {
       throw new Error('Error in fetching search');
     }
-  }, [pool, relays, text]);
+  }, [pool, relays, text, settings]);
 
   return useQuery({
-    queryKey: ['nostr', 'search', text],
+    queryKey: ['nostr', 'search', { text, muteList: settings?.muteList }],
     queryFn: fetchSearch,
+    retry: 1,
     staleTime: 4000, // 4 seconds
     enabled: !!pool && !!relays && !!text,
   });

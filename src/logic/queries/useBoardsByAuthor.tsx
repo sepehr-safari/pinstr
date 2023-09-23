@@ -2,12 +2,15 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { Filter } from 'nostr-tools';
 import { useCallback } from 'react';
 
+import { useSettings } from '@/logic/queries';
 import { useLocalStore } from '@/logic/store';
-import { parseBoardsFromEvents } from '@/logic/utils';
+import { filterBoardsByMuteList, parseBoardsFromEvents } from '@/logic/utils';
 
 export const useBoardsByAuthor = ({ author }: { author: string | undefined }) => {
   const pool = useLocalStore((state) => state.pool);
   const relays = useLocalStore((state) => state.relays);
+
+  const { data: settings } = useSettings();
 
   const fetchBoard = useCallback(
     async ({ pageParam = undefined }: { pageParam?: number | undefined }) => {
@@ -15,7 +18,7 @@ export const useBoardsByAuthor = ({ author }: { author: string | undefined }) =>
 
       const filter: Filter = {
         kinds: [33889 as number],
-        limit: 10,
+        limit: 18,
         authors: [author],
         until: pageParam,
       };
@@ -23,26 +26,26 @@ export const useBoardsByAuthor = ({ author }: { author: string | undefined }) =>
       try {
         const events = await pool.list(relays, [filter]);
         const parsedBoards = parseBoardsFromEvents(events);
+        const filteredBoards =
+          settings && settings.muteList
+            ? filterBoardsByMuteList(parsedBoards, settings.muteList)
+            : parsedBoards;
 
-        if (parsedBoards.length == 0) throw new Error('No boards found');
-
-        return parsedBoards;
+        return filteredBoards;
       } catch (error) {
         throw new Error('Error in fetching boards');
       }
     },
-    [pool, relays, author]
+    [pool, relays, author, settings]
   );
 
   return useInfiniteQuery({
-    queryKey: ['nostr', 'boards', { author }],
+    queryKey: ['nostr', 'boards', { author, muteList: settings?.muteList }],
     queryFn: fetchBoard,
+    retry: 1,
     staleTime: 4000, // 4 seconds
     enabled: !!pool && !!relays && !!author,
-    getNextPageParam: (lastPage) => {
-      if (lastPage.length < 10) return undefined;
-
-      return lastPage[lastPage.length - 1].timestamp - 1;
-    },
+    getNextPageParam: (lastPage) =>
+      lastPage.length > 0 ? lastPage[lastPage.length - 1].timestamp - 1 : undefined,
   });
 };

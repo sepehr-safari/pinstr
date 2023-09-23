@@ -4,12 +4,15 @@ import { useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useFiltersParams } from '@/logic/hooks';
+import { useSettings } from '@/logic/queries';
 import { useLocalStore } from '@/logic/store';
-import { parseBoardsFromEvents } from '@/logic/utils';
+import { filterBoardsByMuteList, parseBoardsFromEvents } from '@/logic/utils';
 
 export const useBoards = () => {
   const { npub, title } = useParams();
   const author = npub ? nip19.decode(npub).data.toString() : undefined;
+
+  const { data: settings } = useSettings();
 
   const { category, format, tag } = useFiltersParams();
   const c = category.value;
@@ -23,7 +26,7 @@ export const useBoards = () => {
     async ({ pageParam = undefined }: { pageParam?: number | undefined }) => {
       if (!pool || !relays) throw new Error('Missing dependencies in fetching boards');
 
-      const filter: Filter = { kinds: [33889 as number], limit: 10, until: pageParam };
+      const filter: Filter = { kinds: [33889 as number], limit: 18, until: pageParam };
       if (!!author) filter['authors'] = [author];
       if (!!title) filter['#d'] = [title];
       if (!!c) filter['#c'] = [c];
@@ -33,26 +36,30 @@ export const useBoards = () => {
       try {
         const events = await pool.list(relays, [filter]);
         const parsedBoards = parseBoardsFromEvents(events);
+        const filteredBoards =
+          settings && settings.muteList
+            ? filterBoardsByMuteList(parsedBoards, settings.muteList)
+            : parsedBoards;
 
-        if (parsedBoards.length == 0) throw new Error('No boards found');
-
-        return parsedBoards;
+        return filteredBoards;
       } catch (error) {
         throw new Error('Error in fetching boards');
       }
     },
-    [pool, relays, author, title, c, f, t]
+    [pool, relays, author, title, c, f, t, settings]
   );
 
   return useInfiniteQuery({
-    queryKey: ['nostr', 'boards', { author, title, category: c, format: f, tag: t }],
+    queryKey: [
+      'nostr',
+      'boards',
+      { author, title, category: c, format: f, tag: t, muteList: settings?.muteList },
+    ],
     queryFn: fetchBoards,
+    retry: 1,
     staleTime: 4000, // 4 seconds
     enabled: !!pool && !!relays,
-    getNextPageParam: (lastPage) => {
-      if (lastPage.length < 10) return undefined;
-
-      return lastPage[lastPage.length - 1].timestamp - 1;
-    },
+    getNextPageParam: (lastPage) =>
+      lastPage.length > 0 ? lastPage[lastPage.length - 1].timestamp - 1 : undefined,
   });
 };
