@@ -12,6 +12,7 @@ interface Props {
   image: string | undefined;
   setImage: (image: string) => void;
   required?: boolean;
+  disabled?: boolean;
 }
 
 const coverImageMenuItems: MenuItem[] = [
@@ -29,7 +30,7 @@ const coverImageMenuItems: MenuItem[] = [
   },
 ];
 
-export const ImageMenu = ({ image, setImage, required = false }: Props) => {
+export const ImageMenu = ({ image, setImage, required = false, disabled = false }: Props) => {
   const [selectedMenuItem, setSelectedMenuItem] = useState(coverImageMenuItems[0].title);
   const [searchKeyword, setSearchKeyword] = useState('');
   const [searchResult, setSearchResult] = useState<string[]>([]);
@@ -105,12 +106,21 @@ export const ImageMenu = ({ image, setImage, required = false }: Props) => {
     return () => clearTimeout(timer);
   }, [searchKeyword]);
 
+  useEffect(() => {
+    if (image != undefined) {
+      setSelectedMenuItem('URL');
+    } else {
+      setSelectedMenuItem(coverImageMenuItems[0].title);
+    }
+  }, [image, setSelectedMenuItem]);
+
   return (
     <>
       <MenuTemplate
         items={coverImageMenuItems}
         selected={selectedMenuItem}
         setSelected={setSelectedMenuItem}
+        disabled={disabled}
       />
 
       {!image && selectedMenuItem === 'Upload' && (
@@ -120,14 +130,14 @@ export const ImageMenu = ({ image, setImage, required = false }: Props) => {
             {required && <span className="text-xs ml-auto">{`(Required)`}</span>}
           </div>
 
-          <div className="mt-2 flex justify-center rounded-lg border border-gray-300 px-4 py-6">
+          <div className="mt-2 flex justify-center rounded-lg border border-gray-300 px-4 py-6 bg-gray-50">
             <div className="text-center" {...getRootProps()}>
               <PhotoIcon className="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
 
               <div className="mt-4 flex text-sm leading-6 text-gray-600">
                 <label
                   htmlFor="file-upload"
-                  className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+                  className="relative cursor-pointer rounded-md font-semibold text-indigo-600 hover:text-indigo-500"
                 >
                   {!isUploading && <span>Upload a file</span>}
                   <input
