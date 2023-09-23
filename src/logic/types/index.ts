@@ -1,5 +1,9 @@
 import { Event } from 'nostr-tools';
 
+export type Settings = {
+  muteList: string[];
+};
+
 export type Pin = string[];
 
 export enum Format {
