@@ -62,7 +62,7 @@ export const PinEditor = () => {
         .finally(() => setIsFetchingLinkPreview(false)),
       {
         pending: 'Loading link preview...',
-        error: 'An error has been occured! Please try again.',
+        error: 'Your link has no preview! Please fill the fields manually.',
         success: 'Successfully loaded!',
       }
     );
