@@ -11,7 +11,7 @@ export const useNote = (noteId: string | undefined) => {
   const fetchNote = useCallback(async () => {
     if (!pool || !relays || !noteId) throw new Error('Missing dependencies in fetching note');
 
-    const filter: Filter = { kinds: [1], limit: 1, ids: [noteId] };
+    const filter: Filter = { kinds: [1], ids: [noteId] };
 
     try {
       const events = await pool.batchedList('notes', relays, [filter]);
@@ -27,7 +27,7 @@ export const useNote = (noteId: string | undefined) => {
   return useQuery({
     queryKey: ['nostr', 'notes', noteId],
     queryFn: fetchNote,
-    retry: 1,
+    retry: 2,
     staleTime: 1000 * 60 * 30, // 30 minutes
     enabled: typeof noteId != 'undefined' && !!pool && !!relays,
   });

@@ -26,7 +26,7 @@ export const useBoards = () => {
     async ({ pageParam = undefined }: { pageParam?: number | undefined }) => {
       if (!pool || !relays) throw new Error('Missing dependencies in fetching boards');
 
-      const filter: Filter = { kinds: [33889 as number], limit: 18, until: pageParam };
+      const filter: Filter = { kinds: [33889 as number], limit: 20, until: pageParam };
       if (!!author) filter['authors'] = [author];
       if (!!title) filter['#d'] = [title];
       if (!!c) filter['#c'] = [c];
@@ -56,7 +56,7 @@ export const useBoards = () => {
       { author, title, category: c, format: f, tag: t, muteList: settings?.muteList.join(',') },
     ],
     queryFn: fetchBoards,
-    retry: 1,
+    retry: 2,
     staleTime: 4000, // 4 seconds
     enabled: !!pool && !!relays,
     getNextPageParam: (lastPage) =>

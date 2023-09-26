@@ -12,7 +12,7 @@ export const useAuthor = (hexPubkey: string | undefined) => {
   const fetchAuthor = useCallback(async () => {
     if (!pool || !relays || !hexPubkey) throw new Error('Missing dependencies in fetching author');
 
-    const filter: Filter = { kinds: [0], limit: 1, authors: [hexPubkey] };
+    const filter: Filter = { kinds: [0], authors: [hexPubkey] };
 
     try {
       const events = await pool.batchedList('authors', relays, [filter]);
@@ -29,7 +29,7 @@ export const useAuthor = (hexPubkey: string | undefined) => {
   return useQuery({
     queryKey: ['nostr', 'authors', hexPubkey],
     queryFn: fetchAuthor,
-    retry: 1,
+    retry: 2,
     staleTime: 1000 * 60 * 30, // 30 minutes
     enabled: typeof hexPubkey != 'undefined' && !!pool && !!relays,
   });

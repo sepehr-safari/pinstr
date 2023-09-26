@@ -18,7 +18,7 @@ export const useBoardsByAuthor = ({ author }: { author: string | undefined }) =>
 
       const filter: Filter = {
         kinds: [33889 as number],
-        limit: 18,
+        limit: 20,
         authors: [author],
         until: pageParam,
       };
@@ -42,7 +42,7 @@ export const useBoardsByAuthor = ({ author }: { author: string | undefined }) =>
   return useInfiniteQuery({
     queryKey: ['nostr', 'boards', { author, muteList: settings?.muteList.join(',') }],
     queryFn: fetchBoard,
-    retry: 1,
+    retry: 2,
     staleTime: 4000, // 4 seconds
     enabled: !!pool && !!relays && !!author,
     getNextPageParam: (lastPage) =>
