@@ -32,4 +32,4 @@ Pinstr is licensed under the MIT License. For more information, see the [LICENSE
 
 ## Contact
 
-If you have any questions or concerns about Pinstr, please contact the developer at [npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7](https://nostr.com/npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7).
+If you have any questions or concerns about Pinstr, please contact the developer at [npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7](https://njump.me/npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7).

@@ -22,4 +22,4 @@ If you make a mistake or behave inappropriately, take responsibility for your ac
 
 ## **Reporting violations**
 
-If you witness or experience any behavior that violates this code of conduct, please report it to [npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7](https://nostribe.com/profile/npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7).
+If you witness or experience any behavior that violates this code of conduct, please report it to [npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7](https://njump.me/npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7).
