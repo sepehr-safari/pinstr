@@ -1,5 +1,4 @@
 import { DocumentTextIcon } from '@heroicons/react/24/outline';
-import { useState } from 'react';
 import ReactPlayer from 'react-player';
 
 import { useUser } from '@/logic/queries';
@@ -18,9 +17,6 @@ export const VideoGrid = ({
   const { pubkey } = useUser();
   const selfBoard = pubkey ? pubkey == board.author : false;
 
-  const [lastPinIndex, setLastPinIndex] = useState<number>(10);
-  const hasNextPage = board.pins.length > lastPinIndex;
-
   if (board.pins.length == 0) {
     return <div>Empty Board!</div>;
   }
@@ -34,7 +30,7 @@ export const VideoGrid = ({
           'md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-3 4xl:grid-cols-4 5xl:grid-cols-4'
         )}
       >
-        {board.pins.slice(0, lastPinIndex).map((videoPin, index) => (
+        {board.pins.map((videoPin, index) => (
           <li key={videoPin[0]} className="group relative overflow-hidden rounded-lg">
             <EllipsisPopover
               board={board}
@@ -62,15 +58,6 @@ export const VideoGrid = ({
           </li>
         ))}
       </ul>
-
-      {hasNextPage && (
-        <button
-          className="mt-16 mb-10 mx-auto block text-gray-700 bg-gray-200 text-xs px-10 py-1 rounded-md disabled:text-gray-300 disabled:bg-gray-50"
-          onClick={() => setLastPinIndex((index) => index + 10)}
-        >
-          Show More
-        </button>
-      )}
     </>
   );
 };

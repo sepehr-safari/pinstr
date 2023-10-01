@@ -18,7 +18,7 @@ export const NoteGrid = ({
   const { pubkey } = useUser();
   const selfBoard = pubkey ? pubkey == board.author : false;
 
-  const [lastPinIndex, setLastPinIndex] = useState<number>(10);
+  const [lastPinIndex, setLastPinIndex] = useState<number>(50);
   const hasNextPage = board.pins.length > lastPinIndex;
 
   if (board.pins.length == 0) {
@@ -55,7 +55,7 @@ export const NoteGrid = ({
       {hasNextPage && (
         <button
           className="mt-16 mb-10 mx-auto block text-gray-700 bg-gray-200 text-xs px-10 py-1 rounded-md disabled:text-gray-300 disabled:bg-gray-50"
-          onClick={() => setLastPinIndex((index) => index + 10)}
+          onClick={() => setLastPinIndex((index) => index + 50)}
         >
           Show More
         </button>

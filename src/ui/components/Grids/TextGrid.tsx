@@ -1,5 +1,4 @@
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
-import { useState } from 'react';
 
 import { useUser } from '@/logic/queries';
 import { Board } from '@/logic/types';
@@ -17,9 +16,6 @@ export const TextGrid = ({
   const { pubkey } = useUser();
   const selfBoard = pubkey ? pubkey == board.author : false;
 
-  const [lastPinIndex, setLastPinIndex] = useState<number>(10);
-  const hasNextPage = board.pins.length > lastPinIndex;
-
   if (board.pins.length == 0) {
     return <div>Empty Board!</div>;
   }
@@ -33,7 +29,7 @@ export const TextGrid = ({
           'md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-3 4xl:grid-cols-4 5xl:grid-cols-4'
         )}
       >
-        {board.pins.slice(0, lastPinIndex).map((textPin, index) => (
+        {board.pins.map((textPin, index) => (
           <li
             key={textPin[0]}
             className="group relative overflow-hidden flex flex-col justify-between rounded-lg bg-white shadow duration-200 hover:shadow-md"
@@ -64,15 +60,6 @@ export const TextGrid = ({
           </li>
         ))}
       </ul>
-
-      {hasNextPage && (
-        <button
-          className="mt-16 mb-10 mx-auto block text-gray-700 bg-gray-200 text-xs px-10 py-1 rounded-md disabled:text-gray-300 disabled:bg-gray-50"
-          onClick={() => setLastPinIndex((index) => index + 10)}
-        >
-          Show More
-        </button>
-      )}
     </>
   );
 };
