@@ -26,7 +26,7 @@ export const BoardCommentButton = ({ board, bgHover = false }: Params) => {
         )}
       >
         <ChatBubbleLeftIcon className="mr-2 h-4 w-4" />
-        <span>{reactions ? numberEllipsis(reactions.comments.length.toString(), 4) : 0}</span>
+        <span>{reactions ? numberEllipsis(reactions.comments.length) : 0}</span>
       </button>
     </>
   );

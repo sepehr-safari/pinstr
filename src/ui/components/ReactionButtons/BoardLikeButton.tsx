@@ -35,9 +35,7 @@ export const BoardLikeButton = ({ board, bgHover = false }: Params) => {
       >
         <HeartIcon className="h-4 w-4" aria-hidden="true" />
         <span className="ml-1">
-          {reactions && reactions.likes.length > 0
-            ? numberEllipsis(reactions.likes.length.toString(), 4)
-            : 0}
+          {reactions && reactions.likes.length > 0 ? numberEllipsis(reactions.likes.length) : 0}
         </span>
       </button>
     </>
