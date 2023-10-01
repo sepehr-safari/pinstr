@@ -13,3 +13,4 @@ export * from './SettingsModal';
 export * from './Spinner';
 export * from './Toast';
 export * from './WarnModal';
+export * from './ZapModal';
