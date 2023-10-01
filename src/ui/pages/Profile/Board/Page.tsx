@@ -55,7 +55,10 @@ export const Page = () => {
         pinIndex={pinIndex}
         setPinIndex={setPinIndex}
         isOpen={openDetails}
-        onClose={() => setOpenDetails(false)}
+        onClose={() => {
+          setOpenDetails(false);
+          setPinIndex(-1);
+        }}
       />
     </>
   );
