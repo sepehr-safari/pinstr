@@ -55,7 +55,7 @@ export const useMutateBoard = () => {
           ...(tags || [])
             .filter((t, i, a) => t.length > 0 && a.indexOf(t) === i)
             .map((t) => ['t', t]),
-          ...newPins.map((p) => ['pin', ...p]),
+          ...newPins.filter((p) => p.some((c) => c !== '')).map((p) => ['pin', ...p]),
         ],
       });
     },
