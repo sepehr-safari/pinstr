@@ -58,7 +58,7 @@ export const ProfileGrid = ({
 
       {hasNextPage && (
         <button
-          className="mt-16 mx-auto block text-gray-700 bg-gray-200 text-xs px-10 py-1 rounded-md disabled:text-gray-300 disabled:bg-gray-50"
+          className="mt-16 mb-10 mx-auto block text-gray-700 bg-gray-200 text-xs px-10 py-1 rounded-md disabled:text-gray-300 disabled:bg-gray-50"
           onClick={() => setLastPinIndex((index) => index + 10)}
         >
           Show More
