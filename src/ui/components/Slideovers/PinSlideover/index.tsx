@@ -1,5 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { XMarkIcon } from '@heroicons/react/24/outline';
+import { CheckIcon, ChevronUpDownIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Fragment, useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -22,6 +22,7 @@ export const PinSlideover = () => {
   const pinIndex = searchParams.get('i');
   const confirm = searchParams.get('confirm');
   const insertFeature = searchParams.get('insert-feature');
+  const reorderFeatures = searchParams.get('reorder-features');
 
   const board = useLocalStore((store) => store.board);
   const setBoard = useLocalStore((store) => store.setBoard);
@@ -85,6 +86,7 @@ export const PinSlideover = () => {
               searchParams.delete('i');
               searchParams.delete('confirm');
               searchParams.delete('insert-feature');
+              searchParams.delete('reorder-features');
 
               return searchParams;
             },
@@ -184,9 +186,9 @@ export const PinSlideover = () => {
                     </div>
 
                     <div className="p-4">
-                      <div className="w-full relative h-12">
+                      <div className="w-full relative h-10">
                         <Transition
-                          show={insertFeature == null && !!board.title}
+                          show={insertFeature == null && reorderFeatures == null && !!board.title}
                           enter="duration-100"
                           enterFrom="opacity-0 translate-x-1/4"
                           enterTo="opacity-100 translate-x-0"
@@ -196,11 +198,30 @@ export const PinSlideover = () => {
                         >
                           <div className="absolute inset-0 flex justify-center">
                             <InsertFeaturePopover />
+
+                            <div className="ml-auto ">
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setSearchParams(
+                                    (searchParams) => {
+                                      searchParams.set('reorder-features', 'show');
+                                      return searchParams;
+                                    },
+                                    { replace: true }
+                                  );
+                                }}
+                                className="inline-flex items-center rounded-full bg-gray-100 px-4 py-3 text-xs font-semibold text-gray-600 shadow-sm hover:bg-gray-200 sm:py-3"
+                              >
+                                <ChevronUpDownIcon className="-ml-1 mr-3 h-5 w-5 hidden sm:block" />
+                                Reorder Features
+                              </button>
+                            </div>
                           </div>
                         </Transition>
 
                         <Transition
-                          show={insertFeature != null}
+                          show={insertFeature != null || reorderFeatures != null}
                           enter="duration-100"
                           enterFrom="opacity-0 -translate-x-1/4"
                           enterTo="opacity-100 translate-x-0"
@@ -208,70 +229,103 @@ export const PinSlideover = () => {
                           leaveFrom="opacity-100 translate-x-0"
                           leaveTo="opacity-0 -translate-x-1/4"
                         >
-                          <div className="w-full flex gap-2">
-                            <input
-                              type="text"
-                              name="feature-title"
-                              id="feature-title"
-                              autoComplete="off"
-                              className="block w-full rounded-full border-0 px-4 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
-                              placeholder="Enter a title"
-                              value={featureTitleInput}
-                              onChange={(e) => setFeatureTitleInput(e.target.value)}
-                            />
+                          <div className="w-full flex gap-2 h-10">
+                            {insertFeature && (
+                              <>
+                                <input
+                                  type="text"
+                                  name="feature-title"
+                                  id="feature-title"
+                                  autoComplete="off"
+                                  className="block w-full rounded-full border-0 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
+                                  placeholder="Enter a title"
+                                  value={featureTitleInput}
+                                  onChange={(e) => setFeatureTitleInput(e.target.value)}
+                                />
 
-                            <button
-                              type="button"
-                              className="inline-flex items-center rounded-full bg-gray-900 px-10 py-3 text-xs font-semibold text-white shadow-sm hover:bg-gray-700"
-                              onClick={() => {
-                                if (
-                                  !featureTitleInput ||
-                                  PRESERVED_TITLES.includes(featureTitleInput) ||
-                                  board.headers
-                                    ?.map((h) => h.split(':')[1])
-                                    .includes(featureTitleInput)
-                                ) {
-                                  toast('Invalid title! Try a unique one!', { type: 'error' });
+                                <button
+                                  type="button"
+                                  className="inline-flex items-center rounded-full bg-gray-900 px-4 py-2 text-xs font-semibold text-white shadow-sm hover:bg-gray-700"
+                                  onClick={() => {
+                                    if (
+                                      !featureTitleInput ||
+                                      PRESERVED_TITLES.includes(featureTitleInput) ||
+                                      board.headers
+                                        ?.map((h) => h.split(':')[1])
+                                        .includes(featureTitleInput)
+                                    ) {
+                                      toast('Invalid title! Try a unique one!', { type: 'error' });
 
-                                  return;
-                                }
+                                      return;
+                                    }
 
-                                setBoardItem('headers', [
-                                  ...(board.headers || []),
-                                  `${insertFeature}:${featureTitleInput}`,
-                                ]);
+                                    setBoardItem('headers', [
+                                      ...(board.headers || []),
+                                      `${insertFeature}:${featureTitleInput}`,
+                                    ]);
 
-                                setBoardItem('pins', board.pins?.map((pin) => [...pin, '']));
+                                    setBoardItem('pins', board.pins?.map((pin) => [...pin, '']));
 
-                                setSearchParams(
-                                  (searchParams) => {
-                                    searchParams.delete('insert-feature');
-                                    return searchParams;
-                                  },
-                                  { replace: true }
-                                );
+                                    setSearchParams(
+                                      (searchParams) => {
+                                        searchParams.delete('insert-feature');
+                                        return searchParams;
+                                      },
+                                      { replace: true }
+                                    );
 
-                                setFeatureTitleInput('');
-                              }}
-                            >
-                              Insert
-                            </button>
+                                    setFeatureTitleInput('');
+                                  }}
+                                >
+                                  Insert
+                                </button>
 
-                            <button
-                              type="button"
-                              className="inline-flex items-center rounded-full bg-white p-4 text-xs font-semibold text-gray-500 shadow-sm hover:bg-gray-100"
-                              onClick={() =>
-                                setSearchParams(
-                                  (searchParams) => {
-                                    searchParams.delete('insert-feature');
-                                    return searchParams;
-                                  },
-                                  { replace: true }
-                                )
-                              }
-                            >
-                              <XMarkIcon className="w-4 h-4" />
-                            </button>
+                                <button
+                                  type="button"
+                                  className="inline-flex items-center rounded-full bg-gray-50 p-4 text-xs font-semibold text-gray-500 shadow-sm hover:bg-gray-100"
+                                  onClick={() =>
+                                    setSearchParams(
+                                      (searchParams) => {
+                                        searchParams.delete('insert-feature');
+                                        return searchParams;
+                                      },
+                                      { replace: true }
+                                    )
+                                  }
+                                >
+                                  <XMarkIcon className="w-4 h-4" />
+                                </button>
+                              </>
+                            )}
+
+                            {reorderFeatures && (
+                              <>
+                                <button
+                                  type="button"
+                                  onClick={() => publishBoard.mutate()}
+                                  className="ml-auto inline-flex items-center rounded-full bg-gray-900 px-4 py-3 text-xs font-semibold text-white shadow-sm hover:bg-gray-700 sm:py-3"
+                                >
+                                  <CheckIcon className="-ml-1 mr-3 h-6 w-6 hidden sm:block" />
+                                  Update board
+                                </button>
+
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    setSearchParams(
+                                      (searchParams) => {
+                                        searchParams.delete('reorder-features');
+                                        return searchParams;
+                                      },
+                                      { replace: true }
+                                    );
+                                  }}
+                                  className="inline-flex p-2 rounded-full bg-gray-100 text-xs font-semibold text-gray-600 shadow-sm hover:bg-gray-200 sm:p-3"
+                                >
+                                  <XMarkIcon className="w-5 h-5" />
+                                </button>
+                              </>
+                            )}
                           </div>
                         </Transition>
                       </div>
@@ -289,6 +343,8 @@ export const PinSlideover = () => {
                                 searchParams.delete('i');
                                 searchParams.delete('confirm');
                                 searchParams.delete('insert-feature');
+                                searchParams.delete('reorder-features');
+
                                 return searchParams;
                               },
                               { replace: true }
@@ -310,6 +366,8 @@ export const PinSlideover = () => {
                                     (searchParams) => {
                                       searchParams.delete('i');
                                       searchParams.delete('insert-feature');
+                                      searchParams.delete('reorder-features');
+
                                       return searchParams;
                                     },
                                     { replace: true }
