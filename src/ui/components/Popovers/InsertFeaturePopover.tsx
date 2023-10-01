@@ -104,9 +104,9 @@ export const InsertFeaturePopover = () => {
   return (
     <>
       <PopoverTemplate buttons={buttons}>
-        <div className="inline-flex items-center rounded-full bg-gray-900 px-6 py-3 text-xs font-semibold text-white shadow-sm hover:bg-gray-700">
-          <RectangleGroupIcon className="-ml-1 mr-3 h-6 w-6" />
-          Insert a Feature
+        <div className="inline-flex items-center rounded-full bg-gray-900 px-4 py-3 text-xs font-semibold text-white shadow-sm hover:bg-gray-700 sm:py-2">
+          <RectangleGroupIcon className="-ml-1 mr-3 h-6 w-6 hidden sm:block" />
+          Insert New Feature
         </div>
       </PopoverTemplate>
     </>

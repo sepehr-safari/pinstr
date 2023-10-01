@@ -53,7 +53,9 @@ export const PopoverTemplate = ({ children, buttons }: PopoverProps) => {
                     {item.title}
                   </div>
                   {!!item.description && (
-                    <p className="font-light text-gray-500">{item.description}</p>
+                    <p className="font-light text-gray-500 text-xs sm:text-sm">
+                      {item.description}
+                    </p>
                   )}
                 </div>
               </div>
