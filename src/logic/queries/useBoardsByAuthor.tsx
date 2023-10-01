@@ -18,7 +18,7 @@ export const useBoardsByAuthor = ({ author }: { author: string | undefined }) =>
 
       const filter: Filter = {
         kinds: [33889 as number],
-        limit: 20,
+        limit: 50,
         authors: [author],
         until: pageParam,
       };
