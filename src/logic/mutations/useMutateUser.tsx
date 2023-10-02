@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { getPublicKey } from 'nostr-tools';
+import { getPublicKey, nip19 } from 'nostr-tools';
 import { toast } from 'react-toastify';
 
 export const useMutateUser = () => {
@@ -34,10 +34,13 @@ export const useMutateUser = () => {
     loginWithSeckey: useMutation({
       mutationFn: (seckey: string) => {
         try {
-          const pubkey = getPublicKey(seckey);
+          const hexSeckey = seckey.startsWith('nsec')
+            ? nip19.decode(seckey).data.toString()
+            : seckey;
+          const pubkey = getPublicKey(hexSeckey);
 
           queryClient.setQueryData(['app', 'user', 'pubkey'], pubkey);
-          queryClient.setQueryData(['app', 'user', 'seckey'], seckey);
+          queryClient.setQueryData(['app', 'user', 'seckey'], hexSeckey);
 
           return Promise.resolve();
         } catch (err) {
