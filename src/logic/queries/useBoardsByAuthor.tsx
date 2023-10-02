@@ -42,7 +42,7 @@ export const useBoardsByAuthor = ({ author }: { author: string | undefined }) =>
   return useInfiniteQuery({
     queryKey: ['nostr', 'boards', { author, muteList: settings?.muteList.join(',') }],
     queryFn: fetchBoard,
-    retry: 2,
+    retry: 4,
     staleTime: 4000, // 4 seconds
     enabled: !!pool && !!relays && !!author,
     getNextPageParam: (lastPage) =>

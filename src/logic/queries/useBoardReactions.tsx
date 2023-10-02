@@ -43,7 +43,7 @@ export const useBoardReactions = (board: Board | undefined | null) => {
   return useQuery({
     queryKey: ['nostr', 'boards', { author: board?.author, title: board?.title }, 'reactions'],
     queryFn: fetchReactions,
-    retry: 2,
+    retry: 4,
     staleTime: 4000, // 4 seconds
     enabled: !!board && !!pool && !!relays,
   });

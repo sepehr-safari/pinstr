@@ -29,7 +29,7 @@ export const useAuthor = (hexPubkey: string | undefined) => {
   return useQuery({
     queryKey: ['nostr', 'authors', hexPubkey],
     queryFn: fetchAuthor,
-    retry: 2,
+    retry: 4,
     staleTime: 1000 * 60 * 30, // 30 minutes
     enabled: typeof hexPubkey != 'undefined' && !!pool && !!relays,
   });

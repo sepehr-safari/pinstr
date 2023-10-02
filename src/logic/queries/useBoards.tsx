@@ -56,7 +56,7 @@ export const useBoards = () => {
       { author, title, category: c, format: f, tag: t, muteList: settings?.muteList.join(',') },
     ],
     queryFn: fetchBoards,
-    retry: 2,
+    retry: 4,
     staleTime: 4000, // 4 seconds
     enabled: !!pool && !!relays,
     getNextPageParam: (lastPage) =>

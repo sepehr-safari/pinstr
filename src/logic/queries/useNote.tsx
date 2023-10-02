@@ -27,7 +27,7 @@ export const useNote = (noteId: string | undefined) => {
   return useQuery({
     queryKey: ['nostr', 'notes', noteId],
     queryFn: fetchNote,
-    retry: 2,
+    retry: 4,
     staleTime: 1000 * 60 * 30, // 30 minutes
     enabled: typeof noteId != 'undefined' && !!pool && !!relays,
   });
