@@ -14,5 +14,7 @@ export const loader = (src: string, opt?: { w?: number; h?: number }) => {
     }
   }
 
-  return `https://img.pinstr.app/${encodeURIComponent(btoa(src))}${queries}`;
+  return `${import.meta.env.VITE_IMAGE_PROXY_API_ENDPOINT}${encodeURIComponent(
+    btoa(src)
+  )}${queries}`;
 };
