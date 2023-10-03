@@ -24,7 +24,6 @@ export const BoardsExplorer = () => {
   }
 
   if (!data || data.pages[0].length == 0) {
-    debugger;
     return <div>No Boards Found!</div>;
   }
 
