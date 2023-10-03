@@ -3,7 +3,7 @@ export const Footer = () => {
     <footer className="fixed z-10 bottom-0 left-0 right-0 flex items-center px-4 py-1 text-gray-500 text-[0.66rem] font-semibold border-t-[1px] border-gray-300 bg-gradient-to-t from-gray-100 to-white md:text-xs">
       <div className="flex flex-col gap-1 items-start md:items-center md:flex-row">
         <a
-          href="https://primal.net/profile/npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7"
+          href={import.meta.env.VITE_SEPEHR_NOSTR_PROFILE_URL}
           target="_blank"
           rel="noreferrer"
           className="hover:underline hover:text-gray-900"
@@ -14,7 +14,7 @@ export const Footer = () => {
         <span className="text-gray-200 mx-2 cursor-default hidden md:block">|</span>
 
         <a
-          href="https://opensats.org/blog/nostr-grants-july-2023"
+          href={import.meta.env.VITE_OPENSATS_GRANTS_URL}
           target="_blank"
           rel="noreferrer"
           className="hover:underline hover:text-gray-900"
@@ -25,7 +25,7 @@ export const Footer = () => {
 
       <div className="ml-auto flex flex-col gap-1 items-end md:items-center md:flex-row">
         <a
-          href="https://nostr.com"
+          href={import.meta.env.VITE_WHAT_IS_NOSTR_URL}
           target="_blank"
           rel="noreferrer"
           className="inline-flex items-center hover:text-gray-900 hover:underline"
@@ -36,7 +36,7 @@ export const Footer = () => {
         <span className="text-gray-200 mx-2 cursor-default hidden md:block">|</span>
 
         <a
-          href="https://github.com/sepehr-safari/pinstr"
+          href={import.meta.env.VITE_PINSTR_GITHUB_URL}
           target="_blank"
           rel="noreferrer"
           className="flex items-center hover:text-gray-900 hover:underline"
