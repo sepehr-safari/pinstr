@@ -40,7 +40,7 @@ export const Login = () => {
               <p className="mt-2 text-sm leading-6 text-gray-500 font-light">
                 What is NOSTR?{' '}
                 <a
-                  href="https://nostr.com"
+                  href={import.meta.env.VITE_WHAT_IS_NOSTR_URL}
                   className="font-light text-blue-600 hover:text-blue-500 hover:underline"
                 >
                   learn on nostr.com

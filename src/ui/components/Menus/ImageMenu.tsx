@@ -42,7 +42,9 @@ export const ImageMenu = ({ image, setImage, required = false, disabled = false 
     setIsSearching(true);
 
     const promises = Array.from({ length: 5 }, () => {
-      return fetch(`https://source.unsplash.com/random/?${searchKeyword}&sig=${Math.random()}`);
+      return fetch(
+        `${import.meta.env.VITE_UNSPLASH_RANDOM_API_ENDPOINT}?${searchKeyword}&sig=${Math.random()}`
+      );
     });
 
     Promise.all(promises).then((responses) => {
@@ -60,15 +62,16 @@ export const ImageMenu = ({ image, setImage, required = false, disabled = false 
       const formData = new FormData();
       formData.append('fileToUpload', acceptedFiles[0]);
 
-      fetch('https://nostr.build/api/upload/iris.php', {
+      fetch(import.meta.env.VITE_NOSTR_BUILD_UPLOAD_API_ENDPOINT, {
         method: 'POST',
         body: formData,
       })
         .then((res) => res.json())
-        .then((url) => {
-          if (!!url) {
+        .then((json) => {
+          const { status, data } = json;
+          if (status === 'success' && !!data && data.length > 0 && !!data[0].url) {
             setIsUploading(false);
-            setImage(url);
+            setImage(data[0].url);
           } else {
             toast('Upload Error!', { type: 'error' });
           }
@@ -92,7 +95,11 @@ export const ImageMenu = ({ image, setImage, required = false, disabled = false 
       setIsSearching(true);
 
       const promises = Array.from({ length: 5 }, () => {
-        return fetch(`https://source.unsplash.com/random/?${searchKeyword}&sig=${Math.random()}`);
+        return fetch(
+          `${
+            import.meta.env.VITE_UNSPLASH_RANDOM_API_ENDPOINT
+          }?${searchKeyword}&sig=${Math.random()}`
+        );
       });
 
       Promise.all(promises).then((responses) => {
