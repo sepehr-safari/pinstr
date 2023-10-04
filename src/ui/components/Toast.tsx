@@ -14,6 +14,7 @@ export const Toast = () => {
       draggable
       pauseOnHover
       theme="light"
+      toastStyle={{ borderRadius: '0.8rem' }}
     />
   );
 };
