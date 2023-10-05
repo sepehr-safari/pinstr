@@ -57,7 +57,7 @@ export const useBoards = () => {
     ],
     queryFn: fetchBoards,
     retry: 4,
-    staleTime: 4000, // 4 seconds
+    staleTime: 0,
     enabled: !!pool && !!relays,
     getNextPageParam: (lastPage) =>
       lastPage.length > 0 ? lastPage[lastPage.length - 1].timestamp - 1 : undefined,

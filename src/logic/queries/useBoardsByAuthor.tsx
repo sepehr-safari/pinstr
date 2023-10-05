@@ -43,7 +43,7 @@ export const useBoardsByAuthor = ({ author }: { author: string | undefined }) =>
     queryKey: ['nostr', 'boards', { author, muteList: settings?.muteList.join(',') }],
     queryFn: fetchBoard,
     retry: 4,
-    staleTime: 4000, // 4 seconds
+    staleTime: 0,
     enabled: !!pool && !!relays && !!author,
     getNextPageParam: (lastPage) =>
       lastPage.length > 0 ? lastPage[lastPage.length - 1].timestamp - 1 : undefined,

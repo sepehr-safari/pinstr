@@ -44,7 +44,7 @@ export const useNoteReactions = (noteId: string | undefined) => {
     queryKey: ['nostr', 'notes', noteId, 'reactions'],
     queryFn: fetchReactions,
     retry: 4,
-    staleTime: 4000, // 4 seconds
+    staleTime: 0,
     enabled: !!noteId && !!pool && !!relays,
   });
 };
