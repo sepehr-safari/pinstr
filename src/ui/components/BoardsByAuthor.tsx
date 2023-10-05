@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import { useBoards } from '@/logic/queries';
@@ -8,11 +8,17 @@ import { MemoizedBoardItem, Spinner } from '@/ui/components';
 export const BoardsByAuthor = () => {
   const { ref, inView } = useInView();
 
-  const { data, status, fetchNextPage, isFetchingNextPage, hasNextPage } = useBoards();
+  const { data, status, fetchNextPage, isFetchingNextPage, hasNextPage, isFetching } = useBoards();
+
+  const safeFetchNextPage = useCallback(() => {
+    if (hasNextPage && !isFetchingNextPage && !isFetching) {
+      fetchNextPage();
+    }
+  }, [hasNextPage, isFetchingNextPage, isFetching]);
 
   useEffect(() => {
     if (inView) {
-      fetchNextPage();
+      safeFetchNextPage();
     }
   }, [inView]);
 
@@ -42,7 +48,7 @@ export const BoardsByAuthor = () => {
 
       <button
         ref={ref}
-        onClick={() => fetchNextPage()}
+        onClick={() => safeFetchNextPage()}
         disabled={!hasNextPage || isFetchingNextPage}
         className="mt-20 mx-auto block text-gray-700 bg-gray-200 text-xs px-4 py-1 rounded-md disabled:text-gray-300 disabled:bg-gray-50"
       >

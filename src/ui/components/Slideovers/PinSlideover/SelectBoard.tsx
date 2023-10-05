@@ -1,5 +1,5 @@
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { useBoardsByAuthor, useUser } from '@/logic/queries';
@@ -11,7 +11,7 @@ export const SelectBoard = () => {
 
   const { pubkey } = useUser();
 
-  const { data, fetchNextPage, isFetchingNextPage, hasNextPage } = useBoardsByAuthor({
+  const { data, fetchNextPage, isFetchingNextPage, hasNextPage, isFetching } = useBoardsByAuthor({
     author: pubkey || undefined,
   });
   const boards = data?.pages?.flat() || [];
@@ -19,6 +19,12 @@ export const SelectBoard = () => {
   const setBoard = useLocalStore((store) => store.setBoard);
 
   const [_, setSearchParams] = useSearchParams();
+
+  const safeFetchNextPage = useCallback(() => {
+    if (hasNextPage && !isFetchingNextPage && !isFetching) {
+      fetchNextPage();
+    }
+  }, [hasNextPage, isFetchingNextPage, isFetching]);
 
   return (
     <>
@@ -91,7 +97,7 @@ export const SelectBoard = () => {
         {hasNextPage && (
           <button
             className="mt-4 mx-auto block text-gray-700 bg-gray-100 text-xs px-4 py-1 rounded-md disabled:text-gray-300 disabled:bg-gray-50"
-            onClick={() => fetchNextPage()}
+            onClick={() => safeFetchNextPage()}
             disabled={isFetchingNextPage}
           >
             {isFetchingNextPage ? 'Loading...' : 'Load More'}
