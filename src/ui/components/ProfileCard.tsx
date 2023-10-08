@@ -68,8 +68,10 @@ export const ProfileCard = () => {
         </div>
       </div>
 
-      <div className="mt-4 mx-auto text-center break-words text-xs font-light text-gray-700 xl:mt-6 xl:mx-0">
-        <p className="max-w-lg">{about ? ellipsis(about, 500) : ''}</p>
+      <div className="mt-4 xl:mt-6">
+        <p className="text-center break-words text-xs font-light text-gray-700">
+          {about ? ellipsis(about, 500) : ''}
+        </p>
       </div>
 
       <div className="flex justify-center">
