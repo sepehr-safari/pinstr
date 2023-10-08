@@ -132,8 +132,8 @@ export const DetailsSlideover = ({
                                     className="flex flex-col items-center gap-2 w-full pb-4 sm:w-3/4"
                                   >
                                     {title != 'Content' && title != 'Image' && (
-                                      <span className="text-sm font-semibold">
-                                        {ellipsis(title, 40)}
+                                      <span className="text-sm font-semibold [overflow-wrap:anywhere]">
+                                        {ellipsis(title, 200)}
                                       </span>
                                     )}
 
@@ -156,8 +156,8 @@ export const DetailsSlideover = ({
                                     className="flex flex-col items-center gap-2 w-full pb-4 sm:w-3/4"
                                   >
                                     {title != 'Content' && (
-                                      <span className="text-sm font-semibold">
-                                        {ellipsis(title, 40)}
+                                      <span className="text-sm font-semibold [overflow-wrap:anywhere]">
+                                        {ellipsis(title, 200)}
                                       </span>
                                     )}
 
@@ -175,21 +175,21 @@ export const DetailsSlideover = ({
                                 return (
                                   <div
                                     key={`${pinIndex} ${hIndex} ${title}`}
-                                    className="flex flex-col gap-2 items-center w-full pb-4 sm:w-3/4"
+                                    className="flex flex-col gap-2 items-center w-full pb-4 [overflow-wrap:anywhere] sm:w-3/4"
                                   >
                                     {title == 'Title' ? (
                                       <span className="text-xl font-semibold leading-5">
-                                        {ellipsis(value, 30)}
+                                        {ellipsis(value, 200)}
                                       </span>
                                     ) : title == 'Content' ? (
-                                      <span className="font-light">{ellipsis(value, 500)}</span>
+                                      <span className="font-light">{ellipsis(value, 1000)}</span>
                                     ) : (
                                       <>
                                         <span className="text-sm font-semibold">
-                                          {ellipsis(title, 30)}
+                                          {ellipsis(title, 200)}
                                         </span>
                                         <span className="text-sm font-light">
-                                          {ellipsis(value, 500)}
+                                          {ellipsis(value, 1000)}
                                         </span>
                                       </>
                                     )}
@@ -199,7 +199,7 @@ export const DetailsSlideover = ({
                                 return (
                                   <div
                                     key={`${pinIndex} ${hIndex} ${title}`}
-                                    className="flex flex-col items-center w-full pb-4 sm:w-3/4"
+                                    className="flex flex-col items-center w-full pb-4 [overflow-wrap:anywhere] sm:w-3/4"
                                   >
                                     {title == 'Content' ? (
                                       <a
@@ -221,7 +221,7 @@ export const DetailsSlideover = ({
                                         rel="noopener noreferrer"
                                         className="inline-flex rounded-full bg-gray-900 px-10 py-3 text-xs text-center font-semibold text-white shadow-sm hover:bg-gray-700"
                                       >
-                                        <span>{ellipsis(title, 40)}</span>
+                                        <span>{ellipsis(title, 200)}</span>
                                       </a>
                                     )}
                                   </div>
@@ -230,11 +230,11 @@ export const DetailsSlideover = ({
                                 return (
                                   <div
                                     key={`${pinIndex} ${hIndex} ${title}`}
-                                    className="flex flex-col gap-2 items-center w-full pb-4 sm:w-3/4"
+                                    className="flex flex-col gap-2 items-center w-full pb-4 [overflow-wrap:anywhere] sm:w-3/4"
                                   >
                                     {title != 'Content' && (
                                       <span className="text-sm font-semibold">
-                                        {ellipsis(title, 40)}
+                                        {ellipsis(title, 200)}
                                       </span>
                                     )}
 
@@ -248,8 +248,8 @@ export const DetailsSlideover = ({
                                   <div key={`${pinIndex} ${hIndex} ${title}`} className="pb-4">
                                     {title != 'Content' && (
                                       <div className="w-full text-center">
-                                        <span className="text-sm font-semibold">
-                                          {ellipsis(title, 40)}
+                                        <span className="text-sm font-semibold [overflow-wrap:anywhere]">
+                                          {ellipsis(title, 200)}
                                         </span>
                                       </div>
                                     )}

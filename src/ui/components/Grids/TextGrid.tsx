@@ -54,7 +54,7 @@ export const TextGrid = ({
                 </div>
               </div>
             </button>
-            <div className="p-4 flex flex-grow items-center">
+            <div className="p-4 flex flex-grow items-center [overflow-wrap:anywhere]">
               <div className="text-xs font-light">{ellipsis(textPin[0], 120)}</div>
             </div>
           </li>

@@ -47,19 +47,19 @@ export const ProfileCard = () => {
 
         <div className="mt-12 w-full text-center xl:text-start xl:mt-0 xl:flex xl:flex-col xl:justify-around">
           <Link to={`/p/${npub}`} className="max-w-fit hover:underline">
-            <h2 className="text-lg font-semibold xl:leading-none">
-              {displayName ? ellipsis(displayName, 30) : ''}
+            <h2 className="text-lg font-semibold [overflow-wrap:anywhere] xl:leading-6">
+              {displayName ? ellipsis(displayName, 100) : ''}
             </h2>
           </Link>
 
-          <span className="mt-1 text-xs font-light text-gray-500">
-            {nip05 ? ellipsis(nip05, 30) : ''}
+          <span className="mt-1 text-xs font-light text-gray-500 [overflow-wrap:anywhere]">
+            {nip05 ? ellipsis(nip05, 60) : ''}
           </span>
 
           <div className="flex justify-center">
             <button
               onClick={() => toast('This feature is still under development.', { type: 'warning' })}
-              className="mt-1 hidden w-full xl:inline-flex justify-center items-center rounded-full bg-gray-900 py-2 text-xs font-semibold text-white shadow-sm hover:bg-gray-700"
+              className="mt-2 hidden w-full xl:inline-flex justify-center items-center rounded-full bg-gray-900 py-2 text-xs font-semibold text-white shadow-sm hover:bg-gray-700"
             >
               <PlusIcon className="-ml-1 w-4 h-4" />
               <span className="ml-1">Follow</span>
@@ -68,9 +68,9 @@ export const ProfileCard = () => {
         </div>
       </div>
 
-      <div className="mt-4 xl:mt-6">
-        <p className="text-center break-words text-xs font-light text-gray-700">
-          {about ? ellipsis(about, 500) : ''}
+      <div className="mt-4 mx-auto max-w-lg xl:mt-6">
+        <p className="text-center text-xs font-light text-gray-700 [overflow-wrap:anywhere]">
+          {about ? ellipsis(about, 1000) : ''}
         </p>
       </div>
 

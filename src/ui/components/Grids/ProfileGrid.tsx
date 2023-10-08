@@ -153,12 +153,12 @@ export const ProfileDetails = ({
             <div className="animate-pulse mx-auto w-1/2 h-[2rem] rounded bg-gray-200" />
           )}
         </h3>
-        <p className="mt-2 w-full text-xs font-light text-gray-700 px-4 max-w-xs">
+        <p className="mt-2 w-full text-xs font-light text-gray-700 px-4 max-w-xs [overflow-wrap:anywhere]">
           {profile ? (
             summary ? (
               ellipsis(profile.about, 100)
             ) : (
-              ellipsis(profile.about, 500)
+              ellipsis(profile.about, 1000)
             )
           ) : (
             <div className="animate-pulse h-[4rem] rounded bg-gray-200" />

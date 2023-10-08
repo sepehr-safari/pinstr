@@ -117,13 +117,13 @@ export const BoardSummary = () => {
               />
             </div>
 
-            <h3 className="text-base font-semibold tracking-tight leading-5 text-gray-900">
-              {ellipsis(board.title, 100)}
+            <h3 className="text-base font-semibold tracking-tight leading-5 text-gray-900 [overflow-wrap:anywhere]">
+              {ellipsis(board.title, 500)}
             </h3>
 
-            <div className="break-words text-xs font-light text-gray-600">
-              <p className="max-w-lg">{ellipsis(board.description, 500)}</p>
-            </div>
+            <p className="text-xs font-light text-gray-600 [overflow-wrap:anywhere]">
+              {ellipsis(board.description, 1000)}
+            </p>
 
             {selfBoard && (
               <>

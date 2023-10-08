@@ -107,8 +107,8 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
 
         <div className="mt-2 flex justify-between">
           <div>
-            <h3 className="text-sm font-semibold text-gray-900 hover:underline">
-              {ellipsis(board.title, 50)}
+            <h3 className="text-sm font-semibold text-gray-900 [overflow-wrap:anywhere] hover:underline">
+              {ellipsis(board.title, 60)}
             </h3>
 
             {!hideAuthor && <AuthorOverview author={author} />}

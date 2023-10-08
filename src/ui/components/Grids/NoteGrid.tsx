@@ -130,7 +130,7 @@ export const NoteDetails = ({
             className="p-4 border-t text-xs text-gray-500 grow w-full text-left hover:bg-gray-50"
             onClick={setPinIndex}
           >
-            <p className="whitespace-break-spaces break-words">
+            <p className="[overflow-wrap:anywhere]">
               {note ? (
                 ellipsis(note.content, 100)
               ) : (
@@ -140,9 +140,7 @@ export const NoteDetails = ({
           </button>
         ) : (
           <div className="p-4 border-t text-xs text-gray-500 grow w-full text-left">
-            <p className="whitespace-break-spaces break-words">
-              {note && ellipsis(note.content, 500)}
-            </p>
+            <p className="[overflow-wrap:anywhere]">{note && ellipsis(note.content, 500)}</p>
           </div>
         )}
       </div>

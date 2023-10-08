@@ -60,12 +60,12 @@ export const AuthorOverview = ({ author }: { author: Author | undefined }) => {
                         loading="lazy"
                       />
                     </div>
-                    <h3 className="mt-4 text-sm font-semibold">
-                      {ellipsis(author.displayName, 30)}
+                    <h3 className="mt-4 text-sm font-semibold [overflow-wrap:anywhere]">
+                      {ellipsis(author.displayName, 100)}
                     </h3>
                     <dl className="mt-1 flex flex-grow flex-col justify-between">
                       <dt className="sr-only">Title</dt>
-                      <dd className="text-xs font-light text-gray-500 px-4 break-words">
+                      <dd className="text-xs font-light text-gray-500 px-4 [overflow-wrap:anywhere]">
                         {ellipsis(author.about, 100)}
                       </dd>
                     </dl>
