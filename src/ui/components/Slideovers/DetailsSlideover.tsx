@@ -85,7 +85,7 @@ export const DetailsSlideover = ({
                 leaveFrom="translate-x-0"
                 leaveTo="translate-x-full"
               >
-                <Dialog.Panel className="group relative py-16 bg-white  shadow-xl pointer-events-auto w-screen max-w-3xl">
+                <Dialog.Panel className="group relative py-16 bg-white shadow-xl pointer-events-auto w-screen max-w-5xl">
                   <div className="flex h-full flex-col overflow-y-scroll">
                     <EllipsisPopover
                       board={board}
