@@ -1,11 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Event } from 'nostr-tools';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 
 import { usePublish } from '@/logic/mutations';
+import { NDKEvent } from '@nostr-dev-kit/ndk';
 
-export const useMutateNoteComment = (note: Event<1> | undefined | null) => {
+export const useMutateNoteComment = (note: NDKEvent | undefined | null) => {
   const publish = usePublish();
   const queryClient = useQueryClient();
 

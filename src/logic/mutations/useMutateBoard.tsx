@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 
 import { usePublish } from '@/logic/mutations';
 import { useLocalStore } from '@/logic/store';
-import { Board, Format } from '@/logic/types';
+import { Format, NDKBoard } from '@/logic/types';
 import { normalizePinContent } from '@/logic/utils';
 
 export const useMutateBoard = () => {
@@ -71,7 +71,8 @@ export const useMutateBoard = () => {
   }, [id, publish]);
 
   const updateBoardFn = useCallback(async () => {
-    const cachedBoard = queryClient.getQueryData<Board>(['nostr', 'boards', { author, title }], {
+    // TODO: NDKBoard is not the actual type of the board in react-query cache
+    const cachedBoard = queryClient.getQueryData<NDKBoard>(['nostr', 'boards', { author, title }], {
       exact: false,
     });
 
@@ -176,7 +177,7 @@ export const useMutateBoard = () => {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['nostr', 'boards', { author, title }] });
 
-        navigate('/p/' + nip19.npubEncode(author!) + '/' + title, { replace: true });
+        navigate('/p/' + nip19.npubEncode(author!.pubkey) + '/' + title, { replace: true });
       },
       onError: () => {
         toast('An error has been occured! Please try again.', { type: 'error' });

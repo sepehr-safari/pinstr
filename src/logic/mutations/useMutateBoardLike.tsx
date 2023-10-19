@@ -2,9 +2,9 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 
 import { usePublish } from '@/logic/mutations';
-import { Board } from '@/logic/types';
+import { NDKBoard } from '@/logic/types';
 
-export const useMutateBoardLike = (board: Board | undefined | null) => {
+export const useMutateBoardLike = (board: NDKBoard | undefined | null) => {
   const publish = usePublish();
   const queryClient = useQueryClient();
 
@@ -16,8 +16,8 @@ export const useMutateBoardLike = (board: Board | undefined | null) => {
         content: '+',
         kind: 7,
         tags: [
-          ['a', `${33889}:${board?.author}:${board?.title}`],
-          ['p', board?.author],
+          ['a', `${33889}:${board?.author.pubkey}:${board?.title}`],
+          ['p', board?.author.pubkey],
         ],
       });
     },
@@ -25,7 +25,7 @@ export const useMutateBoardLike = (board: Board | undefined | null) => {
       queryClient.invalidateQueries([
         'nostr',
         'boards',
-        { author: board?.author, title: board?.title },
+        { author: board?.author.pubkey, title: board?.title },
         'reactions',
       ]);
     },
