@@ -1,9 +1,9 @@
 import { useSearchParams } from 'react-router-dom';
 
 import { useLocalStore } from '@/logic/store';
-import { Board } from '@/logic/types';
+import { NDKBoard } from '@/logic/types';
 
-export const useCreatePinParams = (board: Partial<Board> | undefined) => {
+export const useCreatePinParams = (board: Partial<NDKBoard> | undefined) => {
   const setBoard = useLocalStore((store) => store.setBoard);
 
   const [_, setSearchParams] = useSearchParams();

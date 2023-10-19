@@ -1,10 +1,10 @@
 import { useSearchParams } from 'react-router-dom';
 
 import { useLocalStore } from '@/logic/store';
-import { Board } from '@/logic/types';
+import { NDKBoard } from '@/logic/types';
 
 export const useEditPinParams = (
-  board: Partial<Board> | undefined,
+  board: Partial<NDKBoard> | undefined,
   pinIndex: number | undefined
 ) => {
   const setBoard = useLocalStore((store) => store.setBoard);

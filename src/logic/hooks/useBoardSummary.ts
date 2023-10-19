@@ -1,32 +1,20 @@
 import { nip19 } from 'nostr-tools';
-import { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useCreatePinParams, useEditBoardParams } from '@/logic/hooks';
-import { useMutateBoardLike } from '@/logic/mutations';
-import { useBoardReactions, useBoards, useUser } from '@/logic/queries';
+import { useCommentsParams, useCreatePinParams, useEditBoardParams } from '@/logic/hooks';
+import { useBoards, useUser } from '@/logic/queries';
 
 export const useBoardSummary = () => {
-  const { npub } = useParams();
+  const { npub, title } = useParams();
   const hex = npub ? nip19.decode(npub).data.toString() : undefined;
 
-  const { data, status } = useBoards();
-  const board = data ? data.pages?.[0]?.[0] : undefined;
+  const { commentsParam } = useCommentsParams();
 
-  const { data: reactions } = useBoardReactions(board);
-  const { mutate: like } = useMutateBoardLike(board);
+  const { boards, status } = useBoards({ author: hex, title, enabled: !!hex && !!title });
+  const board = boards ? boards[0] : undefined;
 
   const { pubkey } = useUser();
   const selfBoard = pubkey ? pubkey == hex : false;
-
-  const likedByUser = useMemo(
-    () => !!reactions?.likes.find((event) => event.pubkey == pubkey),
-    [reactions?.likes, pubkey]
-  );
-  const zapedByUser = useMemo(
-    () => !!reactions?.zaps.find((event) => event.pubkey == pubkey),
-    [reactions?.zaps, pubkey]
-  );
 
   const { setEditBoardParams } = useEditBoardParams(board);
   const { setCreatePinParams } = useCreatePinParams(board);
@@ -34,12 +22,10 @@ export const useBoardSummary = () => {
   return {
     status,
     board,
-    reactions,
     setEditBoardParams,
     setCreatePinParams,
     selfBoard,
-    like,
-    likedByUser,
-    zapedByUser,
+    like: async () => await board?.event.react('+'),
+    commentsParam,
   };
 };
