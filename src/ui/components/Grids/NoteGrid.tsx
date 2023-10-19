@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useAuthor, useNote, useUser } from '@/logic/queries';
-import { Board } from '@/logic/types';
+import { NDKBoard } from '@/logic/types';
 import { ellipsis, joinClassNames, loader } from '@/logic/utils';
 
 import { EllipsisPopover } from '@/ui/components/Popovers';
@@ -12,11 +12,11 @@ export const NoteGrid = ({
   board,
   setPinIndex,
 }: {
-  board: Board;
+  board: NDKBoard;
   setPinIndex: (index: number) => void;
 }) => {
   const { pubkey } = useUser();
-  const selfBoard = pubkey ? pubkey == board.author : false;
+  const selfBoard = pubkey ? pubkey == board.author.pubkey : false;
 
   const [lastPinIndex, setLastPinIndex] = useState<number>(50);
   const hasNextPage = board.pins.length > lastPinIndex;
@@ -73,10 +73,11 @@ export const NoteDetails = ({
   summary?: boolean;
   setPinIndex?: () => void;
 }) => {
-  const { data: note, isLoading } = useNote(noteId);
-  const { data: author } = useAuthor(note?.pubkey);
+  const { note } = useNote(noteId);
+  const noteNpub = note ? nip19.npubEncode(note.pubkey) : undefined;
+  const { author } = useAuthor(noteNpub);
 
-  if (!note && !isLoading) {
+  if (note == null) {
     return (
       <div className="w-full h-32 flex justify-center items-center text-xs bg-white rounded-lg text-gray-500">
         Note not found!
@@ -91,14 +92,14 @@ export const NoteDetails = ({
           <div
             className={joinClassNames(
               'h-12 w-12 rounded-full bg-gray-100 text-gray-100',
-              isLoading ? 'animate-pulse' : ''
+              note == undefined ? 'animate-pulse' : ''
             )}
           >
-            {!!author && !!author.picture && (
+            {!!author && author.profile && !!author.profile.image && (
               <img
                 className="rounded-full"
-                src={loader(author.picture, { w: 96, h: 96 })}
-                alt={author?.displayName + ' avatar'}
+                src={loader(author.profile.image, { w: 96, h: 96 })}
+                alt={author?.profile.displayName + ' avatar'}
                 loading="lazy"
               />
             )}
@@ -108,7 +109,7 @@ export const NoteDetails = ({
             <Link to={`/p/${author?.npub}`} className="z-[4]">
               <h3 className="flex truncate text-sm font-medium text-gray-900 hover:underline">
                 {author ? (
-                  ellipsis(author.displayName, 20)
+                  ellipsis(author?.profile?.displayName || '', 20)
                 ) : (
                   <div className="animate-pulse w-24 h-[1rem] rounded bg-gray-100" />
                 )}
@@ -116,7 +117,7 @@ export const NoteDetails = ({
             </Link>
             <p className="mt-1 truncate text-xs text-gray-500">
               {author ? (
-                ellipsis(author.nip05, 20)
+                ellipsis(author.profile?.nip05 || '', 20)
               ) : (
                 <div className="animate-pulse w-14 h-[1rem] rounded bg-gray-100" />
               )}

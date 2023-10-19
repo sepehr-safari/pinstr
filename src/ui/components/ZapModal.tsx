@@ -3,8 +3,9 @@ import { Fragment, useState } from 'react';
 
 import { useMutateBoardZap, useMutateNoteZap } from '@/logic/mutations';
 import { useAuthor } from '@/logic/queries';
-import { Board } from '@/logic/types';
-import { Event } from 'nostr-tools';
+import { NDKBoard } from '@/logic/types';
+import { NDKEvent } from '@nostr-dev-kit/ndk';
+import { nip19 } from 'nostr-tools';
 
 const ZAP_AMOUNTS = [
   {
@@ -54,14 +55,15 @@ export const ZapModal = ({
   note,
   onClose,
 }: {
-  board?: Board | undefined;
-  note?: Event<1> | undefined;
+  board?: NDKBoard | undefined;
+  note?: NDKEvent | undefined;
   onClose: () => void;
 }) => {
   const [selectedAmount, setSelectedAmount] = useState(ZAP_AMOUNTS[0]);
   const [comment, setComment] = useState('');
 
-  const { data: author } = useAuthor(board?.author || note?.pubkey);
+  const noteNpub = note ? nip19.npubEncode(note?.pubkey) : undefined;
+  const { author } = useAuthor(board?.author.npub || noteNpub);
 
   const zapBoard = useMutateBoardZap({ board, amount: selectedAmount.amount, comment });
   const zapNote = useMutateNoteZap({ note, amount: selectedAmount.amount, comment });
@@ -93,7 +95,9 @@ export const ZapModal = ({
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <Dialog.Panel className="overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
-                <h3 className="text-xl font-bold">Send zap to {author?.displayName || '#'}</h3>
+                <h3 className="text-xl font-bold">
+                  Send zap to {author?.profile?.displayName || '#'}
+                </h3>
 
                 <hr className="my-2" />
 

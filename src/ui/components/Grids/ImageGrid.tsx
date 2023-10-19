@@ -1,5 +1,5 @@
 import { useUser } from '@/logic/queries';
-import { Board } from '@/logic/types';
+import { NDKBoard } from '@/logic/types';
 import { joinClassNames, loader } from '@/logic/utils';
 
 import { EllipsisPopover } from '@/ui/components/Popovers';
@@ -8,11 +8,11 @@ export const ImageGrid = ({
   board,
   setPinIndex,
 }: {
-  board: Board;
+  board: NDKBoard;
   setPinIndex: (index: number) => void;
 }) => {
   const { pubkey } = useUser();
-  const selfBoard = pubkey ? pubkey == board.author : false;
+  const selfBoard = pubkey ? pubkey == board.author.pubkey : false;
 
   if (board.pins.length == 0) {
     return <div>Empty Board!</div>;

@@ -1,17 +1,17 @@
 import { ChatBubbleLeftIcon } from '@heroicons/react/24/solid';
 
 import { useCommentsParams } from '@/logic/hooks';
-import { useBoardReactions } from '@/logic/queries';
-import { Board } from '@/logic/types';
+import { useBoardComments } from '@/logic/queries';
+import { NDKBoard } from '@/logic/types';
 import { joinClassNames, numberEllipsis } from '@/logic/utils';
 
 interface Params {
-  board: Board;
+  board: NDKBoard;
   bgHover?: boolean;
 }
 
 export const BoardCommentButton = ({ board, bgHover = false }: Params) => {
-  const { data: reactions } = useBoardReactions(board);
+  const { comments } = useBoardComments(board);
 
   const { toggleCommentsParams } = useCommentsParams();
 
@@ -26,7 +26,7 @@ export const BoardCommentButton = ({ board, bgHover = false }: Params) => {
         )}
       >
         <ChatBubbleLeftIcon className="mr-2 h-4 w-4" />
-        <span>{reactions ? numberEllipsis(reactions.comments.length) : 0}</span>
+        <span>{numberEllipsis(comments.length)}</span>
       </button>
     </>
   );

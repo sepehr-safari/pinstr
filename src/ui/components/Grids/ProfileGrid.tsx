@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { useAuthor, useUser } from '@/logic/queries';
-import { Board } from '@/logic/types';
+import { NDKBoard } from '@/logic/types';
 import { ellipsis, joinClassNames, loader } from '@/logic/utils';
 
 import { EllipsisPopover } from '@/ui/components/Popovers';
@@ -14,11 +14,11 @@ export const ProfileGrid = ({
   board,
   setPinIndex,
 }: {
-  board: Board;
+  board: NDKBoard;
   setPinIndex: (index: number) => void;
 }) => {
   const { pubkey } = useUser();
-  const selfBoard = pubkey ? pubkey == board.author : false;
+  const selfBoard = pubkey ? pubkey == board.author.pubkey : false;
 
   const [lastPinIndex, setLastPinIndex] = useState<number>(50);
   const hasNextPage = board.pins.length > lastPinIndex;
@@ -79,9 +79,10 @@ export const ProfileDetails = ({
 }) => {
   const navigate = useNavigate();
 
-  const { data: profile, isLoading } = useAuthor(pubkey);
+  const npub = nip19.npubEncode(pubkey);
+  const { author, isLoading } = useAuthor(npub);
 
-  if (!profile && !isLoading) {
+  if (!isLoading && !author) {
     return (
       <div className="w-full h-full flex items-center justify-center text-xs text-gray-400 bg-white rounded-lg min-h-[20rem]">
         Profile not found!
@@ -93,7 +94,7 @@ export const ProfileDetails = ({
     <>
       <button
         type="button"
-        onClick={summary ? setOpenDetails : () => navigate('/p/' + profile?.npub)}
+        onClick={summary ? setOpenDetails : () => navigate('/p/' + author?.profile?.npub)}
         disabled={isLoading}
         className="w-full absolute top-0 disabled:pointer-events-none"
       >
@@ -106,14 +107,14 @@ export const ProfileDetails = ({
               : 'bg-gradient-to-br from-purple-800 to-purple-500'
           )}
         >
-          {!!profile?.banner && (
+          {!!author?.profile?.banner && (
             <img
               className={joinClassNames(
                 'w-full h-full object-cover duration-500 group-hover:rounded-b-none',
                 summary ? 'rounded-lg' : 'rounded-t-lg'
               )}
-              src={loader(profile.banner, { w: 300, h: 96 })}
-              alt={profile.displayName + ' banner'}
+              src={loader(author.profile.banner, { w: 300, h: 96 })}
+              alt={author.profile.displayName + ' banner'}
               loading="lazy"
             />
           )}
@@ -121,7 +122,7 @@ export const ProfileDetails = ({
       </button>
       <button
         type="button"
-        onClick={summary ? setOpenDetails : () => navigate('/p/' + profile?.npub)}
+        onClick={summary ? setOpenDetails : () => navigate('/p/' + author?.profile?.npub)}
         disabled={isLoading}
         className="w-full flex flex-col pt-16 grow items-center text-center disabled:pointer-events-none"
       >
@@ -133,32 +134,32 @@ export const ProfileDetails = ({
               : 'bg-gradient-to-tl from-purple-800 to-purple-500 group-hover:scale-110'
           )}
         >
-          {!!profile?.picture && (
+          {!!author?.profile?.image && (
             <img
               className="w-full h-full"
-              src={loader(profile.picture, { w: 96, h: 96 })}
-              alt={profile.displayName + ' avatar'}
+              src={loader(author.profile.image, { w: 96, h: 96 })}
+              alt={author.profile.displayName + ' avatar'}
               loading="lazy"
             />
           )}
         </div>
         <h3 className="mt-4 w-full truncate text-base font-semibold leading-7 tracking-tight text-gray-900">
-          {profile ? (
+          {author?.profile ? (
             summary ? (
-              ellipsis(profile.displayName, 20)
+              ellipsis(author.profile.displayName || '', 20)
             ) : (
-              ellipsis(profile.displayName, 30)
+              ellipsis(author.profile.displayName || '', 30)
             )
           ) : (
             <div className="animate-pulse mx-auto w-1/2 h-[2rem] rounded bg-gray-200" />
           )}
         </h3>
         <p className="mt-2 w-full text-xs font-light text-gray-700 px-4 max-w-xs [overflow-wrap:anywhere]">
-          {profile ? (
+          {!!author?.profile ? (
             summary ? (
-              ellipsis(profile.about, 100)
+              ellipsis(author.profile.about || '', 100)
             ) : (
-              ellipsis(profile.about, 1000)
+              ellipsis(author.profile.about || '', 1000)
             )
           ) : (
             <div className="animate-pulse h-[4rem] rounded bg-gray-200" />
@@ -167,7 +168,7 @@ export const ProfileDetails = ({
       </button>
 
       {summary ? (
-        profile ? (
+        author?.profile ? (
           <div className="my-4 mx-auto max-w-fit">
             <button
               onClick={() => toast('This feature is still under development.', { type: 'warning' })}

@@ -1,40 +1,43 @@
 import { PaperAirplaneIcon } from '@heroicons/react/24/outline';
-import { Event } from 'nostr-tools';
+import { nip19 } from 'nostr-tools';
 import { useMemo, useState } from 'react';
 
 import { useMutateNoteComment } from '@/logic/mutations';
-import { useAuthor, useNoteReactions, useUser } from '@/logic/queries';
+import { useAuthor, useNoteComments, useUser } from '@/logic/queries';
 import { formatRelativeTime, loader } from '@/logic/utils';
 
 import { Spinner } from '@/ui/components';
 import { NoteCommentButton, NoteLikeButton, NoteZapButton } from '@/ui/components/ReactionButtons';
+import { NDKEvent } from '@nostr-dev-kit/ndk';
 
-export const Comment = ({ event }: { event: Event<1> }) => {
+export const Comment = ({ event }: { event: NDKEvent }) => {
   const [inputText, setInputText] = useState('');
   const [showReply, setShowReply] = useState(false);
 
   const { pubkey: selfPubkey } = useUser();
 
-  const { data: author, status } = useAuthor(event.pubkey);
-  const { data: reactions } = useNoteReactions(event.id);
+  const npub = nip19.npubEncode(event.pubkey);
+  const { author, isLoading } = useAuthor(npub);
+  const image = author?.profile?.image || '';
+  const displayName = author?.profile?.displayName || '';
 
-  const comments = useMemo(() => {
-    if (!reactions || !reactions.comments || reactions.comments.length == 0) {
-      return [];
-    }
+  const { comments } = useNoteComments(event);
 
-    return reactions.comments.filter((commentEvent) => {
-      const lastETag = commentEvent.tags.reverse().find((tag) => tag[0] == 'e');
+  const filteredComments = useMemo(
+    () =>
+      comments.filter((commentEvent) => {
+        const lastETag = commentEvent.tags.reverse().find((tag) => tag[0] == 'e');
 
-      if (lastETag?.[1] == event.id) return true;
+        if (lastETag?.[1] == event.id) return true;
 
-      return false;
-    });
-  }, [reactions, event.id]);
+        return false;
+      }),
+    [comments]
+  );
 
   const mutateNoteComment = useMutateNoteComment(event);
 
-  if (status == 'loading') {
+  if (isLoading) {
     return (
       <div className="h-12 flex justify-center items-center">
         <Spinner />
@@ -52,7 +55,7 @@ export const Comment = ({ event }: { event: Event<1> }) => {
         <div className="shrink-0">
           <img
             className="inline-block h-10 w-10 rounded-full"
-            src={loader(author.picture, { w: 96, h: 96 })}
+            src={loader(image, { w: 96, h: 96 })}
             alt=""
           />
         </div>
@@ -63,10 +66,12 @@ export const Comment = ({ event }: { event: Event<1> }) => {
               type="button"
               className="font-semibold text-gray-700 hover:underline hover:text-gray-900"
             >
-              {author.displayName}
+              {displayName}
             </button>
 
-            <span className="ml-1 font-light text-gray-500">{event.content}</span>
+            <span className="ml-1 font-light text-gray-500 [overflow-wrap:anywhere]">
+              {event.content}
+            </span>
           </div>
 
           <div className="flex gap-6 items-center">
@@ -78,7 +83,7 @@ export const Comment = ({ event }: { event: Event<1> }) => {
             />
 
             <p className="ml-auto text-[0.6rem] font-light text-gray-500">
-              {formatRelativeTime(event.created_at)}
+              {formatRelativeTime(event.created_at || 1)}
             </p>
           </div>
 

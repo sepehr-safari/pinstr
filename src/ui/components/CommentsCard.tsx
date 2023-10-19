@@ -1,42 +1,39 @@
 import { PaperAirplaneIcon } from '@heroicons/react/24/outline';
+import { nip19 } from 'nostr-tools';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useMutateBoardComment } from '@/logic/mutations';
-import { useBoardReactions, useBoards, useUser } from '@/logic/queries';
+import { useAuthor, useBoardComments, useUser } from '@/logic/queries';
 
+import { NDKBoard } from '@/logic/types';
 import { Comment, Spinner } from '@/ui/components';
 
-export const CommentsCard = () => {
+export const CommentsCard = ({ board }: { board: NDKBoard }) => {
   const [inputText, setInputText] = useState('');
 
-  const { data, status: boardStatus } = useBoards();
-  const board = data ? data.pages?.[0]?.[0] : undefined;
+  const { comments, isLoading } = useBoardComments(board);
 
-  const { data: reactions, status: reactionsStatus } = useBoardReactions(board);
-
-  const { metadata: selfUser, pubkey: selfPubkey } = useUser();
+  const { pubkey: selfPubkey } = useUser();
+  const selfNpub = selfPubkey ? nip19.npubEncode(selfPubkey) : undefined;
+  const { author: selfUser } = useAuthor(selfNpub);
 
   const mutateBoardComment = useMutateBoardComment(board);
-
-  if (!boardStatus) {
-    return null;
-  }
 
   return (
     <div className="overflow-hidden bg-white shadow-md text-xs xl:rounded-xl">
       <div className="w-full flex flex-col justify-between items-center p-2">
-        {reactionsStatus == 'loading' ? (
+        {isLoading ? (
           <div className="h-32 flex justify-center items-center">
             <Spinner />
           </div>
-        ) : reactions?.comments.length == 0 ? (
+        ) : comments.length == 0 ? (
           <div className="py-2 text-center">
             <p className="text-sm font-semibold">No Comments yet!</p>
             <p className="font-light">Add one to start the conversation.</p>
           </div>
         ) : (
-          reactions?.comments
+          comments
             .filter((event) => {
               const firstTag = event.tags[0];
 
@@ -44,7 +41,7 @@ export const CommentsCard = () => {
                 return false;
               }
 
-              if (firstTag[1] == `33889:${board.author}:${board.title}`) return true;
+              if (firstTag[1] == `33889:${board.author.pubkey}:${board.title}`) return true;
             })
             .map((event) => <Comment key={event.id} event={event} />)
         )}
@@ -53,7 +50,7 @@ export const CommentsCard = () => {
           {selfPubkey ? (
             <>
               <div className="h-9 w-9 rounded-full overflow-hidden">
-                <img className="" src={selfUser?.picture} alt="" />
+                <img className="" src={selfUser?.profile?.image} alt="" />
               </div>
 
               <div className="flex items-center grow">

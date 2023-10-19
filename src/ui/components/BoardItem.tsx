@@ -5,21 +5,19 @@ import { memo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import { useCreatePinParams, useFiltersParams } from '@/logic/hooks';
-import { useAuthor, useUser } from '@/logic/queries';
-import { Board } from '@/logic/types';
+import { useUser } from '@/logic/queries';
+import { NDKBoard } from '@/logic/types';
 import { ellipsis, loader } from '@/logic/utils';
 
 import { AuthorOverview } from '@/ui/components';
 import { EllipsisPopover } from '@/ui/components/Popovers';
 import { BoardLikeButton, BoardZapButton } from '@/ui/components/ReactionButtons';
 
-const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: boolean }) => {
+const BoardItem = ({ board, hideAuthor = false }: { board: NDKBoard; hideAuthor?: boolean }) => {
   const [isHovering, setIsHover] = useState<boolean | undefined>(false);
 
-  const { data: author } = useAuthor(board.author);
-
   const { pubkey } = useUser();
-  const selfBoard = pubkey ? pubkey == board.author : false;
+  const selfBoard = pubkey ? pubkey == board.author.pubkey : false;
 
   const location = useLocation();
 
@@ -82,7 +80,7 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
               </button>
             </Transition.Child>
             <Link
-              to={`/p/${nip19.npubEncode(board.author)}/${board.title}`}
+              to={`/p/${nip19.npubEncode(board.author.pubkey)}/${board.title}`}
               state={{ backgroundLocation: location }}
             >
               <Transition.Child
@@ -111,7 +109,7 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
               {ellipsis(board.title, 60)}
             </h3>
 
-            {!hideAuthor && <AuthorOverview author={author} />}
+            {!hideAuthor && <AuthorOverview author={board.author} />}
           </div>
           <div className="ml-4 mt-[2px] flex items-start gap-4">
             <BoardLikeButton board={board} />

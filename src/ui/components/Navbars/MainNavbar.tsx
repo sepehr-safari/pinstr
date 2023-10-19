@@ -5,7 +5,7 @@ import { Fragment, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useFiltersParams } from '@/logic/hooks';
-import { useUser } from '@/logic/queries';
+import { useAuthor, useUser } from '@/logic/queries';
 import { capitalizeFirstLetter, joinClassNames, loader } from '@/logic/utils';
 
 import { CreatePopover } from '@/ui/components/Popovers';
@@ -21,7 +21,9 @@ export const MainNavbar = () => {
 
   const { tag } = useFiltersParams();
 
-  const { pubkey, metadata } = useUser();
+  const { pubkey } = useUser();
+  const npub = pubkey ? nip19.npubEncode(pubkey) : undefined;
+  const { author: selfUser } = useAuthor(npub);
 
   USER_NAVIGATION[0].link = pubkey ? `/p/${nip19.npubEncode(pubkey)}` : '#';
 
@@ -95,14 +97,14 @@ export const MainNavbar = () => {
                           <img
                             className="h-10 w-10 rounded-full bg-gray-200 text-gray-200"
                             src={
-                              metadata?.picture
-                                ? loader(metadata?.picture, {
+                              selfUser?.profile?.image
+                                ? loader(selfUser?.profile?.image, {
                                     w: 96,
                                     h: 96,
                                   })
                                 : ''
                             }
-                            alt={metadata?.displayName + ' avatar'}
+                            alt={selfUser?.profile?.displayName + ' avatar'}
                             loading="lazy"
                           />
                         </Menu.Button>
@@ -121,18 +123,18 @@ export const MainNavbar = () => {
                             <img
                               className="mt-4 mx-auto h-24 w-24 flex-shrink-0 rounded-full bg-gray-100 text-gray-100"
                               src={
-                                metadata?.picture
-                                  ? loader(metadata?.picture, {
+                                selfUser?.profile?.image
+                                  ? loader(selfUser?.profile?.image, {
                                       w: 96,
                                       h: 96,
                                     })
                                   : ''
                               }
-                              alt={metadata?.displayName + ' avatar'}
+                              alt={selfUser?.profile?.displayName + ' avatar'}
                               loading="lazy"
                             />
                             <h3 className="mt-2 mb-4 text-sm font-semibold text-gray-900 text-center">
-                              {metadata?.displayName}
+                              {selfUser?.profile?.displayName}
                             </h3>
                           </Menu.Item>
                           <div className="py-1">

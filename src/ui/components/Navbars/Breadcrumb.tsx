@@ -1,13 +1,11 @@
 import { HomeIcon } from '@heroicons/react/20/solid';
-import { nip19 } from 'nostr-tools';
 import { Link, useLocation, useParams } from 'react-router-dom';
 
 import { useAuthor } from '@/logic/queries';
 
 export const Breadcrumb = () => {
   const { npub, title } = useParams();
-  const hex = npub ? nip19.decode(npub).data.toString() : undefined;
-  const { data: author } = useAuthor(hex);
+  const { author } = useAuthor(npub);
 
   const location = useLocation();
 
@@ -22,7 +20,7 @@ export const Breadcrumb = () => {
             </Link>
           </div>
         </li>
-        {author && (
+        {author?.profile && (
           <li>
             <div className="flex items-center max-w-[12rem] md:max-w-xs">
               <svg
@@ -39,11 +37,11 @@ export const Breadcrumb = () => {
                   className="ml-2 truncate text-xs font-light text-gray-400 hover:text-gray-700"
                   state={{ backgroundLocation: location }}
                 >
-                  {author.displayName}
+                  {author.profile.displayName}
                 </Link>
               ) : (
                 <div className="ml-2 truncate text-xs font-light text-gray-400">
-                  {author.displayName}
+                  {author.profile.displayName}
                 </div>
               )}
             </div>

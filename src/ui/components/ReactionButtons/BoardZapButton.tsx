@@ -1,33 +1,31 @@
 import { BoltIcon } from '@heroicons/react/20/solid';
 import { useMemo, useState } from 'react';
 
-import { useBoardReactions, useUser } from '@/logic/queries';
-import { Board } from '@/logic/types';
+import { useBoardZaps, useUser } from '@/logic/queries';
+import { NDKBoard } from '@/logic/types';
 import { getInvoiceAmount, joinClassNames, numberEllipsis } from '@/logic/utils';
 
 import { ZapModal } from '@/ui/components';
 
 interface Params {
-  board: Board;
+  board: NDKBoard;
   bgHover?: boolean;
 }
 
 export const BoardZapButton = ({ board, bgHover = false }: Params) => {
   const [showModal, setShowModal] = useState(false);
 
-  const { data: reactions } = useBoardReactions(board);
+  const { zaps } = useBoardZaps(board);
 
   const { pubkey } = useUser();
 
-  const zapedByUser = useMemo(
-    () => !!reactions?.zaps.find((event) => event.pubkey == pubkey),
-    [reactions?.zaps, pubkey]
-  );
-
-  const zaps = useMemo(() => reactions?.zaps || [], [reactions]);
+  const zapedByUser = useMemo(() => !!zaps.find((event) => event.pubkey == pubkey), [zaps, pubkey]);
 
   const zapAmounts = useMemo(
-    () => zaps.map((zap) => getInvoiceAmount(zap.tags.find((t) => t[0] === 'bolt11')?.[1] || '')),
+    () =>
+      zaps.length > 0
+        ? zaps.map((zap) => getInvoiceAmount(zap.tagValue('bolt11') || ''))
+        : undefined,
     [zaps]
   );
 
@@ -46,7 +44,7 @@ export const BoardZapButton = ({ board, bgHover = false }: Params) => {
       >
         <BoltIcon className="h-4 w-4" aria-hidden="true" />
         <span className="ml-1">
-          {zaps.length > 0 ? numberEllipsis(zapAmounts.reduce((a, b) => a + b)) : 0}
+          {zapAmounts ? numberEllipsis(zapAmounts.reduce((a, b) => a + b)) : 0}
         </span>
       </button>
 

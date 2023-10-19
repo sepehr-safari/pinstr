@@ -1,25 +1,24 @@
 import { HeartIcon } from '@heroicons/react/20/solid';
 import { useMemo } from 'react';
 
-import { useMutateBoardLike } from '@/logic/mutations';
-import { useBoardReactions, useUser } from '@/logic/queries';
-import { Board } from '@/logic/types';
+import { useBoardLikes, useUser } from '@/logic/queries';
+import { NDKBoard } from '@/logic/types';
 import { joinClassNames, numberEllipsis } from '@/logic/utils';
 
 interface Params {
-  board: Board;
+  board: NDKBoard;
   bgHover?: boolean;
 }
 
 export const BoardLikeButton = ({ board, bgHover = false }: Params) => {
-  const { data: reactions } = useBoardReactions(board);
-  const { mutate: like } = useMutateBoardLike(board);
+  const { likes } = useBoardLikes(board);
+  const like = async () => await board?.event.react('+');
 
   const { pubkey } = useUser();
 
   const likedByUser = useMemo(
-    () => !!reactions?.likes.find((event) => event.pubkey == pubkey),
-    [reactions?.likes, pubkey]
+    () => !!likes.find((event) => event.pubkey == pubkey),
+    [likes, pubkey]
   );
 
   return (
@@ -34,9 +33,7 @@ export const BoardLikeButton = ({ board, bgHover = false }: Params) => {
         )}
       >
         <HeartIcon className="h-4 w-4" aria-hidden="true" />
-        <span className="ml-1">
-          {reactions && reactions.likes.length > 0 ? numberEllipsis(reactions.likes.length) : 0}
-        </span>
+        <span className="ml-1">{numberEllipsis(likes.length)}</span>
       </button>
     </>
   );

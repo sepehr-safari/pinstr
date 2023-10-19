@@ -1,20 +1,20 @@
 import { HeartIcon } from '@heroicons/react/24/outline';
-import { Event } from 'nostr-tools';
 import { useMemo } from 'react';
 
 import { useMutateNoteLike } from '@/logic/mutations';
-import { useNoteReactions, useUser } from '@/logic/queries';
-import { joinClassNames } from '@/logic/utils';
+import { useNoteLikes, useUser } from '@/logic/queries';
+import { joinClassNames, numberEllipsis } from '@/logic/utils';
+import { NDKEvent } from '@nostr-dev-kit/ndk';
 
-export const NoteLikeButton = ({ note }: { note: Event<1> }) => {
-  const { data: reactions } = useNoteReactions(note.id);
+export const NoteLikeButton = ({ note }: { note: NDKEvent }) => {
+  const { likes } = useNoteLikes(note);
   const { mutate: like } = useMutateNoteLike(note);
 
   const { pubkey } = useUser();
 
   const likedByUser = useMemo(
-    () => !!reactions?.likes.find((event) => event.pubkey == pubkey),
-    [reactions?.likes, pubkey]
+    () => !!likes.find((event) => event.pubkey == pubkey),
+    [likes, pubkey]
   );
 
   return (
@@ -28,9 +28,7 @@ export const NoteLikeButton = ({ note }: { note: Event<1> }) => {
         )}
       >
         <HeartIcon className="h-4 w-4" aria-hidden="true" />
-        <span className="ml-1">
-          {reactions && reactions.likes.length > 0 ? reactions.likes.length : 0}
-        </span>
+        <span className="ml-1">{numberEllipsis(likes.length)}</span>
       </button>
     </>
   );

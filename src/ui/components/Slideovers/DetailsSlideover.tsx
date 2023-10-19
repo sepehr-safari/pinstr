@@ -5,7 +5,7 @@ import { Dispatch, Fragment, SetStateAction, useCallback, useEffect } from 'reac
 import ReactPlayer from 'react-player';
 
 import { useUser } from '@/logic/queries';
-import { Board, Format } from '@/logic/types';
+import { Format, NDKBoard } from '@/logic/types';
 import { ellipsis, loader } from '@/logic/utils';
 
 import { NoteDetails, ProfileDetails } from '@/ui/components/Grids';
@@ -18,14 +18,14 @@ export const DetailsSlideover = ({
   isOpen,
   onClose,
 }: {
-  board: Board;
+  board: NDKBoard;
   pinIndex: number;
   setPinIndex: Dispatch<SetStateAction<number>>;
   isOpen: boolean;
   onClose: () => void;
 }) => {
   const { pubkey } = useUser();
-  const selfBoard = pubkey ? pubkey == board.author : false;
+  const selfBoard = pubkey ? pubkey == board.author.pubkey : false;
 
   const previous = useCallback(
     () => setPinIndex((prev) => (prev > -1 ? prev - 1 : -1)),

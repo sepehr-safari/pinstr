@@ -1,4 +1,3 @@
-import { nip19 } from 'nostr-tools';
 import { useLocation, useParams } from 'react-router-dom';
 
 import { useAuthor } from '@/logic/queries';
@@ -9,11 +8,9 @@ export const ProfileBanner = () => {
   const state = location.state as { backgroundLocation?: Location };
 
   const { npub } = useParams();
-
-  const hex = npub ? nip19.decode(npub).data.toString() : undefined;
-
-  const { data: author } = useAuthor(hex);
-  const { banner, displayName } = author || {};
+  const { author } = useAuthor(npub);
+  const displayName = author?.profile?.displayName || '';
+  const banner = author?.profile?.banner || '';
 
   return (
     <div

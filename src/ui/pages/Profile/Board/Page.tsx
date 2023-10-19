@@ -13,17 +13,22 @@ import {
   VideoGrid,
 } from '@/ui/components/Grids';
 import { DetailsSlideover } from '@/ui/components/Slideovers';
+import { useParams } from 'react-router-dom';
+import { nip19 } from 'nostr-tools';
 
 export const Page = () => {
   const [openDetails, setOpenDetails] = useState(false);
   const [pinIndex, setPinIndex] = useState<number>(-1);
 
+  const { npub, title } = useParams();
+  const author = npub ? nip19.decode(npub).data.toString() : undefined;
+
+  const { boards, status } = useBoards({ author, title, enabled: !!author && !!title });
+  const board = boards ? boards[0] : undefined;
+
   useEffect(() => {
     setOpenDetails(pinIndex > -1);
   }, [pinIndex]);
-
-  const { data, status } = useBoards();
-  const board = data ? data.pages?.[0]?.[0] : undefined;
 
   if (status == 'loading') {
     return (

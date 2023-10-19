@@ -1,5 +1,4 @@
 import { PlusIcon } from '@heroicons/react/20/solid';
-import { nip19 } from 'nostr-tools';
 import { Link, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -10,13 +9,13 @@ import { Spinner } from '@/ui/components';
 
 export const ProfileCard = () => {
   const { npub } = useParams();
+  const { author, isLoading } = useAuthor(npub);
+  const displayName = author?.profile?.displayName || '';
+  const image = author?.profile?.image || '';
+  const nip05 = author?.profile?.nip05 || '';
+  const about = author?.profile?.about || '';
 
-  const hex = npub ? nip19.decode(npub).data.toString() : undefined;
-
-  const { data: author, status } = useAuthor(hex);
-  const { displayName, picture, nip05, about } = author || {};
-
-  if (status == 'loading') {
+  if (isLoading) {
     return (
       <div className="h-32 flex justify-center items-center overflow-hidden bg-white shadow-md text-xs xl:rounded-xl">
         <Spinner />
@@ -38,7 +37,7 @@ export const ProfileCard = () => {
               Open in njump
             </div>
             <img
-              src={!!picture ? loader(picture, { w: 96, h: 96 }) : ''}
+              src={!!image ? loader(image, { w: 96, h: 96 }) : ''}
               alt={`${displayName} avatar`}
               loading="lazy"
             />

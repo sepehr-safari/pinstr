@@ -1,28 +1,26 @@
 import { BoltIcon } from '@heroicons/react/24/outline';
-import { Event } from 'nostr-tools';
 import { useMemo, useState } from 'react';
 
-import { useNoteReactions, useUser } from '@/logic/queries';
+import { useNoteZaps, useUser } from '@/logic/queries';
 import { getInvoiceAmount, joinClassNames, numberEllipsis } from '@/logic/utils';
 
 import { ZapModal } from '@/ui/components';
+import { NDKEvent } from '@nostr-dev-kit/ndk';
 
-export const NoteZapButton = ({ note }: { note: Event<1> }) => {
+export const NoteZapButton = ({ note }: { note: NDKEvent }) => {
   const [showModal, setShowModal] = useState(false);
 
-  const { data: reactions } = useNoteReactions(note.id);
+  const { zaps } = useNoteZaps(note);
 
   const { pubkey } = useUser();
 
-  const zapedByUser = useMemo(
-    () => !!reactions?.zaps.find((event) => event.pubkey == pubkey),
-    [reactions?.zaps, pubkey]
-  );
-
-  const zaps = useMemo(() => reactions?.zaps || [], [reactions]);
+  const zapedByUser = useMemo(() => !!zaps.find((event) => event.pubkey == pubkey), [zaps, pubkey]);
 
   const zapAmounts = useMemo(
-    () => zaps.map((zap) => getInvoiceAmount(zap.tags.find((t) => t[0] === 'bolt11')?.[1] || '')),
+    () =>
+      zaps.length > 0
+        ? zaps.map((zap) => getInvoiceAmount(zap.tags.find((t) => t[0] === 'bolt11')?.[1] || ''))
+        : undefined,
     [zaps]
   );
 
@@ -40,7 +38,7 @@ export const NoteZapButton = ({ note }: { note: Event<1> }) => {
       >
         <BoltIcon className="h-4 w-4" aria-hidden="true" />
         <span className="ml-1">
-          {zaps.length > 0 ? numberEllipsis(zapAmounts.reduce((a, b) => a + b)) : 0}
+          {zapAmounts ? numberEllipsis(zapAmounts.reduce((a, b) => a + b)) : 0}
         </span>
       </button>
 

@@ -1,10 +1,10 @@
 import { ChatBubbleLeftIcon } from '@heroicons/react/24/outline';
 
-import { useNoteReactions } from '@/logic/queries';
-import { Event } from 'nostr-tools';
+import { useNoteComments } from '@/logic/queries';
+import { NDKEvent } from '@nostr-dev-kit/ndk';
 
-export const NoteCommentButton = ({ note, onClick }: { note: Event<1>; onClick: () => void }) => {
-  const { data: reactions } = useNoteReactions(note.id);
+export const NoteCommentButton = ({ note, onClick }: { note: NDKEvent; onClick: () => void }) => {
+  const { comments } = useNoteComments(note);
 
   return (
     <>
@@ -14,7 +14,7 @@ export const NoteCommentButton = ({ note, onClick }: { note: Event<1>; onClick: 
         className="inline-flex justify-center items-center text-xs font-semibold duration-200 text-gray-600 hover:text-gray-900"
       >
         <ChatBubbleLeftIcon className="mr-2 h-4 w-4" />
-        <span>{reactions ? reactions.comments.length : 0}</span>
+        <span>{comments.length}</span>
       </button>
     </>
   );
