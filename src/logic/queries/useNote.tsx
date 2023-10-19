@@ -11,7 +11,7 @@ export const useNote = (noteId: string | undefined) => {
     if (!noteId || !!note || !ndk) return;
 
     ndk.fetchEvent(noteId).then((event) => setNote(event));
-  }, [noteId, note]);
+  }, [noteId, note, ndk, setNote]);
 
   return { note };
 };
