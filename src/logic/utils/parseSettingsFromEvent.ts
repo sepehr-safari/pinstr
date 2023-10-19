@@ -1,10 +1,9 @@
-import { Event } from 'nostr-tools';
-
 import { Settings } from '@/logic/types';
+import { NDKEvent } from '@nostr-dev-kit/ndk';
 
-export const parseSettingsFromEvent = (event: Event) => {
+export const parseSettingsFromEvent = (event: NDKEvent) => {
   const settings: Settings = {
-    muteList: ['NSFW'],
+    muteList: [],
   };
 
   for (const tag of event.tags) {

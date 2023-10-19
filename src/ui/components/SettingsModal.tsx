@@ -15,10 +15,10 @@ export const SettingsModal = () => {
   const settingsParam = searchParams.get('settings');
 
   const { publishSettings } = useMutateSettings();
-  const { data: settings } = useSettings();
+  const { settings } = useSettings();
 
   useEffect(() => {
-    settings && setMuteList(settings.muteList);
+    setMuteList(settings.muteList);
   }, [settings]);
 
   return (

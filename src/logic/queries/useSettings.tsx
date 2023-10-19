@@ -1,54 +1,39 @@
-import { useQuery } from '@tanstack/react-query';
-import { Event, Filter } from 'nostr-tools';
-import { useCallback } from 'react';
-
-import { useUser } from '@/logic/queries';
+import { NDKEvent, NDKFilter } from '@nostr-dev-kit/ndk';
+import { useEffect, useState } from 'react';
 import { useLocalStore } from '@/logic/store';
-import { Settings } from '@/logic/types';
-import { parseSettingsFromEvent } from '@/logic/utils';
+import { useUser } from '@/logic/queries';
+import { parseSettingsFromEvent } from '../utils';
+import { Settings } from '../types';
+
+const defaultSettings: Settings = {
+  muteList: [],
+};
 
 export const useSettings = () => {
-  const pool = useLocalStore((store) => store.pool);
-  const relays = useLocalStore((store) => store.relays);
+  const [settings, setSettings] = useState<Settings>(defaultSettings);
 
   const { pubkey } = useUser();
 
-  const fetchSettings = useCallback(async () => {
-    if (!pubkey) {
-      const defaultSettings: Settings = {
-        muteList: [],
-      };
+  const ndk = useLocalStore((state) => state.ndk);
 
-      return defaultSettings;
-    }
+  useEffect(() => {
+    if (!pubkey || !!settings || !ndk) return;
 
-    if (!pool || !relays) throw new Error('Missing dependencies in fetching settings');
-
-    const filter: Filter = {
+    const filter: NDKFilter = {
       kinds: [30078],
       limit: 1,
       authors: [pubkey],
       '#d': ['pinstr-settings'],
     };
 
-    try {
-      const events = (await pool.list(relays, [filter])) as Event<30078>[];
+    ndk.fetchEvent(filter).then((event) => {
+      if (!event) return;
 
-      if (events.length == 0) throw new Error('Settings event not found');
+      const fetchedSettings = parseSettingsFromEvent(event);
 
-      const settings = parseSettingsFromEvent(events[0]);
+      setSettings(fetchedSettings);
+    });
+  }, [pubkey, settings, ndk, setSettings]);
 
-      return settings;
-    } catch (error) {
-      throw new Error('Error in fetching settings');
-    }
-  }, [pool, relays, pubkey]);
-
-  return useQuery({
-    queryKey: ['nostr', 'settings', pubkey],
-    queryFn: fetchSettings,
-    retry: 4,
-    staleTime: 1000 * 60 * 30, // 30 minutes
-    enabled: !!pubkey && !!pool && !!relays,
-  });
+  return { settings };
 };
