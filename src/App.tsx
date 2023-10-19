@@ -6,6 +6,8 @@ import { AppRouter } from '@/logic/routes';
 import { createIDBPersister } from '@/logic/utils';
 
 import { Toast } from '@/ui/components';
+import { useLocalStore } from './logic/store';
+import { useEffect } from 'react';
 
 const persister = createIDBPersister();
 const queryClient = new QueryClient({
@@ -21,6 +23,12 @@ const queryClient = new QueryClient({
 });
 
 export const App = () => {
+  const ndk = useLocalStore((state) => state.ndk);
+
+  useEffect(() => {
+    if (ndk) ndk.connect();
+  }, [ndk]);
+
   return (
     <PersistQueryClientProvider client={queryClient} persistOptions={{ persister }}>
       <BrowserRouter>
