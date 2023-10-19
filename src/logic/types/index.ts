@@ -1,4 +1,4 @@
-import { Event } from 'nostr-tools';
+import { NDKEvent, NDKUser } from '@nostr-dev-kit/ndk';
 
 export type Settings = {
   muteList: string[];
@@ -17,11 +17,11 @@ export enum Format {
 
 export type Features = Map<Format, [string, string]>;
 
-export interface Board {
+export interface NDKBoard {
   id: string;
   timestamp: number;
   title: string;
-  author: string;
+  author: NDKUser;
   description: string;
   category: string;
   tags: string[];
@@ -29,28 +29,7 @@ export interface Board {
   headers: string[];
   pins: Pin[];
   format: Format;
-  event: Event<33889>;
-}
-
-export interface Author {
-  hexPubkey: string;
-  picture: string;
-  name: string;
-  displayName: string;
-  nip05: string;
-  about: string;
-  banner: string;
-  lud06: string;
-  lud16: string;
-  website: string;
-  npub: string;
-  event: Event<0>;
-}
-
-export interface Reactions {
-  likes: Event<7>[];
-  zaps: Event<9735>[];
-  comments: Event<1>[];
+  event: NDKEvent;
 }
 
 export type ProfileAddressType = 'nip05' | 'nip19' | 'hex' | 'unknown';
