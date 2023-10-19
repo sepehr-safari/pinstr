@@ -1,7 +1,5 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { useAuthor } from '@/logic/queries';
-
 export const useUser = () => {
   const queryClient = useQueryClient();
   const { data: pubkey } = useQuery({
@@ -24,7 +22,5 @@ export const useUser = () => {
     staleTime: Infinity,
   });
 
-  const { data: metadata } = useAuthor(pubkey || undefined);
-
-  return { pubkey, seckey, metadata };
+  return { pubkey, seckey };
 };

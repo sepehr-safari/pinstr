@@ -1,72 +1,100 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { Filter, nip19 } from 'nostr-tools';
-import { useCallback } from 'react';
-import { useParams } from 'react-router-dom';
+import { NDKEvent, NDKFilter, NDKKind } from '@nostr-dev-kit/ndk';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useLocalStore } from '../store';
+import { NDKBoard } from '../types';
+import { isMutedBoard, parseBoardFromEvent } from '../utils';
 
-import { useFiltersParams } from '@/logic/hooks';
-import { useSettings } from '@/logic/queries';
-import { useLocalStore } from '@/logic/store';
-import { filterBoardsByMuteList, parseBoardsFromEvents } from '@/logic/utils';
+type Params = {
+  author?: string;
+  title?: string;
+  category?: string;
+  format?: string;
+  tag?: string;
+  muteList?: string[];
+  enabled?: boolean;
+};
 
-export const useBoards = () => {
-  const { npub, title } = useParams();
-  const author = npub ? nip19.decode(npub).data.toString() : undefined;
+export const useBoards = ({
+  author,
+  category,
+  format,
+  muteList,
+  tag,
+  title,
+  enabled = true,
+}: Params) => {
+  const isSubscribed = useRef(false);
 
-  const { data: settings } = useSettings();
+  const [boards, setBoards] = useState<NDKBoard[]>([]);
+  const [eose, setEose] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
 
-  const { category, format, tag } = useFiltersParams();
-  const c = category.value;
-  const f = format.value;
-  const t = tag.value;
+  const ndk = useLocalStore((state) => state.ndk);
 
-  const pool = useLocalStore((state) => state.pool);
-  const relays = useLocalStore((state) => state.relays);
+  const subscribe = useCallback(
+    async (until?: number | undefined, closeOnEose: boolean = false) => {
+      if (!ndk) return;
 
-  const fetchBoards = useCallback(
-    async ({ pageParam = undefined }: { pageParam?: number | undefined }) => {
-      if (!pool || !relays) throw new Error('Missing dependencies in fetching boards');
-
-      const filter: Filter = { kinds: [33889 as number], limit: 50, until: pageParam };
+      const filter: NDKFilter = { kinds: [33889 as NDKKind], limit: 50, until };
       if (!!author) filter['authors'] = [author];
       if (!!title) filter['#d'] = [title];
-      if (!!c) filter['#c'] = [c];
-      if (!!f) filter['#f'] = [f];
-      if (!!t) filter['#t'] = [t];
+      if (!!category) filter['#c'] = [category];
+      if (!!format) filter['#f'] = [format];
+      if (!!tag) filter['#t'] = [tag];
 
-      try {
-        const events = await pool.list(relays, [filter]);
-        const parsedBoards = parseBoardsFromEvents(events);
-        const filteredBoards =
-          settings && settings.muteList
-            ? filterBoardsByMuteList(parsedBoards, settings.muteList)
-            : parsedBoards;
+      const subscription = ndk.subscribe([filter], { closeOnEose });
+      let hasBoards = false;
 
-        return filteredBoards;
-      } catch (error) {
-        throw new Error('Error in fetching boards');
-      }
+      subscription.on('event', (event: NDKEvent) => {
+        const parsedBoard = parseBoardFromEvent(event);
+
+        if (isMutedBoard(parsedBoard, muteList)) return;
+        hasBoards = true;
+
+        const author = ndk.getUser({ hexpubkey: event.pubkey });
+        author.fetchProfile().then(() => {
+          setBoards((prev) => [...prev, { ...parsedBoard, author }]);
+        });
+      });
+
+      subscription.on('eose', () => {
+        if (hasBoards == false) {
+          setHasMore(false);
+        }
+
+        setEose(true);
+      });
     },
-    [pool, relays, author, title, c, f, t, settings]
+    [ndk, boards, author, title, category, format, tag, muteList, setBoards, setEose, setHasMore]
   );
 
-  return useInfiniteQuery({
-    queryKey: [
-      'nostr',
-      'boards',
-      {
-        author,
-        title,
-        category: c,
-        format: f,
-        tag: t,
-        muteList: settings && settings.muteList ? settings.muteList.join(',') : undefined,
-      },
-    ],
-    queryFn: fetchBoards,
-    retry: 4,
-    staleTime: 0,
-    enabled: !!pool && !!relays,
-    getNextPageParam: (lastPage) =>
-      lastPage.length > 0 ? lastPage[lastPage.length - 1].timestamp - 1 : undefined,
-  });
+  const loadMore = useCallback(() => {
+    subscribe(boards[boards.length - 1].timestamp - 1, true);
+  }, [subscribe, boards]);
+
+  const isLoading = !eose && boards.length == 0;
+  const isFetching = !eose && boards.length > 0;
+  const isDone = eose && boards.length > 0;
+  const isEmpty = eose && boards.length == 0;
+
+  const status = isLoading
+    ? 'loading'
+    : isFetching
+    ? 'fetching'
+    : isDone
+    ? 'done'
+    : isEmpty
+    ? 'empty'
+    : 'error';
+
+  useEffect(() => {
+    if (!enabled) return;
+    if (isSubscribed.current == true) return;
+
+    isSubscribed.current = true;
+
+    subscribe();
+  }, [subscribe, enabled]);
+
+  return { boards, loadMore, status, hasMore };
 };

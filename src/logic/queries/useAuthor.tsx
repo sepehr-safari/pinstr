@@ -1,36 +1,26 @@
-import { useQuery } from '@tanstack/react-query';
-import { Filter } from 'nostr-tools';
-import { useCallback } from 'react';
+import { NDKUser } from '@nostr-dev-kit/ndk';
+import { useEffect, useState } from 'react';
 
 import { useLocalStore } from '@/logic/store';
-import { parseAuthorsFromEvents } from '@/logic/utils';
 
-export const useAuthor = (hexPubkey: string | undefined) => {
-  const pool = useLocalStore((store) => store.pool);
-  const relays = useLocalStore((store) => store.relays);
+export const useAuthor = (npub: string | undefined) => {
+  const [isLoading, setIsloading] = useState(true);
+  const [author, setAuthor] = useState<NDKUser | undefined>(undefined);
 
-  const fetchAuthor = useCallback(async () => {
-    if (!pool || !relays || !hexPubkey) throw new Error('Missing dependencies in fetching author');
+  const ndk = useLocalStore((state) => state.ndk);
 
-    const filter: Filter = { kinds: [0], authors: [hexPubkey] };
+  useEffect(() => {
+    if (!!ndk && !!npub) {
+      const user = ndk.getUser({ npub });
 
-    try {
-      const events = await pool.batchedList('authors', relays, [filter]);
-      const parsedAuthors = parseAuthorsFromEvents(events);
+      if (user.profile != undefined) return;
 
-      if (parsedAuthors.length == 0) throw new Error('Author not found');
-
-      return parsedAuthors[0];
-    } catch (error) {
-      throw new Error('Error in fetching author');
+      user.fetchProfile().then(() => {
+        setAuthor(user);
+        setIsloading(false);
+      });
     }
-  }, [pool, relays, hexPubkey]);
+  }, [ndk, npub, setIsloading, setAuthor]);
 
-  return useQuery({
-    queryKey: ['nostr', 'authors', hexPubkey],
-    queryFn: fetchAuthor,
-    retry: 4,
-    staleTime: 1000 * 60 * 30, // 30 minutes
-    enabled: typeof hexPubkey != 'undefined' && !!pool && !!relays,
-  });
+  return { author, isLoading };
 };

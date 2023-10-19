@@ -1,34 +1,17 @@
-import { useQuery } from '@tanstack/react-query';
-import { Filter } from 'nostr-tools';
-import { useCallback } from 'react';
-
-import { useLocalStore } from '@/logic/store';
+import { NDKEvent } from '@nostr-dev-kit/ndk';
+import { useEffect, useState } from 'react';
+import { useLocalStore } from '../store';
 
 export const useNote = (noteId: string | undefined) => {
-  const pool = useLocalStore((store) => store.pool);
-  const relays = useLocalStore((store) => store.relays);
+  const [note, setNote] = useState<NDKEvent | undefined | null>(undefined);
 
-  const fetchNote = useCallback(async () => {
-    if (!pool || !relays || !noteId) throw new Error('Missing dependencies in fetching note');
+  const ndk = useLocalStore((state) => state.ndk);
 
-    const filter: Filter = { kinds: [1], ids: [noteId] };
+  useEffect(() => {
+    if (!noteId || !!note || !ndk) return;
 
-    try {
-      const events = await pool.batchedList('notes', relays, [filter]);
+    ndk.fetchEvent(noteId).then((event) => setNote(event));
+  }, [noteId, note]);
 
-      if (events.length == 0) throw new Error('Note not found');
-
-      return events[0];
-    } catch (error) {
-      throw new Error('Error in fetching note');
-    }
-  }, [pool, relays, noteId]);
-
-  return useQuery({
-    queryKey: ['nostr', 'notes', noteId],
-    queryFn: fetchNote,
-    retry: 4,
-    staleTime: 1000 * 60 * 30, // 30 minutes
-    enabled: typeof noteId != 'undefined' && !!pool && !!relays,
-  });
+  return { note };
 };
