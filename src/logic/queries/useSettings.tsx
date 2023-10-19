@@ -1,9 +1,9 @@
-import { NDKEvent, NDKFilter } from '@nostr-dev-kit/ndk';
-import { useEffect, useState } from 'react';
-import { useLocalStore } from '@/logic/store';
 import { useUser } from '@/logic/queries';
-import { parseSettingsFromEvent } from '../utils';
+import { useLocalStore } from '@/logic/store';
+import { NDKFilter } from '@nostr-dev-kit/ndk';
+import { useEffect, useState } from 'react';
 import { Settings } from '../types';
+import { parseSettingsFromEvent } from '../utils';
 
 const defaultSettings: Settings = {
   muteList: [],
