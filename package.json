@@ -13,9 +13,11 @@
   "dependencies": {
     "@headlessui/react": "^1.7.16",
     "@heroicons/react": "^2.0.18",
+    "@nostr-dev-kit/ndk": "^2.0.3",
+    "@nostr-dev-kit/ndk-cache-dexie": "^2.0.3",
     "@popperjs/core": "^2.11.8",
-    "@tanstack/react-query": "^4.32.1",
-    "@tanstack/react-query-persist-client": "^4.32.6",
+    "@tanstack/react-query": "^4.36.1",
+    "@tanstack/react-query-persist-client": "^4.36.1",
     "idb-keyval": "^6.2.1",
     "lodash.clonedeep": "^4.5.0",
     "nostr-tools": "^1.16.0",
@@ -46,7 +48,7 @@
     "postcss": "^8.4.27",
     "prettier": "3.0.0",
     "tailwindcss": "^3.3.3",
-    "typescript": "^5.0.2",
+    "typescript": "^5.2.2",
     "vite": "^4.4.5"
   }
 }
