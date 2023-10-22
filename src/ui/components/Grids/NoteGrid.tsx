@@ -2,8 +2,8 @@ import { nip19 } from 'nostr-tools';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { useAuthor, useNote, useUser } from '@/logic/queries';
-import { NDKBoard } from '@/logic/types';
+import { useAuthor, useEvent, useUser } from '@/logic/queries';
+import { Board } from '@/logic/types';
 import { ellipsis, joinClassNames, loader } from '@/logic/utils';
 
 import { EllipsisPopover } from '@/ui/components/Popovers';
@@ -12,11 +12,11 @@ export const NoteGrid = ({
   board,
   setPinIndex,
 }: {
-  board: NDKBoard;
+  board: Board;
   setPinIndex: (index: number) => void;
 }) => {
   const { pubkey } = useUser();
-  const selfBoard = pubkey ? pubkey == board.author.pubkey : false;
+  const selfBoard = pubkey ? pubkey == board.event.author.pubkey : false;
 
   const [lastPinIndex, setLastPinIndex] = useState<number>(50);
   const hasNextPage = board.pins.length > lastPinIndex;
@@ -73,7 +73,7 @@ export const NoteDetails = ({
   summary?: boolean;
   setPinIndex?: () => void;
 }) => {
-  const { note } = useNote(noteId);
+  const { event: note } = useEvent(noteId);
   const noteNpub = note ? nip19.npubEncode(note.pubkey) : undefined;
   const { author } = useAuthor(noteNpub);
 
@@ -99,7 +99,7 @@ export const NoteDetails = ({
               <img
                 className="rounded-full"
                 src={loader(author.profile.image, { w: 96, h: 96 })}
-                alt={author?.profile.displayName + ' avatar'}
+                alt={author?.profile.name + ' avatar'}
                 loading="lazy"
               />
             )}
@@ -109,7 +109,7 @@ export const NoteDetails = ({
             <Link to={`/p/${author?.npub}`} className="z-[4]">
               <h3 className="flex truncate text-sm font-medium text-gray-900 hover:underline">
                 {author ? (
-                  ellipsis(author?.profile?.displayName || '', 20)
+                  ellipsis(author?.profile?.name || '', 20)
                 ) : (
                   <div className="animate-pulse w-24 h-[1rem] rounded bg-gray-100" />
                 )}

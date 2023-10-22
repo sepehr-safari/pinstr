@@ -2,11 +2,11 @@ import { HeartIcon } from '@heroicons/react/20/solid';
 import { useMemo } from 'react';
 
 import { useBoardLikes, useUser } from '@/logic/queries';
-import { NDKBoard } from '@/logic/types';
+import { Board } from '@/logic/types';
 import { joinClassNames, numberEllipsis } from '@/logic/utils';
 
 interface Params {
-  board: NDKBoard;
+  board: Board;
   bgHover?: boolean;
 }
 

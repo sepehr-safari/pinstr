@@ -7,7 +7,7 @@ import {
   useRemoveBoardParams,
   useRemovePinParams,
 } from '@/logic/hooks';
-import { NDKBoard, PopoverButton } from '@/logic/types';
+import { Board, PopoverButton } from '@/logic/types';
 
 import { ActionButton } from './ActionButton';
 
@@ -16,7 +16,7 @@ export const EditButtons = ({
   pinIndex,
   editType,
 }: {
-  board: NDKBoard;
+  board: Board;
   pinIndex?: number | undefined;
   editType: 'pin' | 'board';
 }) => {

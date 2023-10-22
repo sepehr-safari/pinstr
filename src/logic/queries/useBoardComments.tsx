@@ -1,9 +1,9 @@
 import { NDKEvent, NDKFilter } from '@nostr-dev-kit/ndk';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocalStore } from '../store';
-import { NDKBoard } from '../types';
+import { Board } from '../types';
 
-export const useBoardComments = (board: NDKBoard | undefined) => {
+export const useBoardComments = (board: Board | undefined) => {
   const isSubscribed = useRef(false);
 
   const [comments, setComments] = useState<NDKEvent[]>([]);
@@ -15,7 +15,7 @@ export const useBoardComments = (board: NDKBoard | undefined) => {
     if (!ndk || !board) return;
 
     const filter: NDKFilter = {
-      '#a': [`${33889}:${board.author.pubkey}:${board.title}`],
+      '#a': [`${33889}:${board.event.author.pubkey}:${board.title}`],
       kinds: [1],
     };
 

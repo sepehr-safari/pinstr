@@ -2,13 +2,13 @@ import { BoltIcon } from '@heroicons/react/20/solid';
 import { useMemo, useState } from 'react';
 
 import { useBoardZaps, useUser } from '@/logic/queries';
-import { NDKBoard } from '@/logic/types';
+import { Board } from '@/logic/types';
 import { getInvoiceAmount, joinClassNames, numberEllipsis } from '@/logic/utils';
 
 import { ZapModal } from '@/ui/components';
 
 interface Params {
-  board: NDKBoard;
+  board: Board;
   bgHover?: boolean;
 }
 

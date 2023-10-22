@@ -2,7 +2,7 @@ import { Popover } from '@headlessui/react';
 import { EllipsisVerticalIcon } from '@heroicons/react/24/outline';
 import { useMemo } from 'react';
 
-import { NDKBoard, PopoverButton } from '@/logic/types';
+import { Board, PopoverButton } from '@/logic/types';
 import { joinClassNames } from '@/logic/utils';
 
 import { ActionButton } from './ActionButton';
@@ -12,7 +12,7 @@ import { InternalLink } from './InternalLink';
 import { TransitionWrapper } from './TransitionWrapper';
 
 interface Params {
-  board: NDKBoard;
+  board: Board;
   pinIndex?: number;
   actionButtons?: PopoverButton[];
   internalLinks?: string[][];

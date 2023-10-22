@@ -37,11 +37,11 @@ export const Breadcrumb = () => {
                   className="ml-2 truncate text-xs font-light text-gray-400 hover:text-gray-700"
                   state={{ backgroundLocation: location }}
                 >
-                  {author.profile.displayName}
+                  {author.profile.name}
                 </Link>
               ) : (
                 <div className="ml-2 truncate text-xs font-light text-gray-400">
-                  {author.profile.displayName}
+                  {author.profile.name}
                 </div>
               )}
             </div>

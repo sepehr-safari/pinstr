@@ -1,4 +1,4 @@
-import { Format, NDKBoard, Pin } from '@/logic/types';
+import { Format, Board, Pin } from '@/logic/types';
 import { NDKEvent } from '@nostr-dev-kit/ndk';
 
 export const parseBoardFromEvent = (event: NDKEvent) => {
@@ -53,9 +53,7 @@ export const parseBoardFromEvent = (event: NDKEvent) => {
     throw new Error('Invalid board');
   }
 
-  const board: Omit<NDKBoard, 'author'> = {
-    id: event.id,
-    timestamp: event.created_at || 1,
+  const board: Board = {
     title,
     image,
     description,

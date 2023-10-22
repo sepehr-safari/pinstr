@@ -7,7 +7,7 @@ import {
   VideoCameraIcon,
 } from '@heroicons/react/24/outline';
 
-import { useLocalStore } from '@/logic/store';
+import { Board } from '@/logic/types';
 import { joinClassNames } from '@/logic/utils';
 
 const items = [
@@ -55,9 +55,11 @@ const items = [
   },
 ];
 
-export const FormatSelector = () => {
-  const setBoardItem = useLocalStore((store) => store.setBoardItem);
+type Params = {
+  setBoardItem: (key: keyof Board, value: any) => void;
+};
 
+export const FormatSelector = ({ setBoardItem }: Params) => {
   return (
     <ul role="list" className="grid grid-cols-1 gap-6">
       {items.map((item) => (

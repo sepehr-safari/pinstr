@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { useAuthor, useUser } from '@/logic/queries';
-import { NDKBoard } from '@/logic/types';
+import { Board } from '@/logic/types';
 import { ellipsis, joinClassNames, loader } from '@/logic/utils';
 
 import { EllipsisPopover } from '@/ui/components/Popovers';
@@ -14,11 +14,11 @@ export const ProfileGrid = ({
   board,
   setPinIndex,
 }: {
-  board: NDKBoard;
+  board: Board;
   setPinIndex: (index: number) => void;
 }) => {
   const { pubkey } = useUser();
-  const selfBoard = pubkey ? pubkey == board.author.pubkey : false;
+  const selfBoard = pubkey ? pubkey == board.event.author.pubkey : false;
 
   const [lastPinIndex, setLastPinIndex] = useState<number>(50);
   const hasNextPage = board.pins.length > lastPinIndex;
@@ -114,7 +114,7 @@ export const ProfileDetails = ({
                 summary ? 'rounded-lg' : 'rounded-t-lg'
               )}
               src={loader(author.profile.banner, { w: 300, h: 96 })}
-              alt={author.profile.displayName + ' banner'}
+              alt={author.profile.name + ' banner'}
               loading="lazy"
             />
           )}
@@ -138,7 +138,7 @@ export const ProfileDetails = ({
             <img
               className="w-full h-full"
               src={loader(author.profile.image, { w: 96, h: 96 })}
-              alt={author.profile.displayName + ' avatar'}
+              alt={author.profile.name + ' avatar'}
               loading="lazy"
             />
           )}
@@ -146,9 +146,9 @@ export const ProfileDetails = ({
         <h3 className="mt-4 w-full truncate text-base font-semibold leading-7 tracking-tight text-gray-900">
           {author?.profile ? (
             summary ? (
-              ellipsis(author.profile.displayName || '', 20)
+              ellipsis(author.profile.name || '', 20)
             ) : (
-              ellipsis(author.profile.displayName || '', 30)
+              ellipsis(author.profile.name || '', 30)
             )
           ) : (
             <div className="animate-pulse mx-auto w-1/2 h-[2rem] rounded bg-gray-200" />

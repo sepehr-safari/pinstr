@@ -104,7 +104,7 @@ export const MainNavbar = () => {
                                   })
                                 : ''
                             }
-                            alt={selfUser?.profile?.displayName + ' avatar'}
+                            alt={selfUser?.profile?.name + ' avatar'}
                             loading="lazy"
                           />
                         </Menu.Button>
@@ -130,11 +130,11 @@ export const MainNavbar = () => {
                                     })
                                   : ''
                               }
-                              alt={selfUser?.profile?.displayName + ' avatar'}
+                              alt={selfUser?.profile?.name + ' avatar'}
                               loading="lazy"
                             />
                             <h3 className="mt-2 mb-4 text-sm font-semibold text-gray-900 text-center">
-                              {selfUser?.profile?.displayName}
+                              {selfUser?.profile?.name}
                             </h3>
                           </Menu.Item>
                           <div className="py-1">

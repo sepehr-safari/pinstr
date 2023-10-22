@@ -2,11 +2,11 @@ import { ChatBubbleLeftIcon } from '@heroicons/react/24/solid';
 
 import { useCommentsParams } from '@/logic/hooks';
 import { useBoardComments } from '@/logic/queries';
-import { NDKBoard } from '@/logic/types';
+import { Board } from '@/logic/types';
 import { joinClassNames, numberEllipsis } from '@/logic/utils';
 
 interface Params {
-  board: NDKBoard;
+  board: Board;
   bgHover?: boolean;
 }
 

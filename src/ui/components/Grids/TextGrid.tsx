@@ -1,7 +1,7 @@
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
 
 import { useUser } from '@/logic/queries';
-import { NDKBoard } from '@/logic/types';
+import { Board } from '@/logic/types';
 import { ellipsis, joinClassNames, loader } from '@/logic/utils';
 
 import { EllipsisPopover } from '@/ui/components/Popovers';
@@ -10,11 +10,11 @@ export const TextGrid = ({
   board,
   setPinIndex,
 }: {
-  board: NDKBoard;
+  board: Board;
   setPinIndex: (index: number) => void;
 }) => {
   const { pubkey } = useUser();
-  const selfBoard = pubkey ? pubkey == board.author.pubkey : false;
+  const selfBoard = pubkey ? pubkey == board.event.author.pubkey : false;
 
   if (board.pins.length == 0) {
     return <div>Empty Board!</div>;
