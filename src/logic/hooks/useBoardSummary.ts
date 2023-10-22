@@ -2,25 +2,23 @@ import { nip19 } from 'nostr-tools';
 import { useParams } from 'react-router-dom';
 
 import { useCommentsParams, useCreatePinParams, useEditBoardParams } from '@/logic/hooks';
-import { useBoards, useUser } from '@/logic/queries';
+import { useBoard, useUser } from '@/logic/queries';
 
 export const useBoardSummary = () => {
   const { npub, title } = useParams();
-  const hex = npub ? nip19.decode(npub).data.toString() : undefined;
+  const author = npub ? nip19.decode(npub).data.toString() : undefined;
 
   const { commentsParam } = useCommentsParams();
 
-  const { boards, status } = useBoards({ author: hex, title, enabled: !!hex && !!title });
-  const board = boards ? boards[0] : undefined;
+  const board = useBoard({ author, title });
 
   const { pubkey } = useUser();
-  const selfBoard = pubkey ? pubkey == hex : false;
+  const selfBoard = pubkey ? pubkey == author : false;
 
-  const { setEditBoardParams } = useEditBoardParams(board);
-  const { setCreatePinParams } = useCreatePinParams(board);
+  const { setEditBoardParams } = useEditBoardParams(board ?? undefined);
+  const { setCreatePinParams } = useCreatePinParams(board ?? undefined);
 
   return {
-    status,
     board,
     setEditBoardParams,
     setCreatePinParams,
