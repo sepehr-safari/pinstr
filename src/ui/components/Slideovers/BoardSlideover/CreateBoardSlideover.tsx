@@ -1,57 +1,51 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, useEffect, useMemo } from 'react';
+import { Fragment, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import { useRemoveBoardParams } from '@/logic/hooks';
 import { useMutateBoard } from '@/logic/mutations';
-import { useLocalStore } from '@/logic/store';
 import { capitalizeFirstLetter } from '@/logic/utils';
 
+import { Board } from '@/logic/types';
 import { CategoryMenu, ImageMenu } from '@/ui/components/Menus';
 import { FormatSelector } from './FormatSelector';
 
-export const BoardSlideover = () => {
+export const CreateBoardSlideover = () => {
+  const [tempBoard, setTempBoard] = useState<Partial<Board>>({});
+
   const [searchParams, setSearchParams] = useSearchParams();
   const action = searchParams.get('action');
-  const confirm = searchParams.get('confirm');
 
-  const board = useLocalStore((store) => store.board);
-  const setBoardItem = useLocalStore((store) => store.setBoardItem);
+  const setBoardItem = (key: keyof Board, value: any) => {
+    setTempBoard((board) => ({ ...board, [key]: value }));
+  };
 
-  const canSubmit = useMemo(
-    () =>
-      board.format != undefined &&
-      board.category != undefined &&
-      board.title != undefined &&
-      board.description != undefined &&
-      board.image != undefined,
-    [board.format, board.category, board.title, board.description, board.image]
-  );
+  const canSubmit = () =>
+    tempBoard &&
+    tempBoard.format != undefined &&
+    tempBoard.category != undefined &&
+    tempBoard.title != undefined &&
+    tempBoard.description != undefined &&
+    tempBoard.image != undefined;
 
-  const { publishBoard, updateBoard, deleteBoard } = useMutateBoard();
-
-  const { setRemoveBoardParams } = useRemoveBoardParams(board);
-
-  useEffect(() => {
-    if (action === 'remove-board' && confirm === 'true') {
-      !deleteBoard.isLoading && deleteBoard.mutate();
-    }
-  }, [deleteBoard, action, confirm]);
+  const { publishBoard, isLoading } = useMutateBoard();
 
   return (
-    <Transition.Root show={action === 'create-board' || action === 'edit-board'} as={Fragment}>
+    <Transition.Root show={action === 'create-board'} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-10"
-        onClose={() =>
+        onClose={() => {
+          setTempBoard({});
+
           setSearchParams(
             (searchParams) => {
               searchParams.delete('action');
+
               return searchParams;
             },
             { replace: true }
-          )
-        }
+          );
+        }}
       >
         <Transition.Child
           as={Fragment}
@@ -85,35 +79,27 @@ export const BoardSlideover = () => {
                       <div className="bg-gray-800 px-4 py-6 sm:px-6">
                         <div className="flex items-center justify-between">
                           <Dialog.Title className="text-base font-semibold leading-6 text-white">
-                            {action === 'create-board' ? (
-                              board.format == undefined ? (
-                                <span>Create a new board</span>
-                              ) : (
-                                <span>{board.format}</span>
-                              )
+                            {tempBoard.format == undefined ? (
+                              <span>Create a new board</span>
                             ) : (
-                              <span>Edit your board</span>
+                              <span>{tempBoard.format}</span>
                             )}
                           </Dialog.Title>
                         </div>
                         <div className="mt-1">
                           <p className="text-sm font-light text-gray-300">
-                            {action === 'create-board' ? (
-                              board.format == undefined ? (
-                                <span>Get started by choosing a board type.</span>
-                              ) : (
-                                <span>Fill in the details below to create your desired board.</span>
-                              )
+                            {tempBoard.format == undefined ? (
+                              <span>Get started by choosing a board type.</span>
                             ) : (
-                              <span>Edit the details below to update your board.</span>
+                              <span>Fill in the details below to create your desired board.</span>
                             )}
                           </p>
                         </div>
                       </div>
 
-                      {board.format == undefined ? (
+                      {tempBoard.format == undefined ? (
                         <div className="p-6">
-                          <FormatSelector />
+                          <FormatSelector setBoardItem={setBoardItem} />
                         </div>
                       ) : (
                         <div className="flex flex-1 flex-col justify-between">
@@ -139,7 +125,7 @@ export const BoardSlideover = () => {
                                     autoComplete="off"
                                     autoFocus
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
-                                    value={board.title}
+                                    value={tempBoard.title}
                                     onChange={(e) => setBoardItem('title', e.target.value)}
                                   />
                                 </div>
@@ -163,7 +149,7 @@ export const BoardSlideover = () => {
                                     id="description"
                                     autoComplete="off"
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
-                                    value={board.description}
+                                    value={tempBoard.description}
                                     onChange={(e) => setBoardItem('description', e.target.value)}
                                   />
                                 </div>
@@ -182,7 +168,7 @@ export const BoardSlideover = () => {
                                 </span>
                                 <div className="mt-2">
                                   <CategoryMenu
-                                    selected={board.category}
+                                    selected={tempBoard.category}
                                     setSelected={(value) => setBoardItem('category', value)}
                                     hideFirstOption
                                   />
@@ -208,7 +194,7 @@ export const BoardSlideover = () => {
                                     id="tags"
                                     autoComplete="off"
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
-                                    value={board.tags?.join(' ')}
+                                    value={tempBoard.tags?.join(' ')}
                                     onChange={(event) =>
                                       setBoardItem(
                                         'tags',
@@ -223,9 +209,9 @@ export const BoardSlideover = () => {
                                   />
                                 </div>
 
-                                {board.tags && board.tags.length > 0 && (
+                                {tempBoard.tags && tempBoard.tags.length > 0 && (
                                   <div className="mt-2 flex gap-2 flex-wrap">
-                                    {board.tags.map((tag, index) => (
+                                    {tempBoard.tags.map((tag, index) => (
                                       <span
                                         key={index}
                                         className="inline-flex items-center gap-x-0.5 rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10"
@@ -252,64 +238,44 @@ export const BoardSlideover = () => {
                                 </span>
                                 <div className="mt-2">
                                   <ImageMenu
-                                    image={board.image}
+                                    image={tempBoard.image}
                                     setImage={(value) => setBoardItem('image', value)}
                                   />
                                 </div>
                               </div>
-
-                              {action === 'edit-board' && (
-                                <div className="py-6">
-                                  <div className="flex flex-col rounded-md border border-dashed border-red-300">
-                                    <div className="w-full bg-red-50 shadow-inner px-4 py-2 border-b border-red-100 rounded-t-md">
-                                      <span className="text-sm font-bold text-red-400">
-                                        Danger Zone
-                                      </span>
-                                    </div>
-                                    <div className="p-4 flex items-center">
-                                      <div className="text-xs">
-                                        Deleting a board is permanent and cannot be undone.
-                                      </div>
-                                      <button
-                                        type="button"
-                                        className="ml-auto rounded-md border border-red-200 px-4 py-1 text-sm font-bold leading-6 text-red-400 hover:text-red-500 hover:border-red-300"
-                                        onClick={setRemoveBoardParams}
-                                      >
-                                        Delete Board
-                                      </button>
-                                    </div>
-                                  </div>
-                                </div>
-                              )}
                             </div>
                           </div>
                         </div>
                       )}
                     </div>
+
                     <div className="flex flex-shrink-0 justify-between px-4 py-4">
                       <div>
                         <button
                           type="button"
                           className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                          onClick={() =>
+                          onClick={() => {
+                            setTempBoard({});
+
                             setSearchParams(
                               (searchParams) => {
                                 searchParams.delete('action');
+
                                 return searchParams;
                               },
                               {
                                 replace: true,
                               }
-                            )
-                          }
+                            );
+                          }}
                         >
                           Cancel
                         </button>
                       </div>
 
-                      {board.format != undefined && (
+                      {tempBoard.format != undefined && (
                         <div className="flex">
-                          {action === 'create-board' ? (
+                          {
                             <>
                               <button
                                 type="button"
@@ -324,23 +290,14 @@ export const BoardSlideover = () => {
                               </button>
                               <button
                                 type="button"
-                                onClick={() => publishBoard.mutate()}
+                                onClick={() => publishBoard(tempBoard, () => setTempBoard({}))}
                                 className="ml-4 inline-flex justify-center rounded-md bg-gray-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 disabled:bg-gray-300 disabled:hover:opacity-100"
-                                disabled={!canSubmit || publishBoard.status == 'loading'}
+                                disabled={!canSubmit || isLoading}
                               >
                                 Create Board
                               </button>
                             </>
-                          ) : (
-                            <button
-                              type="button"
-                              onClick={() => updateBoard.mutate()}
-                              className="ml-4 inline-flex justify-center rounded-md bg-gray-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 disabled:bg-gray-300 disabled:hover:opacity-100"
-                              disabled={!canSubmit || updateBoard.status == 'loading'}
-                            >
-                              Update Board
-                            </button>
-                          )}
+                          }
                         </div>
                       )}
                     </div>
