@@ -1,197 +1,216 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { nip19 } from 'nostr-tools';
-import { useCallback } from 'react';
+import NDK, { NDKEvent } from '@nostr-dev-kit/ndk';
+import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { usePublish } from '@/logic/mutations';
+import { useUser } from '@/logic/queries';
 import { useLocalStore } from '@/logic/store';
-import { Format, NDKBoard } from '@/logic/types';
+import { Board, Format } from '@/logic/types';
 import { normalizePinContent } from '@/logic/utils';
 
+type PublishBoardParams = {
+  pubkey: string | null | undefined;
+  board: Partial<Board>;
+  pinIndex: string | null;
+  action: string | null;
+  ndk: NDK;
+  overridePins?: string[][] | undefined;
+};
+
+const publishBoardFn = async ({
+  pubkey,
+  board,
+  pinIndex,
+  action,
+  ndk,
+  overridePins,
+}: PublishBoardParams) => {
+  if (
+    !pubkey ||
+    !board.format ||
+    !board.category ||
+    !board.title ||
+    !board.description ||
+    !board.image ||
+    !board.headers
+  ) {
+    throw new Error('Missing required fields');
+  }
+
+  const newPins = [...(overridePins || board.pins || [])];
+  if (pinIndex != null && newPins.length > +pinIndex && action != 'remove-pin') {
+    for (let hIndex = 0; hIndex < board.headers.length; hIndex++) {
+      if (newPins[+pinIndex][hIndex] !== '') {
+        const normalizedContent = await normalizePinContent({
+          content: newPins[+pinIndex][hIndex],
+          format: board.headers[hIndex].split(':')[0] as Format,
+        });
+
+        newPins[+pinIndex][hIndex] = normalizedContent;
+      }
+    }
+  }
+
+  const e = new NDKEvent(ndk, {
+    content: '',
+    kind: 33889,
+    created_at: Math.floor(Date.now() / 1000),
+    pubkey,
+    tags: [
+      ['d', board.title],
+      ['description', board.description],
+      ['c', board.category],
+      ['f', board.format],
+      ['image', board.image],
+      ['headers', ...board.headers],
+      ...(board.tags || [])
+        .filter((t, i, a) => t.length > 0 && a.indexOf(t) === i)
+        .map((t) => ['t', t]),
+      ...newPins.filter((p) => p.some((c) => c !== '')).map((p) => ['pin', ...p]),
+    ],
+  });
+
+  await e.publish();
+
+  return e;
+};
+
+type DeleteBoardParams = { pubkey: string | null | undefined; board: Partial<Board>; ndk: NDK };
+
+const deleteBoardFn = async ({ pubkey, board, ndk }: DeleteBoardParams) => {
+  if (!pubkey || !board.event || !board.event.id) {
+    throw new Error('Missing required fields');
+  }
+
+  const e = new NDKEvent(ndk, {
+    content: '',
+    created_at: Math.floor(Date.now() / 1000),
+    pubkey,
+    kind: 5,
+    tags: [['e', board.event.id]],
+  });
+
+  await e.publish();
+
+  return e;
+};
+
 export const useMutateBoard = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const [searchParams, setSearchParams] = useSearchParams();
   const action = searchParams.get('action');
   const pinIndex = searchParams.get('i');
 
-  const { category, description, headers, image, pins, tags, title, format, id, author } =
-    useLocalStore((store) => store.board);
+  const ndk = useLocalStore((store) => store.ndk);
 
-  const queryClient = useQueryClient();
+  const { pubkey } = useUser();
 
   const navigate = useNavigate();
 
-  const publish = usePublish();
-
-  const publishBoardFn = useCallback(
-    async (overridePins?: string[][] | undefined) => {
-      if (!format || !category || !title || !description || !image || !headers) {
-        throw new Error('Missing required fields');
-      }
-
-      const newPins = [...(overridePins || pins || [])];
-      if (pinIndex != null && newPins.length > +pinIndex && action != 'remove-pin') {
-        for (let hIndex = 0; hIndex < headers.length; hIndex++) {
-          if (newPins[+pinIndex][hIndex] !== '') {
-            const normalizedContent = await normalizePinContent({
-              content: newPins[+pinIndex][hIndex],
-              format: headers[hIndex].split(':')[0] as Format,
-            });
-
-            newPins[+pinIndex][hIndex] = normalizedContent;
-          }
-        }
-      }
-
-      return publish({
-        kind: 33889 as number,
-        tags: [
-          ['d', title],
-          ['description', description],
-          ['c', category],
-          ['f', format],
-          ['image', image],
-          ['headers', ...headers],
-          ...(tags || [])
-            .filter((t, i, a) => t.length > 0 && a.indexOf(t) === i)
-            .map((t) => ['t', t]),
-          ...newPins.filter((p) => p.some((c) => c !== '')).map((p) => ['pin', ...p]),
-        ],
-      });
-    },
-    [publish, title, description, image, category, format, tags, pins, headers, pinIndex]
-  );
-
-  const deleteBoardFn = useCallback(() => {
-    if (!id) {
-      throw new Error('Missing initial board');
-    }
-
-    return publish({ kind: 5, tags: [['e', id]] });
-  }, [id, publish]);
-
-  const updateBoardFn = useCallback(async () => {
-    // TODO: NDKBoard is not the actual type of the board in react-query cache
-    const cachedBoard = queryClient.getQueryData<NDKBoard>(['nostr', 'boards', { author, title }], {
-      exact: false,
-    });
-
-    if (!cachedBoard) {
-      await deleteBoardFn();
-    }
-
-    return publishBoardFn();
-  }, [publishBoardFn, deleteBoardFn, queryClient, author, title]);
-
   return {
-    publishBoard: useMutation({
-      mutationFn: () =>
-        toast.promise(publishBoardFn, {
+    isLoading,
+    publishBoard: (board: Partial<Board>, onSuccess?: () => void) => {
+      setIsLoading(true);
+
+      toast
+        .promise(publishBoardFn({ pubkey, board, pinIndex, action, ndk }), {
           pending: 'Publishing...',
-          error: 'An error has been occured! Please try again.',
           success: 'Successfully published!',
-        }),
-      onSuccess: (event) => {
-        queryClient.invalidateQueries({
-          queryKey: ['nostr', 'boards', { author: event.pubkey, title }],
-        });
-
-        navigate('/p/' + nip19.npubEncode(event.pubkey) + '/' + title, { replace: true });
-      },
-      onError: () => {
-        setSearchParams(
-          (searchParams) => {
-            searchParams.delete('action');
-            searchParams.delete('i');
-            return searchParams;
-          },
-          { replace: true }
-        );
-      },
-    }),
-    updateBoard: useMutation({
-      mutationFn: () =>
-        toast.promise(updateBoardFn, {
-          pending: 'Publishing...',
           error: 'An error has been occured! Please try again.',
-          success: 'Successfully Published!',
-        }),
-      onSuccess: (event) => {
-        queryClient.invalidateQueries({
-          queryKey: ['nostr', 'boards', { author: event.pubkey, title }],
-        });
+        })
+        .then((event) => {
+          navigate('/p/' + event.author.npub + '/' + board.title, { replace: true });
 
-        navigate('/p/' + nip19.npubEncode(event.pubkey) + '/' + title, { replace: true });
-      },
-      onError: () => {
-        setSearchParams(
-          (searchParams) => {
-            searchParams.delete('action');
-            return searchParams;
-          },
-          { replace: true }
-        );
-      },
-    }),
-    deleteBoard: useMutation({
-      mutationFn: () =>
-        toast.promise(deleteBoardFn, {
+          onSuccess?.();
+        })
+        .catch(() => {
+          toast('An error has been occured! Please try again.', { type: 'error' });
+
+          setSearchParams(
+            (searchParams) => {
+              searchParams.delete('action');
+              searchParams.delete('i');
+              return searchParams;
+            },
+            { replace: true }
+          );
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    },
+    deleteBoard: (board: Partial<Board>, onSuccess?: () => void) => {
+      setIsLoading(true);
+
+      toast
+        .promise(deleteBoardFn({ pubkey, board, ndk }), {
           pending: 'Deleting board...',
           error: 'An error has been occured! Please try again.',
           success: 'Successfully deleted!',
-        }),
-      onSuccess: (event) => {
-        queryClient.invalidateQueries({ queryKey: ['nostr', 'boards', { author: event.pubkey }] });
-
-        navigate('/p/' + nip19.npubEncode(event.pubkey), {
-          replace: true,
-        });
-      },
-      onError: () => {
-        setSearchParams(
-          (searchParams) => {
-            searchParams.delete('action');
-            searchParams.delete('confirm');
-            return searchParams;
-          },
-          { replace: true }
-        );
-      },
-    }),
-    removePin: useMutation({
-      mutationFn: () => {
-        const newPins = [...(pins || [])];
-
-        if (pinIndex != null && newPins.length > 0) {
-          newPins.splice(parseInt(pinIndex), 1);
-
-          return toast.promise(publishBoardFn(newPins), {
-            pending: 'Removing pin...',
-            error: 'An error has been occured! Please try again.',
-            success: 'Successfully removed!',
+        })
+        .then((event) => {
+          navigate('/p/' + event.author.npub, {
+            replace: true,
           });
-        } else {
-          throw new Error('Unexpected remove action');
-        }
-      },
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['nostr', 'boards', { author, title }] });
 
-        navigate('/p/' + nip19.npubEncode(author!.pubkey) + '/' + title, { replace: true });
-      },
-      onError: () => {
-        toast('An error has been occured! Please try again.', { type: 'error' });
+          onSuccess?.();
+        })
+        .catch(() => {
+          setSearchParams(
+            (searchParams) => {
+              searchParams.delete('action');
+              searchParams.delete('confirm');
+              return searchParams;
+            },
+            { replace: true }
+          );
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    },
+    removePin: (board: Partial<Board>, pinIndex: string, onSuccess?: () => void) => {
+      const newPins = [...(board.pins || [])];
 
-        setSearchParams(
-          (searchParams) => {
-            searchParams.delete('action');
-            searchParams.delete('i');
-            searchParams.delete('confirm');
-            return searchParams;
-          },
-          { replace: true }
-        );
-      },
-    }),
+      if (newPins.length > 0) {
+        newPins.splice(parseInt(pinIndex), 1);
+
+        setIsLoading(true);
+
+        toast
+          .promise(
+            publishBoardFn({ pubkey, board, pinIndex, action, ndk, overridePins: newPins }),
+            {
+              pending: 'Removing pin...',
+              error: 'An error has been occured! Please try again.',
+              success: 'Successfully removed!',
+            }
+          )
+          .then(() => {
+            navigate('/p/' + board.event!.author.npub + '/' + board.title, {
+              replace: true,
+            });
+
+            onSuccess?.();
+          })
+          .catch(() => {
+            setSearchParams(
+              (searchParams) => {
+                searchParams.delete('action');
+                searchParams.delete('i');
+                searchParams.delete('confirm');
+                return searchParams;
+              },
+              { replace: true }
+            );
+          })
+          .finally(() => {
+            setIsLoading(false);
+          });
+      } else {
+        throw new Error('Unexpected remove action');
+      }
+    },
   };
 };
