@@ -3,15 +3,19 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { useLocalStore } from '@/logic/store';
-import { Format } from '@/logic/types';
+import { Format, Board } from '@/logic/types';
 import { OGloader } from '@/logic/utils';
 
 import { ImageMenu } from '@/ui/components/Menus';
 
 const REQUIRED_TITLES = ['Content', 'Title', 'Image'];
 
-export const PinEditor = () => {
+type Params = {
+  board: Board;
+  setBoardItem: (key: keyof Board, value: any) => void;
+};
+
+export const PinEditor = ({ board, setBoardItem }: Params) => {
   const [isFetchingLinkPreview, setIsFetchingLinkPreview] = useState(false);
 
   const [searchParams, _] = useSearchParams();
@@ -19,10 +23,19 @@ export const PinEditor = () => {
   const pinIndex = searchParams.get('i');
   const reorderFeatures = searchParams.get('reorder-features');
 
-  const headers = useLocalStore((store) => store.board.headers);
-  const pins = useLocalStore((store) => store.board.pins);
-  const setPin = useLocalStore((store) => store.setPin);
-  const setBoardItem = useLocalStore((store) => store.setBoardItem);
+  const { headers, pins } = board;
+
+  const setPin = (pinIndex: number, headerIndex: number, value: any) => {
+    const newPins = [...(board.pins || [])];
+    if (newPins.length > pinIndex) {
+      newPins[pinIndex][headerIndex] = value;
+    } else {
+      newPins[pinIndex] = [];
+      newPins[pinIndex][headerIndex] = value;
+    }
+
+    setBoardItem('pins', newPins);
+  };
 
   const firstOptionalHeaderIndex = useMemo(() => {
     if (!headers) return -1;

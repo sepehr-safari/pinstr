@@ -1,30 +1,11 @@
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
-import { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 
-import { useBoards, useUser } from '@/logic/queries';
-import { useLocalStore } from '@/logic/store';
+import { useSelectBoard } from '@/logic/hooks';
 import { loader } from '@/logic/utils';
 
 export const SelectBoard = () => {
-  const [searchInput, setSearchInput] = useState('');
-
-  const { pubkey } = useUser();
-
-  const { boards, loadMore } = useBoards({
-    author: pubkey || undefined,
-    enabled: !!pubkey,
-  });
-
-  const setBoard = useLocalStore((store) => store.setBoard);
-
-  const [_, setSearchParams] = useSearchParams();
-
-  // const safeFetchNextPage = useCallback(() => {
-  //   if (hasNextPage && !isFetchingNextPage && !isFetching) {
-  //     fetchNextPage();
-  //   }
-  // }, [hasNextPage, isFetchingNextPage, isFetching]);
+  const { boards, hasMore, loadMore, searchInput, selectBoard, setSearchInput, isFetching } =
+    useSelectBoard();
 
   return (
     <>
@@ -55,7 +36,7 @@ export const SelectBoard = () => {
           {(boards || [])
             .filter((board) => board.title.toLowerCase().includes(searchInput.toLowerCase()))
             .map((board) => (
-              <li key={board.id} className="flow-root">
+              <li key={board.event.id} className="flow-root">
                 <div className="relative group flex items-center gap-2 pr-2 rounded-xl focus-within:ring-2 focus-within:ring-gray-500 hover:bg-gray-100 hover:cursor-pointer">
                   <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-lg bg-gray-200 text-gray-200">
                     <img
@@ -72,17 +53,7 @@ export const SelectBoard = () => {
                       <button
                         type="button"
                         className="text-start"
-                        onClick={() => {
-                          setSearchParams(
-                            (searchParams) => {
-                              searchParams.set('i', board.pins.length.toString());
-                              return searchParams;
-                            },
-                            { replace: true }
-                          );
-
-                          setBoard(board);
-                        }}
+                        onClick={() => selectBoard(board)}
                       >
                         <span className="absolute inset-0" aria-hidden="true" />
                         <span>{board.title}</span>
@@ -101,15 +72,13 @@ export const SelectBoard = () => {
           Load More
         </button>
 
-        {/* {hasNextPage && (
-          <button
-            className="mt-4 mx-auto block text-gray-700 bg-gray-100 text-xs px-4 py-1 rounded-md disabled:text-gray-300 disabled:bg-gray-50"
-            onClick={() => safeFetchNextPage()}
-            disabled={isFetchingNextPage}
-          >
-            {isFetchingNextPage ? 'Loading...' : 'Load More'}
-          </button>
-        )} */}
+        <button
+          onClick={() => loadMore()}
+          disabled={!hasMore || isFetching}
+          className="mt-20 mx-auto block text-gray-700 bg-gray-100 text-xs px-4 py-1 rounded-md disabled:text-gray-300 disabled:bg-gray-50"
+        >
+          {isFetching ? 'Loading...' : hasMore ? 'Load More' : 'Nothing more to load'}
+        </button>
       </div>
     </>
   );
