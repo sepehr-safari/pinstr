@@ -1,4 +1,6 @@
 export * from './useBoardSummary';
+export * from './useBoardsByAuthor';
+export * from './useBoardsExplorer';
 export * from './useClickAway';
 export * from './useCommentsParams';
 export * from './useCreateBoardParams';
@@ -8,3 +10,4 @@ export * from './useEditPinParams';
 export * from './useFiltersParams';
 export * from './useRemoveBoardParams';
 export * from './useRemovePinParams';
+export * from './useSelectBoard';
