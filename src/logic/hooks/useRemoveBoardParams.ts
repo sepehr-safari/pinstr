@@ -1,20 +1,18 @@
 import { useSearchParams } from 'react-router-dom';
 
-import { useLocalStore } from '@/logic/store';
-import { NDKBoard } from '@/logic/types';
+import { Board } from '@/logic/types';
 
-export const useRemoveBoardParams = (board: Partial<NDKBoard> | undefined) => {
-  const setBoard = useLocalStore((store) => store.setBoard);
-
+export const useRemoveBoardParams = (board: Board | undefined) => {
   const [_, setSearchParams] = useSearchParams();
 
   return {
     setRemoveBoardParams: () => {
       if (board) {
-        setBoard(board);
         setSearchParams(
           (searchParams) => {
             searchParams.set('action', 'remove-board');
+            board.title && searchParams.set('title', board.title);
+
             return searchParams;
           },
           { replace: true }
