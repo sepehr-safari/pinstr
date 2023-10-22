@@ -1,6 +1,8 @@
+import { nip19 } from 'nostr-tools';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-import { useBoards } from '@/logic/queries';
+import { useBoard } from '@/logic/queries';
 import { Format } from '@/logic/types';
 
 import { Spinner } from '@/ui/components';
@@ -13,8 +15,6 @@ import {
   VideoGrid,
 } from '@/ui/components/Grids';
 import { DetailsSlideover } from '@/ui/components/Slideovers';
-import { useParams } from 'react-router-dom';
-import { nip19 } from 'nostr-tools';
 
 export const Page = () => {
   const [openDetails, setOpenDetails] = useState(false);
@@ -23,14 +23,13 @@ export const Page = () => {
   const { npub, title } = useParams();
   const author = npub ? nip19.decode(npub).data.toString() : undefined;
 
-  const { boards, status } = useBoards({ author, title, enabled: !!author && !!title });
-  const board = boards ? boards[0] : undefined;
+  const board = useBoard({ author, title });
 
   useEffect(() => {
     setOpenDetails(pinIndex > -1);
   }, [pinIndex]);
 
-  if (status == 'loading') {
+  if (board == undefined) {
     return (
       <div className="h-32 flex justify-center items-center">
         <Spinner />
@@ -38,7 +37,7 @@ export const Page = () => {
     );
   }
 
-  if (!board) {
+  if (board == null) {
     return <div>Board not found!</div>;
   }
 
