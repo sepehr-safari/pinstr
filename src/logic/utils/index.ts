@@ -4,7 +4,7 @@ export * from './createIDBPersister';
 export * from './ellipsis';
 export * from './formatRelativeTime';
 export * from './getInvoiceAmount';
-export * from './isMutedBoard';
+export * from './isMutedEvent';
 export * from './joinClassNames';
 export * from './loader';
 export * from './normalizePinContent';
