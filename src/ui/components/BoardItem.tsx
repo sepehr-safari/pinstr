@@ -1,23 +1,22 @@
 import { Transition } from '@headlessui/react';
 import { PaperClipIcon } from '@heroicons/react/24/outline';
-import { nip19 } from 'nostr-tools';
 import { memo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import { useCreatePinParams, useFiltersParams } from '@/logic/hooks';
 import { useUser } from '@/logic/queries';
-import { NDKBoard } from '@/logic/types';
+import { Board } from '@/logic/types';
 import { ellipsis, loader } from '@/logic/utils';
 
 import { AuthorOverview } from '@/ui/components';
 import { EllipsisPopover } from '@/ui/components/Popovers';
 import { BoardLikeButton, BoardZapButton } from '@/ui/components/ReactionButtons';
 
-const BoardItem = ({ board, hideAuthor = false }: { board: NDKBoard; hideAuthor?: boolean }) => {
+const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: boolean }) => {
   const [isHovering, setIsHover] = useState<boolean | undefined>(false);
 
   const { pubkey } = useUser();
-  const selfBoard = pubkey ? pubkey == board.author.pubkey : false;
+  const selfBoard = pubkey ? pubkey == board.event.author.pubkey : false;
 
   const location = useLocation();
 
@@ -80,7 +79,7 @@ const BoardItem = ({ board, hideAuthor = false }: { board: NDKBoard; hideAuthor?
               </button>
             </Transition.Child>
             <Link
-              to={`/p/${nip19.npubEncode(board.author.pubkey)}/${board.title}`}
+              to={`/p/${board.event.author.npub}/${board.title}`}
               state={{ backgroundLocation: location }}
             >
               <Transition.Child
@@ -109,7 +108,7 @@ const BoardItem = ({ board, hideAuthor = false }: { board: NDKBoard; hideAuthor?
               {ellipsis(board.title, 60)}
             </h3>
 
-            {!hideAuthor && <AuthorOverview author={board.author} />}
+            {!hideAuthor && <AuthorOverview author={board.event.author} />}
           </div>
           <div className="ml-4 mt-[2px] flex items-start gap-4">
             <BoardLikeButton board={board} />
@@ -121,4 +120,7 @@ const BoardItem = ({ board, hideAuthor = false }: { board: NDKBoard; hideAuthor?
   );
 };
 
-export const MemoizedBoardItem = memo(BoardItem, (prev, next) => prev.board.id == next.board.id);
+export const MemoizedBoardItem = memo(
+  BoardItem,
+  (prev, next) => prev.board.event.id == next.board.event.id
+);

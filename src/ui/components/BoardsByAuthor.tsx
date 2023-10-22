@@ -1,32 +1,19 @@
-import { useInView } from 'react-intersection-observer';
+import { useEffect } from 'react';
 
-import { useBoards } from '@/logic/queries';
-
+import { useBoardsByAuthor } from '@/logic/hooks';
 import { MemoizedBoardItem, Spinner } from '@/ui/components';
-import { nip19 } from 'nostr-tools';
-import { useParams } from 'react-router-dom';
 
 export const BoardsByAuthor = () => {
-  const { ref } = useInView();
+  const { boards, hasMore, isEmpty, isFetching, isPending, loadMore, ref, inView } =
+    useBoardsByAuthor();
 
-  const { npub } = useParams();
-  const author = npub ? nip19.decode(npub).data.toString() : undefined;
+  useEffect(() => {
+    if (!isFetching && inView) {
+      loadMore();
+    }
+  }, [isFetching, inView, loadMore]);
 
-  const { boards, status, loadMore, hasMore } = useBoards({ author, enabled: !!author });
-
-  // const safeFetchNextPage = useCallback(() => {
-  //   if (hasNextPage && !isFetchingNextPage && !isFetching) {
-  //     fetchNextPage();
-  //   }
-  // }, [hasNextPage, isFetchingNextPage, isFetching]);
-
-  // useEffect(() => {
-  //   if (inView) {
-  //     safeFetchNextPage();
-  //   }
-  // }, [inView]);
-
-  if (status == 'loading') {
+  if (isPending) {
     return (
       <div className="h-full w-full flex justify-center items-center">
         <Spinner />
@@ -34,7 +21,7 @@ export const BoardsByAuthor = () => {
     );
   }
 
-  if (status == 'empty') {
+  if (isEmpty) {
     return <div>No Boards Found!</div>;
   }
 
@@ -46,17 +33,17 @@ export const BoardsByAuthor = () => {
         }
       >
         {boards.map((board) => (
-          <MemoizedBoardItem key={board.id} board={board} />
+          <MemoizedBoardItem key={board.event.id} board={board} />
         ))}
       </div>
 
       <button
         ref={ref}
         onClick={() => loadMore()}
-        disabled={!hasMore}
+        disabled={!hasMore || isFetching}
         className="mt-20 mx-auto block text-gray-700 bg-gray-100 text-xs px-4 py-1 rounded-md disabled:text-gray-300 disabled:bg-gray-50"
       >
-        {hasMore ? 'Load More' : 'Nothing more to load'}
+        {isFetching ? 'Loading...' : hasMore ? 'Load More' : 'Nothing more to load'}
       </button>
     </div>
   );

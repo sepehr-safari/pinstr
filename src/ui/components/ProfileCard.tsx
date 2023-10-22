@@ -10,7 +10,7 @@ import { Spinner } from '@/ui/components';
 export const ProfileCard = () => {
   const { npub } = useParams();
   const { author, isLoading } = useAuthor(npub);
-  const displayName = author?.profile?.displayName || '';
+  const name = author?.profile?.name || '';
   const image = author?.profile?.image || '';
   const nip05 = author?.profile?.nip05 || '';
   const about = author?.profile?.about || '';
@@ -38,7 +38,7 @@ export const ProfileCard = () => {
             </div>
             <img
               src={!!image ? loader(image, { w: 96, h: 96 }) : ''}
-              alt={`${displayName} avatar`}
+              alt={`${name} avatar`}
               loading="lazy"
             />
           </div>
@@ -47,7 +47,7 @@ export const ProfileCard = () => {
         <div className="mt-12 w-full text-center xl:text-start xl:mt-0 xl:flex xl:flex-col xl:justify-around">
           <Link to={`/p/${npub}`} className="max-w-fit hover:underline">
             <h2 className="text-lg font-semibold [overflow-wrap:anywhere] xl:leading-6">
-              {displayName ? ellipsis(displayName, 100) : ''}
+              {name ? ellipsis(name, 100) : ''}
             </h2>
           </Link>
 

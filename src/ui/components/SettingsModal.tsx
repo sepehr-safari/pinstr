@@ -18,7 +18,7 @@ export const SettingsModal = () => {
   const { settings } = useSettings();
 
   useEffect(() => {
-    setMuteList(settings.muteList);
+    settings && setMuteList(settings.muteList);
   }, [settings]);
 
   return (

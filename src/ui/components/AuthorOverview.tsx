@@ -1,12 +1,12 @@
 import { Popover } from '@headlessui/react';
 import { PlusIcon, UserIcon } from '@heroicons/react/20/solid';
+import { NDKUser } from '@nostr-dev-kit/ndk';
 import { useState } from 'react';
 import { usePopper } from 'react-popper';
 import { Link, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { ellipsis, loader } from '@/logic/utils';
-import { NDKUser } from '@nostr-dev-kit/ndk';
 
 export const AuthorOverview = ({ author }: { author: NDKUser | undefined }) => {
   const location = useLocation();
@@ -17,9 +17,11 @@ export const AuthorOverview = ({ author }: { author: NDKUser | undefined }) => {
     placement: 'top',
   });
 
-  if (author == undefined) {
+  if (!author || !author.profile || !author.npub) {
     return <div className="animate-pulse w-1/2 mt-1 h-[0.8rem] rounded bg-gray-200" />;
   }
+
+  const { profile, npub } = author;
 
   return (
     <Popover className="leading-none">
@@ -30,7 +32,7 @@ export const AuthorOverview = ({ author }: { author: NDKUser | undefined }) => {
             className="text-xs text-gray-500 focus:border-none focus:outline-none"
             onMouseEnter={({ currentTarget }) => !open && currentTarget.click()}
           >
-            {ellipsis(author.profile?.displayName || '', 30)}
+            {ellipsis(profile.name || '', 30)}
           </Popover.Button>
 
           <Popover.Panel
@@ -46,8 +48,8 @@ export const AuthorOverview = ({ author }: { author: NDKUser | undefined }) => {
                   <div className="absolute top-0 w-full p-1">
                     <img
                       className="w-full h-24 object-cover bg-gray-200 text-gray-200 rounded-t"
-                      src={loader(author.profile?.banner || '', { w: 300, h: 96 })}
-                      alt={author.profile?.displayName || '' + ' banner'}
+                      src={loader(profile.banner || '', { w: 300, h: 96 })}
+                      alt={profile.name || '' + ' banner'}
                       loading="lazy"
                     />
                   </div>
@@ -55,18 +57,18 @@ export const AuthorOverview = ({ author }: { author: NDKUser | undefined }) => {
                     <div className="mx-auto rounded-full bg-gray-300 text-gray-300 z-[1]">
                       <img
                         className="w-24 h-24 rounded-full"
-                        src={loader(author.profile?.image || '', { w: 96, h: 96 })}
-                        alt={author.profile?.displayName || '' + ' avatar'}
+                        src={loader(profile.image || '', { w: 96, h: 96 })}
+                        alt={profile.name || '' + ' avatar'}
                         loading="lazy"
                       />
                     </div>
                     <h3 className="mt-4 text-sm font-semibold [overflow-wrap:anywhere]">
-                      {ellipsis(author.profile?.displayName || '', 100)}
+                      {ellipsis(profile.name || '', 100)}
                     </h3>
                     <dl className="mt-1 flex flex-grow flex-col justify-between">
                       <dt className="sr-only">Title</dt>
                       <dd className="text-xs font-light text-gray-500 px-4 [overflow-wrap:anywhere]">
-                        {ellipsis(author.profile?.about || '', 100)}
+                        {ellipsis(profile.about || '', 100)}
                       </dd>
                     </dl>
                   </div>
@@ -75,7 +77,7 @@ export const AuthorOverview = ({ author }: { author: NDKUser | undefined }) => {
                   <div className="-mt-px flex divide-x divide-gray-200">
                     <div className="flex w-0 flex-1">
                       <Link
-                        to={`/p/${author.npub}`}
+                        to={`/p/${npub}`}
                         state={{ backgroundLocation: location }}
                         className="relative inline-flex w-0 flex-1 items-center justify-center gap-x-2 rounded-bl-lg border border-transparent py-2 text-xs font-semibold text-gray-900 hover:underline"
                       >

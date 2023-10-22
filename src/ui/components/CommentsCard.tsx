@@ -6,10 +6,10 @@ import { Link } from 'react-router-dom';
 import { useMutateBoardComment } from '@/logic/mutations';
 import { useAuthor, useBoardComments, useUser } from '@/logic/queries';
 
-import { NDKBoard } from '@/logic/types';
+import { Board } from '@/logic/types';
 import { Comment, Spinner } from '@/ui/components';
 
-export const CommentsCard = ({ board }: { board: NDKBoard }) => {
+export const CommentsCard = ({ board }: { board: Board }) => {
   const [inputText, setInputText] = useState('');
 
   const { comments, isLoading } = useBoardComments(board);
@@ -41,7 +41,7 @@ export const CommentsCard = ({ board }: { board: NDKBoard }) => {
                 return false;
               }
 
-              if (firstTag[1] == `33889:${board.author.pubkey}:${board.title}`) return true;
+              if (firstTag[1] == `33889:${board.event.author.pubkey}:${board.title}`) return true;
             })
             .map((event) => <Comment key={event.id} event={event} />)
         )}

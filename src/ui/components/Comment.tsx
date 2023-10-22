@@ -19,7 +19,7 @@ export const Comment = ({ event }: { event: NDKEvent }) => {
   const npub = nip19.npubEncode(event.pubkey);
   const { author, isLoading } = useAuthor(npub);
   const image = author?.profile?.image || '';
-  const displayName = author?.profile?.displayName || '';
+  const name = author?.profile?.name || '';
 
   const { comments } = useNoteComments(event);
 
@@ -66,7 +66,7 @@ export const Comment = ({ event }: { event: NDKEvent }) => {
               type="button"
               className="font-semibold text-gray-700 hover:underline hover:text-gray-900"
             >
-              {displayName}
+              {name}
             </button>
 
             <span className="ml-1 font-light text-gray-500 [overflow-wrap:anywhere]">

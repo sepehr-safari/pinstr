@@ -20,12 +20,14 @@ import {
 } from '@/ui/components/ReactionButtons';
 
 export const BoardSummary = () => {
-  const { status, board, setCreatePinParams, setEditBoardParams, selfBoard, commentsParam } =
+  const { board, setCreatePinParams, setEditBoardParams, selfBoard, commentsParam } =
     useBoardSummary();
 
   const copyRawData = useCallback(() => {
+    if (!board) return;
+
     try {
-      board && navigator.clipboard.writeText(JSON.stringify(board.event.rawEvent()));
+      navigator.clipboard.writeText(JSON.stringify(board.event.rawEvent()));
 
       toast.success('Copied to clipboard', { type: 'success' });
     } catch (error) {
@@ -53,7 +55,7 @@ export const BoardSummary = () => {
     }
   }, [board]);
 
-  if (status == 'loading') {
+  if (board == undefined) {
     return (
       <div className="h-32 flex justify-center items-center overflow-hidden bg-white shadow-md text-xs xl:rounded-xl">
         <Spinner />
@@ -61,7 +63,7 @@ export const BoardSummary = () => {
     );
   }
 
-  if (!board) {
+  if (board == null) {
     return null;
   }
 
@@ -71,9 +73,13 @@ export const BoardSummary = () => {
         <div className="w-full group flex flex-col gap-4 pt-4 justify-between items-center divide-y">
           <div className="flex flex-col gap-2 text-xs font-light text-gray-400">
             <div className="flex w-full justify-center items-center gap-4">
-              <span>{board && formatRelativeTime(board.timestamp)}</span>
+              {board.event.created_at && (
+                <>
+                  <span>{formatRelativeTime(board.event.created_at)}</span>
 
-              <span>|</span>
+                  <span>|</span>
+                </>
+              )}
 
               <span className="flex items-center">
                 <Link to={`/?category=${board.category}`} className="hover:underline">
@@ -82,7 +88,7 @@ export const BoardSummary = () => {
               </span>
             </div>
 
-            {board && board.tags.length > 0 && (
+            {board.tags.length > 0 && (
               <div className="px-4 flex justify-center gap-x-4 gap-y-2 flex-wrap">
                 {board.tags.map((tag, index) => (
                   <Link to={`/?tag=${tag}`} key={index} className="hover:underline">
@@ -112,8 +118,8 @@ export const BoardSummary = () => {
             <div className="pt-4 px-6 flex flex-col gap-4 w-full items-center text-center">
               <div className="w-40 h-32 rounded-md overflow-hidden">
                 <img
-                  src={board ? loader(board?.image, { w: 500, h: 400 }) : ''}
-                  alt={board?.title}
+                  src={loader(board.image, { w: 500, h: 400 })}
+                  alt={board.title}
                   className="w-full h-full bg-gray-200 text-gray-200"
                   loading="lazy"
                 />
@@ -133,7 +139,7 @@ export const BoardSummary = () => {
                     <button
                       type="button"
                       className="flex items-center justify-center rounded-md bg-gray-100 w-full py-2 text-xs font-semibold text-gray-600 hover:bg-gray-200 hover:text-gray-900"
-                      onClick={setEditBoardParams}
+                      onClick={() => setEditBoardParams()}
                     >
                       <PencilIcon className="-ml-2 w-4 h-4" />
                       <span className="ml-2">Edit Board</span>
@@ -141,7 +147,7 @@ export const BoardSummary = () => {
                     <button
                       type="button"
                       className="flex items-center justify-center rounded-md bg-gray-100 w-full py-2 text-xs font-semibold text-gray-600 hover:bg-gray-200 hover:text-gray-900"
-                      onClick={setCreatePinParams}
+                      onClick={() => setCreatePinParams()}
                     >
                       <PaperClipIcon className="-ml-2 w-4 h-4" />
                       <span className="ml-2">Add Pin</span>

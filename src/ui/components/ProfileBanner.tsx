@@ -9,7 +9,7 @@ export const ProfileBanner = () => {
 
   const { npub } = useParams();
   const { author } = useAuthor(npub);
-  const displayName = author?.profile?.displayName || '';
+  const name = author?.profile?.name || '';
   const banner = author?.profile?.banner || '';
 
   return (
@@ -23,7 +23,7 @@ export const ProfileBanner = () => {
         <img
           className="w-full h-full object-cover text-white md:rounded-t-md"
           src={loader(banner, { w: 1000, h: 256 })}
-          alt={`${displayName} banner`}
+          alt={`${name} banner`}
           loading="lazy"
         />
       ) : (
