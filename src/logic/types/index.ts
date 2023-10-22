@@ -1,4 +1,4 @@
-import { NDKEvent, NDKUser } from '@nostr-dev-kit/ndk';
+import { NDKEvent } from '@nostr-dev-kit/ndk';
 
 export type Settings = {
   muteList: string[];
@@ -17,11 +17,8 @@ export enum Format {
 
 export type Features = Map<Format, [string, string]>;
 
-export interface NDKBoard {
-  id: string;
-  timestamp: number;
+export interface Board {
   title: string;
-  author: NDKUser;
   description: string;
   category: string;
   tags: string[];
