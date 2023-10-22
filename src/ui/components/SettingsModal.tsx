@@ -18,8 +18,8 @@ export const SettingsModal = () => {
   const { settings } = useSettings();
 
   useEffect(() => {
-    settings && setMuteList(settings.muteList);
-  }, [settings]);
+    muteList == undefined && settings && setMuteList(settings.muteList);
+  }, [muteList, settings, setMuteList]);
 
   return (
     <Transition.Root show={!!settingsParam} as={Fragment}>
