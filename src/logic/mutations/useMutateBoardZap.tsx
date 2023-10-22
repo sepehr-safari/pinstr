@@ -2,14 +2,14 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 
-import { NDKBoard } from '@/logic/types';
+import { Board } from '@/logic/types';
 
 export const useMutateBoardZap = ({
   board,
   amount,
   comment,
 }: {
-  board: NDKBoard | undefined | null;
+  board: Board | undefined | null;
   amount: number;
   comment: string;
 }) => {
@@ -44,7 +44,12 @@ export const useMutateBoardZap = ({
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['nostr', 'boards', { author: board?.author, title: board?.title }, 'reactions'],
+        queryKey: [
+          'nostr',
+          'boards',
+          { author: board?.event.author.pubkey, title: board?.title },
+          'reactions',
+        ],
         exact: false,
       });
     },

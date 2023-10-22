@@ -3,9 +3,9 @@ import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 
 import { usePublish } from '@/logic/mutations';
-import { NDKBoard } from '@/logic/types';
+import { Board } from '@/logic/types';
 
-export const useMutateBoardComment = (board: NDKBoard | undefined | null) => {
+export const useMutateBoardComment = (board: Board | undefined | null) => {
   const publish = usePublish();
   const queryClient = useQueryClient();
 
@@ -19,8 +19,8 @@ export const useMutateBoardComment = (board: NDKBoard | undefined | null) => {
         content: text,
         kind: 1,
         tags: [
-          ['a', `${33889}:${board.author.pubkey}:${board.title}`],
-          ['p', board.author.pubkey],
+          ['a', `${33889}:${board.event.author.pubkey}:${board.title}`],
+          ['p', board.event.author.pubkey],
         ],
       });
     },
@@ -39,7 +39,7 @@ export const useMutateBoardComment = (board: NDKBoard | undefined | null) => {
       queryClient.invalidateQueries([
         'nostr',
         'boards',
-        { author: board?.author.pubkey, title: board?.title },
+        { author: board?.event.author.pubkey, title: board?.title },
         'reactions',
       ]);
     },
