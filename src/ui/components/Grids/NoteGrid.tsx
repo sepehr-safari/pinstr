@@ -1,3 +1,4 @@
+import { NDKUser } from '@nostr-dev-kit/ndk';
 import { nip19 } from 'nostr-tools';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -74,7 +75,8 @@ export const NoteDetails = ({
   setPinIndex?: () => void;
 }) => {
   const { event: note } = useEvent(noteId);
-  const noteNpub = note ? nip19.npubEncode(note.pubkey) : undefined;
+  const ndkUser = note ? new NDKUser({ hexpubkey: note.pubkey }) : undefined;
+  const noteNpub = ndkUser?.npub;
   const { author } = useAuthor(noteNpub);
 
   if (note == null) {

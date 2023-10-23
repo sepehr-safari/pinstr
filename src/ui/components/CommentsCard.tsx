@@ -1,5 +1,5 @@
 import { PaperAirplaneIcon } from '@heroicons/react/24/outline';
-import { nip19 } from 'nostr-tools';
+import { NDKUser } from '@nostr-dev-kit/ndk';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -15,7 +15,8 @@ export const CommentsCard = ({ board }: { board: Board }) => {
   const { comments, isLoading } = useBoardComments(board);
 
   const { pubkey: selfPubkey } = useUser();
-  const selfNpub = selfPubkey ? nip19.npubEncode(selfPubkey) : undefined;
+  const ndkUser = selfPubkey ? new NDKUser({ hexpubkey: selfPubkey }) : undefined;
+  const selfNpub = ndkUser?.npub;
   const { author: selfUser } = useAuthor(selfNpub);
 
   const mutateBoardComment = useMutateBoardComment(board);

@@ -1,4 +1,4 @@
-import { nip19 } from 'nostr-tools';
+import { NDKUser } from '@nostr-dev-kit/ndk';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -21,7 +21,8 @@ export const Page = () => {
   const [pinIndex, setPinIndex] = useState<number>(-1);
 
   const { npub, title } = useParams();
-  const author = npub ? nip19.decode(npub).data.toString() : undefined;
+  const ndkUser = npub ? new NDKUser({ npub }) : undefined;
+  const author = ndkUser?.pubkey;
 
   const board = useBoard({ author, title });
 

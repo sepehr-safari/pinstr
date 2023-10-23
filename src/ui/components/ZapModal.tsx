@@ -1,11 +1,10 @@
 import { Dialog, Transition } from '@headlessui/react';
+import { NDKEvent, NDKUser } from '@nostr-dev-kit/ndk';
 import { Fragment, useState } from 'react';
 
 import { useMutateBoardZap, useMutateNoteZap } from '@/logic/mutations';
 import { useAuthor } from '@/logic/queries';
 import { Board } from '@/logic/types';
-import { NDKEvent } from '@nostr-dev-kit/ndk';
-import { nip19 } from 'nostr-tools';
 
 const ZAP_AMOUNTS = [
   {
@@ -62,7 +61,8 @@ export const ZapModal = ({
   const [selectedAmount, setSelectedAmount] = useState(ZAP_AMOUNTS[0]);
   const [comment, setComment] = useState('');
 
-  const noteNpub = note ? nip19.npubEncode(note?.pubkey) : undefined;
+  const ndkUser = note ? new NDKUser({ hexpubkey: note.pubkey }) : undefined;
+  const noteNpub = ndkUser?.npub;
   const { author } = useAuthor(board?.event.author.npub || noteNpub);
 
   const zapBoard = useMutateBoardZap({ board, amount: selectedAmount.amount, comment });

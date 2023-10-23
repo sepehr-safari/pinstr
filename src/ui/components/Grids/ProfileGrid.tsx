@@ -1,4 +1,5 @@
 import { PlusIcon } from '@heroicons/react/20/solid';
+import { NDKUser } from '@nostr-dev-kit/ndk';
 import { nip19 } from 'nostr-tools';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -79,7 +80,7 @@ export const ProfileDetails = ({
 }) => {
   const navigate = useNavigate();
 
-  const npub = nip19.npubEncode(pubkey);
+  const { npub } = new NDKUser({ hexpubkey: pubkey });
   const { author, isLoading } = useAuthor(npub);
 
   if (!isLoading && !author) {

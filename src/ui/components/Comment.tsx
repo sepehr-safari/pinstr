@@ -1,5 +1,5 @@
 import { PaperAirplaneIcon } from '@heroicons/react/24/outline';
-import { nip19 } from 'nostr-tools';
+import { NDKEvent, NDKUser } from '@nostr-dev-kit/ndk';
 import { useMemo, useState } from 'react';
 
 import { useMutateNoteComment } from '@/logic/mutations';
@@ -8,7 +8,6 @@ import { formatRelativeTime, loader } from '@/logic/utils';
 
 import { Spinner } from '@/ui/components';
 import { NoteCommentButton, NoteLikeButton, NoteZapButton } from '@/ui/components/ReactionButtons';
-import { NDKEvent } from '@nostr-dev-kit/ndk';
 
 export const Comment = ({ event }: { event: NDKEvent }) => {
   const [inputText, setInputText] = useState('');
@@ -16,7 +15,7 @@ export const Comment = ({ event }: { event: NDKEvent }) => {
 
   const { pubkey: selfPubkey } = useUser();
 
-  const npub = nip19.npubEncode(event.pubkey);
+  const { npub } = new NDKUser({ hexpubkey: event.pubkey });
   const { author, isLoading } = useAuthor(npub);
   const image = author?.profile?.image || '';
   const name = author?.profile?.name || '';

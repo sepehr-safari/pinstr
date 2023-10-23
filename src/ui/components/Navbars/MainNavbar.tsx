@@ -1,5 +1,6 @@
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid';
+import { NDKUser } from '@nostr-dev-kit/ndk';
 import { nip19 } from 'nostr-tools';
 import { Fragment, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -22,7 +23,8 @@ export const MainNavbar = () => {
   const { tag } = useFiltersParams();
 
   const { pubkey } = useUser();
-  const npub = pubkey ? nip19.npubEncode(pubkey) : undefined;
+  const ndkUser = pubkey ? new NDKUser({ hexpubkey: pubkey }) : undefined;
+  const npub = ndkUser?.npub;
   const { author: selfUser } = useAuthor(npub);
 
   USER_NAVIGATION[0].link = pubkey ? `/p/${nip19.npubEncode(pubkey)}` : '#';
