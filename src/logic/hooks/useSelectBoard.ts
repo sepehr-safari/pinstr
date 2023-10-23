@@ -1,5 +1,5 @@
 import { NDKFilter, NDKKind } from '@nostr-dev-kit/ndk';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { useEvents, useUser } from '@/logic/queries';
@@ -23,7 +23,14 @@ export const useSelectBoard = () => {
     filters: [filter],
   });
 
-  const boards = events.map((e) => parseBoardFromEvent(e));
+  const boards = useMemo(
+    () =>
+      events.reduce((boards, event) => {
+        const parsedBoard = parseBoardFromEvent(event);
+        return parsedBoard ? [...boards, parsedBoard] : boards;
+      }, [] as Board[]),
+    [events]
+  );
 
   const selectBoard = (board: Board) =>
     setSearchParams(

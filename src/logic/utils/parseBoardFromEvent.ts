@@ -46,11 +46,11 @@ export const parseBoardFromEvent = (event: NDKEvent) => {
   }
 
   if (!format || !title || !image || !description || !category || headers.length == 0) {
-    throw new Error('Invalid board');
+    return null;
   }
 
   if (format in Format == false) {
-    throw new Error('Invalid board');
+    return null;
   }
 
   const board: Board = {

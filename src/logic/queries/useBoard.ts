@@ -2,14 +2,13 @@ import { NDKFilter, NDKKind } from '@nostr-dev-kit/ndk';
 
 import { useEvent, useSettings } from '@/logic/queries';
 import { isMutedEvent, parseBoardFromEvent } from '@/logic/utils';
-import { Board } from '../types';
 
 type Params = {
   author: string | undefined;
   title: string | undefined;
 };
 
-export const useBoard = ({ author, title }: Params): Board | undefined | null => {
+export const useBoard = ({ author, title }: Params) => {
   const { settings } = useSettings();
   const muteList = settings ? settings.muteList : undefined;
 

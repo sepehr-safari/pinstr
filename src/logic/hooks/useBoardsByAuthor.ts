@@ -1,17 +1,19 @@
-import { NDKFilter, NDKKind } from '@nostr-dev-kit/ndk';
-import { nip19 } from 'nostr-tools';
+import { NDKFilter, NDKKind, NDKUser } from '@nostr-dev-kit/ndk';
+import { useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useParams } from 'react-router-dom';
 
 import { useFiltersParams } from '@/logic/hooks';
 import { useEvents, useSettings } from '@/logic/queries';
+import { Board } from '@/logic/types';
 import { isMutedEvent, parseBoardFromEvent } from '@/logic/utils';
 
 export const useBoardsByAuthor = () => {
   const { ref, inView } = useInView();
 
   const { npub } = useParams();
-  const author = npub ? nip19.decode(npub).data.toString() : undefined;
+  const ndkUser = npub ? new NDKUser({ npub }) : undefined;
+  const author = ndkUser?.pubkey;
 
   const { category, format, tag } = useFiltersParams();
   const c = category.value;
@@ -35,9 +37,16 @@ export const useBoardsByAuthor = () => {
     enabled: !!author,
   });
 
-  const boards = events
-    .filter((e) => !isMutedEvent(e, muteList))
-    .map((e) => parseBoardFromEvent(e));
+  const boards = useMemo(
+    () =>
+      events
+        .filter((event) => !isMutedEvent(event, muteList))
+        .reduce((boards, event) => {
+          const parsedBoard = parseBoardFromEvent(event);
+          return parsedBoard ? [...boards, parsedBoard] : boards;
+        }, [] as Board[]),
+    [events, muteList]
+  );
 
   return {
     boards,

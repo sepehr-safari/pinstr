@@ -1,10 +1,11 @@
 import { NDKFilter, NDKKind } from '@nostr-dev-kit/ndk';
+import { useMemo } from 'react';
+import { useInView } from 'react-intersection-observer';
 
 import { useFiltersParams } from '@/logic/hooks';
 import { useEvents, useSettings } from '@/logic/queries';
-import { useInView } from 'react-intersection-observer';
-import { Board } from '../types';
-import { isMutedEvent, parseBoardFromEvent } from '../utils';
+import { Board } from '@/logic/types';
+import { isMutedEvent, parseBoardFromEvent } from '@/logic/utils';
 
 export const useBoardsExplorer = () => {
   const { ref, inView } = useInView();
@@ -29,15 +30,16 @@ export const useBoardsExplorer = () => {
     filters: [filter],
   });
 
-  let boards: Board[] = [];
-
-  events
-    .filter((e) => !isMutedEvent(e, muteList))
-    .forEach((e) => {
-      try {
-        boards.push(parseBoardFromEvent(e));
-      } catch (_) {}
-    });
+  const boards = useMemo(
+    () =>
+      events
+        .filter((event) => !isMutedEvent(event, muteList))
+        .reduce((boards, event) => {
+          const parsedBoard = parseBoardFromEvent(event);
+          return parsedBoard ? [...boards, parsedBoard] : boards;
+        }, [] as Board[]),
+    [events, muteList]
+  );
 
   return {
     boards,
