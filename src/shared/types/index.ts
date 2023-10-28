@@ -9,12 +9,31 @@ export enum Format {
   'Note' = 'Note',
 }
 
+export enum Category {
+  'Entertainment' = 'Entertainment',
+  'Technology' = 'Technology',
+  'FOSS' = 'FOSS',
+  'Worldview' = 'Worldview',
+  'Fashion' = 'Fashion',
+  'Food' = 'Food',
+  'Arts' = 'Arts',
+  'Sports' = 'Sports',
+  'Architecture' = 'Architecture',
+  'Adventure' = 'Adventure',
+  'Science' = 'Science',
+  'History' = 'History',
+  'Business' = 'Business',
+  'Jobs' = 'Jobs',
+  'Family' = 'Family',
+  'Mindfulness' = 'Mindfulness',
+}
+
 export type Pin = string[];
 
 export type Board = {
   title: string;
   description: string;
-  category: string;
+  category: Category;
   tags: string[];
   image: string;
   headers: string[];
@@ -30,12 +49,3 @@ export type Settings = {
 };
 
 export type ProfileAddressType = 'nip05' | 'nip19' | 'hex' | 'unknown';
-
-export interface PopoverButton {
-  title: string;
-  onClick: () => void;
-  description?: string;
-  color?: string;
-  icon?: any;
-  private?: boolean;
-}

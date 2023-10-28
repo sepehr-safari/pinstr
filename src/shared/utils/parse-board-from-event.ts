@@ -1,4 +1,4 @@
-import { Format, Board, Pin } from 'shared/types';
+import { Format, type Board, type Pin, Category } from 'shared/types';
 import { NDKEvent } from '@nostr-dev-kit/ndk';
 
 export const parseBoardFromEvent = (event: NDKEvent) => {
@@ -53,11 +53,15 @@ export const parseBoardFromEvent = (event: NDKEvent) => {
     return null;
   }
 
+  if (category in Category == false) {
+    return null;
+  }
+
   const board: Board = {
     title,
     image,
     description,
-    category,
+    category: category as Category,
     headers,
     tags,
     pins,
