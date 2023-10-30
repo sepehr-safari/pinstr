@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { useMutateUser } from '@/logic/mutations';
-import { useUser } from '@/logic/queries';
+import { useMutateUser } from '@/shared/hooks/mutations';
+import { useUser } from '@/shared/hooks/queries';
 
 export const Page = () => {
   const { pubkey } = useUser();

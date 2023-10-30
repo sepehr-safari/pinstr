@@ -1,7 +1,7 @@
 import NDK, { NDKNip07Signer } from '@nostr-dev-kit/ndk';
 import NDKCacheAdapterDexie from '@nostr-dev-kit/ndk-cache-dexie';
 import { SimplePool } from 'nostr-tools';
-import { Category, Format } from 'shared/types';
+import { Category, Format } from '@/shared/types';
 import { create } from 'zustand';
 
 type NDKState = {

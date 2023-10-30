@@ -1,9 +1,9 @@
 import { Event, EventTemplate } from 'nostr-tools';
 import { useCallback } from 'react';
 
-import { useUser } from '@/logic/queries';
-import { useLocalStore } from '@/logic/store';
-import { signEventWithNip07, signEventWithSeckey } from '@/logic/utils';
+import { useUser } from '@/shared/hooks/queries';
+import { useLocalStore } from '@/shared/store';
+import { signEventWithNip07, signEventWithSeckey } from '@/shared/utils';
 
 export const usePublish = () => {
   const { pool, relays } = useLocalStore();

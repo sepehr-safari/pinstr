@@ -1,7 +1,7 @@
 import { NDKEvent, NDKFilter, NDKSubscription, NDKSubscriptionOptions } from '@nostr-dev-kit/ndk';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { useLocalStore } from '@/logic/store';
+import { useLocalStore } from '@/shared/store';
 
 type Params = {
   filters: NDKFilter[];

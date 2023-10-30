@@ -1,4 +1,4 @@
-import { Format, type Board, type Pin, Category } from 'shared/types';
+import { Format, type Board, type Pin, Category } from '@/shared/types';
 import { NDKEvent } from '@nostr-dev-kit/ndk';
 
 export const parseBoardFromEvent = (event: NDKEvent) => {

@@ -1,5 +1,4 @@
-import { BoardsExplorer } from '@/ui/components';
-import { FiltersNavbar } from '@/ui/components/Navbars';
+import { BoardsExplorer, FiltersNavbar } from '@/features';
 
 export const Page = () => {
   return (

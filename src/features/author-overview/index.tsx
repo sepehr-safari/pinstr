@@ -6,7 +6,7 @@ import { usePopper } from 'react-popper';
 import { Link, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { ellipsis, loader } from 'shared/utils';
+import { ellipsis, loader } from '@/shared/utils';
 
 export const AuthorOverview = ({ author }: { author: NDKUser | undefined }) => {
   const location = useLocation();

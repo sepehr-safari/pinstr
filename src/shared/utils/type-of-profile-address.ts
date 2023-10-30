@@ -1,4 +1,4 @@
-import { ProfileAddressType } from 'shared/types';
+import { ProfileAddressType } from '@/shared/types';
 
 export const typeOfProfileAddress = (address: string): ProfileAddressType => {
   if (address.startsWith('npub1')) {

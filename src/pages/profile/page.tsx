@@ -1,6 +1,5 @@
-import { BoardsByAuthor, ProfileCard } from '@/ui/components';
-import { FiltersNavbar } from '@/ui/components/Navbars';
-import { MainContainer, StickyContainer } from '@/ui/components/ProfileContainers';
+import { BoardsByAuthor, ProfileCard, FiltersNavbar } from '@/features';
+import { StickyContainer, MainContainer } from '@/shared/layouts';
 
 export const Page = () => {
   return (

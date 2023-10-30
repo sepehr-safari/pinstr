@@ -1,8 +1,8 @@
+import { NDKEvent } from '@nostr-dev-kit/ndk';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 
-import { usePublish } from '@/logic/mutations';
-import { NDKEvent } from '@nostr-dev-kit/ndk';
+import { usePublish } from '@/shared/hooks/mutations';
 
 export const useMutateNoteLike = (note: NDKEvent | undefined | null) => {
   const publish = usePublish();

@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 
-import { usePublish } from '@/logic/mutations';
-import { Board } from '@/logic/types';
+import { usePublish } from '@/shared/hooks/mutations';
+import { Board } from '@/shared/types';
 
 export const useMutateBoardLike = (board: Board | undefined | null) => {
   const publish = usePublish();

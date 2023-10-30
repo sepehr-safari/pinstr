@@ -2,9 +2,9 @@ import { Popover } from '@headlessui/react';
 import { EllipsisVerticalIcon } from '@heroicons/react/24/outline';
 import { useMemo } from 'react';
 
-import type { Board } from 'shared/types';
+import type { Board } from '@/shared/types';
 
-import { joinClassNames } from 'shared/utils';
+import { joinClassNames } from '@/shared/utils';
 
 import { ActionButton } from './action-button';
 import { EditButtons } from './edit-buttons';

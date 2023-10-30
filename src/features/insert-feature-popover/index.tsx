@@ -12,7 +12,7 @@ import { useMemo, useState } from 'react';
 import { usePopper } from 'react-popper';
 import { useSearchParams } from 'react-router-dom';
 
-import { joinClassNames } from 'shared/utils';
+import { joinClassNames } from '@/shared/utils';
 import { PopoverButton } from './types';
 
 // TODO: refactor - replace popover with menu component

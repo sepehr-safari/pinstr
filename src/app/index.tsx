@@ -3,10 +3,10 @@ import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client
 import { useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
-import { AppRouter } from 'pages';
-import { useLocalStore } from 'shared/store';
-import { Toast } from 'shared/components';
-import { createIDBPersister } from 'shared/utils';
+import { AppRouter } from '@/pages';
+import { useLocalStore } from '@/shared/store';
+import { Toast } from '@/shared/components';
+import { createIDBPersister } from '@/shared/utils';
 
 import './index.css';
 

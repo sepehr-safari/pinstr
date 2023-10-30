@@ -3,8 +3,8 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import { useMutateSettings } from 'shared/hooks/mutations';
-import { useSettings } from 'shared/hooks/queries';
+import { useMutateSettings } from '@/shared/hooks/mutations';
+import { useSettings } from '@/shared/hooks/queries';
 
 export const SettingsModal = () => {
   const [muteList, setMuteList] = useState<string[] | undefined>(undefined);

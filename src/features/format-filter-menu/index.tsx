@@ -1,4 +1,4 @@
-import { Menu, type MenuItem } from 'shared/components';
+import { Menu, type MenuItem } from '@/shared/components';
 
 import { FORMAT_FILTER_MENU_ITEMS } from './config';
 
@@ -14,5 +14,6 @@ export const FormatFilterMenu = ({ selected, setSelected }: Props) => (
     items={FORMAT_FILTER_MENU_ITEMS}
     label={selected ?? FORMAT_FILTER_MENU_ITEMS[0].title}
     onSelect={setSelected}
+    variant="outline"
   />
 );

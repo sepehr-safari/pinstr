@@ -1,4 +1,4 @@
-import { Menu, type MenuItem } from 'shared/components';
+import { Menu, type MenuItem } from '@/shared/components';
 
 import { CATEGORY_FILTER_MENU_ITEMS } from './config';
 
@@ -18,6 +18,7 @@ export const CategoryFilterMenu = ({ selected, setSelected, hideFirstOption }: P
       items={categoryFilterMenuItems}
       label={selected ?? categoryFilterMenuItems[0].title}
       onSelect={setSelected}
+      variant="outline"
     />
   );
 };

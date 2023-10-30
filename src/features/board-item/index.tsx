@@ -3,16 +3,16 @@ import { PaperClipIcon } from '@heroicons/react/24/outline';
 import { memo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-import { useCreatePinParams, useFiltersParams } from 'shared/hooks/common';
-import { useUser } from 'shared/hooks/queries';
+import { useCreatePinParams, useFiltersParams } from '@/shared/hooks/common';
+import { useUser } from '@/shared/hooks/queries';
 
-import { Board } from 'shared/types';
+import { Board } from '@/shared/types';
 
-import { ellipsis, loader } from 'shared/utils';
+import { ellipsis, loader } from '@/shared/utils';
 
-import { AuthorOverview, EllipsisPopover } from 'features';
+import { AuthorOverview, EllipsisPopover } from '@/features';
 
-import { BoardLikeButton, BoardZapButton } from 'shared/components/ReactionButtons';
+import { BoardLikeButton, BoardZapButton } from '@/features/reaction-buttons';
 
 const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: boolean }) => {
   const [isHovering, setIsHover] = useState<boolean | undefined>(false);

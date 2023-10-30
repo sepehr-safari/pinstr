@@ -1,4 +1,4 @@
-import { joinClassNames } from 'shared/utils';
+import { joinClassNames } from '@/shared/utils';
 
 const variantClasses = {
   primary: 'bg-gray-900 text-white hover:bg-gray-700',

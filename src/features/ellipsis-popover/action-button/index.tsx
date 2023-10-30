@@ -1,5 +1,5 @@
 import { PopoverButton } from '../types';
-import { joinClassNames } from 'shared/utils';
+import { joinClassNames } from '@/shared/utils';
 
 export const ActionButton = ({ button }: { button: PopoverButton }) => {
   return (

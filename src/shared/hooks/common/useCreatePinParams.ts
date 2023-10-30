@@ -1,6 +1,6 @@
 import { useSearchParams } from 'react-router-dom';
 
-import { Board } from '@/logic/types';
+import type { Board } from '@/shared/types';
 
 export const useCreatePinParams = (board: Partial<Board> | undefined) => {
   const [_, setSearchParams] = useSearchParams();

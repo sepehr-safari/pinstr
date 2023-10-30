@@ -1,6 +1,7 @@
 import { NDKEvent, NDKFilter } from '@nostr-dev-kit/ndk';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useLocalStore } from '../store';
+
+import { useLocalStore } from '@/shared/store';
 
 export const useNoteZaps = (note: NDKEvent | undefined) => {
   const isSubscribed = useRef(false);
@@ -21,15 +22,15 @@ export const useNoteZaps = (note: NDKEvent | undefined) => {
     const subscription = ndk.subscribe([filter]);
 
     subscription.on('event', async (event: NDKEvent) => {
-      if (isLoading) setIsLoading(false);
+      setIsLoading(false);
 
       setZaps((prev) => [...prev, event]);
     });
 
     subscription.on('eose', () => {
-      if (isLoading) setIsLoading(false);
+      setIsLoading(false);
     });
-  }, [ndk, note, setZaps, setIsLoading, isLoading]);
+  }, [ndk, note, setZaps, setIsLoading]);
 
   useEffect(() => {
     if (!note || !ndk) return;

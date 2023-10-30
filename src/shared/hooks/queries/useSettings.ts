@@ -1,8 +1,8 @@
-import { useEvent, useUser } from '@/logic/queries';
 import { NDKFilter } from '@nostr-dev-kit/ndk';
 
-import { Settings } from '@/logic/types';
-import { parseSettingsFromEvent } from '@/logic/utils';
+import { useEvent, useUser } from '@/shared/hooks/queries';
+import { Settings } from '@/shared/types';
+import { parseSettingsFromEvent } from '@/shared/utils';
 
 const defaultSettings: Settings = {
   muteList: [],

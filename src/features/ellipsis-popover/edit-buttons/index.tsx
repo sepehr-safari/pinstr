@@ -6,8 +6,8 @@ import {
   useEditPinParams,
   useRemoveBoardParams,
   useRemovePinParams,
-} from 'shared/hooks/common';
-import type { Board } from 'shared/types';
+} from '@/shared/hooks/common';
+import type { Board } from '@/shared/types';
 
 import { ActionButton } from '../action-button';
 import { PopoverButton } from '../types';

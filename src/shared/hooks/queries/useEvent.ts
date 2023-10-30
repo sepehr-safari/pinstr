@@ -1,7 +1,7 @@
 import { NDKEvent, NDKFilter, NDKKind } from '@nostr-dev-kit/ndk';
 import { useEffect, useRef, useState } from 'react';
 
-import { useLocalStore } from '@/logic/store';
+import { useLocalStore } from '@/shared/store';
 
 /**
  * Custom hook to fetch an NDKEvent by ID and return its state.

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import { loader } from '@/logic/utils';
+import { loader } from '@/shared/utils';
 
 export const Page = () => {
   return (

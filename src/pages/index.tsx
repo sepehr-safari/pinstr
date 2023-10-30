@@ -6,7 +6,7 @@ import { LogoutPage } from './logout';
 import { MainLayout } from './main-layout';
 import { NoMatchPage } from './no-match';
 import { ProfileLayout, ProfilePage } from './profile';
-import { BoardLayout, BoardPage } from './profile/board';
+import { BoardLayout, BoardPage } from './board';
 import { SlideoverLayout } from './slideover-layout';
 
 export const AppRouter = () => {

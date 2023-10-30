@@ -1,7 +1,8 @@
 import { NDKEvent, NDKFilter } from '@nostr-dev-kit/ndk';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useLocalStore } from '../store';
-import { Board } from '../types';
+
+import { useLocalStore } from '@/shared/store';
+import { Board } from '@/shared/types';
 
 export const useBoardLikes = (board: Board | undefined) => {
   const isSubscribed = useRef(false);
@@ -22,15 +23,15 @@ export const useBoardLikes = (board: Board | undefined) => {
     const subscription = ndk.subscribe([filter]);
 
     subscription.on('event', async (event: NDKEvent) => {
-      if (isLoading) setIsLoading(false);
+      setIsLoading(false);
 
       setLikes((prev) => [...prev, event]);
     });
 
     subscription.on('eose', () => {
-      if (isLoading) setIsLoading(false);
+      setIsLoading(false);
     });
-  }, [ndk, board, setLikes, setIsLoading, isLoading]);
+  }, [ndk, board, setLikes, setIsLoading]);
 
   useEffect(() => {
     if (!board || !ndk) return;

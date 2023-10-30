@@ -1,7 +1,7 @@
 import { Menu as HeadlessuiMenu, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 
-import { joinClassNames } from 'shared/utils';
+import { joinClassNames } from '@/shared/utils';
 
 import { type MenuItem } from './types';
 

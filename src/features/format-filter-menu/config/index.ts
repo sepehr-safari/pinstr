@@ -1,4 +1,4 @@
-import { type MenuItem } from 'shared/components';
+import { type MenuItem } from '@/shared/components';
 
 export const FORMAT_FILTER_MENU_ITEMS: MenuItem[] = [
   {

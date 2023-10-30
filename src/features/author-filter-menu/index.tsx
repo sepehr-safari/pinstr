@@ -1,4 +1,4 @@
-import { Menu, type MenuItem } from 'shared/components';
+import { Menu, type MenuItem } from '@/shared/components';
 
 import { AUTHOR_FILTER_MENU_ITEMS } from './config';
 

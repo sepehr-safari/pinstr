@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 
-import { Board } from '@/logic/types';
+import { Board } from '@/shared/types';
 
 export const useMutateBoardZap = ({
   board,

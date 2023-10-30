@@ -3,7 +3,7 @@ import { ListBulletIcon, PaperClipIcon, PlusIcon } from '@heroicons/react/24/out
 import { useMemo, useState } from 'react';
 import { usePopper } from 'react-popper';
 
-import { useCreateBoardParams, useCreatePinParams } from 'shared/hooks/common';
+import { useCreateBoardParams, useCreatePinParams } from '@/shared/hooks/common';
 
 // TODO: Should replace popover with menu component
 export const CreatePopover = () => {

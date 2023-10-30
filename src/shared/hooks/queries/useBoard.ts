@@ -1,7 +1,7 @@
 import { NDKFilter, NDKKind } from '@nostr-dev-kit/ndk';
 
-import { useEvent, useSettings } from '@/logic/queries';
-import { isMutedEvent, parseBoardFromEvent } from '@/logic/utils';
+import { useEvent, useSettings } from '@/shared/hooks/queries';
+import { isMutedEvent, parseBoardFromEvent } from '@/shared/utils';
 
 type Params = {
   author: string | undefined;

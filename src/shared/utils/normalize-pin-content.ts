@@ -1,7 +1,7 @@
 import { nip05, nip19 } from 'nostr-tools';
 
-import { Format } from 'shared/types';
-import { typeOfProfileAddress } from 'shared/utils';
+import { Format } from '@/shared/types';
+import { typeOfProfileAddress } from '@/shared/utils';
 
 export const normalizePinContent = async ({
   content,

@@ -1,4 +1,4 @@
-import { Settings } from 'shared/types';
+import { Settings } from '@/shared/types';
 import { NDKEvent } from '@nostr-dev-kit/ndk';
 
 export const parseSettingsFromEvent = (event: NDKEvent) => {

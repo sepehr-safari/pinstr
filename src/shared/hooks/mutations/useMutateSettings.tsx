@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { usePublish } from '@/logic/mutations';
+import { usePublish } from '@/shared/hooks/mutations';
 
 export const useMutateSettings = () => {
   const [_, setSearchParams] = useSearchParams();

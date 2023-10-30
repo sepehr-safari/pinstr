@@ -1,7 +1,7 @@
 import { NDKUser } from '@nostr-dev-kit/ndk';
 import { useEffect, useState } from 'react';
 
-import { useLocalStore } from '@/logic/store';
+import { useLocalStore } from '@/shared/store';
 
 export const useAuthor = (npub: string | undefined) => {
   const [isLoading, setIsloading] = useState(true);

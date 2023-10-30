@@ -3,10 +3,10 @@ import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { useUser } from '@/logic/queries';
-import { useLocalStore } from '@/logic/store';
-import { Board, Format } from '@/logic/types';
-import { normalizePinContent } from '@/logic/utils';
+import { useUser } from '@/shared/hooks/queries';
+import { useLocalStore } from '@/shared/store';
+import { Board, Format } from '@/shared/types';
+import { normalizePinContent } from '@/shared/utils';
 
 type PublishBoardParams = {
   pubkey: string | null | undefined;
