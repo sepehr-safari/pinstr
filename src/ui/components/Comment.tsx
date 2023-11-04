@@ -22,17 +22,17 @@ export const Comment = ({ event }: { event: NDKEvent }) => {
 
   const { comments } = useNoteComments(event);
 
-  const filteredComments = useMemo(
-    () =>
-      comments.filter((commentEvent) => {
-        const lastETag = commentEvent.tags.reverse().find((tag) => tag[0] == 'e');
+  // const filteredComments = useMemo(
+  //   () =>
+  //     comments.filter((commentEvent) => {
+  //       const lastETag = commentEvent.tags.reverse().find((tag) => tag[0] == 'e');
 
-        if (lastETag?.[1] == event.id) return true;
+  //       if (lastETag?.[1] == event.id) return true;
 
-        return false;
-      }),
-    [comments]
-  );
+  //       return false;
+  //     }),
+  //   [comments]
+  // );
 
   const mutateNoteComment = useMutateNoteComment(event);
 
