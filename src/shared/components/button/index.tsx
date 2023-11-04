@@ -14,7 +14,7 @@ const sizeClasses = {
 };
 
 type Props = {
-  vatiant?: keyof typeof variantClasses;
+  variant?: keyof typeof variantClasses;
   size?: keyof typeof sizeClasses;
   rounded?: boolean;
   icon?: React.ReactNode;
@@ -22,10 +22,11 @@ type Props = {
   disabled?: boolean;
   block?: boolean;
   className?: string;
+  onClick?: () => void;
 };
 
 export const Button = ({
-  vatiant = 'primary',
+  variant = 'primary',
   size = 'md',
   rounded = false,
   icon,
@@ -33,10 +34,11 @@ export const Button = ({
   disabled = false,
   block = false,
   className = '',
+  onClick,
 }: Props) => {
   const joinedClassNames = joinClassNames(
     'flex items-center justify-center gap-2 text-xs font-semibold focus:outline-none',
-    variantClasses[vatiant],
+    variantClasses[variant],
     sizeClasses[size],
     rounded ? 'rounded-full' : 'rounded-md',
     disabled ? 'opacity-50 cursor-not-allowed' : '',
@@ -45,7 +47,7 @@ export const Button = ({
   );
 
   return (
-    <button className={joinedClassNames} disabled={disabled}>
+    <button className={joinedClassNames} disabled={disabled} onClick={onClick}>
       {icon && <span className="-ml-2 w-4 h-4">{icon}</span>}
       {label && <span className={joinClassNames(icon ? 'ml-2' : '')}>{label}</span>}
     </button>
