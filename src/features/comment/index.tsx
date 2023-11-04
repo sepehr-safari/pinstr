@@ -1,6 +1,6 @@
 import { PaperAirplaneIcon } from '@heroicons/react/24/outline';
 import { NDKEvent, NDKUser } from '@nostr-dev-kit/ndk';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 
 import { useMutateNoteComment } from '@/shared/hooks/mutations';
 import { useAuthor, useNoteComments, useUser } from '@/shared/hooks/queries';
