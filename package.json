@@ -13,7 +13,7 @@
   "dependencies": {
     "@headlessui/react": "^1.7.16",
     "@heroicons/react": "^2.0.18",
-    "@nostr-dev-kit/ndk": "^2.0.3",
+    "@nostr-dev-kit/ndk": "^2.0.5",
     "@nostr-dev-kit/ndk-cache-dexie": "^2.0.3",
     "@popperjs/core": "^2.11.8",
     "@tanstack/react-query": "^4.36.1",
