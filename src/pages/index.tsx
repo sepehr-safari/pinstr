@@ -6,10 +6,18 @@ import { LogoutPage } from './logout';
 import { MainLayout } from './main-layout';
 import { NoMatchPage } from './no-match';
 import { ProfileLayout, ProfilePage } from './profile';
-import { BoardLayout, BoardPage, EditBoardPage } from './board';
+import {
+  BoardLayout,
+  BoardPage,
+  EditBoardPage,
+  EditBoardLayout,
+  AddPinLayout,
+  AddPinPage,
+  EditPinLayout,
+  EditPinPage,
+} from './board';
 import { SlideoverLayout } from './slideover-layout';
 import { CreateBoardLayout, CreateBoardPage } from './create-board';
-import { EditBoardLayout } from './board/edit-board';
 
 export const AppRouter = () => {
   const location = useLocation();
@@ -32,6 +40,14 @@ export const AppRouter = () => {
 
                 <Route path="edit-board" element={<EditBoardLayout />}>
                   <Route index element={<EditBoardPage />} />
+                </Route>
+
+                <Route path="add-pin" element={<AddPinLayout />}>
+                  <Route index element={<AddPinPage />} />
+                </Route>
+
+                <Route path="edit-pin" element={<EditPinLayout />}>
+                  <Route index element={<EditPinPage />} />
                 </Route>
               </Route>
             </Route>

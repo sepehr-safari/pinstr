@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Spinner } from '@/shared/components';
 import { useBoard } from '@/shared/hooks/queries';
 
-import { BoardWizard } from '@/features';
+import { PinWizard } from '@/features';
 
 export const Page = () => {
   const { npub, title } = useParams();
@@ -26,9 +26,11 @@ export const Page = () => {
     return <div>Board not found!</div>;
   }
 
+  const pinIndex = board.pins ? board.pins.length : 0;
+
   return (
     <>
-      <BoardWizard initialBoard={board} />
+      <PinWizard board={board} pinIndex={pinIndex} />
     </>
   );
 };
