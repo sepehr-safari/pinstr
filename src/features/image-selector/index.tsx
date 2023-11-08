@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 
 import { loader } from '@/shared/utils';
 
-import { MenuItem, Menu } from '@/shared/components';
+import { MenuItem, Menu, Text, Input } from '@/shared/components';
 import { ImageModal } from '@/features';
 
 interface Props {
@@ -134,8 +134,13 @@ export const ImageSelector = ({ image, setImage, required = false, disabled = fa
       {!image && selectedMenuItem.title === 'Upload' && (
         <div className="mt-4">
           <div className="flex items-center gap-2">
-            <span className="text-sm font-medium leading-6 text-gray-900">Image / Upload</span>
-            {required && <span className="text-xs ml-auto">{`(Required)`}</span>}
+            <Text variant="h4">{`Image / Upload`}</Text>
+
+            {required && (
+              <Text variant="h5" className="ml-auto">
+                {`(Required)`}
+              </Text>
+            )}
           </div>
 
           <div className="mt-2 flex justify-center rounded-lg border border-gray-300 px-4 py-6 bg-gray-50">
@@ -176,23 +181,26 @@ export const ImageSelector = ({ image, setImage, required = false, disabled = fa
       {!image && selectedMenuItem.title === 'Stock Images' && (
         <>
           <div className="mt-4 flex items-center gap-2">
-            <span className="text-sm font-medium leading-6 text-gray-900">
-              Image / Search From Stock Images
-            </span>
-            {required && <span className="text-xs ml-auto">{`(Required)`}</span>}
+            <Text variant="h4">{`Image / Search From Stock Images`}</Text>
+
+            {required && (
+              <Text variant="h5" className="ml-auto">
+                {`(Required)`}
+              </Text>
+            )}
           </div>
 
           <div className="mt-2 relative">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
               <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
             </div>
-            <input
-              className="block w-full rounded-md border-0 bg-white py-1.5 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-500 sm:text-sm sm:leading-6"
+            <Input
+              variant="primary"
+              className="pl-10 pr-3 py-2"
               type="search"
               name="search"
               id="search"
               placeholder="Search a keyword"
-              autoComplete="off"
               autoFocus
               value={searchKeyword}
               onChange={(e) => setSearchKeyword(e.target.value)}
@@ -280,14 +288,12 @@ export const ImageSelector = ({ image, setImage, required = false, disabled = fa
             Image / URL
           </label>
           <div className="mt-2">
-            <input
-              type="text"
+            <Input
+              variant="primary"
               name="cover-image-url"
               id="cover-image-url"
-              autoComplete="off"
               placeholder="https://"
               autoFocus
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
               value={image}
               onChange={(e) => setImage(e.target.value)}
             />
@@ -298,10 +304,13 @@ export const ImageSelector = ({ image, setImage, required = false, disabled = fa
       {!!image && (
         <div className="mt-4">
           <div className="flex items-center gap-2">
-            <span className="text-sm font-medium leading-6 text-gray-900">
-              Image / Selected Image
-            </span>
-            {required && <span className="text-xs ml-auto">{`(Required)`}</span>}
+            <Text variant="h4">{`Image / Selected Image`}</Text>
+
+            {required && (
+              <Text variant="h5" className="ml-auto">
+                {`(Required)`}
+              </Text>
+            )}
           </div>
 
           <div className="mt-2 flex justify-center rounded-lg border border-gray-300 px-4 py-4">
