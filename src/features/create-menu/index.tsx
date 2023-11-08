@@ -1,9 +1,10 @@
 import { Popover, Transition } from '@headlessui/react';
 import { ListBulletIcon, PaperClipIcon, PlusIcon } from '@heroicons/react/24/outline';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { usePopper } from 'react-popper';
+import { useNavigate } from 'react-router-dom';
 
-import { useCreateBoardParams, useCreatePinParams } from '@/shared/hooks/common';
+import { useCreatePinParams } from '@/shared/hooks/common';
 
 // TODO: Should replace popover with menu component
 export const CreatePopover = () => {
@@ -11,26 +12,24 @@ export const CreatePopover = () => {
   const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null);
   const { styles, attributes } = usePopper(referenceElement, popperElement);
 
-  const { setCreateBoardParams } = useCreateBoardParams();
+  const navigate = useNavigate();
+
   const { setCreatePinParams } = useCreatePinParams({});
 
-  const buttons = useMemo(
-    () => [
-      {
-        title: 'New Board',
-        description: 'Create a new board',
-        icon: ListBulletIcon,
-        onClick: setCreateBoardParams,
-      },
-      {
-        title: 'Add Pin',
-        description: 'Add a new pin to an existing board',
-        icon: PaperClipIcon,
-        onClick: setCreatePinParams,
-      },
-    ],
-    [setCreateBoardParams, setCreatePinParams]
-  );
+  const buttons = [
+    {
+      title: 'New Board',
+      description: 'Create a new board',
+      icon: ListBulletIcon,
+      onClick: () => navigate('/create-board'),
+    },
+    {
+      title: 'Add Pin',
+      description: 'Add a new pin to an existing board',
+      icon: PaperClipIcon,
+      onClick: setCreatePinParams,
+    },
+  ];
 
   return (
     <Popover className="relative">

@@ -1,12 +1,7 @@
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
-import { useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import {
-  useEditBoardParams,
-  useEditPinParams,
-  useRemoveBoardParams,
-  useRemovePinParams,
-} from '@/shared/hooks/common';
+import { useEditPinParams, useRemoveBoardParams, useRemovePinParams } from '@/shared/hooks/common';
 import type { Board } from '@/shared/types';
 
 import { ActionButton } from '../action-button';
@@ -21,27 +16,28 @@ export const EditButtons = ({
   pinIndex?: number | undefined;
   editType: 'pin' | 'board';
 }) => {
-  const { setEditBoardParams } = useEditBoardParams(board);
+  const navigate = useNavigate();
+
   const { setRemoveBoardParams } = useRemoveBoardParams(board);
   const { setEditPinParams } = useEditPinParams(board, pinIndex);
   const { setRemovePinParams } = useRemovePinParams(board, pinIndex);
 
-  const buttons = useMemo<PopoverButton[]>(
-    () => [
-      {
-        title: 'Edit',
-        icon: PencilIcon,
-        onClick: editType == 'board' ? setEditBoardParams : setEditPinParams,
-      },
-      {
-        title: 'Remove',
-        icon: TrashIcon,
-        color: 'text-red-600',
-        onClick: editType == 'board' ? setRemoveBoardParams : setRemovePinParams,
-      },
-    ],
-    [editType, setEditBoardParams, setEditPinParams, setRemoveBoardParams, setRemovePinParams]
-  );
+  const buttons: PopoverButton[] = [
+    {
+      title: 'Edit',
+      icon: PencilIcon,
+      onClick:
+        editType == 'board'
+          ? () => navigate(`/p/${board.event.author.npub}/${board.title}/edit-board`)
+          : setEditPinParams,
+    },
+    {
+      title: 'Remove',
+      icon: TrashIcon,
+      color: 'text-red-600',
+      onClick: editType == 'board' ? setRemoveBoardParams : setRemovePinParams,
+    },
+  ];
 
   return (
     <>
