@@ -1,9 +1,9 @@
 import { Transition } from '@headlessui/react';
 import { PaperClipIcon } from '@heroicons/react/24/outline';
 import { memo, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-import { useCreatePinParams, useFiltersParams } from '@/shared/hooks/common';
+import { useFiltersParams } from '@/shared/hooks/common';
 import { useUser } from '@/shared/hooks/queries';
 
 import { Board } from '@/shared/types';
@@ -20,9 +20,9 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
   const { pubkey } = useUser();
   const selfBoard = pubkey ? pubkey == board.event.author.pubkey : false;
 
+  const navigate = useNavigate();
   const location = useLocation();
 
-  const { setCreatePinParams } = useCreatePinParams(board);
   const { format, category } = useFiltersParams();
 
   return (
@@ -38,7 +38,12 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
             pinIndex={0}
             selfBoard={selfBoard}
             actionButtons={[
-              { title: 'Add Pin', icon: PaperClipIcon, onClick: setCreatePinParams, private: true },
+              {
+                title: 'Add Pin',
+                icon: PaperClipIcon,
+                onClick: () => navigate(`/p/${board.event.author.npub}/${board.title}/add-pin`),
+                private: true,
+              },
             ]}
             editType="board"
             buttonTheme="dark"
