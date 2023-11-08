@@ -4,8 +4,6 @@ import { useState } from 'react';
 import { usePopper } from 'react-popper';
 import { useNavigate } from 'react-router-dom';
 
-import { useCreatePinParams } from '@/shared/hooks/common';
-
 // TODO: Should replace popover with menu component
 export const CreatePopover = () => {
   const [referenceElement, setReferenceElement] = useState<HTMLButtonElement | null>(null);
@@ -13,8 +11,6 @@ export const CreatePopover = () => {
   const { styles, attributes } = usePopper(referenceElement, popperElement);
 
   const navigate = useNavigate();
-
-  const { setCreatePinParams } = useCreatePinParams({});
 
   const buttons = [
     {
@@ -27,7 +23,7 @@ export const CreatePopover = () => {
       title: 'Add Pin',
       description: 'Add a new pin to an existing board',
       icon: PaperClipIcon,
-      onClick: setCreatePinParams,
+      onClick: () => {},
     },
   ];
 
