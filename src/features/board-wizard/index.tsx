@@ -1,10 +1,10 @@
-import { CategoryFilterMenu, FormatFilterMenu, ImageSelector, DeleteBoard } from '@/features';
+import { CategoryFilterMenu, FormatFilterMenu, ImageSelector } from '@/features';
 import { useState } from 'react';
 
+import { Button, DangerZone, Input, Text } from '@/shared/components';
+import { useMutateBoard } from '@/shared/hooks/mutations';
 import { Board, Format } from '@/shared/types';
 import { capitalizeFirstLetter, getBoardHeadersByFormat } from '@/shared/utils';
-import { Button, Input, Text } from '@/shared/components';
-import { useMutateBoard } from '@/shared/hooks/mutations';
 
 type Props = {
   initialBoard: Board | null;
@@ -13,7 +13,7 @@ type Props = {
 export const BoardWizard = ({ initialBoard }: Props) => {
   const [partialBoard, setPartialBoard] = useState<Partial<Board>>(initialBoard || {});
 
-  const { publishBoard, isLoading } = useMutateBoard();
+  const { publishBoard, isLoading, deleteBoard } = useMutateBoard();
 
   const setPartialBoardItem = (key: keyof Board, value: any) => {
     setPartialBoard((board) => ({ ...board, [key]: value }));
@@ -203,7 +203,7 @@ export const BoardWizard = ({ initialBoard }: Props) => {
             />
           </div>
 
-          {initialBoard && <DeleteBoard board={initialBoard} />}
+          {initialBoard && <DangerZone button={{ onClick: () => deleteBoard(initialBoard) }} />}
         </div>
       </div>
     </>

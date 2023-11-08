@@ -9,7 +9,6 @@ export * from './category-filter-menu';
 export * from './comment';
 export * from './comments-card';
 export * from './create-menu';
-export * from './delete-board';
 export * from './details-slideover';
 export * from './ellipsis-popover';
 export * from './filters-navbar';

@@ -6,6 +6,8 @@ const variantClasses = {
   accent: 'bg-purple-800 text-white hover:bg-purple-600',
   outline: 'bg-transparent text-gray-900 border border-gray-300 hover:bg-gray-100',
   text: 'bg-transparent text-gray-900 hover:underline',
+  danger:
+    'bg-transparent border border-red-200 text-red-400 hover:text-red-500 hover:border-red-300',
 };
 
 const sizeClasses = {
