@@ -156,16 +156,7 @@ export const useMutateBoard = () => {
 
           onSuccess?.();
         })
-        .catch(() => {
-          setSearchParams(
-            (searchParams) => {
-              searchParams.delete('action');
-              searchParams.delete('confirm');
-              return searchParams;
-            },
-            { replace: true }
-          );
-        })
+        .catch(() => {})
         .finally(() => {
           setIsLoading(false);
         });
