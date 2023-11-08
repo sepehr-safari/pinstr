@@ -201,7 +201,6 @@ export const ImageSelector = ({ image, setImage, required = false, disabled = fa
               name="search"
               id="search"
               placeholder="Search a keyword"
-              autoFocus
               value={searchKeyword}
               onChange={(e) => setSearchKeyword(e.target.value)}
             />
@@ -293,7 +292,6 @@ export const ImageSelector = ({ image, setImage, required = false, disabled = fa
               name="cover-image-url"
               id="cover-image-url"
               placeholder="https://"
-              autoFocus
               value={image}
               onChange={(e) => setImage(e.target.value)}
             />
