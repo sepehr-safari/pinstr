@@ -18,7 +18,7 @@ import { EllipsisPopover, CommentsCard } from '@/features';
 import { BoardCommentButton, BoardLikeButton, BoardZapButton } from '@/features/reaction-buttons';
 
 export const BoardSummary = () => {
-  const { board, setCreatePinParams, selfBoard, commentsParam, navigate } = useBoardSummary();
+  const { board, selfBoard, commentsParam, navigate } = useBoardSummary();
 
   const copyRawData = useCallback(() => {
     if (!board) return;
@@ -146,7 +146,9 @@ export const BoardSummary = () => {
                     <button
                       type="button"
                       className="flex items-center justify-center rounded-md bg-gray-100 w-full py-2 text-xs font-semibold text-gray-600 hover:bg-gray-200 hover:text-gray-900"
-                      onClick={() => setCreatePinParams()}
+                      onClick={() =>
+                        navigate(`/p/${board.event.author.npub}/${board.title}/add-pin`)
+                      }
                     >
                       <PaperClipIcon className="-ml-2 w-4 h-4" />
                       <span className="ml-2">Add Pin</span>

@@ -1,7 +1,7 @@
 import { nip19 } from 'nostr-tools';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { useCommentsParams, useCreatePinParams } from '@/shared/hooks/common';
+import { useCommentsParams } from '@/shared/hooks/common';
 import { useBoard, useUser } from '@/shared/hooks/queries';
 
 export const useBoardSummary = () => {
@@ -16,11 +16,8 @@ export const useBoardSummary = () => {
   const { pubkey } = useUser();
   const selfBoard = pubkey ? pubkey == author : false;
 
-  const { setCreatePinParams } = useCreatePinParams(board ?? undefined);
-
   return {
     board,
-    setCreatePinParams,
     selfBoard,
     like: async () => await board?.event.react('+'),
     commentsParam,
