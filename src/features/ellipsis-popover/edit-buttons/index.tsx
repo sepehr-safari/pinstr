@@ -1,26 +1,28 @@
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { useNavigate } from 'react-router-dom';
 
-import { useEditPinParams, useRemoveBoardParams, useRemovePinParams } from '@/shared/hooks/common';
 import type { Board } from '@/shared/types';
 
+import { RemoveConfirmModal } from '@/shared/components';
+import { useMutateBoard } from '@/shared/hooks/mutations';
+import { useState } from 'react';
 import { ActionButton } from '../action-button';
 import { PopoverButton } from '../types';
 
 export const EditButtons = ({
   board,
-  pinIndex,
   editType,
+  pinIndex,
 }: {
   board: Board;
-  pinIndex?: number | undefined;
   editType: 'pin' | 'board';
+  pinIndex?: number;
 }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const navigate = useNavigate();
 
-  const { setRemoveBoardParams } = useRemoveBoardParams(board);
-  const { setEditPinParams } = useEditPinParams(board, pinIndex);
-  const { setRemovePinParams } = useRemovePinParams(board, pinIndex);
+  const { deleteBoard, removePin } = useMutateBoard();
 
   const buttons: PopoverButton[] = [
     {
@@ -29,13 +31,13 @@ export const EditButtons = ({
       onClick:
         editType == 'board'
           ? () => navigate(`/p/${board.event.author.npub}/${board.title}/edit-board`)
-          : setEditPinParams,
+          : () => navigate(`/p/${board.event.author.npub}/${board.title}/edit-pin/${pinIndex}`),
     },
     {
       title: 'Remove',
       icon: TrashIcon,
       color: 'text-red-600',
-      onClick: editType == 'board' ? setRemoveBoardParams : setRemovePinParams,
+      onClick: () => setIsModalOpen(true),
     },
   ];
 
@@ -44,6 +46,17 @@ export const EditButtons = ({
       {buttons.map((button, index) => (
         <ActionButton key={button.title + index} button={button} />
       ))}
+
+      {isModalOpen && (
+        <RemoveConfirmModal
+          onClose={() => setIsModalOpen(false)}
+          onConfirm={
+            editType == 'board'
+              ? () => deleteBoard(board)
+              : () => pinIndex && removePin(board, pinIndex)
+          }
+        />
+      )}
     </>
   );
 };
