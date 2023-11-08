@@ -3,18 +3,19 @@ import { MagnifyingGlassIcon } from '@heroicons/react/20/solid';
 import { NDKUser } from '@nostr-dev-kit/ndk';
 import { nip19 } from 'nostr-tools';
 import { Fragment, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { useFiltersParams } from '@/shared/hooks/common';
 import { useAuthor, useUser } from '@/shared/hooks/queries';
 import { capitalizeFirstLetter, joinClassNames, loader } from '@/shared/utils';
 
-import { CreatePopover } from '@/features';
-
+import { Button } from '@/shared/components';
 import { USER_NAVIGATION } from './config';
 
 export const Navbar = () => {
   const [searchInput, setSearchInput] = useState('');
+
+  const navigate = useNavigate();
 
   const { tag } = useFiltersParams();
 
@@ -83,8 +84,14 @@ export const Navbar = () => {
               )}
 
               {pubkey && (
-                <>
-                  <CreatePopover />
+                <div className="flex gap-2">
+                  <Button
+                    variant="primary"
+                    label="New Board"
+                    onClick={() => navigate('/create-board')}
+                    size="lg"
+                    rounded
+                  />
 
                   <Menu as="div" className="relative flex-shrink-0">
                     <>
@@ -156,7 +163,7 @@ export const Navbar = () => {
                       </Transition>
                     </>
                   </Menu>
-                </>
+                </div>
               )}
             </div>
           </div>
