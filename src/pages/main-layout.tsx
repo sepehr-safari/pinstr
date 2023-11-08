@@ -1,18 +1,15 @@
 import { Outlet } from 'react-router-dom';
 
-import { SettingsModal, WarnModal } from '@/features';
+import { SettingsModal } from '@/features';
 
-import { CreateBoardSlideover, EditBoardSlideover, Navbar, PinSlideover } from '@/features';
+import { Navbar, PinSlideover } from '@/features';
 
 import { Footer } from '@/shared/components';
 
 export const MainLayout = () => {
   return (
     <>
-      <CreateBoardSlideover />
-      <EditBoardSlideover />
       <PinSlideover />
-      <WarnModal />
       <SettingsModal />
 
       <Navbar />

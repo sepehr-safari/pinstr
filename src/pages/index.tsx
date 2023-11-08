@@ -6,8 +6,10 @@ import { LogoutPage } from './logout';
 import { MainLayout } from './main-layout';
 import { NoMatchPage } from './no-match';
 import { ProfileLayout, ProfilePage } from './profile';
-import { BoardLayout, BoardPage } from './board';
+import { BoardLayout, BoardPage, EditBoardPage } from './board';
 import { SlideoverLayout } from './slideover-layout';
+import { CreateBoardLayout, CreateBoardPage } from './create-board';
+import { EditBoardLayout } from './board/edit-board';
 
 export const AppRouter = () => {
   const location = useLocation();
@@ -27,8 +29,16 @@ export const AppRouter = () => {
 
               <Route path=":title" element={<BoardLayout />}>
                 <Route index element={<BoardPage />} />
+
+                <Route path="edit-board" element={<EditBoardLayout />}>
+                  <Route index element={<EditBoardPage />} />
+                </Route>
               </Route>
             </Route>
+          </Route>
+
+          <Route path="create-board" element={<CreateBoardLayout />}>
+            <Route index element={<CreateBoardPage />} />
           </Route>
 
           <Route path="*" element={<NoMatchPage />} />
