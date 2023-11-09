@@ -14,6 +14,7 @@ export default defineConfig({
           'react-stuff': ['react', 'react-dom', 'react-router-dom'],
           'nostr-tools': ['nostr-tools'],
           'react-player': ['react-player'],
+          'nostr-dev-kit': ['@nostr-dev-kit/ndk', '@nostr-dev-kit/ndk-cache-dexie'],
         },
       },
     },
