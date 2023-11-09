@@ -7,7 +7,7 @@ type Props = {
   message?: string;
   button: {
     label?: string;
-    onClick: () => void;
+    onConfirm: () => void;
   };
 };
 
@@ -21,7 +21,7 @@ export const DangerZone = ({
   return (
     <>
       {isModalOpen && (
-        <RemoveConfirmModal onClose={() => setIsModalOpen(false)} onConfirm={button.onClick} />
+        <RemoveConfirmModal onClose={() => setIsModalOpen(false)} onConfirm={button.onConfirm} />
       )}
 
       <div className="py-6">
