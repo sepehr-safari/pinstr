@@ -4,7 +4,8 @@ const variantClasses = {
   primary: 'bg-gray-900 text-white hover:bg-gray-700',
   secondary: 'bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-900',
   accent: 'bg-purple-800 text-white hover:bg-purple-600',
-  outline: 'bg-transparent text-gray-900 border border-gray-300 hover:bg-gray-100',
+  outline:
+    'bg-transparent text-gray-900 border border-gray-300 hover:bg-gray-100 hover:border-gray-400 hover:shadow-lg',
   text: 'bg-transparent text-gray-900 hover:underline',
   danger:
     'bg-transparent border border-red-200 text-red-400 hover:text-red-500 hover:border-red-300',
