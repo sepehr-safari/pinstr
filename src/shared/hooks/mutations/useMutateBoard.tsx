@@ -1,6 +1,6 @@
 import NDK, { NDKEvent } from '@nostr-dev-kit/ndk';
 import { useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { useUser } from '@/shared/hooks/queries';
@@ -11,20 +11,11 @@ import { normalizePinContent } from '@/shared/utils';
 type PublishBoardParams = {
   pubkey: string | null | undefined;
   board: Partial<Board>;
-  pinIndex: string | null;
-  action: string | null;
   ndk: NDK;
   overridePins?: string[][] | undefined;
 };
 
-const publishBoardFn = async ({
-  pubkey,
-  board,
-  pinIndex,
-  action,
-  ndk,
-  overridePins,
-}: PublishBoardParams) => {
+const publishBoardFn = async ({ pubkey, board, ndk, overridePins }: PublishBoardParams) => {
   if (
     !pubkey ||
     !board.format ||
@@ -38,15 +29,15 @@ const publishBoardFn = async ({
   }
 
   const newPins = [...(overridePins || board.pins || [])];
-  if (pinIndex != null && newPins.length > +pinIndex && action != 'remove-pin') {
+  for (let pinIndex = 0; pinIndex < newPins.length; pinIndex++) {
     for (let hIndex = 0; hIndex < board.headers.length; hIndex++) {
-      if (newPins[+pinIndex][hIndex] !== '') {
+      if (newPins[pinIndex][hIndex] !== '') {
         const normalizedContent = await normalizePinContent({
-          content: newPins[+pinIndex][hIndex],
+          content: newPins[pinIndex][hIndex],
           format: board.headers[hIndex].split(':')[0] as Format,
         });
 
-        newPins[+pinIndex][hIndex] = normalizedContent;
+        newPins[pinIndex][hIndex] = normalizedContent;
       }
     }
   }
@@ -98,10 +89,6 @@ const deleteBoardFn = async ({ pubkey, board, ndk }: DeleteBoardParams) => {
 export const useMutateBoard = () => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const [searchParams, setSearchParams] = useSearchParams();
-  const action = searchParams.get('action');
-  const pinIndex = searchParams.get('i');
-
   const ndk = useLocalStore((store) => store.ndk);
 
   const { pubkey } = useUser();
@@ -114,7 +101,7 @@ export const useMutateBoard = () => {
       setIsLoading(true);
 
       toast
-        .promise(publishBoardFn({ pubkey, board, pinIndex, action, ndk }), {
+        .promise(publishBoardFn({ pubkey, board, ndk }), {
           pending: 'Publishing...',
           success: 'Successfully published!',
           error: 'An error has been occured! Please try again.',
@@ -126,15 +113,6 @@ export const useMutateBoard = () => {
         })
         .catch(() => {
           toast('An error has been occured! Please try again.', { type: 'error' });
-
-          setSearchParams(
-            (searchParams) => {
-              searchParams.delete('action');
-              searchParams.delete('i');
-              return searchParams;
-            },
-            { replace: true }
-          );
         })
         .finally(() => {
           setIsLoading(false);
@@ -161,23 +139,20 @@ export const useMutateBoard = () => {
           setIsLoading(false);
         });
     },
-    removePin: (board: Partial<Board>, pinIndex: string, onSuccess?: () => void) => {
+    removePin: (board: Partial<Board>, pinIndex: number, onSuccess?: () => void) => {
       const newPins = [...(board.pins || [])];
 
       if (newPins.length > 0) {
-        newPins.splice(parseInt(pinIndex), 1);
+        newPins.splice(pinIndex, 1);
 
         setIsLoading(true);
 
         toast
-          .promise(
-            publishBoardFn({ pubkey, board, pinIndex, action, ndk, overridePins: newPins }),
-            {
-              pending: 'Removing pin...',
-              error: 'An error has been occured! Please try again.',
-              success: 'Successfully removed!',
-            }
-          )
+          .promise(publishBoardFn({ pubkey, board, ndk, overridePins: newPins }), {
+            pending: 'Removing pin...',
+            error: 'An error has been occured! Please try again.',
+            success: 'Successfully removed!',
+          })
           .then(() => {
             navigate('/p/' + board.event!.author.npub + '/' + board.title, {
               replace: true,
@@ -185,17 +160,7 @@ export const useMutateBoard = () => {
 
             onSuccess?.();
           })
-          .catch(() => {
-            setSearchParams(
-              (searchParams) => {
-                searchParams.delete('action');
-                searchParams.delete('i');
-                searchParams.delete('confirm');
-                return searchParams;
-              },
-              { replace: true }
-            );
-          })
+          .catch()
           .finally(() => {
             setIsLoading(false);
           });
