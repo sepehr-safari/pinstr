@@ -30,9 +30,13 @@ export const Page = () => {
     return <Text variant="h4">Pin not defined!</Text>;
   }
 
+  if (parseInt(pinIndex) > board.pins.length - 1) {
+    return <Text variant="h4">Pin not found!</Text>;
+  }
+
   return (
     <>
-      <PinWizard board={board} pinIndex={parseInt(pinIndex)} />
+      <PinWizard initialBoard={board} pinIndex={parseInt(pinIndex)} mode="edit" />
     </>
   );
 };

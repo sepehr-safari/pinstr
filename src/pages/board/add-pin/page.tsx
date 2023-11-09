@@ -30,7 +30,7 @@ export const Page = () => {
 
   return (
     <>
-      <PinWizard board={board} pinIndex={pinIndex} />
+      <PinWizard initialBoard={board} pinIndex={pinIndex} mode="add" />
     </>
   );
 };
