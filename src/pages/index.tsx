@@ -48,6 +48,8 @@ export const AppRouter = () => {
 
                 <Route path="edit-pin" element={<EditPinLayout />}>
                   <Route index element={<EditPinPage />} />
+
+                  <Route path=":pinIndex" element={<EditPinPage />} />
                 </Route>
               </Route>
             </Route>
