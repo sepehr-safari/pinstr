@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 
 import { loader } from '@/shared/utils';
 
-import { MenuItem, Menu, Text, Input } from '@/shared/components';
+import { MenuItem, Menu, Text, Input, Button } from '@/shared/components';
 import { ImageModal } from '@/features';
 
 interface Props {
@@ -312,20 +312,21 @@ export const ImageSelector = ({ image, setImage, required = false, disabled = fa
           </div>
 
           <div className="mt-2 flex justify-center rounded-lg border border-gray-300 px-4 py-4">
-            <div className="text-center">
+            <div className="flex flex-col gap-2 justify-center">
               <img
                 src={loader(image, { w: 500, h: 400 })}
                 alt="Image"
                 className="mx-auto w-32 h-auto rounded-md bg-gray-100 text-gray-100"
                 loading="lazy"
               />
-              <button
-                type="button"
-                className="mt-4 rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+
+              <Button
+                variant="text"
+                rounded
+                size="sm"
+                label="Change Image"
                 onClick={() => setImage('')}
-              >
-                Change
-              </button>
+              />
             </div>
           </div>
         </div>
