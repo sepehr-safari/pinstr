@@ -18,7 +18,6 @@ export * from './image-selector';
 export * from './insert-feature-popover';
 export * from './navbar';
 export * from './pin-items';
-export * from './pin-slideover';
 export * from './pin-wizard';
 export * from './profile-banner';
 export * from './profile-card';
