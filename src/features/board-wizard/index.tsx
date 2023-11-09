@@ -195,6 +195,7 @@ export const BoardWizard = ({ initialBoard }: Props) => {
           <div>
             <Button
               block
+              rounded
               variant="primary"
               size="lg"
               disabled={!canSubmit || isLoading}
@@ -203,7 +204,7 @@ export const BoardWizard = ({ initialBoard }: Props) => {
             />
           </div>
 
-          {initialBoard && <DangerZone button={{ onClick: () => deleteBoard(initialBoard) }} />}
+          {initialBoard && <DangerZone button={{ onConfirm: () => deleteBoard(initialBoard) }} />}
         </div>
       </div>
     </>
