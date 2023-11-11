@@ -42,7 +42,7 @@ export const Button = ({
   onClick,
 }: Props) => {
   const joinedClassNames = joinClassNames(
-    'flex items-center justify-center gap-2 text-xs font-semibold focus:outline-none',
+    'flex items-center justify-center text-xs font-semibold focus:outline-none',
     sizeClasses[size],
     variantClasses[variant],
     rounded ? 'rounded-full' : 'rounded-md',
@@ -53,7 +53,7 @@ export const Button = ({
 
   return (
     <button className={joinedClassNames} disabled={disabled} onClick={onClick}>
-      {icon && <span className="-ml-2 w-4 h-4">{icon}</span>}
+      {icon && <span className="-ml-1 w-4 h-4">{icon}</span>}
       {label && <span className={joinClassNames(icon ? 'ml-2' : '')}>{label}</span>}
     </button>
   );

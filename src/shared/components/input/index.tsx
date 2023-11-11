@@ -6,14 +6,14 @@ const variantClasses = {
 };
 
 type Props = {
-  variant: keyof typeof variantClasses;
+  variant?: keyof typeof variantClasses;
 };
 
 export const Input = ({
-  variant,
-  className,
+  variant = 'primary',
   type = 'text',
   autoComplete = 'off',
+  className,
   ...props
 }: Props & React.InputHTMLAttributes<HTMLInputElement>) => {
   const joinedClassNames = joinClassNames(variantClasses[variant], className || '');
