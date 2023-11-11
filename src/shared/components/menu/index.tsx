@@ -50,15 +50,15 @@ export const Menu = ({
         leaveFrom="opacity-100 scale-100"
         leaveTo="opacity-0 scale-95"
       >
-        <HeadlessuiMenu.Items className="absolute left-0 z-10 mt-2 w-full origin-top-left rounded-md bg-white shadow-lg ring-1 ring-gray-900/10 max-h-80 overflow-y-auto focus:outline-none">
-          <div className="py-1">
+        <HeadlessuiMenu.Items className="absolute left-0 z-20 mt-2 w-full origin-top-left rounded-md bg-white shadow-lg ring-1 ring-gray-900/10 max-h-80 overflow-y-auto focus:outline-none">
+          <div>
             {items.map((item, index) => (
               <HeadlessuiMenu.Item key={index}>
                 {({ active }) => (
                   <button
                     className={joinClassNames(
                       active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                      'block w-full px-6 py-4 text-left text-sm'
+                      'block w-full px-6 py-2 text-left text-sm'
                     )}
                     onClick={() => onSelect(item)}
                   >
