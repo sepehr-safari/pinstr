@@ -1,10 +1,14 @@
+import { ChevronUpDownIcon } from '@heroicons/react/24/outline';
+
+import { ImageSelector } from '@/features';
+
 import { Button, DangerZone, Text } from '@/shared/components';
 import { Board, Format } from '@/shared/types';
-import { ChevronUpDownIcon } from '@heroicons/react/24/outline';
-import { ImageSelector } from '..';
+
 import { PRESERVED_TITLES } from './config';
-import { ReorderArrows } from './reorder-arrows';
+import { FeaturesTool } from './features-tool';
 import { usePinWizard } from './hooks';
+import { ReorderArrows } from './reorder-arrows';
 
 type Props = {
   initialBoard: Board;
@@ -119,8 +123,11 @@ export const PinWizard = ({ initialBoard, pinIndex, mode }: Props) => {
               );
             })}
 
-          <div className="">
+          <div className="flex gap-4">
+            <FeaturesTool initialBoard={initialBoard} setPartialBoardItem={setPartialBoardItem} />
+
             <Button
+              block
               variant="outline"
               label="Reorder Features"
               icon={<ChevronUpDownIcon />}
