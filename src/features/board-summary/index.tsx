@@ -12,7 +12,7 @@ import { useBoardSummary } from './hooks';
 
 import { ellipsis, formatRelativeTime, loader } from '@/shared/utils';
 
-import { Spinner } from '@/shared/components';
+import { Button, Spinner } from '@/shared/components';
 
 import { EllipsisPopover, CommentsCard } from '@/features';
 import { BoardCommentButton, BoardLikeButton, BoardZapButton } from '@/features/reaction-buttons';
@@ -133,26 +133,24 @@ export const BoardSummary = () => {
               {selfBoard && (
                 <>
                   <div className="flex gap-2 shrink-0 w-full max-w-xs">
-                    <button
-                      type="button"
-                      className="flex items-center justify-center rounded-md bg-gray-100 w-full py-2 text-xs font-semibold text-gray-600 hover:bg-gray-200 hover:text-gray-900"
+                    <Button
+                      variant="secondary"
+                      block
+                      icon={<PencilIcon />}
+                      label="Edit Board"
                       onClick={() =>
                         navigate(`/p/${board.event.author.npub}/${board.title}/edit-board`)
                       }
-                    >
-                      <PencilIcon className="-ml-2 w-4 h-4" />
-                      <span className="ml-2">Edit Board</span>
-                    </button>
-                    <button
-                      type="button"
-                      className="flex items-center justify-center rounded-md bg-gray-100 w-full py-2 text-xs font-semibold text-gray-600 hover:bg-gray-200 hover:text-gray-900"
+                    />
+                    <Button
+                      variant="secondary"
+                      block
+                      icon={<PaperClipIcon />}
+                      label="Add Pin"
                       onClick={() =>
                         navigate(`/p/${board.event.author.npub}/${board.title}/add-pin`)
                       }
-                    >
-                      <PaperClipIcon className="-ml-2 w-4 h-4" />
-                      <span className="ml-2">Add Pin</span>
-                    </button>
+                    />
                   </div>
                 </>
               )}
