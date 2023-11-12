@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { MemoizedBoardItem } from '@/features';
-import { Spinner } from '@/shared/components';
+import { Spinner, Text } from '@/shared/components';
 
 import { useBoardsExplorer } from './hooks';
 
@@ -29,7 +29,9 @@ export const BoardsExplorer = () => {
 
   return (
     <div className="pb-16 overflow-hidden">
-      <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 4xl:grid-cols-5">
+      <Text variant="h3">{`Recent Boards`}</Text>
+
+      <div className="mt-4 grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 4xl:grid-cols-5">
         {boards.map((board) => (
           <MemoizedBoardItem key={board.event.id} board={board} />
         ))}
@@ -39,7 +41,7 @@ export const BoardsExplorer = () => {
         ref={ref}
         onClick={() => loadMore()}
         disabled={!hasMore || isFetching}
-        className="mt-20 mx-auto block text-gray-700 bg-gray-100 text-xs px-4 py-1 rounded-md disabled:text-gray-300 disabled:bg-gray-50"
+        className="mt-4 mx-auto block text-transparent bg-transparent text-xs px-4 py-1"
       >
         {isFetching ? 'Loading...' : hasMore ? 'Load More' : 'Nothing more to load'}
       </button>

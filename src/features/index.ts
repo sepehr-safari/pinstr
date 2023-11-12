@@ -1,5 +1,6 @@
 export * from './author-filter-menu';
 export * from './author-overview';
+export * from './board-booster';
 export * from './board-item';
 export * from './board-summary';
 export * from './board-wizard';
@@ -11,6 +12,7 @@ export * from './comments-card';
 export * from './create-menu';
 export * from './details-slideover';
 export * from './ellipsis-popover';
+export * from './featured-boards';
 export * from './filters-navbar';
 export * from './format-filter-menu';
 export * from './image-modal';

@@ -14,7 +14,7 @@ import { ellipsis, formatRelativeTime, loader } from '@/shared/utils';
 
 import { Button, Spinner } from '@/shared/components';
 
-import { EllipsisPopover, CommentsCard } from '@/features';
+import { BoardBooster, CommentsCard, EllipsisPopover } from '@/features';
 import { BoardCommentButton, BoardLikeButton, BoardZapButton } from '@/features/reaction-buttons';
 
 export const BoardSummary = () => {
@@ -132,7 +132,7 @@ export const BoardSummary = () => {
 
               {selfBoard && (
                 <>
-                  <div className="flex gap-2 shrink-0 w-full max-w-xs">
+                  <div className="flex gap-2 shrink-0 w-full">
                     <Button
                       variant="secondary"
                       block
@@ -154,6 +154,8 @@ export const BoardSummary = () => {
                   </div>
                 </>
               )}
+
+              <BoardBooster board={board} />
             </div>
           </div>
 
