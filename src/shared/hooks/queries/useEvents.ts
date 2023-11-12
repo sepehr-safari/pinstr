@@ -1,4 +1,5 @@
 import { NDKEvent, NDKFilter, NDKSubscription, NDKSubscriptionOptions } from '@nostr-dev-kit/ndk';
+import { isEqual } from 'lodash';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useLocalStore } from '@/shared/store';
@@ -18,6 +19,7 @@ type Params = {
  */
 export const useEvents = ({ filters, enabled = true, subscriptionOptions }: Params) => {
   const subscription = useRef<NDKSubscription | undefined>(undefined);
+  const filtersRef = useRef<NDKFilter[]>(filters);
 
   const [events, setEvents] = useState<NDKEvent[]>([]);
   const [eose, setEose] = useState(false);
@@ -43,7 +45,7 @@ export const useEvents = ({ filters, enabled = true, subscriptionOptions }: Para
       let hasEvents = false;
 
       subscription.current = ndk.subscribe(
-        filters.map((f) => ({ ...f, until: _until || f.until })),
+        filtersRef.current.map((f) => ({ ...f, until: _until || f.until })),
         { ...subscriptionOptions, closeOnEose: _closeOnEose || subscriptionOptions?.closeOnEose }
       );
 
@@ -65,7 +67,7 @@ export const useEvents = ({ filters, enabled = true, subscriptionOptions }: Para
         setEose(true);
       });
     },
-    [ndk, setEvents, setEose, setHasMore, filters, subscriptionOptions]
+    [ndk, setEvents, setEose, setHasMore, subscriptionOptions]
   );
 
   /**
@@ -75,12 +77,26 @@ export const useEvents = ({ filters, enabled = true, subscriptionOptions }: Para
     if (!hasMore) return;
 
     setEose(false);
-    subscribe((events[events.length - 1].created_at || 2) - 1, true);
+    events.length > 0 && subscribe((events[events.length - 1].created_at || 2) - 1, true);
   }, [hasMore, setEose, subscribe, events]);
 
   useEffect(() => {
-    if (enabled && !subscription.current) subscribe();
-  }, [enabled, subscribe]);
+    if (!enabled) return;
+
+    if (!subscription.current) {
+      subscribe();
+    } else if (!isEqual(filtersRef.current, filters)) {
+      subscription.current.stop();
+
+      subscription.current = undefined;
+      filtersRef.current = filters;
+      setEvents([]);
+      setEose(false);
+      setHasMore(true);
+
+      subscribe();
+    }
+  }, [enabled, subscribe, filters]);
 
   useEffect(() => {
     return () => {
