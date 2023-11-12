@@ -8,7 +8,9 @@ import { toast } from 'react-toastify';
 
 import { ellipsis, loader } from '@/shared/utils';
 
-export const AuthorOverview = ({ author }: { author: NDKUser | undefined }) => {
+type Props = { author: NDKUser | undefined; boosted?: boolean };
+
+export const AuthorOverview = ({ author, boosted }: Props) => {
   const location = useLocation();
 
   const [referenceElement, setReferenceElement] = useState<HTMLButtonElement | null>(null);
@@ -32,6 +34,7 @@ export const AuthorOverview = ({ author }: { author: NDKUser | undefined }) => {
             className="text-xs text-gray-500 focus:border-none focus:outline-none"
             onMouseEnter={({ currentTarget }) => !open && currentTarget.click()}
           >
+            {boosted && <span className="text-xs text-gray-500 mr-1">{`🚀 Boosted by`}</span>}
             {ellipsis(profile.name || '', 30)}
           </Popover.Button>
 

@@ -43,7 +43,7 @@ export const BoardsByAuthor = () => {
         ref={ref}
         onClick={() => loadMore()}
         disabled={!hasMore || isFetching}
-        className="mt-20 mx-auto block text-gray-700 bg-gray-100 text-xs px-4 py-1 rounded-md disabled:text-gray-300 disabled:bg-gray-50"
+        className="mt-4 mx-auto block text-transparent bg-transparent text-xs px-4 py-1"
       >
         {isFetching ? 'Loading...' : hasMore ? 'Load More' : 'Nothing more to load'}
       </button>

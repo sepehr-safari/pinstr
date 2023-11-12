@@ -34,7 +34,7 @@ export const useBoardsByAuthor = () => {
 
   const { events, hasMore, isDone, isEmpty, isFetching, isPending, loadMore } = useEvents({
     filters: [filter],
-    enabled: !!author,
+    enabled: Boolean(author),
   });
 
   const boards = useMemo(
