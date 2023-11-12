@@ -1,3 +1,4 @@
+import { NDKEvent, NDKUser } from '@nostr-dev-kit/ndk';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
@@ -5,7 +6,6 @@ import { useEvents } from '@/shared/hooks/queries';
 import { useLocalStore } from '@/shared/store';
 import { Board } from '@/shared/types';
 import { getInvoiceAmount, parseBoardFromEvent } from '@/shared/utils';
-import { NDKEvent, NDKUser } from '@nostr-dev-kit/ndk';
 
 const BOOSTR_PUBKEY = import.meta.env.VITE_BOOSTR_NOSTR_PUBKEY;
 
@@ -79,18 +79,24 @@ export const useFeaturedBoards = () => {
 
   const filters = useMemo(
     () =>
-      filteredBoostRequests.map((event) => {
-        const authorNpub = event.tags.find((t) => t[0] === 'boardAuthor')?.[1] || '';
-        const authorPubkey = new NDKUser({ npub: authorNpub }).pubkey;
+      filteredBoostRequests
+        .map((event) => {
+          const authorNpub = event.tags.find((t) => t[0] === 'boardAuthor')?.[1] || '';
+          const authorPubkey = new NDKUser({ npub: authorNpub }).pubkey;
 
-        const title = event.tags.find((t) => t[0] === 'boardTitle')?.[1] || '';
-        const decodedTitle = decodeURIComponent(title);
+          const title = event.tags.find((t) => t[0] === 'boardTitle')?.[1] || '';
+          const decodedTitle = decodeURIComponent(title);
 
-        return {
-          authors: [authorPubkey],
-          '#d': [decodedTitle],
-        };
-      }),
+          return {
+            authors: [authorPubkey],
+            '#d': [decodedTitle],
+          };
+        })
+        .filter(
+          (f, i, a) =>
+            a.findIndex((x) => x['#d'][0] === f['#d'][0] && x['authors'][0] === f['authors'][0]) ===
+            i
+        ),
     [filteredBoostRequests]
   );
 
