@@ -45,7 +45,7 @@ export const useEvents = ({ filters, enabled = true, subscriptionOptions }: Para
       let hasEvents = false;
 
       subscription.current = ndk.subscribe(
-        filtersRef.current.map((f) => ({ ...f, until: _until || f.until })),
+        filters.map((f) => ({ ...f, until: _until || f.until })),
         { ...subscriptionOptions, closeOnEose: _closeOnEose || subscriptionOptions?.closeOnEose }
       );
 
@@ -67,7 +67,7 @@ export const useEvents = ({ filters, enabled = true, subscriptionOptions }: Para
         setEose(true);
       });
     },
-    [ndk, setEvents, setEose, setHasMore, subscriptionOptions]
+    [ndk, setEvents, setEose, setHasMore, filters, subscriptionOptions]
   );
 
   /**
