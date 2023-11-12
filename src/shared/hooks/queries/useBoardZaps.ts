@@ -25,7 +25,9 @@ export const useBoardZaps = (board: Board | undefined) => {
     subscription.on('event', async (event: NDKEvent) => {
       setIsLoading(false);
 
-      setZaps((prev) => [...prev, event]);
+      setZaps((prev) =>
+        [...prev, event].filter((e, i, a) => a.findIndex((x) => x.id == e.id) == i)
+      );
     });
 
     subscription.on('eose', () => {

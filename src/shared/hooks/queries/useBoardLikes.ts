@@ -25,7 +25,9 @@ export const useBoardLikes = (board: Board | undefined) => {
     subscription.on('event', async (event: NDKEvent) => {
       setIsLoading(false);
 
-      setLikes((prev) => [...prev, event]);
+      setLikes((prev) =>
+        [...prev, event].filter((e, i, a) => a.findIndex((x) => x.id == e.id) == i)
+      );
     });
 
     subscription.on('eose', () => {
