@@ -139,7 +139,11 @@ export const BoardSummary = () => {
                       icon={<PencilIcon />}
                       label="Edit Board"
                       onClick={() =>
-                        navigate(`/p/${board.event.author.npub}/${board.title}/edit-board`)
+                        navigate(
+                          `/p/${board.event.author.npub}/${encodeURIComponent(
+                            board.title
+                          )}/edit-board`
+                        )
                       }
                     />
                     <Button
@@ -148,7 +152,9 @@ export const BoardSummary = () => {
                       icon={<PaperClipIcon />}
                       label="Add Pin"
                       onClick={() =>
-                        navigate(`/p/${board.event.author.npub}/${board.title}/add-pin`)
+                        navigate(
+                          `/p/${board.event.author.npub}/${encodeURIComponent(board.title)}/add-pin`
+                        )
                       }
                     />
                   </div>

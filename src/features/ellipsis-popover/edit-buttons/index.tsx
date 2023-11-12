@@ -30,8 +30,16 @@ export const EditButtons = ({
       icon: PencilIcon,
       onClick:
         editType == 'board'
-          ? () => navigate(`/p/${board.event.author.npub}/${board.title}/edit-board`)
-          : () => navigate(`/p/${board.event.author.npub}/${board.title}/edit-pin/${pinIndex}`),
+          ? () =>
+              navigate(
+                `/p/${board.event.author.npub}/${encodeURIComponent(board.title)}/edit-board`
+              )
+          : () =>
+              navigate(
+                `/p/${board.event.author.npub}/${encodeURIComponent(
+                  board.title
+                )}/edit-pin/${pinIndex}`
+              ),
     },
     {
       title: 'Remove',

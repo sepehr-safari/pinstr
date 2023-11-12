@@ -107,7 +107,9 @@ export const useMutateBoard = () => {
           error: 'An error has been occured! Please try again.',
         })
         .then((event) => {
-          navigate('/p/' + event.author.npub + '/' + board.title, { replace: true });
+          navigate(`/p/${event.author.npub}/${encodeURIComponent(board.title || '')}`, {
+            replace: true,
+          });
 
           onSuccess?.();
         })
@@ -154,7 +156,7 @@ export const useMutateBoard = () => {
             success: 'Successfully removed!',
           })
           .then(() => {
-            navigate('/p/' + board.event!.author.npub + '/' + board.title, {
+            navigate(`/p/${board.event!.author.npub}/${encodeURIComponent(board.title || '')}`, {
               replace: true,
             });
 

@@ -41,7 +41,10 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
               {
                 title: 'Add Pin',
                 icon: PaperClipIcon,
-                onClick: () => navigate(`/p/${board.event.author.npub}/${board.title}/add-pin`),
+                onClick: () =>
+                  navigate(
+                    `/p/${board.event.author.npub}/${encodeURIComponent(board.title)}/add-pin`
+                  ),
                 private: true,
               },
             ]}
@@ -86,7 +89,7 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
               </button>
             </Transition.Child>
             <Link
-              to={`/p/${board.event.author.npub}/${board.title}`}
+              to={`/p/${board.event.author.npub}/${encodeURIComponent(board.title)}`}
               state={{ backgroundLocation: location }}
             >
               <Transition.Child
