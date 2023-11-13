@@ -79,24 +79,18 @@ export const useFeaturedBoards = () => {
 
   const filters = useMemo(
     () =>
-      filteredBoostRequests
-        .map((event) => {
-          const authorNpub = event.tags.find((t) => t[0] === 'boardAuthor')?.[1] || '';
-          const authorPubkey = new NDKUser({ npub: authorNpub }).pubkey;
+      filteredBoostRequests.map((event) => {
+        const authorNpub = event.tags.find((t) => t[0] === 'boardAuthor')?.[1] || '';
+        const authorPubkey = new NDKUser({ npub: authorNpub }).pubkey;
 
-          const title = event.tags.find((t) => t[0] === 'boardTitle')?.[1] || '';
-          const decodedTitle = decodeURIComponent(title);
+        const title = event.tags.find((t) => t[0] === 'boardTitle')?.[1] || '';
+        const decodedTitle = decodeURIComponent(title);
 
-          return {
-            authors: [authorPubkey],
-            '#d': [decodedTitle],
-          };
-        })
-        .filter(
-          (f, i, a) =>
-            a.findIndex((x) => x['#d'][0] === f['#d'][0] && x['authors'][0] === f['authors'][0]) ===
-            i
-        ),
+        return {
+          authors: [authorPubkey],
+          '#d': [decodedTitle],
+        };
+      }),
     [filteredBoostRequests]
   );
 
@@ -111,8 +105,12 @@ export const useFeaturedBoards = () => {
         (boards, event) => {
           const parsedBoard = parseBoardFromEvent(event);
 
+          if (!parsedBoard) return boards;
+
+          if (boards.find((b) => b.event.id === parsedBoard.event.id)) return boards;
+
           const boardAuthor = encodeURIComponent(event.author.npub);
-          const boardTitle = encodeURIComponent(parsedBoard?.title || '');
+          const boardTitle = encodeURIComponent(parsedBoard.title || '');
           const booster =
             filteredBoostRequests
               .find(
@@ -122,7 +120,7 @@ export const useFeaturedBoards = () => {
               )
               ?.tags.find((t) => t[0] === 'booster')?.[1] || '';
 
-          return parsedBoard ? [...boards, { ...parsedBoard, booster }] : boards;
+          return [...boards, { ...parsedBoard, booster }];
         },
         [] as Array<Board & { booster: string }>
       ),
