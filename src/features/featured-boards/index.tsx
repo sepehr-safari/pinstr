@@ -1,20 +1,27 @@
+import { NDKUser } from '@nostr-dev-kit/ndk';
 import { useEffect } from 'react';
 
 import { AuthorOverview, MemoizedBoardItem } from '@/features';
+
 import { Spinner, Text } from '@/shared/components';
+import { useAuthor } from '@/shared/hooks/queries';
+import { Board } from '@/shared/types';
 
 import { useFeaturedBoards } from './hooks';
 
-import { Board } from '@/shared/types';
-import { useAuthor } from '@/shared/hooks/queries';
-import { NDKUser } from '@nostr-dev-kit/ndk';
-
-const FeaturedBoardItem = ({ board }: { board: Board & { booster: string } }) => {
-  const { author } = useAuthor(new NDKUser({ pubkey: board.booster }).npub);
+const FeaturedBoardItem = ({ board }: { board: Board & { booster: string | undefined } }) => {
+  const npub = board.booster ? new NDKUser({ pubkey: board.booster }).npub : undefined;
+  const { author } = useAuthor(npub);
 
   return (
     <div className="flex flex-col gap-2">
-      <AuthorOverview author={author} boosted />
+      {author ? (
+        <AuthorOverview author={author} boosted />
+      ) : (
+        <div className="leading-none">
+          <span className="text-xs text-gray-500 ">{`🚀 Boosted by Anonymouse`}</span>
+        </div>
+      )}
 
       <MemoizedBoardItem board={board} />
     </div>
@@ -45,7 +52,7 @@ export const FeaturedBoards = () => {
 
   return (
     <div className="overflow-hidden">
-      <Text variant="h3">Featured Boards</Text>
+      <Text variant="h3">{`Featured Boards`}</Text>
 
       <div className="mt-4 grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 4xl:grid-cols-5">
         {boards.map((board) => (
