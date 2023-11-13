@@ -53,7 +53,7 @@ export const Button = ({
 
   return (
     <button className={joinedClassNames} disabled={disabled} onClick={onClick}>
-      {icon && <span className="-ml-1 w-4 h-4">{icon}</span>}
+      {icon && <div className="-ml-1 w-4 h-4 flex items-center">{icon}</div>}
       {label && <span className={joinClassNames(icon ? 'ml-2' : '')}>{label}</span>}
     </button>
   );
