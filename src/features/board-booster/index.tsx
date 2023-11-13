@@ -1,16 +1,15 @@
 import { Switch } from '@headlessui/react';
 import { RocketLaunchIcon } from '@heroicons/react/24/outline';
-import { NDKFilter } from '@nostr-dev-kit/ndk';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import ConfettiExplosion from 'react-confetti-explosion';
+import { toast } from 'react-toastify';
 
-import { Button, Modal, Text } from '@/shared/components';
-import { useUser } from '@/shared/hooks/queries';
-import { useLocalStore } from '@/shared/store';
+import { Button, Modal, Spinner, Text } from '@/shared/components';
+import { useEvents, useUser } from '@/shared/hooks/queries';
 import { Board } from '@/shared/types';
 import { joinClassNames } from '@/shared/utils';
 
 import { BOOST_DURATIONS } from './config';
-import { toast } from 'react-toastify';
 
 type Props = {
   board: Board;
@@ -20,11 +19,54 @@ export const BoardBooster = ({ board }: Props) => {
   const [isShowingModal, setIsShowingModal] = useState(false);
   const [selectedDuration, setSelectedDuration] = useState(BOOST_DURATIONS[0]);
   const [anon, setAnon] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [isExploding, setIsExploding] = useState(false);
+  const [boostRequest, setBoostRequest] = useState<string | null>(null);
 
   const { pubkey } = useUser();
-  const ndk = useLocalStore((store) => store.ndk);
 
-  const fetchBoostRequestAndZap = async () => {
+  const filters = boostRequest ? [{ ids: [boostRequest] }] : [];
+  const { events } = useEvents({
+    filters,
+    enabled: filters.length > 0,
+  });
+
+  useEffect(() => {
+    if (events.length > 0) {
+      const { webln } = window as { webln?: any };
+
+      if (!webln) {
+        setIsProcessing(false);
+        toast.error('Webln is not available!');
+      }
+
+      webln
+        .enable()
+        .then(() => {
+          events[0].zap(selectedDuration.zapAmount * 1000, '').then((invoice) => {
+            invoice &&
+              webln
+                .sendPayment(invoice)
+                .then(() => {
+                  setIsProcessing(false);
+                  setBoostRequest(null);
+                  setIsShowingModal(false);
+                  setIsExploding(true);
+                })
+                .catch(() => {
+                  setIsProcessing(false);
+                  toast.error('Zap failed!');
+                });
+          });
+        })
+        .catch(() => {
+          setIsProcessing(false);
+          toast.error('Could not enable webln!');
+        });
+    }
+  }, [events]);
+
+  const fetchBoostRequest = async () => {
     const searchParams = new URLSearchParams({
       boardAuthor: encodeURIComponent(board.event.author.npub),
       boardTitle: encodeURIComponent(board.title),
@@ -43,42 +85,37 @@ export const BoardBooster = ({ board }: Props) => {
 
     const data = await res.json();
 
-    if (data) {
-      const filter: NDKFilter = { ids: [data.eventId] };
-      const event = await ndk.fetchEvent(filter);
-
-      const invoice = await event?.zap(selectedDuration.zapAmount * 1000, '');
-
-      const { webln } = window as { webln?: any };
-
-      if (webln) {
-        try {
-          await webln.enable();
-
-          try {
-            await webln.sendPayment(invoice);
-
-            return true;
-          } catch (error) {
-            throw new Error('Failed to send payment');
-          }
-        } catch (e) {
-          throw new Error('Failed to enable WebLN');
-        }
-      } else {
-        throw new Error('WebLN is not defined');
-      }
+    if (data && data.eventId) {
+      setBoostRequest(data.eventId);
     }
   };
 
   return (
     <>
+      {isExploding && (
+        <ConfettiExplosion
+          zIndex={50}
+          force={0.8}
+          duration={3000}
+          particleCount={250}
+          width={1600}
+        />
+      )}
+
       <Button
         variant="primary"
         block
         icon={<RocketLaunchIcon />}
         label="Boost This Board!"
-        onClick={() => setIsShowingModal(true)}
+        onClick={() => {
+          setIsExploding(false);
+          setAnon(false);
+          setSelectedDuration(BOOST_DURATIONS[0]);
+          setBoostRequest(null);
+          setIsProcessing(false);
+
+          setIsShowingModal(true);
+        }}
       />
 
       {isShowingModal && (
@@ -103,6 +140,7 @@ export const BoardBooster = ({ board }: Props) => {
                         : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
                     }`}
                     onClick={() => setSelectedDuration(boostDuration)}
+                    disabled={isProcessing}
                   >
                     {boostDuration.label}
                   </button>
@@ -138,20 +176,20 @@ export const BoardBooster = ({ board }: Props) => {
             <Button
               variant="primary"
               size="lg"
-              label={`⚡️ Zap ${selectedDuration.zapAmount || '_'} Sats to boost for ${
-                selectedDuration.label
-              }`}
-              onClick={() =>
-                toast
-                  .promise(fetchBoostRequestAndZap, {
-                    pending: 'Processing...',
-                    success: 'Successfully Boosted!',
-                    error: 'Failed to Boost.',
-                  })
-                  .catch((error) => {
-                    console.log(error);
-                  })
+              label={
+                isProcessing
+                  ? `Processing...`
+                  : `⚡️ Zap ${selectedDuration.zapAmount || '_'} Sats to boost for ${
+                      selectedDuration.label
+                    }`
               }
+              onClick={() => {
+                setIsProcessing(true);
+
+                fetchBoostRequest();
+              }}
+              disabled={isProcessing}
+              icon={isProcessing && <Spinner />}
             />
 
             <div className="text-center">
