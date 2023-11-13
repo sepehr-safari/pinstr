@@ -7,7 +7,7 @@ import { useLocalStore } from '@/shared/store';
 import { Board } from '@/shared/types';
 import { getInvoiceAmount, parseBoardFromEvent } from '@/shared/utils';
 
-const BOOSTR_PUBKEY = import.meta.env.VITE_BOOSTR_NOSTR_PUBKEY;
+const BOOSTR_PUBKEY = import.meta.env.VITE_BOOSTR_NOSTR_PUBKEY as string;
 
 export const useFeaturedBoards = () => {
   const [filteredBoostRequests, setFilteredBoostRequests] = useState<NDKEvent[]>([]);
@@ -34,7 +34,7 @@ export const useFeaturedBoards = () => {
         authors: [BOOSTR_PUBKEY],
       },
     ],
-    enabled: BOOSTR_PUBKEY,
+    enabled: Boolean(BOOSTR_PUBKEY),
   });
 
   useEffect(() => {
