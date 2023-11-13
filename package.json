@@ -22,6 +22,7 @@
     "lodash": "^4.17.21",
     "nostr-tools": "^1.16.0",
     "react": "^18.2.0",
+    "react-confetti-explosion": "^2.1.2",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
     "react-intersection-observer": "^9.5.2",
