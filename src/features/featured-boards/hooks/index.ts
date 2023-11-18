@@ -9,6 +9,8 @@ import { getInvoiceAmount, parseBoardFromEvent } from '@/shared/utils';
 
 const BOOSTR_PUBKEY = import.meta.env.VITE_BOOSTR_NOSTR_PUBKEY as string;
 
+const aMonthAgoInSec = Math.floor(Date.now() / 1000) - 60 * 60 * 24 * 30;
+
 export const useFeaturedBoards = () => {
   const [filteredBoostRequests, setFilteredBoostRequests] = useState<NDKEvent[]>([]);
 
@@ -32,6 +34,7 @@ export const useFeaturedBoards = () => {
         kinds: [1],
         limit: 10,
         authors: [BOOSTR_PUBKEY],
+        since: aMonthAgoInSec,
       },
     ],
     enabled: Boolean(BOOSTR_PUBKEY),
