@@ -63,11 +63,16 @@ export const useFeaturedBoards = () => {
           const expectedZapSum = event.tags.find((t) => t[0] === 'zapAmount')?.[1] || '0';
 
           if (zapSum >= Number(expectedZapSum)) {
-            const durationInHours = event.tags.find((t) => t[0] === 'boostDuration')?.[1] || '0';
+            const durationInHours = Number(
+              event.tags.find((t) => t[0] === 'boostDuration')?.[1] || '0'
+            );
+            const durationInMs = durationInHours * 60 * 60 * 1000;
 
-            const isExpired =
-              Math.floor(Date.now() / 1000) >
-              new Date(event.created_at!).getTime() + Number(durationInHours) * 60 * 60 * 1000;
+            const nowInMs = Date.now();
+
+            const eventInMs = (event.created_at || 0) * 1000;
+
+            const isExpired = nowInMs - eventInMs > durationInMs;
 
             if (!isExpired) {
               setFilteredBoostRequests((prev) => [...prev, event]);
