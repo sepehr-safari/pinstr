@@ -135,6 +135,12 @@ export const useFeaturedBoards = () => {
     [events]
   );
 
+  useEffect(() => {
+    if (!isFetching && inView) {
+      loadMore();
+    }
+  }, [isFetching, inView, loadMore]);
+
   return {
     boards,
     hasMore,
@@ -144,6 +150,5 @@ export const useFeaturedBoards = () => {
     isPending: isBoostRequestsPending || isBoardsPending,
     loadMore,
     ref,
-    inView,
   };
 };

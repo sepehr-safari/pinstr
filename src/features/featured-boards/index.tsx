@@ -1,42 +1,10 @@
-import { NDKUser } from '@nostr-dev-kit/ndk';
-import { useEffect } from 'react';
-
-import { AuthorOverview, MemoizedBoardItem } from '@/features';
-
 import { Spinner, Text } from '@/shared/components';
-import { useAuthor } from '@/shared/hooks/queries';
-import { Board } from '@/shared/types';
 
+import { FeaturedBoardItem } from './featured-board-item';
 import { useFeaturedBoards } from './hooks';
 
-const FeaturedBoardItem = ({ board }: { board: Board & { booster: string | undefined } }) => {
-  const npub = board.booster ? new NDKUser({ pubkey: board.booster }).npub : undefined;
-  const { author } = useAuthor(npub);
-
-  return (
-    <div className="flex flex-col gap-2">
-      {author ? (
-        <AuthorOverview author={author} boosted />
-      ) : (
-        <div className="leading-none">
-          <span className="text-xs text-gray-500 ">{`🚀 Boosted by Anonymouse`}</span>
-        </div>
-      )}
-
-      <MemoizedBoardItem board={board} />
-    </div>
-  );
-};
-
 export const FeaturedBoards = () => {
-  const { boards, loadMore, hasMore, isEmpty, isPending, ref, inView, isFetching } =
-    useFeaturedBoards();
-
-  useEffect(() => {
-    if (!isFetching && inView) {
-      loadMore();
-    }
-  }, [isFetching, inView, loadMore]);
+  const { boards, loadMore, hasMore, isEmpty, isPending, ref, isFetching } = useFeaturedBoards();
 
   return (
     <div className="overflow-hidden">
