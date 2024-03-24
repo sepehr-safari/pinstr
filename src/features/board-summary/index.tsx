@@ -4,13 +4,14 @@ import {
   PaperClipIcon,
   PencilIcon,
 } from '@heroicons/react/24/outline';
+import { formatRelative } from 'date-fns';
 import { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { useBoardSummary } from './hooks';
 
-import { ellipsis, formatRelativeTime, loader } from '@/shared/utils';
+import { ellipsis, loader } from '@/shared/utils';
 
 import { Button, Spinner } from '@/shared/components';
 
@@ -72,7 +73,7 @@ export const BoardSummary = () => {
             <div className="flex w-full justify-center items-center gap-4">
               {board.event.created_at && (
                 <>
-                  <span>{formatRelativeTime(board.event.created_at)}</span>
+                  <span>{formatRelative(new Date(board.event.created_at * 1000), new Date())}</span>
 
                   <span>|</span>
                 </>
