@@ -1,10 +1,10 @@
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
-
-import { useUser } from '@/shared/hooks/queries';
-import { Board } from '@/shared/types';
-import { cn, loader } from '@/shared/utils';
+import { useActiveUser } from 'nostr-hooks';
 
 import { EllipsisPopover } from '@/features';
+
+import { Board } from '@/shared/types';
+import { cn, loader } from '@/shared/utils';
 
 type Props = {
   board: Board;
@@ -12,8 +12,9 @@ type Props = {
 };
 
 export const LinkPinItem = ({ board, setPinIndex }: Props) => {
-  const { pubkey } = useUser();
-  const selfBoard = pubkey ? pubkey == board.event.author.pubkey : false;
+  const { activeUser } = useActiveUser();
+  const selfBoard =
+    activeUser && activeUser.pubkey ? activeUser.pubkey == board.event.author.pubkey : false;
 
   if (board.pins.length == 0) {
     return <div>Empty Board!</div>;

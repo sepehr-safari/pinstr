@@ -1,11 +1,11 @@
 import { DocumentTextIcon } from '@heroicons/react/24/outline';
+import { useActiveUser } from 'nostr-hooks';
 import ReactPlayer from 'react-player';
 
-import { useUser } from '@/shared/hooks/queries';
+import { EllipsisPopover } from '@/features';
+
 import { Board } from '@/shared/types';
 import { cn } from '@/shared/utils';
-
-import { EllipsisPopover } from '@/features';
 
 type Props = {
   board: Board;
@@ -13,8 +13,8 @@ type Props = {
 };
 
 export const VideoPinItem = ({ board, setPinIndex }: Props) => {
-  const { pubkey } = useUser();
-  const selfBoard = pubkey ? pubkey == board.event.author.pubkey : false;
+  const { activeUser } = useActiveUser();
+  const selfBoard = activeUser ? activeUser.pubkey == board.event.author.pubkey : false;
 
   if (board.pins.length == 0) {
     return <div>Empty Board!</div>;

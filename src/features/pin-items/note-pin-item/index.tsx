@@ -1,13 +1,13 @@
-import { NDKUser } from '@nostr-dev-kit/ndk';
+import { NDKEvent } from '@nostr-dev-kit/ndk';
+import { useActiveUser, useNdk } from 'nostr-hooks';
 import { nip19 } from 'nostr-tools';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { useAuthor, useEvent, useUser } from '@/shared/hooks/queries';
-import { Board } from '@/shared/types';
-import { ellipsis, cn, loader } from '@/shared/utils';
-
 import { EllipsisPopover } from '@/features';
+
+import { Board } from '@/shared/types';
+import { cn, ellipsis, loader } from '@/shared/utils';
 
 type Props = {
   board: Board;
@@ -15,8 +15,9 @@ type Props = {
 };
 
 export const NotePinItem = ({ board, setPinIndex }: Props) => {
-  const { pubkey } = useUser();
-  const selfBoard = pubkey ? pubkey == board.event.author.pubkey : false;
+  const { activeUser } = useActiveUser();
+  const selfBoard =
+    activeUser && activeUser.pubkey ? activeUser.pubkey == board.event.author.pubkey : false;
 
   const [lastPinIndex, setLastPinIndex] = useState<number>(50);
   const hasNextPage = board.pins.length > lastPinIndex;
@@ -73,10 +74,19 @@ export const NoteDetails = ({
   summary?: boolean;
   setPinIndex?: () => void;
 }) => {
-  const { event: note } = useEvent(noteId);
-  const ndkUser = note ? new NDKUser({ hexpubkey: note.pubkey }) : undefined;
-  const noteNpub = ndkUser?.npub;
-  const { author } = useAuthor(noteNpub);
+  const [note, setNote] = useState<NDKEvent | undefined | null>(undefined);
+
+  const { ndk } = useNdk();
+
+  ndk.fetchEvent(noteId).then((event) => {
+    if (event === null) {
+      setNote(null);
+    } else {
+      event.author.fetchProfile().finally(() => {
+        setNote(event);
+      });
+    }
+  });
 
   if (note == null) {
     return (
@@ -96,29 +106,29 @@ export const NoteDetails = ({
               note == undefined ? 'animate-pulse' : ''
             )}
           >
-            {!!author && author.profile && !!author.profile.image && (
+            {note.author.profile && !!note.author.profile.image && (
               <img
                 className="rounded-full"
-                src={loader(author.profile.image, { w: 96, h: 96 })}
-                alt={author?.profile.name + ' avatar'}
+                src={loader(note.author.profile.image, { w: 96, h: 96 })}
+                alt={note.author.profile.name + ' avatar'}
                 loading="lazy"
               />
             )}
           </div>
 
           <div className="flex flex-col truncate">
-            <Link to={`/p/${author?.npub}`} className="z-[4]">
+            <Link to={`/p/${note.author.npub}`} className="z-[4]">
               <h3 className="flex truncate text-sm font-medium text-gray-900 hover:underline">
-                {author ? (
-                  ellipsis(author?.profile?.name || '', 20)
+                {note.author ? (
+                  ellipsis(note.author.profile?.name || '', 20)
                 ) : (
                   <div className="animate-pulse w-24 h-[1rem] rounded bg-gray-100" />
                 )}
               </h3>
             </Link>
             <p className="mt-1 truncate text-xs text-gray-500">
-              {author ? (
-                ellipsis(author.profile?.nip05 || '', 20)
+              {note.author ? (
+                ellipsis(note.author.profile?.nip05 || '', 20)
               ) : (
                 <div className="animate-pulse w-14 h-[1rem] rounded bg-gray-100" />
               )}
