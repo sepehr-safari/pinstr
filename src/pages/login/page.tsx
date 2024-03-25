@@ -1,21 +1,21 @@
 import { useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
-import { useMutateUser } from '@/shared/hooks/mutations';
-import { useUser } from '@/shared/hooks/queries';
+import { useActiveUser, useNdk } from 'nostr-hooks';
+import { NDKNip07Signer, NDKPrivateKeySigner } from '@nostr-dev-kit/ndk';
 
 export const Page = () => {
-  const { pubkey } = useUser();
-  const { loginWithExtension, loginWithSeckey } = useMutateUser();
-
-  const navigate = useNavigate();
   const seckeyRef = useRef<HTMLInputElement>(null);
 
+  const { activeUser } = useActiveUser();
+  const { setSigner } = useNdk();
+
+  const navigate = useNavigate();
+
   useEffect(() => {
-    if (pubkey) {
+    if (activeUser) {
       navigate('/', { replace: true });
     }
-  }, [pubkey, navigate]);
+  }, [activeUser, navigate]);
 
   return (
     <>
@@ -74,11 +74,13 @@ export const Page = () => {
                   <div>
                     <button
                       type="button"
-                      onClick={() =>
-                        seckeyRef &&
-                        seckeyRef.current &&
-                        loginWithSeckey.mutate(seckeyRef.current?.value)
-                      }
+                      onClick={() => {
+                        if (seckeyRef && seckeyRef.current) {
+                          localStorage.setItem('pk', seckeyRef.current.value);
+
+                          setSigner(new NDKPrivateKeySigner(seckeyRef.current?.value));
+                        }
+                      }}
                       className="flex w-full justify-center rounded-md bg-gray-800 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-800"
                     >
                       Log In
@@ -100,7 +102,11 @@ export const Page = () => {
                 <div className="mt-6">
                   <button
                     type="button"
-                    onClick={() => loginWithExtension.mutate()}
+                    onClick={() => {
+                      localStorage.removeItem('pk');
+
+                      setSigner(new NDKNip07Signer());
+                    }}
                     className="flex w-full items-center justify-center gap-3 rounded-md bg-purple-800 px-3 py-1.5 text-white"
                   >
                     <span className="text-sm font-semibold leading-6">

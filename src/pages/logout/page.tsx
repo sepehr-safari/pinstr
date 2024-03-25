@@ -1,22 +1,19 @@
+import { useNdk } from 'nostr-hooks';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useMutateUser } from '@/shared/hooks/mutations';
-import { useUser } from '@/shared/hooks/queries';
-
 export const Page = () => {
-  const { pubkey } = useUser();
-  const { logout } = useMutateUser();
+  const { setSigner } = useNdk();
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!pubkey) {
-      navigate('/', { replace: true });
-    } else {
-      logout.mutate();
-    }
-  }, [pubkey, navigate, logout]);
+    setSigner(undefined);
 
-  return <div></div>;
+    localStorage.removeItem('pk');
+
+    navigate('/', { replace: true });
+  }, [setSigner, navigate]);
+
+  return null;
 };
