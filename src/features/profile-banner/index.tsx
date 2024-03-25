@@ -1,16 +1,29 @@
+import { NDKUserProfile } from '@nostr-dev-kit/ndk';
+import { useNdk } from 'nostr-hooks';
+import { useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 
-import { useAuthor } from '@/shared/hooks/queries';
 import { cn, loader } from '@/shared/utils';
 
 export const ProfileBanner = () => {
+  const [profile, setProfile] = useState<NDKUserProfile | undefined | null>(undefined);
+
   const location = useLocation();
   const state = location.state as { backgroundLocation?: Location };
 
   const { npub } = useParams();
-  const { author } = useAuthor(npub);
-  const name = author?.profile?.name || '';
-  const banner = author?.profile?.banner || '';
+
+  const { ndk } = useNdk();
+
+  ndk
+    .getUser({ npub })
+    .fetchProfile()
+    .then((profile) => {
+      setProfile(profile);
+    });
+
+  const name = profile?.name || '';
+  const banner = profile?.banner || '';
 
   return (
     <div

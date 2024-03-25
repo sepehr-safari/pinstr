@@ -7,19 +7,17 @@ import {
 import { formatRelative } from 'date-fns';
 import { useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
-
-import { useBoardSummary } from './hooks';
-
-import { ellipsis, loader } from '@/shared/utils';
-
-import { Button, Spinner } from '@/shared/components';
 
 import { BoardBooster, CommentsCard, EllipsisPopover } from '@/features';
 import { BoardCommentButton, BoardLikeButton, BoardZapButton } from '@/features/reaction-buttons';
 
+import { Button, Spinner } from '@/shared/components';
+import { ellipsis, loader } from '@/shared/utils';
+
+import { useBoardSummary } from './hooks';
+
 export const BoardSummary = () => {
-  const { board, selfBoard, commentsParam, navigate } = useBoardSummary();
+  const { board, selfBoard, commentsParam, navigate, toast } = useBoardSummary();
 
   const copyRawData = useCallback(() => {
     if (!board) return;
@@ -27,9 +25,9 @@ export const BoardSummary = () => {
     try {
       navigator.clipboard.writeText(JSON.stringify(board.event.rawEvent()));
 
-      toast.success('Copied to clipboard', { type: 'success' });
+      toast({ description: 'Copied to clipboard', variant: 'success' });
     } catch (error) {
-      toast.error('Error in copying to clipboard', { type: 'error' });
+      toast({ description: 'Error in copying to clipboard', variant: 'destructive' });
     }
   }, [board]);
 
@@ -47,9 +45,9 @@ export const BoardSummary = () => {
       anchor.click();
       window.URL.revokeObjectURL(url);
 
-      toast.success('Exported as CSV', { type: 'success' });
+      toast({ description: 'Exported as CSV', variant: 'success' });
     } catch (error) {
-      toast.error('Error in exporting as CSV', { type: 'error' });
+      toast({ description: 'Error in exporting as CSV', variant: 'destructive' });
     }
   }, [board]);
 

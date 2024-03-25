@@ -13,6 +13,7 @@ import { usePopper } from 'react-popper';
 import { useSearchParams } from 'react-router-dom';
 
 import { cn } from '@/shared/utils';
+
 import { PopoverButton } from './types';
 
 // TODO: refactor - replace popover with menu component

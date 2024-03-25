@@ -1,11 +1,11 @@
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import type { Board } from '@/shared/types';
 
 import { RemoveConfirmModal } from '@/shared/components';
 import { useMutateBoard } from '@/shared/hooks/mutations';
-import { useState } from 'react';
+import type { Board } from '@/shared/types';
+
 import { ActionButton } from '../action-button';
 import { PopoverButton } from '../types';
 
@@ -22,7 +22,7 @@ export const EditButtons = ({
 
   const navigate = useNavigate();
 
-  const { deleteBoard, removePin } = useMutateBoard();
+  const { removePin, deleteBoard } = useMutateBoard();
 
   const buttons: PopoverButton[] = [
     {

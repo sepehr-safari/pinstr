@@ -1,12 +1,12 @@
 import { CogIcon, MagnifyingGlassIcon, PhotoIcon } from '@heroicons/react/20/solid';
 import { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { toast } from 'react-toastify';
 
-import { loader } from '@/shared/utils';
-
-import { MenuItem, Menu, Text, Input, Button } from '@/shared/components';
 import { ImageModal } from '@/features';
+
+import { Button, Input, Menu, MenuItem, Text } from '@/shared/components';
+import { useToast } from '@/shared/components/ui/use-toast';
+import { loader } from '@/shared/utils';
 
 interface Props {
   image: string | undefined;
@@ -37,6 +37,8 @@ export const ImageSelector = ({ image, setImage, required = false, disabled = fa
   const [isSearching, setIsSearching] = useState(false);
   const [showModalIndex, setShowModalIndex] = useState<null | number>(null);
   const [isUploading, setIsUploading] = useState(false);
+
+  const { toast } = useToast();
 
   const handleLoadMore = useCallback(() => {
     setIsSearching(true);
@@ -73,11 +75,11 @@ export const ImageSelector = ({ image, setImage, required = false, disabled = fa
             setIsUploading(false);
             setImage(data[0].url);
           } else {
-            toast('Upload Error!', { type: 'error' });
+            toast({ description: 'Upload Error!', variant: 'destructive' });
           }
         })
         .catch(() => {
-          toast('Upload Error!', { type: 'error' });
+          toast({ description: 'Upload Error!', variant: 'destructive' });
         });
     }
   }, []);

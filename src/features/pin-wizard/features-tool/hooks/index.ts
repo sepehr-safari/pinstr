@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { toast } from 'react-toastify';
 
+import { useToast } from '@/shared/components/ui/use-toast';
 import { Format } from '@/shared/types';
 
 import { PRESERVED_TITLES } from '../../config';
@@ -11,26 +11,27 @@ export const useFeaturesTool = ({ initialBoard, setPartialBoardItem }: FeaturesT
   const [title, setTitle] = useState('');
   const [format, setFormat] = useState<Format>(Format.Image);
 
+  const { toast } = useToast();
+
   const insertFeature = () => {
     if (
       !title ||
       PRESERVED_TITLES.includes(title) ||
       initialBoard.headers?.map((h) => h.split(':')[1]).includes(title)
     ) {
-      toast('Invalid title! Try a unique one!', {
-        type: 'error',
-      });
+      toast({ description: 'Invalid title! Try a unique one!', variant: 'destructive' });
 
       return;
     }
 
     setPartialBoardItem('headers', [...(initialBoard.headers || []), `${format}:${title}`]);
 
-    setPartialBoardItem('pins', initialBoard.pins?.map((pin) => [...pin, '']));
+    setPartialBoardItem(
+      'pins',
+      initialBoard.pins?.map((pin) => [...pin, ''])
+    );
 
-    toast('Feature inserted!', {
-      type: 'success',
-    });
+    toast({ description: 'Feature inserted!', variant: 'success' });
 
     setIsShowingFeaturesTool(false);
 

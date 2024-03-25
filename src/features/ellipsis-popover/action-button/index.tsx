@@ -1,5 +1,6 @@
-import { PopoverButton } from '../types';
 import { cn } from '@/shared/utils';
+
+import { PopoverButton } from '../types';
 
 export const ActionButton = ({ button }: { button: PopoverButton }) => {
   return (

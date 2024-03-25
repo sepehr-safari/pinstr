@@ -1,15 +1,13 @@
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid';
-import { NDKUser } from '@nostr-dev-kit/ndk';
-import { nip19 } from 'nostr-tools';
+import { useActiveUser } from 'nostr-hooks';
 import { Fragment, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
+import { Button } from '@/shared/components';
 import { useFiltersParams } from '@/shared/hooks/common';
-import { useAuthor, useUser } from '@/shared/hooks/queries';
 import { capitalizeFirstLetter, cn, loader } from '@/shared/utils';
 
-import { Button } from '@/shared/components';
 import { USER_NAVIGATION } from './config';
 
 export const Navbar = () => {
@@ -19,12 +17,9 @@ export const Navbar = () => {
 
   const { tag } = useFiltersParams();
 
-  const { pubkey } = useUser();
-  const ndkUser = pubkey ? new NDKUser({ hexpubkey: pubkey }) : undefined;
-  const npub = ndkUser?.npub;
-  const { author: selfUser } = useAuthor(npub);
+  const { activeUser } = useActiveUser();
 
-  USER_NAVIGATION[0].link = pubkey ? `/p/${nip19.npubEncode(pubkey)}` : '#';
+  USER_NAVIGATION[0].link = activeUser && activeUser.pubkey ? `/p/${activeUser.npub}` : '#';
 
   useEffect(() => setSearchInput(tag.value || ''), [tag.value, setSearchInput]);
 
@@ -74,7 +69,7 @@ export const Navbar = () => {
             </div>
 
             <div className="relative z-10 flex items-center">
-              {!pubkey && (
+              {!activeUser && (
                 <Link
                   to="/login"
                   className="inline-flex rounded-full bg-gray-900 px-4 py-2.5 text-xs font-semibold text-white shadow-sm hover:bg-gray-700"
@@ -83,7 +78,7 @@ export const Navbar = () => {
                 </Link>
               )}
 
-              {pubkey && (
+              {activeUser && (
                 <div className="flex gap-2">
                   <Button
                     variant="primary"
@@ -102,14 +97,14 @@ export const Navbar = () => {
                           <img
                             className="h-10 w-10 rounded-full bg-gray-200 text-gray-200"
                             src={
-                              selfUser?.profile?.image
-                                ? loader(selfUser?.profile?.image, {
+                              activeUser?.profile?.image
+                                ? loader(activeUser?.profile?.image, {
                                     w: 96,
                                     h: 96,
                                   })
                                 : ''
                             }
-                            alt={selfUser?.profile?.name + ' avatar'}
+                            alt={activeUser?.profile?.name + ' avatar'}
                             loading="lazy"
                           />
                         </Menu.Button>
@@ -128,18 +123,18 @@ export const Navbar = () => {
                             <img
                               className="mt-4 mx-auto h-24 w-24 flex-shrink-0 rounded-full bg-gray-100 text-gray-100"
                               src={
-                                selfUser?.profile?.image
-                                  ? loader(selfUser?.profile?.image, {
+                                activeUser?.profile?.image
+                                  ? loader(activeUser?.profile?.image, {
                                       w: 96,
                                       h: 96,
                                     })
                                   : ''
                               }
-                              alt={selfUser?.profile?.name + ' avatar'}
+                              alt={activeUser?.profile?.name + ' avatar'}
                               loading="lazy"
                             />
                             <h3 className="mt-2 mb-4 text-sm font-semibold text-gray-900 text-center">
-                              {selfUser?.profile?.name}
+                              {activeUser?.profile?.name}
                             </h3>
                           </Menu.Item>
                           <div className="py-1">

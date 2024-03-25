@@ -1,17 +1,14 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 import { XMarkIcon } from '@heroicons/react/24/outline';
+import { useActiveUser } from 'nostr-hooks';
 import { Dispatch, Fragment, SetStateAction, useCallback, useEffect } from 'react';
 import ReactPlayer from 'react-player';
 
-import { useUser } from '@/shared/hooks/queries';
+import { EllipsisPopover, NoteDetails, ProfileDetails } from '@/features';
 
-import { Format, Board } from '@/shared/types';
+import { Board, Format } from '@/shared/types';
 import { ellipsis, loader } from '@/shared/utils';
-
-import { NoteDetails, ProfileDetails } from '@/features';
-
-import { EllipsisPopover } from '@/features';
 
 export const DetailsSlideover = ({
   board,
@@ -26,8 +23,9 @@ export const DetailsSlideover = ({
   isOpen: boolean;
   onClose: () => void;
 }) => {
-  const { pubkey } = useUser();
-  const selfBoard = pubkey ? pubkey == board.event.author.pubkey : false;
+  const { activeUser } = useActiveUser();
+  const selfBoard =
+    activeUser && activeUser.pubkey ? activeUser.pubkey == board.event.author.pubkey : false;
 
   const previous = useCallback(
     () => setPinIndex((prev) => (prev > -1 ? prev - 1 : -1)),

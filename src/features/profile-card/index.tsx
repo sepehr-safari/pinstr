@@ -1,21 +1,35 @@
 import { PlusIcon } from '@heroicons/react/20/solid';
+import { NDKUserProfile } from '@nostr-dev-kit/ndk';
+import { useNdk } from 'nostr-hooks';
+import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
-
-import { useAuthor } from '@/shared/hooks/queries';
-import { ellipsis, loader } from '@/shared/utils';
 
 import { Spinner } from '@/shared/components';
+import { useToast } from '@/shared/components/ui/use-toast';
+import { ellipsis, loader } from '@/shared/utils';
 
 export const ProfileCard = () => {
-  const { npub } = useParams();
-  const { author, isLoading } = useAuthor(npub);
-  const name = author?.profile?.name || '';
-  const image = author?.profile?.image || '';
-  const nip05 = author?.profile?.nip05 || '';
-  const about = author?.profile?.about || '';
+  const [profile, setProfile] = useState<NDKUserProfile | undefined | null>(undefined);
 
-  if (isLoading) {
+  const { npub } = useParams();
+
+  const { toast } = useToast();
+
+  const { ndk } = useNdk();
+
+  ndk
+    .getUser({ npub })
+    .fetchProfile()
+    .then((profile) => {
+      setProfile(profile);
+    });
+
+  const name = profile?.name || '';
+  const image = profile?.image || '';
+  const nip05 = profile?.nip05 || '';
+  const about = profile?.about || '';
+
+  if (profile === undefined) {
     return (
       <div className="h-32 flex justify-center items-center overflow-hidden bg-white shadow-md text-xs xl:rounded-xl">
         <Spinner />
@@ -57,7 +71,12 @@ export const ProfileCard = () => {
 
           <div className="flex justify-center">
             <button
-              onClick={() => toast('This feature is still under development.', { type: 'warning' })}
+              onClick={() =>
+                toast({
+                  description: 'This feature is still under development.',
+                  variant: 'destructive',
+                })
+              }
               className="mt-2 hidden w-full xl:inline-flex justify-center items-center rounded-full bg-gray-900 py-2 text-xs font-semibold text-white shadow-sm hover:bg-gray-700"
             >
               <PlusIcon className="-ml-1 w-4 h-4" />
@@ -75,7 +94,12 @@ export const ProfileCard = () => {
 
       <div className="flex justify-center">
         <button
-          onClick={() => toast('This feature is still under development.', { type: 'warning' })}
+          onClick={() =>
+            toast({
+              description: 'This feature is still under development.',
+              variant: 'destructive',
+            })
+          }
           className="mt-4 inline-flex xl:hidden justify-center items-center rounded-full bg-gray-900 px-6 py-2 text-xs font-semibold text-white shadow-sm hover:bg-gray-700"
         >
           <PlusIcon className="-ml-1 w-4 h-4" />

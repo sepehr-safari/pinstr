@@ -1,26 +1,33 @@
 import { PaperAirplaneIcon } from '@heroicons/react/24/outline';
-import { NDKUser } from '@nostr-dev-kit/ndk';
-import { useState } from 'react';
+import { NDKEvent } from '@nostr-dev-kit/ndk';
+import { useActiveUser, useNdk, useNewEvent } from 'nostr-hooks';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-
-import { Spinner } from '@/shared/components';
-import { useMutateBoardComment } from '@/shared/hooks/mutations';
-import { useAuthor, useBoardComments, useUser } from '@/shared/hooks/queries';
-import type { Board } from '@/shared/types';
 
 import { Comment } from '@/features';
 
+import { Spinner } from '@/shared/components';
+import type { Board } from '@/shared/types';
+
 export const CommentsCard = ({ board }: { board: Board }) => {
   const [inputText, setInputText] = useState('');
+  const [comments, setComments] = useState<NDKEvent[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const { comments, isLoading } = useBoardComments(board);
+  const { activeUser } = useActiveUser();
+  const { ndk } = useNdk();
+  const { createNewEvent } = useNewEvent();
 
-  const { pubkey: selfPubkey } = useUser();
-  const ndkUser = selfPubkey ? new NDKUser({ hexpubkey: selfPubkey }) : undefined;
-  const selfNpub = ndkUser?.npub;
-  const { author: selfUser } = useAuthor(selfNpub);
-
-  const mutateBoardComment = useMutateBoardComment(board);
+  useEffect(() => {
+    ndk
+      .fetchEvents([{ kinds: [1], limit: 100, '#a': [board.event.tagAddress()] }])
+      .then((events) => {
+        setComments([...events]);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [ndk, setComments, board.event.id]);
 
   return (
     <div className="overflow-hidden bg-white shadow-md text-xs xl:rounded-xl">
@@ -49,10 +56,10 @@ export const CommentsCard = ({ board }: { board: Board }) => {
         )}
 
         <div className="flex gap-2 w-full border-t mt-2 p-2 pt-4">
-          {selfPubkey ? (
+          {activeUser ? (
             <>
               <div className="h-9 w-9 rounded-full overflow-hidden">
-                <img className="" src={selfUser?.profile?.image} alt="" />
+                <img className="" src={activeUser.profile?.image} alt="" />
               </div>
 
               <div className="flex items-center grow">
@@ -74,8 +81,15 @@ export const CommentsCard = ({ board }: { board: Board }) => {
                 <button
                   type="button"
                   className="text-xs text-gray-500 hover:text-gray-700"
+                  disabled={!inputText}
                   onClick={() => {
-                    mutateBoardComment.mutate(inputText);
+                    const e = createNewEvent();
+                    e.kind = 1;
+                    e.content = inputText;
+                    e.tags.push(['a', board.event.tagAddress()]);
+                    e.tags.push(['p', board.event.author.pubkey]);
+                    e.publish();
+
                     setInputText('');
                   }}
                 >

@@ -4,7 +4,7 @@ import { FeaturedBoardItem } from './featured-board-item';
 import { useFeaturedBoards } from './hooks';
 
 export const FeaturedBoards = () => {
-  const { boards, loadMore, hasMore, isEmpty, isPending, ref, isFetching } = useFeaturedBoards();
+  const { boards, isEmpty, isPending } = useFeaturedBoards();
 
   return (
     <div className="overflow-hidden">
@@ -24,14 +24,14 @@ export const FeaturedBoards = () => {
         </div>
       )}
 
-      <button
+      {/* <button
         ref={ref}
         onClick={() => loadMore()}
         disabled={!hasMore || isFetching}
         className="mx-auto block text-transparent bg-transparent text-xs px-4 py-1"
       >
         {isFetching ? 'Loading...' : hasMore ? 'Load More' : 'Nothing more to load'}
-      </button>
+      </button> */}
     </div>
   );
 };

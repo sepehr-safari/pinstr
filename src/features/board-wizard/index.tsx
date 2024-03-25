@@ -13,7 +13,7 @@ type Props = {
 export const BoardWizard = ({ initialBoard }: Props) => {
   const [partialBoard, setPartialBoard] = useState<Partial<Board>>(initialBoard || {});
 
-  const { publishBoard, isLoading, deleteBoard } = useMutateBoard();
+  const { publishBoard, deleteBoard, isLoading } = useMutateBoard();
 
   const setPartialBoardItem = (key: keyof Board, value: any) => {
     setPartialBoard((board) => ({ ...board, [key]: value }));
@@ -25,7 +25,8 @@ export const BoardWizard = ({ initialBoard }: Props) => {
       partialBoard.category != undefined &&
       partialBoard.title != undefined &&
       partialBoard.description != undefined &&
-      partialBoard.image != undefined
+      partialBoard.image != undefined &&
+      partialBoard.event != undefined
   );
 
   return (

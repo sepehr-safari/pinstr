@@ -1,24 +1,21 @@
 import { Transition } from '@headlessui/react';
 import { PaperClipIcon } from '@heroicons/react/24/outline';
+import { useActiveUser } from 'nostr-hooks';
 import { memo, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-import { useFiltersParams } from '@/shared/hooks/common';
-import { useUser } from '@/shared/hooks/queries';
-
-import { Board } from '@/shared/types';
-
-import { ellipsis, loader } from '@/shared/utils';
-
 import { AuthorOverview, EllipsisPopover } from '@/features';
-
 import { BoardLikeButton, BoardZapButton } from '@/features/reaction-buttons';
+
+import { useFiltersParams } from '@/shared/hooks/common';
+import { Board } from '@/shared/types';
+import { ellipsis, loader } from '@/shared/utils';
 
 const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: boolean }) => {
   const [isHovering, setIsHover] = useState<boolean | undefined>(false);
 
-  const { pubkey } = useUser();
-  const selfBoard = pubkey ? pubkey == board.event.author.pubkey : false;
+  const { activeUser } = useActiveUser();
+  const selfBoard = activeUser ? activeUser.pubkey == board.event.author.pubkey : false;
 
   const navigate = useNavigate();
   const location = useLocation();

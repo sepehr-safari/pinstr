@@ -1,10 +1,11 @@
 import { NDKFilter, NDKKind, NDKUser } from '@nostr-dev-kit/ndk';
+import { useSubscribe } from 'nostr-hooks';
 import { useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useParams } from 'react-router-dom';
 
 import { useFiltersParams } from '@/shared/hooks/common';
-import { useEvents, useSettings } from '@/shared/hooks/queries';
+import { useSettings } from '@/shared/hooks/queries';
 import { Board } from '@/shared/types';
 import { isMutedEvent, parseBoardFromEvent } from '@/shared/utils';
 
@@ -25,16 +26,17 @@ export const useBoardsByAuthor = () => {
 
   const filter: NDKFilter = {
     kinds: [33889 as NDKKind],
-    limit: 50,
+    limit: 100,
   };
   if (!!author) filter['authors'] = [author];
   if (!!c) filter['#c'] = [c];
   if (!!f) filter['#f'] = [f];
   if (!!t) filter['#t'] = [t];
 
-  const { events, hasMore, isDone, isEmpty, isFetching, isPending, loadMore } = useEvents({
+  const { events, eose, isSubscribed } = useSubscribe({
     filters: [filter],
     enabled: Boolean(author),
+    fetchProfiles: true,
   });
 
   const boards = useMemo(
@@ -48,14 +50,13 @@ export const useBoardsByAuthor = () => {
     [events, muteList]
   );
 
+  // TODO: add loadMore function
+
   return {
     boards,
-    hasMore,
-    isDone,
-    isEmpty: isEmpty || (boards.length == 0 && isDone),
-    isFetching,
-    isPending,
-    loadMore,
+    isPending: !eose && boards.length == 0,
+    isEmpty: boards.length == 0 && eose,
+    isSubscribed,
     ref,
     inView,
   };

@@ -1,26 +1,33 @@
 import { PaperAirplaneIcon } from '@heroicons/react/24/outline';
-import { NDKEvent, NDKUser } from '@nostr-dev-kit/ndk';
-import { useState } from 'react';
-
-import { useMutateNoteComment } from '@/shared/hooks/mutations';
-import { useAuthor, useNoteComments, useUser } from '@/shared/hooks/queries';
-import { formatRelativeTime, loader } from '@/shared/utils';
-import { Spinner } from '@/shared/components';
+import { NDKEvent } from '@nostr-dev-kit/ndk';
+import { formatRelative } from 'date-fns';
+import { useActiveUser, useNdk, useNewEvent, useProfiles } from 'nostr-hooks';
+import { useEffect, useState } from 'react';
 
 import { NoteCommentButton, NoteLikeButton, NoteZapButton } from '@/features/reaction-buttons';
+
+import { Spinner } from '@/shared/components';
+import { loader } from '@/shared/utils';
 
 export const Comment = ({ event }: { event: NDKEvent }) => {
   const [inputText, setInputText] = useState('');
   const [showReply, setShowReply] = useState(false);
+  const [comments, setComments] = useState<NDKEvent[]>([]);
 
-  const { pubkey: selfPubkey } = useUser();
+  const { activeUser } = useActiveUser();
+  const { ndk } = useNdk();
+  const { createNewEvent } = useNewEvent();
 
-  const { npub } = new NDKUser({ hexpubkey: event.pubkey });
-  const { author, isLoading } = useAuthor(npub);
-  const image = author?.profile?.image || '';
-  const name = author?.profile?.name || '';
+  const { events: eventsWithProfile } = useProfiles({ events: [event] });
+  const author = eventsWithProfile?.[0].author;
+  const image = author.profile?.image || '';
+  const name = author.profile?.name || '';
 
-  const { comments } = useNoteComments(event);
+  useEffect(() => {
+    ndk.fetchEvents([{ kinds: [1], limit: 100, '#e': [event.id] }]).then((events) => {
+      setComments([...events]);
+    });
+  }, [ndk, setComments, event.id]);
 
   // const filteredComments = useMemo(
   //   () =>
@@ -34,9 +41,7 @@ export const Comment = ({ event }: { event: NDKEvent }) => {
   //   [comments]
   // );
 
-  const mutateNoteComment = useMutateNoteComment(event);
-
-  if (isLoading) {
+  if (eventsWithProfile.length === 0) {
     return (
       <div className="h-12 flex justify-center items-center">
         <Spinner />
@@ -78,11 +83,11 @@ export const Comment = ({ event }: { event: NDKEvent }) => {
             <NoteZapButton note={event} />
             <NoteCommentButton
               note={event}
-              onClick={() => !!selfPubkey && setShowReply((prev) => !prev)}
+              onClick={() => !!activeUser && setShowReply((prev) => !prev)}
             />
 
             <p className="ml-auto text-[0.6rem] font-light text-gray-500">
-              {formatRelativeTime(event.created_at || 1)}
+              {formatRelative(new Date((event.created_at || 1) * 1000), new Date())}
             </p>
           </div>
 
@@ -107,8 +112,15 @@ export const Comment = ({ event }: { event: NDKEvent }) => {
                 <button
                   type="button"
                   className="text-xs text-gray-500 hover:text-gray-700"
+                  disabled={!inputText}
                   onClick={() => {
-                    mutateNoteComment.mutate(inputText);
+                    const e = createNewEvent();
+                    e.kind = 1;
+                    e.content = inputText;
+                    e.tags.push(['e', event.id]);
+                    e.tags.push(['p', event.author.pubkey]);
+                    e.publish();
+
                     setInputText('');
                   }}
                 >

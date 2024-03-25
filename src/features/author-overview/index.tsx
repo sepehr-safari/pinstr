@@ -4,7 +4,8 @@ import { NDKUser } from '@nostr-dev-kit/ndk';
 import { useState } from 'react';
 import { usePopper } from 'react-popper';
 import { Link, useLocation } from 'react-router-dom';
-import { toast } from 'react-toastify';
+
+import { useToast } from '@/shared/components/ui/use-toast';
 
 import { ellipsis, loader } from '@/shared/utils';
 
@@ -12,6 +13,8 @@ type Props = { author: NDKUser | undefined; boosted?: boolean };
 
 export const AuthorOverview = ({ author, boosted }: Props) => {
   const location = useLocation();
+
+  const { toast } = useToast();
 
   const [referenceElement, setReferenceElement] = useState<HTMLButtonElement | null>(null);
   const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null);
@@ -91,7 +94,10 @@ export const AuthorOverview = ({ author, boosted }: Props) => {
                     <div className="-ml-px flex w-0 flex-1">
                       <button
                         onClick={() =>
-                          toast('This feature is still under development.', { type: 'warning' })
+                          toast({
+                            title: '',
+                            description: 'This feature is still under development.',
+                          })
                         }
                         className="relative inline-flex w-0 flex-1 items-center justify-center gap-x-2 rounded-br-lg border border-transparent py-2 text-xs font-semibold text-gray-900 hover:underline"
                       >

@@ -3,7 +3,6 @@ import { EllipsisVerticalIcon } from '@heroicons/react/24/outline';
 import { useMemo } from 'react';
 
 import type { Board } from '@/shared/types';
-
 import { cn } from '@/shared/utils';
 
 import { ActionButton } from './action-button';
@@ -11,7 +10,6 @@ import { EditButtons } from './edit-buttons';
 import { ExternalLink } from './external-link';
 import { InternalLink } from './internal-link';
 import { TransitionWrapper } from './transition-wrapper';
-
 import type { PopoverButton } from './types';
 
 interface Params {

@@ -1,19 +1,17 @@
-import { useEffect } from 'react';
-
 import { MemoizedBoardItem } from '@/features';
+
 import { Spinner, Text } from '@/shared/components';
 
 import { useBoardsExplorer } from './hooks';
 
 export const BoardsExplorer = () => {
-  const { boards, loadMore, hasMore, isEmpty, isPending, ref, inView, isFetching } =
-    useBoardsExplorer();
+  const { boards, isEmpty, isPending } = useBoardsExplorer();
 
-  useEffect(() => {
-    if (!isFetching && inView) {
-      loadMore();
-    }
-  }, [isFetching, inView, loadMore]);
+  // useEffect(() => {
+  //   if (!isFetching && inView) {
+  //     loadMore();
+  //   }
+  // }, [isFetching, inView, loadMore]);
 
   if (isPending) {
     return (
@@ -37,14 +35,14 @@ export const BoardsExplorer = () => {
         ))}
       </div>
 
-      <button
+      {/* <button
         ref={ref}
         onClick={() => loadMore()}
         disabled={!hasMore || isFetching}
         className="mt-4 mx-auto block text-transparent bg-transparent text-xs px-4 py-1"
       >
         {isFetching ? 'Loading...' : hasMore ? 'Load More' : 'Nothing more to load'}
-      </button>
+      </button> */}
     </div>
   );
 };

@@ -1,13 +1,13 @@
 import { Switch } from '@headlessui/react';
 import { RocketLaunchIcon } from '@heroicons/react/24/outline';
+import { useActiveUser, useSubscribe } from 'nostr-hooks';
 import { useEffect, useState } from 'react';
 import ConfettiExplosion from 'react-confetti-explosion';
-import { toast } from 'react-toastify';
 
 import { Button, Modal, Spinner, Text } from '@/shared/components';
-import { useEvents, useUser } from '@/shared/hooks/queries';
+import { useToast } from '@/shared/components/ui/use-toast';
 import { Board } from '@/shared/types';
-import { joinClassNames } from '@/shared/utils';
+import { cn } from '@/shared/utils';
 
 import { BOOST_DURATIONS } from './config';
 
@@ -23,10 +23,11 @@ export const BoardBooster = ({ board }: Props) => {
   const [isExploding, setIsExploding] = useState(false);
   const [boostRequest, setBoostRequest] = useState<string | null>(null);
 
-  const { pubkey } = useUser();
+  const { activeUser } = useActiveUser();
+  const { toast } = useToast();
 
   const filters = boostRequest ? [{ ids: [boostRequest] }] : [];
-  const { events } = useEvents({
+  const { events } = useSubscribe({
     filters,
     enabled: filters.length > 0,
   });
@@ -37,7 +38,7 @@ export const BoardBooster = ({ board }: Props) => {
 
       if (!webln) {
         setIsProcessing(false);
-        toast.error('Webln is not available!');
+        toast({ description: 'Webln is not available!', variant: 'destructive' });
       }
 
       webln
@@ -55,13 +56,13 @@ export const BoardBooster = ({ board }: Props) => {
                 })
                 .catch(() => {
                   setIsProcessing(false);
-                  toast.error('Zap failed!');
+                  toast({ description: 'Zap failed!', variant: 'destructive' });
                 });
           });
         })
         .catch(() => {
           setIsProcessing(false);
-          toast.error('Could not enable webln!');
+          toast({ description: 'Could not enable webln!', variant: 'destructive' });
         });
     }
   }, [events]);
@@ -72,7 +73,7 @@ export const BoardBooster = ({ board }: Props) => {
       boardTitle: encodeURIComponent(board.title),
       boostDuration: encodeURIComponent(selectedDuration.durationAmount),
       zapAmount: encodeURIComponent(selectedDuration.zapAmount),
-      booster: !anon && pubkey ? encodeURIComponent(pubkey) : '',
+      booster: !anon && activeUser ? encodeURIComponent(activeUser.pubkey) : '',
     });
 
     const res = await fetch(import.meta.env.VITE_BOOSTR_API_URL + '?' + searchParams.toString(), {
@@ -152,14 +153,14 @@ export const BoardBooster = ({ board }: Props) => {
               <Switch
                 checked={anon}
                 onChange={setAnon}
-                className={joinClassNames(
+                className={cn(
                   anon ? 'bg-gray-700' : 'bg-gray-200',
                   'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none'
                 )}
               >
                 <span
                   aria-hidden="true"
-                  className={joinClassNames(
+                  className={cn(
                     anon ? 'translate-x-5' : 'translate-x-0',
                     'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out'
                   )}

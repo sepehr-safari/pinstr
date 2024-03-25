@@ -1,13 +1,19 @@
 import { NDKUser } from '@nostr-dev-kit/ndk';
-
-import { useAuthor } from '@/shared/hooks/queries';
+import { useNdk } from 'nostr-hooks';
+import { useState } from 'react';
 
 import { FeaturedBoardItemProps } from '../types';
 
 export const useFeaturedBoardItem = ({ board }: FeaturedBoardItemProps) => {
-  const npub = board.booster ? new NDKUser({ pubkey: board.booster }).npub : undefined;
+  const [booster, setBooster] = useState<NDKUser | undefined>(undefined);
 
-  const { author } = useAuthor(npub);
+  const { ndk } = useNdk();
 
-  return { author };
+  const _booster = ndk.getUser({ pubkey: board.booster });
+
+  _booster.fetchProfile().finally(() => {
+    setBooster(_booster);
+  });
+
+  return { booster };
 };

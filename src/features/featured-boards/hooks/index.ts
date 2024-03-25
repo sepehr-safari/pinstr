@@ -1,9 +1,8 @@
 import { NDKEvent, NDKUser } from '@nostr-dev-kit/ndk';
+import { useNdk, useSubscribe } from 'nostr-hooks';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
-import { useEvents } from '@/shared/hooks/queries';
-import { useLocalStore } from '@/shared/store';
 import { Board } from '@/shared/types';
 import { getInvoiceAmount, parseBoardFromEvent } from '@/shared/utils';
 
@@ -16,19 +15,11 @@ export const useFeaturedBoards = () => {
 
   const processedBoostRequests = useRef<string[]>([]);
 
-  const { ref, inView } = useInView();
+  const { ref } = useInView();
 
-  const ndk = useLocalStore((store) => store.ndk);
+  const { ndk } = useNdk();
 
-  const {
-    events: boostRequests,
-    hasMore,
-    isDone,
-    isEmpty,
-    isFetching,
-    isPending: isBoostRequestsPending,
-    loadMore,
-  } = useEvents({
+  const { events: boostRequests } = useSubscribe({
     filters: [
       {
         kinds: [1],
@@ -102,7 +93,7 @@ export const useFeaturedBoards = () => {
     [filteredBoostRequests]
   );
 
-  const { events, isPending: isBoardsPending } = useEvents({
+  const { events, eose, isSubscribed } = useSubscribe({
     filters,
     enabled: filters.length > 0,
   });
@@ -135,20 +126,17 @@ export const useFeaturedBoards = () => {
     [events]
   );
 
-  useEffect(() => {
-    if (!isFetching && inView) {
-      loadMore();
-    }
-  }, [isFetching, inView, loadMore]);
+  // useEffect(() => {
+  //   if (!isFetching && inView) {
+  //     loadMore();
+  //   }
+  // }, [isFetching, inView, loadMore]);
 
   return {
     boards,
-    hasMore,
-    isDone,
-    isEmpty: isEmpty || (boards.length == 0 && isDone),
-    isFetching,
-    isPending: isBoostRequestsPending || isBoardsPending,
-    loadMore,
+    isPending: !eose && boards.length == 0,
+    isEmpty: boards.length == 0 && eose,
+    isSubscribed,
     ref,
   };
 };
