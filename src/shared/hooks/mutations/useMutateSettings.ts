@@ -1,51 +1,45 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useCallback } from 'react';
+import { useNewEvent } from 'nostr-hooks';
 import { useSearchParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
-import { usePublish } from '@/shared/hooks/mutations';
+import { useToast } from '@/shared/components/ui/use-toast';
 
 export const useMutateSettings = () => {
   const [_, setSearchParams] = useSearchParams();
 
-  const queryClient = useQueryClient();
+  const { toast } = useToast();
 
-  const publish = usePublish();
-
-  const publishSettingsFn = useCallback(
-    async (muteList: string[]) => {
-      return publish({
-        kind: 30078 as number,
-        tags: [
-          ['d', 'pinstr-settings'],
-          ['mute list', ...(muteList || [])],
-        ],
-      });
-    },
-    [publish]
-  );
+  const { createNewEvent } = useNewEvent();
 
   return {
-    publishSettings: useMutation({
-      mutationFn: (muteList: string[]) =>
-        toast.promise(publishSettingsFn(muteList), {
-          pending: 'Saving...',
-          error: 'An error has been occured! Please try again.',
-          success: 'Successfully saved!',
-        }),
-      onSuccess: (event) => {
-        queryClient.invalidateQueries({
-          queryKey: ['nostr', 'settings', event.pubkey],
-        });
+    saveMuteList: async (muteList: string[]) => {
+      const e = createNewEvent();
+      e.content = '';
+      e.kind = 30078;
+      e.tags = [
+        ['d', 'pinstr-settings'],
+        ['mute-list', ...(muteList || [])],
+      ];
+      e.publish()
+        .then(() => {
+          toast({
+            description: 'Successfully saved!',
+            variant: 'success',
+          });
 
-        setSearchParams(
-          (searchParams) => {
-            searchParams.delete('settings');
-            return searchParams;
-          },
-          { replace: true }
-        );
-      },
-    }),
+          setSearchParams(
+            (searchParams) => {
+              searchParams.delete('settings');
+              return searchParams;
+            },
+            { replace: true }
+          );
+        })
+        .catch(() => {
+          toast({
+            description: 'An error has been occured! Please try again.',
+            variant: 'destructive',
+          });
+        });
+    },
   };
 };
