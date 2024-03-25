@@ -57,7 +57,7 @@
     "lodash": "^4.17.21",
     "lucide-react": "^0.363.0",
     "next-themes": "^0.3.0",
-    "nostr-hooks": "^2.6.0",
+    "nostr-hooks": "^2.6.1",
     "nostr-tools": "^2.3.2",
     "react": "^18.2.0",
     "react-confetti-explosion": "^2.1.2",
