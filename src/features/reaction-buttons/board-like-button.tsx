@@ -1,10 +1,9 @@
 import { HeartIcon } from '@heroicons/react/20/solid';
-import { useMemo } from 'react';
-
-import { useBoardLikes, useUser } from '@/shared/hooks/queries';
+import { NDKEvent } from '@nostr-dev-kit/ndk';
+import { useActiveUser, useNdk } from 'nostr-hooks';
+import { useEffect, useMemo, useState } from 'react';
 
 import type { Board } from '@/shared/types';
-
 import { cn, numberEllipsis } from '@/shared/utils';
 
 type Props = {
@@ -13,21 +12,29 @@ type Props = {
 };
 
 export const BoardLikeButton = ({ board, bgHover = false }: Props) => {
-  const { likes } = useBoardLikes(board);
-  const like = async () => await board?.event.react('+');
+  const [likes, setLikes] = useState<NDKEvent[]>([]);
 
-  const { pubkey } = useUser();
+  const { activeUser } = useActiveUser();
+  const { ndk } = useNdk();
+
+  useEffect(() => {
+    ndk
+      .fetchEvents([{ kinds: [7], limit: 100, '#a': [board.event.tagAddress()] }])
+      .then((events) => {
+        setLikes([...events]);
+      });
+  }, [ndk, setLikes, board.event.id]);
 
   const likedByUser = useMemo(
-    () => !!likes.find((event) => event.pubkey == pubkey),
-    [likes, pubkey]
+    () => !!likes.find((event) => event.pubkey == activeUser?.pubkey),
+    [likes, activeUser?.pubkey]
   );
 
   return (
     <>
       <button
         type="button"
-        onClick={() => !likedByUser && like()}
+        onClick={() => !likedByUser && board.event.react('+')}
         className={cn(
           'inline-flex justify-center items-center text-xs font-semibold',
           likedByUser ? 'text-red-600 hover:cursor-default' : 'text-gray-600 hover:text-gray-900',

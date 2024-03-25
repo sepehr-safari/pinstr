@@ -1,22 +1,30 @@
 import { BoltIcon } from '@heroicons/react/24/outline';
 import { NDKEvent } from '@nostr-dev-kit/ndk';
-import { useMemo, useState } from 'react';
-
-import { useNoteZaps, useUser } from '@/shared/hooks/queries';
-import { getInvoiceAmount, cn, numberEllipsis } from '@/shared/utils';
+import { useEffect, useMemo, useState } from 'react';
+import { useActiveUser, useNdk } from 'nostr-hooks';
 
 import { ZapModal } from '@/features';
+
+import { getInvoiceAmount, cn, numberEllipsis } from '@/shared/utils';
 
 // TODO: refactor ALL reaction buttons
 
 export const NoteZapButton = ({ note }: { note: NDKEvent }) => {
-  const [showModal, setShowModal] = useState(false);
+  const [zaps, setZaps] = useState<NDKEvent[]>([]);
 
-  const { zaps } = useNoteZaps(note);
+  const { ndk } = useNdk();
+  const { activeUser } = useActiveUser();
 
-  const { pubkey } = useUser();
+  useEffect(() => {
+    ndk.fetchEvents([{ kinds: [9735], limit: 100, '#e': [note.id] }]).then((events) => {
+      setZaps([...events]);
+    });
+  }, [ndk, setZaps, note.id]);
 
-  const zapedByUser = useMemo(() => !!zaps.find((event) => event.pubkey == pubkey), [zaps, pubkey]);
+  const zapedByUser = useMemo(
+    () => !!zaps.find((event) => event.pubkey == activeUser?.pubkey),
+    [zaps, activeUser?.pubkey]
+  );
 
   const zapAmounts = useMemo(
     () =>
@@ -28,23 +36,22 @@ export const NoteZapButton = ({ note }: { note: NDKEvent }) => {
 
   return (
     <>
-      <button
-        type="button"
-        onClick={() => setShowModal(true)}
-        className={cn(
-          'inline-flex justify-center text-xs font-semibold',
-          zapedByUser
-            ? 'text-yellow-600 hover:text-yellow-700'
-            : 'text-gray-600 hover:text-gray-900'
-        )}
-      >
-        <BoltIcon className="h-4 w-4" aria-hidden="true" />
-        <span className="ml-1">
-          {zapAmounts ? numberEllipsis(zapAmounts.reduce((a, b) => a + b)) : 0}
-        </span>
-      </button>
-
-      {showModal && note && <ZapModal note={note} onClose={() => setShowModal(false)} />}
+      <ZapModal target={{ type: 'event', event: note }}>
+        <button
+          type="button"
+          className={cn(
+            'inline-flex justify-center text-xs font-semibold',
+            zapedByUser
+              ? 'text-yellow-600 hover:text-yellow-700'
+              : 'text-gray-600 hover:text-gray-900'
+          )}
+        >
+          <BoltIcon className="h-4 w-4" aria-hidden="true" />
+          <span className="ml-1">
+            {zapAmounts ? numberEllipsis(zapAmounts.reduce((a, b) => a + b)) : 0}
+          </span>
+        </button>
+      </ZapModal>
     </>
   );
 };

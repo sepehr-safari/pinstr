@@ -1,10 +1,10 @@
 import { ChatBubbleLeftIcon } from '@heroicons/react/24/solid';
+import { NDKEvent } from '@nostr-dev-kit/ndk';
+import { useNdk } from 'nostr-hooks';
+import { useEffect, useState } from 'react';
 
 import { useCommentsParams } from '@/shared/hooks/common';
-import { useBoardComments } from '@/shared/hooks/queries';
-
 import type { Board } from '@/shared/types';
-
 import { cn, numberEllipsis } from '@/shared/utils';
 
 type Props = {
@@ -13,7 +13,17 @@ type Props = {
 };
 
 export const BoardCommentButton = ({ board, bgHover = false }: Props) => {
-  const { comments } = useBoardComments(board);
+  const [comments, setComments] = useState<NDKEvent[]>([]);
+
+  const { ndk } = useNdk();
+
+  useEffect(() => {
+    ndk
+      .fetchEvents([{ kinds: [1], limit: 100, '#a': [board.event.tagAddress()] }])
+      .then((events) => {
+        setComments([...events]);
+      });
+  }, [ndk, setComments, board.event.id]);
 
   const { toggleCommentsParams } = useCommentsParams();
 

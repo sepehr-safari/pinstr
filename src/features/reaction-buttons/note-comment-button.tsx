@@ -1,10 +1,18 @@
 import { ChatBubbleLeftIcon } from '@heroicons/react/24/outline';
 import { NDKEvent } from '@nostr-dev-kit/ndk';
-
-import { useNoteComments } from '@/shared/hooks/queries';
+import { useNdk } from 'nostr-hooks';
+import { useEffect, useState } from 'react';
 
 export const NoteCommentButton = ({ note, onClick }: { note: NDKEvent; onClick: () => void }) => {
-  const { comments } = useNoteComments(note);
+  const [comments, setComments] = useState<NDKEvent[]>([]);
+
+  const { ndk } = useNdk();
+
+  useEffect(() => {
+    ndk.fetchEvents([{ kinds: [1], limit: 100, '#e': [note.id] }]).then((events) => {
+      setComments([...events]);
+    });
+  }, [ndk, setComments, note.id]);
 
   return (
     <>
