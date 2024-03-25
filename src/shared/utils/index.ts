@@ -1,4 +1,5 @@
 export * from './capitalize-first-letter';
+export * from './cn';
 export * from './ellipsis';
 export * from './get-board-headers-by-format';
 export * from './get-invoice-amount';
