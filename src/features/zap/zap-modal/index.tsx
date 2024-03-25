@@ -11,7 +11,6 @@ import {
   DialogTrigger,
 } from '@/shared/components/ui/dialog';
 import { Input } from '@/shared/components/ui/input';
-import { Small } from '@/shared/components/ui/typography/small';
 
 import { ZAP_AMOUNTS } from './config';
 import { useZapModal } from './hooks';
@@ -53,7 +52,7 @@ export const ZapModal = ({
         </DialogHeader>
 
         <div className="mt-4 flex flex-col gap-2">
-          <Small>Zap amount in Sats:</Small>
+          <small>Zap amount in Sats:</small>
 
           <div className="grid grid-cols-4 gap-4">
             {ZAP_AMOUNTS.map((zapAmount) => (
@@ -90,7 +89,7 @@ export const ZapModal = ({
         </div>
 
         <div className="mt-4 flex flex-col gap-2">
-          <Small>Comment:</Small>
+          <small>Comment:</small>
 
           <Input value={comment} onChange={(e) => setComment(e.target.value)} />
         </div>
