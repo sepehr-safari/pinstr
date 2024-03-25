@@ -1,6 +1,7 @@
-import { NDKFilter, NDKKind } from '@nostr-dev-kit/ndk';
+import { NDKEvent, NDKFilter, NDKKind } from '@nostr-dev-kit/ndk';
+import { useSubscribe } from 'nostr-hooks';
 
-import { useEvent, useSettings } from '@/shared/hooks/queries';
+import { useSettings } from '@/shared/hooks/queries';
 import { isMutedEvent, parseBoardFromEvent } from '@/shared/utils';
 
 type Params = {
@@ -12,16 +13,30 @@ export const useBoard = ({ author, title }: Params) => {
   const { settings } = useSettings();
   const muteList = settings ? settings.muteList : undefined;
 
-  const filter: NDKFilter | undefined =
+  const filters: NDKFilter[] =
     !!author && !!title
-      ? {
-          kinds: [33889 as NDKKind],
-          authors: [author],
-          '#d': [title],
-        }
-      : undefined;
+      ? [
+          {
+            kinds: [33889 as NDKKind],
+            limit: 1,
+            authors: [author],
+            '#d': [title],
+          },
+        ]
+      : [];
 
-  const { event } = useEvent(filter);
+  const { events, eose } = useSubscribe({
+    filters,
+    enabled: !!author && !!title,
+    fetchProfiles: true,
+  });
+
+  let event: NDKEvent | undefined | null = undefined;
+  if (events.length == 0) {
+    eose && (event = null);
+  } else {
+    event = events[0];
+  }
 
   if (event == undefined) return undefined;
 
