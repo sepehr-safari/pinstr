@@ -3,7 +3,7 @@ import { NDKEvent } from '@nostr-dev-kit/ndk';
 import { useMemo, useState } from 'react';
 
 import { useNoteZaps, useUser } from '@/shared/hooks/queries';
-import { getInvoiceAmount, joinClassNames, numberEllipsis } from '@/shared/utils';
+import { getInvoiceAmount, cn, numberEllipsis } from '@/shared/utils';
 
 import { ZapModal } from '@/features';
 
@@ -31,7 +31,7 @@ export const NoteZapButton = ({ note }: { note: NDKEvent }) => {
       <button
         type="button"
         onClick={() => setShowModal(true)}
-        className={joinClassNames(
+        className={cn(
           'inline-flex justify-center text-xs font-semibold',
           zapedByUser
             ? 'text-yellow-600 hover:text-yellow-700'

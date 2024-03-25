@@ -12,7 +12,7 @@ import { useMemo, useState } from 'react';
 import { usePopper } from 'react-popper';
 import { useSearchParams } from 'react-router-dom';
 
-import { joinClassNames } from '@/shared/utils';
+import { cn } from '@/shared/utils';
 import { PopoverButton } from './types';
 
 // TODO: refactor - replace popover with menu component
@@ -147,7 +147,7 @@ export const InsertFeaturePopover = () => {
                   )}
 
                   <div className="">
-                    <div className={joinClassNames('font-semibold', item.color || 'text-gray-900')}>
+                    <div className={cn('font-semibold', item.color || 'text-gray-900')}>
                       {item.title}
                     </div>
                     {!!item.description && (

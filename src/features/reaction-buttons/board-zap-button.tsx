@@ -5,7 +5,7 @@ import { useBoardZaps, useUser } from '@/shared/hooks/queries';
 
 import type { Board } from '@/shared/types';
 
-import { getInvoiceAmount, joinClassNames, numberEllipsis } from '@/shared/utils';
+import { getInvoiceAmount, cn, numberEllipsis } from '@/shared/utils';
 
 import { ZapModal } from '@/features';
 
@@ -36,7 +36,7 @@ export const BoardZapButton = ({ board, bgHover = false }: Props) => {
       <button
         type="button"
         onClick={() => setShowModal(true)}
-        className={joinClassNames(
+        className={cn(
           'inline-flex justify-center items-center text-xs font-semibold',
           zapedByUser
             ? 'text-yellow-600 hover:text-yellow-700'

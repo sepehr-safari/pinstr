@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 
 import type { Board } from '@/shared/types';
 
-import { joinClassNames } from '@/shared/utils';
+import { cn } from '@/shared/utils';
 
 import { ActionButton } from './action-button';
 import { EditButtons } from './edit-buttons';
@@ -56,7 +56,7 @@ export const EllipsisPopover = ({
   return (
     <Popover>
       <Popover.Button
-        className={joinClassNames(
+        className={cn(
           buttonTheme == 'light'
             ? 'text-gray-500 bg-black/5 hover:bg-black/10'
             : 'text-white bg-black/30 hover:bg-black/50',
@@ -71,7 +71,7 @@ export const EllipsisPopover = ({
       <TransitionWrapper overlay={overlay}>
         <Popover.Panel
           onClick={onClick}
-          className={joinClassNames(
+          className={cn(
             'm-4 absolute w-40 z-[5] rounded bg-white p-2 text-xs ring-1 ring-gray-900/20',
             className
           )}

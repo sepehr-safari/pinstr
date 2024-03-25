@@ -3,7 +3,7 @@ import ReactPlayer from 'react-player';
 
 import { useUser } from '@/shared/hooks/queries';
 import { Board } from '@/shared/types';
-import { joinClassNames } from '@/shared/utils';
+import { cn } from '@/shared/utils';
 
 import { EllipsisPopover } from '@/features';
 
@@ -24,7 +24,7 @@ export const VideoPinItem = ({ board, setPinIndex }: Props) => {
     <>
       <ul
         role="list"
-        className={joinClassNames(
+        className={cn(
           'grid gap-4 grid-cols-1 sm:grid-cols-2',
           'md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-3 4xl:grid-cols-4 5xl:grid-cols-4'
         )}

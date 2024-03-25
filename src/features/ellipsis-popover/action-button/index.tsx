@@ -1,5 +1,5 @@
 import { PopoverButton } from '../types';
-import { joinClassNames } from '@/shared/utils';
+import { cn } from '@/shared/utils';
 
 export const ActionButton = ({ button }: { button: PopoverButton }) => {
   return (
@@ -10,9 +10,7 @@ export const ActionButton = ({ button }: { button: PopoverButton }) => {
       >
         {button.icon && <button.icon className="w-4 h-4" />}
 
-        <span className={joinClassNames('font-semibold', button.color || 'text-gray-900')}>
-          {button.title}
-        </span>
+        <span className={cn('font-semibold', button.color || 'text-gray-900')}>{button.title}</span>
       </div>
     </>
   );

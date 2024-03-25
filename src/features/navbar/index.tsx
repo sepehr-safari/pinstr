@@ -7,7 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { useFiltersParams } from '@/shared/hooks/common';
 import { useAuthor, useUser } from '@/shared/hooks/queries';
-import { capitalizeFirstLetter, joinClassNames, loader } from '@/shared/utils';
+import { capitalizeFirstLetter, cn, loader } from '@/shared/utils';
 
 import { Button } from '@/shared/components';
 import { USER_NAVIGATION } from './config';
@@ -148,7 +148,7 @@ export const Navbar = () => {
                                 {({ active }) => (
                                   <Link
                                     to={item.link}
-                                    className={joinClassNames(
+                                    className={cn(
                                       active ? 'bg-gray-100' : '',
                                       'block px-4 py-2 text-center text-sm font-medium text-gray-900'
                                     )}

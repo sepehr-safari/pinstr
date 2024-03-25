@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 
 import { useAuthor, useUser } from '@/shared/hooks/queries';
 import { Board } from '@/shared/types';
-import { ellipsis, joinClassNames, loader } from '@/shared/utils';
+import { ellipsis, cn, loader } from '@/shared/utils';
 
 import { EllipsisPopover } from '@/features';
 
@@ -31,7 +31,7 @@ export const ProfilePinItem = ({ board, setPinIndex }: Props) => {
     <>
       <ul
         role="list"
-        className={joinClassNames(
+        className={cn(
           'grid gap-4 grid-cols-1 sm:grid-cols-2',
           'md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-5 5xl:grid-cols-6'
         )}
@@ -99,7 +99,7 @@ export const ProfileDetails = ({
         className="w-full absolute top-0 disabled:pointer-events-none"
       >
         <div
-          className={joinClassNames(
+          className={cn(
             'w-full h-24 text-gray-200 duration-500 group-hover:rounded-b-none',
             summary ? 'rounded-lg' : 'rounded-t-lg',
             isLoading
@@ -109,7 +109,7 @@ export const ProfileDetails = ({
         >
           {!!author?.profile?.banner && (
             <img
-              className={joinClassNames(
+              className={cn(
                 'w-full h-full object-cover duration-500 group-hover:rounded-b-none',
                 summary ? 'rounded-lg' : 'rounded-t-lg'
               )}
@@ -127,7 +127,7 @@ export const ProfileDetails = ({
         className="w-full flex flex-col pt-16 grow items-center text-center disabled:pointer-events-none"
       >
         <div
-          className={joinClassNames(
+          className={cn(
             'mx-auto rounded-full overflow-hidden w-24 h-24 text-gray-300 z-[1] duration-500',
             isLoading
               ? 'bg-gray-200'

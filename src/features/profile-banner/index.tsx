@@ -1,7 +1,7 @@
 import { useLocation, useParams } from 'react-router-dom';
 
 import { useAuthor } from '@/shared/hooks/queries';
-import { joinClassNames, loader } from '@/shared/utils';
+import { cn, loader } from '@/shared/utils';
 
 export const ProfileBanner = () => {
   const location = useLocation();
@@ -14,7 +14,7 @@ export const ProfileBanner = () => {
 
   return (
     <div
-      className={joinClassNames(
+      className={cn(
         '-mt-20 absolute top-0 w-full bg-gray-300 rounded-t-md',
         state?.backgroundLocation ? 'h-40' : 'h-52'
       )}

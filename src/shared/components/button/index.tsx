@@ -1,4 +1,4 @@
-import { joinClassNames } from '@/shared/utils';
+import { cn } from '@/shared/utils';
 
 const variantClasses = {
   primary: 'bg-gray-900 text-white hover:bg-gray-700',
@@ -41,7 +41,7 @@ export const Button = ({
   className = '',
   onClick,
 }: Props) => {
-  const joinedClassNames = joinClassNames(
+  const joinedClassNames = cn(
     'flex items-center justify-center text-xs font-semibold focus:outline-none',
     sizeClasses[size],
     variantClasses[variant],
@@ -54,7 +54,7 @@ export const Button = ({
   return (
     <button className={joinedClassNames} disabled={disabled} onClick={onClick}>
       {icon && <div className="-ml-1 w-4 h-4 flex items-center">{icon}</div>}
-      {label && <span className={joinClassNames(icon ? 'ml-2' : '')}>{label}</span>}
+      {label && <span className={cn(icon ? 'ml-2' : '')}>{label}</span>}
     </button>
   );
 };

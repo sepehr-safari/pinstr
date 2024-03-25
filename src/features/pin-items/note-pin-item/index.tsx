@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import { useAuthor, useEvent, useUser } from '@/shared/hooks/queries';
 import { Board } from '@/shared/types';
-import { ellipsis, joinClassNames, loader } from '@/shared/utils';
+import { ellipsis, cn, loader } from '@/shared/utils';
 
 import { EllipsisPopover } from '@/features';
 
@@ -29,7 +29,7 @@ export const NotePinItem = ({ board, setPinIndex }: Props) => {
     <>
       <ul
         role="list"
-        className={joinClassNames(
+        className={cn(
           'grid gap-4 grid-cols-1 sm:grid-cols-2',
           'md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-3 4xl:grid-cols-4 5xl:grid-cols-4'
         )}
@@ -91,7 +91,7 @@ export const NoteDetails = ({
       <div className="w-full h-full flex flex-col">
         <div className="flex w-full items-center space-x-2 p-4">
           <div
-            className={joinClassNames(
+            className={cn(
               'h-12 w-12 rounded-full bg-gray-100 text-gray-100',
               note == undefined ? 'animate-pulse' : ''
             )}

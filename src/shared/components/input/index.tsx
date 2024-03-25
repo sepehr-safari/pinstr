@@ -1,4 +1,4 @@
-import { joinClassNames } from '@/shared/utils';
+import { cn } from '@/shared/utils';
 
 const variantClasses = {
   primary:
@@ -16,7 +16,7 @@ export const Input = ({
   className,
   ...props
 }: Props & React.InputHTMLAttributes<HTMLInputElement>) => {
-  const joinedClassNames = joinClassNames(variantClasses[variant], className || '');
+  const joinedClassNames = cn(variantClasses[variant], className || '');
 
   return <input type={type} autoComplete={autoComplete} className={joinedClassNames} {...props} />;
 };

@@ -1,6 +1,6 @@
 import { useUser } from '@/shared/hooks/queries';
 import { Board } from '@/shared/types';
-import { joinClassNames, loader } from '@/shared/utils';
+import { cn, loader } from '@/shared/utils';
 
 import { EllipsisPopover } from '@/features';
 
@@ -21,7 +21,7 @@ export const ImagePinItem = ({ board, setPinIndex }: Props) => {
     <>
       <ul
         role="list"
-        className={joinClassNames(
+        className={cn(
           'grid gap-4 grid-cols-1 sm:grid-cols-2',
           'md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-4 4xl:grid-cols-5 5xl:grid-cols-6'
         )}

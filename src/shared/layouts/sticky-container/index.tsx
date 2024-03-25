@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 
-import { joinClassNames } from '@/shared/utils';
+import { cn } from '@/shared/utils';
 
 export const StickyContainer = ({
   children,
@@ -14,7 +14,7 @@ export const StickyContainer = ({
 
   return (
     <div
-      className={joinClassNames(
+      className={cn(
         'flex flex-col gap-4 w-full xl:max-w-sm',
         'xl:self-start xl:sticky',
         state?.backgroundLocation ? 'xl:top-10' : 'mt-24 xl:mt-12 xl:top-24',

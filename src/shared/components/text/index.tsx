@@ -1,4 +1,4 @@
-import { joinClassNames } from '@/shared/utils';
+import { cn } from '@/shared/utils';
 
 const variantClasses = {
   xs: 'text-xs font-light text-gray-500',
@@ -18,7 +18,7 @@ export const Text = ({
   className,
   ...props
 }: Props & React.HTMLAttributes<HTMLParagraphElement>) => {
-  const joinedClassNames = joinClassNames(variantClasses[variant], className || '');
+  const joinedClassNames = cn(variantClasses[variant], className || '');
 
   return (
     <p className={joinedClassNames} {...props}>

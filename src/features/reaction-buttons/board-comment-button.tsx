@@ -5,7 +5,7 @@ import { useBoardComments } from '@/shared/hooks/queries';
 
 import type { Board } from '@/shared/types';
 
-import { joinClassNames, numberEllipsis } from '@/shared/utils';
+import { cn, numberEllipsis } from '@/shared/utils';
 
 type Props = {
   board: Board;
@@ -22,7 +22,7 @@ export const BoardCommentButton = ({ board, bgHover = false }: Props) => {
       <button
         type="button"
         onClick={toggleCommentsParams}
-        className={joinClassNames(
+        className={cn(
           'inline-flex justify-center items-center text-xs font-semibold duration-200 text-gray-600 hover:text-gray-900',
           bgHover ? 'hover:bg-gray-200' : ''
         )}
