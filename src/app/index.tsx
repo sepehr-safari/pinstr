@@ -12,7 +12,7 @@ export const App = () => {
   useNostrHooks();
 
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       <BrowserRouter>
         <AppRouter />
       </BrowserRouter>

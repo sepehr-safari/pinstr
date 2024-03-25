@@ -25,4 +25,4 @@ export * from './profile-banner';
 export * from './profile-card';
 export * from './reaction-buttons';
 export * from './settings-modal';
-export * from './zap-modal';
+export * from './zap';
