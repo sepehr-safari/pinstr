@@ -7,4 +7,3 @@ export * from './modal';
 export * from './remove-confirm-modal';
 export * from './spinner';
 export * from './text';
-export * from './toast';
