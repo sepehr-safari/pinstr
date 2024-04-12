@@ -1,86 +1,276 @@
-import { Location, Route, Routes, useLocation } from 'react-router-dom';
+import { Location, Route, Routes, createBrowserRouter, useLocation } from 'react-router-dom';
 
-import { HomePage } from './home';
-import { LoginPage } from './login';
-import { LogoutPage } from './logout';
 import { MainLayout } from './main-layout';
-import { NoMatchPage } from './no-match';
-import { ProfileLayout, ProfilePage } from './profile';
-import {
-  BoardLayout,
-  BoardPage,
-  EditBoardPage,
-  EditBoardLayout,
-  AddPinLayout,
-  AddPinPage,
-  EditPinLayout,
-  EditPinPage,
-} from './board';
+import { ProfileLayout } from './profile';
+import { BoardLayout, EditBoardLayout, AddPinLayout, EditPinLayout } from './board';
 import { SlideoverLayout } from './slideover-layout';
-import { CreateBoardLayout, CreateBoardPage } from './create-board';
+import { CreateBoardLayout } from './create-board';
 
-export const AppRouter = () => {
-  const location = useLocation();
-  const state = location.state as { backgroundLocation?: Location };
+const HomePage = () => import('./home');
+const NoMatchPage = () => import('./no-match');
+const LogoutPage = () => import('./logout');
+const LoginPage = () => import('./login');
+const ProfilePage = () => import('./profile');
+const CreateBoardPage = () => import('./create-board');
+const BoardPage = () => import('./board');
+const EditBoardPage = () => import('./board');
+const AddPinPage = () => import('./board');
+const EditPinPage = () => import('./board');
 
-  return (
-    <>
-      <Routes location={state?.backgroundLocation || location}>
-        <Route path="/" element={<MainLayout />}>
-          <Route index element={<HomePage />} />
+export const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <MainLayout />,
+    children: [
+      {
+        path: '/',
+        async lazy() {
+          return { Component: (await HomePage()).HomePage };
+        },
+      }, //------
+      {
+        path: '/p',
+        children: [
+          {
+            path: '/p',
+            async lazy() {
+              return { Component: (await NoMatchPage()).NoMatchPage };
+            },
+          },
+          {
+            path: '/p/:npub',
+            element: <ProfileLayout />,
+            children: [
+              {
+                path: '/p/:npub',
+                async lazy() {
+                  return { Component: (await ProfilePage()).ProfilePage };
+                },
+              },
+              {
+                path: '/p/:npub/:title',
+                element: <BoardLayout />,
+                children: [
+                  {
+                    path: '/p/:npub/:title',
+                    async lazy() {
+                      return { Component: (await BoardPage()).BoardPage };
+                    },
+                  },
+                  {
+                    path: '/p/:npub/:title/edit-board',
+                    element: <EditBoardLayout />,
+                    children: [
+                      {
+                        path: '/p/:npub/:title/edit-board',
+                        async lazy() {
+                          return { Component: (await EditBoardPage()).EditBoardPage };
+                        },
+                      },
+                    ],
+                  },
+                  {
+                    path: '/p/:npub/:title/add-pin',
+                    element: <AddPinLayout />,
+                    children: [
+                      {
+                        path: '/p/:npub/:title/add-pin',
+                        async lazy() {
+                          return { Component: (await AddPinPage()).AddPinPage };
+                        },
+                      },
+                    ],
+                  },
+                  {
+                    path: '/p/:npub/:title/edit-pin',
+                    element: <EditPinLayout />,
+                    children: [
+                      {
+                        path: '/p/:npub/:title/edit-pin',
+                        async lazy() {
+                          return { Component: (await EditPinPage()).EditPinPage };
+                        },
+                      },
+                      {
+                        path: '/p/:npub/:title/edit-pin/:pinIndex',
+                        async lazy() {
+                          return { Component: (await EditPinPage()).EditPinPage };
+                        },
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      }, // -----
+      {
+        path: '/create-board',
+        element: <CreateBoardLayout />,
+        children: [
+          {
+            path: '/create-board',
+            async lazy() {
+              return { Component: (await CreateBoardPage()).CreateBoardPage };
+            },
+          },
+        ],
+      }, // -----
+      {
+        path: '/login',
+        async lazy() {
+          return { Component: (await LoginPage()).LoginPage };
+        },
+      },
+      {
+        path: '/logout',
+        async lazy() {
+          return { Component: (await LogoutPage()).LogoutPage };
+        },
+      }, // -------
+      {
+        path: '*',
+        async lazy() {
+          return { Component: (await NoMatchPage()).NoMatchPage };
+        },
+      }, // ------
+    ],
+  },
+]);
 
-          <Route path="p">
-            <Route index element={<NoMatchPage />} />
+// export const AppRouter = () => {
+//   const location = useLocation();
+//   const state = location.state as { backgroundLocation?: Location };
 
-            <Route path=":npub" element={<ProfileLayout />}>
-              <Route index element={<ProfilePage />} />
+//   return (
+//     <>
+//       <Routes location={state?.backgroundLocation || location}>
+//         <Route path="/" element={<MainLayout />}>
+//           <Route index lazy={() => import('./home')} />
 
-              <Route path=":title" element={<BoardLayout />}>
-                <Route index element={<BoardPage />} />
+//           <Route path="p">
+//             <Route
+//               index
+//               lazy={async () => {
+//                 return { Component: (await NoMatchPage()).NoMatchPage };
+//               }}
+//             />
 
-                <Route path="edit-board" element={<EditBoardLayout />}>
-                  <Route index element={<EditBoardPage />} />
-                </Route>
+//             <Route path=":npub" element={<ProfileLayout />}>
+//               <Route
+//                 index
+//                 lazy={async () => {
+//                   return { Component: (await ProfilePage()).ProfilePage };
+//                 }}
+//               />
 
-                <Route path="add-pin" element={<AddPinLayout />}>
-                  <Route index element={<AddPinPage />} />
-                </Route>
+//               <Route path=":title" element={<BoardLayout />}>
+//                 <Route
+//                   index
+//                   lazy={async () => {
+//                     return { Component: (await BoardPage()).BoardPage };
+//                   }}
+//                 />
 
-                <Route path="edit-pin" element={<EditPinLayout />}>
-                  <Route index element={<EditPinPage />} />
+//                 <Route path="edit-board" element={<EditBoardLayout />}>
+//                   <Route
+//                     index
+//                     lazy={async () => {
+//                       return { Component: (await EditBoardPage()).EditBoardPage };
+//                     }}
+//                   />
+//                 </Route>
 
-                  <Route path=":pinIndex" element={<EditPinPage />} />
-                </Route>
-              </Route>
-            </Route>
-          </Route>
+//                 <Route path="add-pin" element={<AddPinLayout />}>
+//                   <Route
+//                     index
+//                     lazy={async () => {
+//                       return { Component: (await AddPinPage()).AddPinPage };
+//                     }}
+//                   />
+//                 </Route>
 
-          <Route path="create-board" element={<CreateBoardLayout />}>
-            <Route index element={<CreateBoardPage />} />
-          </Route>
+//                 <Route path="edit-pin" element={<EditPinLayout />}>
+//                   <Route
+//                     index
+//                     lazy={async () => {
+//                       return { Component: (await EditPinPage()).EditPinPage };
+//                     }}
+//                   />
 
-          <Route path="*" element={<NoMatchPage />} />
-        </Route>
+//                   <Route
+//                     path=":pinIndex"
+//                     lazy={async () => {
+//                       return { Component: (await EditPinPage()).EditPinPage };
+//                     }}
+//                   />
+//                 </Route>
+//               </Route>
+//             </Route>
+//           </Route>
 
-        <Route path="login" element={<LoginPage />} />
-        <Route path="logout" element={<LogoutPage />} />
-      </Routes>
+//           <Route path="create-board" element={<CreateBoardLayout />}>
+//             <Route
+//               index
+//               lazy={async () => {
+//                 return { Component: (await CreateBoardPage()).CreateBoardPage };
+//               }}
+//             />
+//           </Route>
 
-      {state?.backgroundLocation && (
-        <Routes>
-          <Route path="p" element={<SlideoverLayout />}>
-            <Route index element={<NoMatchPage />} />
+//           <Route
+//             path="*"
+//             lazy={async () => {
+//               return { Component: (await NoMatchPage()).NoMatchPage };
+//             }}
+//           />
+//         </Route>
 
-            <Route path=":npub" element={<ProfileLayout />}>
-              <Route index element={<ProfilePage />} />
+//         <Route
+//           path="login"
+//           lazy={async () => {
+//             return { Component: (await LoginPage()).LoginPage };
+//           }}
+//         />
+//         <Route
+//           path="logout"
+//           lazy={async () => {
+//             return { Component: (await LogoutPage()).LogoutPage };
+//           }}
+//         />
+//       </Routes>
 
-              <Route path=":title" element={<BoardLayout />}>
-                <Route index element={<BoardPage />} />
-              </Route>
-            </Route>
-          </Route>
-        </Routes>
-      )}
-    </>
-  );
-};
+//       {state?.backgroundLocation && (
+//         <Routes>
+//           <Route path="p" element={<SlideoverLayout />}>
+//             <Route
+//               index
+//               lazy={async () => {
+//                 return { Component: (await NoMatchPage()).NoMatchPage };
+//               }}
+//             />
+
+//             <Route path=":npub" element={<ProfileLayout />}>
+//               <Route
+//                 index
+//                 lazy={async () => {
+//                   return { Component: (await ProfilePage()).ProfilePage };
+//                 }}
+//               />
+
+//               <Route path=":title" element={<BoardLayout />}>
+//                 <Route
+//                   index
+//                   lazy={async () => {
+//                     return { Component: (await BoardPage()).BoardPage };
+//                   }}
+//                 />
+//               </Route>
+//             </Route>
+//           </Route>
+//         </Routes>
+//       )}
+//     </>
+//   );
+// };

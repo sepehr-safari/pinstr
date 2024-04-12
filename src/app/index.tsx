@@ -1,11 +1,11 @@
 import NDK, { NDKPrivateKeySigner, NDKSigner } from '@nostr-dev-kit/ndk';
 import NDKCacheAdapterDexie from '@nostr-dev-kit/ndk-cache-dexie';
 import { useNostrHooks } from 'nostr-hooks';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, RouterProvider } from 'react-router-dom';
 
 import './index.css';
 
-import { AppRouter } from '@/pages';
+import { router } from '@/pages';
 
 import { ThemeProvider } from '@/shared/components/theme-provider';
 import { Toaster } from '@/shared/components/ui/toaster';
@@ -29,9 +29,7 @@ export const App = () => {
 
   return (
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-      <BrowserRouter>
-        <AppRouter />
-      </BrowserRouter>
+      <RouterProvider router={router} />
 
       <Toaster />
     </ThemeProvider>
