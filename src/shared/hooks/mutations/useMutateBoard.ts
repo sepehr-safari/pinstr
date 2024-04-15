@@ -31,7 +31,7 @@ const publishBoardFn = async ({ pubkey, board, ndk, overridePins }: PublishBoard
   const newPins = [...(overridePins || board.pins || [])];
   for (let pinIndex = 0; pinIndex < newPins.length; pinIndex++) {
     for (let hIndex = 0; hIndex < board.headers.length; hIndex++) {
-      if (newPins[pinIndex][hIndex] !== '') {
+      if (Boolean(newPins[pinIndex][hIndex])) {
         const normalizedContent = await normalizePinContent({
           content: newPins[pinIndex][hIndex],
           format: board.headers[hIndex].split(':')[0] as Format,
