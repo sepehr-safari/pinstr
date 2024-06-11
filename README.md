@@ -24,7 +24,8 @@ We welcome contributions from the community! If you'd like to contribute to Pins
 
 If you'd like to support the development of Pinstr, please consider donating to the developer.
 
-- ⚡ Zap sats to [sepehr@getalby.com](sepehr@getalby.com)
+- ⚡ Lightning: [sepehr@getalby.com](https://getalby.com/p/sepehr)
+- Bitcoin: bc1q76g4zu4nqthdd62lhsk96gjh5eu74y77hkxcx6
 
 ## License
 
@@ -33,3 +34,8 @@ Pinstr is licensed under the MIT License. For more information, see the [LICENSE
 ## Contact
 
 If you have any questions or concerns about Pinstr, please contact the developer at [npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7](https://njump.me/npub18c556t7n8xa3df2q82rwxejfglw5przds7sqvefylzjh8tjne28qld0we7).
+
+## Special thanks to
+
+- [OpenSats](https://opensats.org/) for their financial support of the project.
+- [Karnage](https://github.com/karnagebitcoin) for his fancy design work.
