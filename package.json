@@ -2,7 +2,7 @@
   "name": "pinstr",
   "description": "A Nostr client for curating and sharing interests with the world.",
   "private": true,
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
