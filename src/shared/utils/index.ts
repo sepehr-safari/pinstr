@@ -1,4 +1,5 @@
 export * from './capitalize-first-letter';
+export * from './cn';
 export * from './create-idb-persister';
 export * from './ellipsis';
 export * from './format-relative-time';
