@@ -166,9 +166,9 @@ export const BoardSummary = () => {
           </div>
 
           <div className="grid grid-cols-3 w-full h-10 divide-x">
-            <BoardLikeButton board={board} bgHover={true} />
-            <BoardZapButton board={board} bgHover={true} />
-            <BoardCommentButton board={board} bgHover={true} />
+            <BoardLikeButton board={board} bgHover={true} showCount={true} />
+            <BoardZapButton board={board} bgHover={true} showCount={true} />
+            <BoardCommentButton board={board} bgHover={true} showCount={true} />
           </div>
         </div>
       </div>

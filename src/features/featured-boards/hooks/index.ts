@@ -1,6 +1,5 @@
 import { NDKEvent, NDKUser } from '@nostr-dev-kit/ndk';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useInView } from 'react-intersection-observer';
 
 import { useEvents } from '@/shared/hooks/queries';
 import { useLocalStore } from '@/shared/store';
@@ -16,8 +15,6 @@ export const useFeaturedBoards = () => {
 
   const processedBoostRequests = useRef<string[]>([]);
 
-  const { ref, inView } = useInView();
-
   const ndk = useLocalStore((store) => store.ndk);
 
   const {
@@ -32,7 +29,7 @@ export const useFeaturedBoards = () => {
     filters: [
       {
         kinds: [1],
-        limit: 10,
+        limit: 50,
         authors: [BOOSTR_PUBKEY],
         since: aMonthAgoInSec,
       },
@@ -135,12 +132,6 @@ export const useFeaturedBoards = () => {
     [events]
   );
 
-  useEffect(() => {
-    if (!isFetching && inView) {
-      loadMore();
-    }
-  }, [isFetching, inView, loadMore]);
-
   return {
     boards,
     hasMore,
@@ -149,6 +140,5 @@ export const useFeaturedBoards = () => {
     isFetching,
     isPending: isBoostRequestsPending || isBoardsPending,
     loadMore,
-    ref,
   };
 };

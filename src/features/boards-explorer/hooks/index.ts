@@ -1,6 +1,5 @@
 import { NDKFilter, NDKKind } from '@nostr-dev-kit/ndk';
 import { useMemo } from 'react';
-import { useInView } from 'react-intersection-observer';
 
 import { useFiltersParams } from '@/shared/hooks/common';
 import { useEvents, useSettings } from '@/shared/hooks/queries';
@@ -8,8 +7,6 @@ import { Board } from '@/shared/types';
 import { isMutedEvent, parseBoardFromEvent } from '@/shared/utils';
 
 export const useBoardsExplorer = () => {
-  const { ref, inView } = useInView();
-
   const { category, format, tag } = useFiltersParams();
   const c = category.value;
   const f = format.value;
@@ -49,7 +46,5 @@ export const useBoardsExplorer = () => {
     isFetching,
     isPending,
     loadMore,
-    ref,
-    inView,
   };
 };

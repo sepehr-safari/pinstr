@@ -10,9 +10,16 @@ import { joinClassNames, numberEllipsis } from '@/shared/utils';
 type Props = {
   board: Board;
   bgHover?: boolean;
+  circular?: boolean;
+  showCount?: boolean;
 };
 
-export const BoardCommentButton = ({ board, bgHover = false }: Props) => {
+export const BoardCommentButton = ({
+  board,
+  bgHover = false,
+  circular = false,
+  showCount = false,
+}: Props) => {
   const { comments } = useBoardComments(board);
 
   const { toggleCommentsParams } = useCommentsParams();
@@ -23,12 +30,14 @@ export const BoardCommentButton = ({ board, bgHover = false }: Props) => {
         type="button"
         onClick={toggleCommentsParams}
         className={joinClassNames(
-          'inline-flex justify-center items-center text-xs font-semibold duration-200 text-gray-600 hover:text-gray-900',
-          bgHover ? 'hover:bg-gray-200' : ''
+          'inline-flex justify-center items-center text-xs font-semibold bg-white duration-200 text-gray-600 hover:text-gray-900',
+          bgHover ? 'hover:bg-gray-200' : '',
+          circular ? 'rounded-full p-2' : ''
         )}
       >
-        <ChatBubbleLeftIcon className="mr-2 h-4 w-4" />
-        <span>{numberEllipsis(comments.length)}</span>
+        <ChatBubbleLeftIcon className="h-4 w-4" />
+
+        {showCount === true && <span className="ml-1">{numberEllipsis(comments.length)}</span>}
       </button>
     </>
   );
