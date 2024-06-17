@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 
 import { MemoizedBoardItem } from '@/features';
 import { Spinner, Text } from '@/shared/components';
@@ -6,14 +7,7 @@ import { Spinner, Text } from '@/shared/components';
 import { useBoardsExplorer } from './hooks';
 
 export const BoardsExplorer = () => {
-  const { boards, loadMore, hasMore, isEmpty, isPending, ref, inView, isFetching } =
-    useBoardsExplorer();
-
-  useEffect(() => {
-    if (!isFetching && inView) {
-      loadMore();
-    }
-  }, [isFetching, inView, loadMore]);
+  const { boards, loadMore, hasMore, isEmpty, isPending, isFetching } = useBoardsExplorer();
 
   if (isPending) {
     return (
@@ -31,20 +25,23 @@ export const BoardsExplorer = () => {
     <div className="pb-16 overflow-hidden">
       <Text variant="h3">{`Recent Boards`}</Text>
 
-      <div className="mt-4 grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 4xl:grid-cols-5">
-        {boards.map((board) => (
-          <MemoizedBoardItem key={board.event.id} board={board} />
-        ))}
-      </div>
-
-      <button
-        ref={ref}
-        onClick={() => loadMore()}
-        disabled={!hasMore || isFetching}
-        className="mt-4 mx-auto block text-transparent bg-transparent text-xs px-4 py-1"
+      <InfiniteScroll
+        dataLength={boards.length}
+        next={loadMore}
+        hasMore={hasMore && !isFetching}
+        loader={<></>}
+        className="mt-4"
       >
-        {isFetching ? 'Loading...' : hasMore ? 'Load More' : 'Nothing more to load'}
-      </button>
+        <ResponsiveMasonry
+          columnsCountBreakPoints={{ 300: 1, 600: 2, 900: 3, 1200: 4, 1500: 5, 1900: 6, 2200: 7 }}
+        >
+          <Masonry gutter="0.25rem">
+            {boards.map((board) => (
+              <MemoizedBoardItem key={board.event.id} board={board} />
+            ))}
+          </Masonry>
+        </ResponsiveMasonry>
+      </InfiniteScroll>
     </div>
   );
 };

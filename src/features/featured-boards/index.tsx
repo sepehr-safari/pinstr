@@ -1,37 +1,43 @@
+import InfiniteScroll from 'react-infinite-scroll-component';
+import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
+
 import { Spinner, Text } from '@/shared/components';
 
 import { FeaturedBoardItem } from './featured-board-item';
 import { useFeaturedBoards } from './hooks';
 
 export const FeaturedBoards = () => {
-  const { boards, loadMore, hasMore, isEmpty, isPending, ref, isFetching } = useFeaturedBoards();
+  const { boards, loadMore, hasMore, isEmpty, isPending, isFetching } = useFeaturedBoards();
 
   return (
     <div className="overflow-hidden">
       <Text variant="h3">{`Featured Boards`}</Text>
 
-      {isPending ? (
+      {isEmpty ? (
+        <></>
+      ) : isPending ? (
         <div className="h-full w-full flex justify-center items-center">
           <Spinner />
         </div>
-      ) : isEmpty ? (
-        <></>
       ) : (
-        <div className="mt-4 grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 4xl:grid-cols-5">
-          {boards.map((board) => (
-            <FeaturedBoardItem key={board.event.id} board={board} />
-          ))}
-        </div>
+        <InfiniteScroll
+          dataLength={boards.length}
+          next={loadMore}
+          hasMore={hasMore && !isFetching}
+          loader={<></>}
+          className="mt-4"
+        >
+          <ResponsiveMasonry
+            columnsCountBreakPoints={{ 300: 1, 600: 2, 900: 3, 1200: 4, 1500: 5, 1900: 6, 2200: 7 }}
+          >
+            <Masonry gutter="0.25rem">
+              {boards.map((board) => (
+                <FeaturedBoardItem key={board.event.id} board={board} />
+              ))}
+            </Masonry>
+          </ResponsiveMasonry>
+        </InfiniteScroll>
       )}
-
-      <button
-        ref={ref}
-        onClick={() => loadMore()}
-        disabled={!hasMore || isFetching}
-        className="mx-auto block text-transparent bg-transparent text-xs px-4 py-1"
-      >
-        {isFetching ? 'Loading...' : hasMore ? 'Load More' : 'Nothing more to load'}
-      </button>
     </div>
   );
 };

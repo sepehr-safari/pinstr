@@ -1,6 +1,5 @@
 import { NDKFilter, NDKKind, NDKUser } from '@nostr-dev-kit/ndk';
 import { useMemo } from 'react';
-import { useInView } from 'react-intersection-observer';
 import { useParams } from 'react-router-dom';
 
 import { useFiltersParams } from '@/shared/hooks/common';
@@ -9,8 +8,6 @@ import { Board } from '@/shared/types';
 import { isMutedEvent, parseBoardFromEvent } from '@/shared/utils';
 
 export const useBoardsByAuthor = () => {
-  const { ref, inView } = useInView();
-
   const { npub } = useParams();
   const ndkUser = npub ? new NDKUser({ npub }) : undefined;
   const author = ndkUser?.pubkey;
@@ -56,7 +53,5 @@ export const useBoardsByAuthor = () => {
     isFetching,
     isPending,
     loadMore,
-    ref,
-    inView,
   };
 };
