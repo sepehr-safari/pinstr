@@ -13,8 +13,7 @@ import { EllipsisPopover } from '@/features';
 import { BoardLikeButton, BoardZapButton } from '@/features/reaction-buttons';
 
 // TODO: refactor
-// const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: boolean }) => {
-const BoardItem = ({ board }: { board: Board }) => {
+const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: boolean }) => {
   const [isHovering, setIsHover] = useState<boolean | undefined>(false);
 
   const { pubkey } = useUser();
@@ -24,6 +23,10 @@ const BoardItem = ({ board }: { board: Board }) => {
   const location = useLocation();
 
   // const { format, category } = useFiltersParams();
+
+  // TODO: temp fix
+  if (hideAuthor) {
+  }
 
   return (
     <>
