@@ -24,10 +24,6 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
 
   // const { format, category } = useFiltersParams();
 
-  // TODO: temp fix
-  if (hideAuthor) {
-  }
-
   return (
     <>
       <div
@@ -111,31 +107,27 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
             </Transition.Child>
             <Transition.Child
               as="div"
-              className="z-[2] absolute inset-0"
+              className="z-[2] absolute left-2 bottom-4 right-4"
               enter="duration-200 delay-100"
-              enterFrom="opacity-0 translate-x-2"
-              enterTo="opacity-100 translate-x-4"
+              enterFrom="opacity-0 translate-x-0"
+              enterTo="opacity-100 translate-x-2"
               leave="duration-200"
-              leaveFrom="opacity-100 translate-x-4"
-              leaveTo="opacity-0 translate-x-2"
+              leaveFrom="opacity-100 translate-x-2"
+              leaveTo="opacity-0 translate-x-0"
             >
               {/* !hideAuthor && <AuthorOverview author={board.event.author} /> */}
               {/* TODO: update AuthorOverview */}
-              <div className="absolute bottom-4">
-                {/* {!hideAuthor && (
-                  <Link
-                    to={`/p/${board.event.author.npub}`}
-                    state={{ backgroundLocation: location }}
-                    className="text-xs font-semibold text-white focus:border-none focus:outline-none hover:underline"
-                  >
-                    {ellipsis(board.event.author.profile?.name || '', 30)}
-                  </Link>
-                )} */}
+              {!hideAuthor && (
+                <Link
+                  to={`/p/${board.event.author.npub}`}
+                  state={{ backgroundLocation: location }}
+                  className="text-xs font-semibold text-white focus:border-none focus:outline-none hover:underline"
+                >
+                  {ellipsis(board.event.author.profile?.name || '', 30)}
+                </Link>
+              )}
 
-                <h3 className="text-sm font-bold text-white [overflow-wrap:anywhere]">
-                  {ellipsis(board.title, 60)}
-                </h3>
-              </div>
+              <h3 className="text-sm font-bold text-white">{ellipsis(board.title, 60)}</h3>
             </Transition.Child>
             <Link
               to={`/p/${board.event.author.npub}/${encodeURIComponent(board.title)}`}
