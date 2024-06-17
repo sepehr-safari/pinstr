@@ -1,15 +1,9 @@
-import { Popover, Transition } from '@headlessui/react';
+import { Popover, PopoverButton, PopoverPanel, Transition } from '@headlessui/react';
 import { ListBulletIcon, PaperClipIcon, PlusIcon } from '@heroicons/react/24/outline';
-import { useState } from 'react';
-import { usePopper } from 'react-popper';
 import { useNavigate } from 'react-router-dom';
 
 // TODO: Should replace popover with menu component
 export const CreatePopover = () => {
-  const [referenceElement, setReferenceElement] = useState<HTMLButtonElement | null>(null);
-  const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null);
-  const { styles, attributes } = usePopper(referenceElement, popperElement);
-
   const navigate = useNavigate();
 
   const buttons = [
@@ -29,12 +23,12 @@ export const CreatePopover = () => {
 
   return (
     <Popover className="relative">
-      <Popover.Button ref={setReferenceElement} className="focus:outline-none">
+      <PopoverButton className="focus:outline-none">
         <div className="mr-2 inline-flex items-center rounded-full bg-gray-900 px-4 py-2.5 text-xs font-semibold text-white shadow-sm hover:bg-gray-700 md:mr-4">
           <PlusIcon className="-ml-1 mr-1 h-4 w-4" />
           Create
         </div>
-      </Popover.Button>
+      </PopoverButton>
 
       <Transition
         enter="ease-out duration-200"
@@ -44,12 +38,7 @@ export const CreatePopover = () => {
         leaveFrom="opacity-100 translate-y-0"
         leaveTo="opacity-0 -translate-y-2"
       >
-        <Popover.Panel
-          className="my-4 absolute z-10 flex w-screen max-w-max px-4"
-          ref={setPopperElement}
-          style={styles.popper}
-          {...attributes.popper}
-        >
+        <PopoverPanel className="my-4 absolute z-10 flex w-screen max-w-max px-4" anchor="bottom">
           <div className="max-w-sm flex-auto rounded-xl bg-white p-2 text-sm shadow-lg ring-1 ring-gray-900/20">
             {buttons.map((item, index) => (
               <div
@@ -74,7 +63,7 @@ export const CreatePopover = () => {
               </div>
             ))}
           </div>
-        </Popover.Panel>
+        </PopoverPanel>
       </Transition>
     </Popover>
   );

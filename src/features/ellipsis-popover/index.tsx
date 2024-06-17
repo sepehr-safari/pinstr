@@ -45,6 +45,10 @@ export const EllipsisPopover = ({
   buttonTheme = 'light',
   onClick,
 }: Params) => {
+  // TODO: refactor
+  if (overlay) {
+  }
+
   const hasPublicActionButtons = useMemo(
     () => !!actionButtons && actionButtons.filter((btn) => !btn.private).length > 0,
     [actionButtons]

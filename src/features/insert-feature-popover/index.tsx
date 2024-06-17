@@ -1,4 +1,4 @@
-import { Popover, Transition } from '@headlessui/react';
+import { Popover, PopoverButton, PopoverPanel, Transition } from '@headlessui/react';
 import {
   ChatBubbleLeftIcon,
   DocumentTextIcon,
@@ -8,24 +8,20 @@ import {
   UserIcon,
   VideoCameraIcon,
 } from '@heroicons/react/24/outline';
-import { useMemo, useState } from 'react';
-import { usePopper } from 'react-popper';
+import { useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { joinClassNames } from '@/shared/utils';
-import { PopoverButton } from './types';
+
+import { PopoverButtonType } from './types';
 
 // TODO: refactor - replace popover with menu component
 // use menu items with their onClick handlers
 
 export const InsertFeaturePopover = () => {
-  const [referenceElement, setReferenceElement] = useState<HTMLButtonElement | null>(null);
-  const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null);
-  const { styles, attributes } = usePopper(referenceElement, popperElement);
-
   const [_, setSearchParams] = useSearchParams();
 
-  const buttons: PopoverButton[] = useMemo(
+  const buttons: PopoverButtonType[] = useMemo(
     () => [
       {
         title: 'Text',
@@ -112,12 +108,12 @@ export const InsertFeaturePopover = () => {
   return (
     <>
       <Popover className="relative">
-        <Popover.Button ref={setReferenceElement} className="focus:outline-none">
+        <PopoverButton className="focus:outline-none">
           <div className="inline-flex items-center rounded-full bg-gray-900 px-4 py-3 text-xs font-semibold text-white shadow-sm hover:bg-gray-700 sm:py-2">
             <RectangleGroupIcon className="-ml-1 mr-3 h-6 w-6 hidden sm:block" />
             Insert New Feature
           </div>
-        </Popover.Button>
+        </PopoverButton>
 
         <Transition
           enter="ease-out duration-200"
@@ -127,12 +123,7 @@ export const InsertFeaturePopover = () => {
           leaveFrom="opacity-100 translate-y-0"
           leaveTo="opacity-0 -translate-y-2"
         >
-          <Popover.Panel
-            className="my-4 absolute z-10 flex w-screen max-w-max px-4"
-            ref={setPopperElement}
-            style={styles.popper}
-            {...attributes.popper}
-          >
+          <PopoverPanel className="my-4 absolute z-10 flex w-screen max-w-max px-4" anchor="bottom">
             <div className="max-w-sm flex-auto rounded-xl bg-white p-2 text-sm shadow-lg ring-1 ring-gray-900/20">
               {buttons.map((item, index) => (
                 <div
@@ -159,7 +150,7 @@ export const InsertFeaturePopover = () => {
                 </div>
               ))}
             </div>
-          </Popover.Panel>
+          </PopoverPanel>
         </Transition>
       </Popover>
     </>
