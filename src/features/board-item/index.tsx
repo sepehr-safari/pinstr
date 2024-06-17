@@ -27,34 +27,34 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
   return (
     <>
       <div
-        className="group"
+        className="group relative overflow-hidden rounded-sm bg-gray-100 hover:cursor-pointer"
         onMouseEnter={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
       >
-        <div className="relative overflow-hidden rounded-sm bg-gray-100 hover:cursor-pointer">
-          <EllipsisPopover
-            board={board}
-            pinIndex={0}
-            selfBoard={selfBoard}
-            actionButtons={[
-              {
-                title: 'Add Pin',
-                icon: PaperClipIcon,
-                onClick: () =>
-                  navigate(
-                    `/p/${board.event.author.npub}/${encodeURIComponent(board.title)}/add-pin`
-                  ),
-                private: true,
-              },
-            ]}
-            editType="board"
-            buttonTheme="dark"
-            className="top-3 left-3"
-            slideInFrom="left"
-          />
+        {/* <div className="relative overflow-hidden rounded-sm bg-gray-100 hover:cursor-pointer"> */}
+        <EllipsisPopover
+          board={board}
+          pinIndex={0}
+          selfBoard={selfBoard}
+          actionButtons={[
+            {
+              title: 'Add Pin',
+              icon: PaperClipIcon,
+              onClick: () =>
+                navigate(
+                  `/p/${board.event.author.npub}/${encodeURIComponent(board.title)}/add-pin`
+                ),
+              private: true,
+            },
+          ]}
+          editType="board"
+          buttonTheme="dark"
+          className="top-3 left-3"
+          slideInFrom="left"
+        />
 
-          <Transition show={isHovering}>
-            {/* <Transition.Child
+        <Transition show={isHovering}>
+          {/* <Transition.Child
               as="div"
               className="z-[2] absolute left-4 top-4"
               enter="duration-200 delay-100"
@@ -88,72 +88,95 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
                 {board.category}
               </button>
             </Transition.Child> */}
-            <Transition.Child
-              as="div"
-              className="z-[2] absolute right-4 top-4"
-              enter="duration-200 delay-100"
-              enterFrom="opacity-0 translate-x-2"
-              enterTo="opacity-100 translate-x-0"
-              leave="duration-200"
-              leaveFrom="opacity-100 translate-x-0"
-              leaveTo="opacity-0 translate-x-2"
-            >
-              <div className="flex gap-2">
-                <BoardLikeButton board={board} circular />
-                <BoardZapButton board={board} circular />
-                {/* TODO: Slideover comments section from right */}
-                {/* <BoardCommentButton board={board} circular /> */}
-              </div>
-            </Transition.Child>
-            <Transition.Child
-              as="div"
-              className="z-[2] absolute left-2 bottom-4 right-4"
-              enter="duration-200 delay-100"
-              enterFrom="opacity-0 translate-x-0"
-              enterTo="opacity-100 translate-x-2"
-              leave="duration-200"
-              leaveFrom="opacity-100 translate-x-2"
-              leaveTo="opacity-0 translate-x-0"
-            >
-              {/* !hideAuthor && <AuthorOverview author={board.event.author} /> */}
-              {/* TODO: update AuthorOverview */}
-              {!hideAuthor && (
-                <Link
-                  to={`/p/${board.event.author.npub}`}
-                  state={{ backgroundLocation: location }}
-                  className="text-xs font-semibold text-white focus:border-none focus:outline-none hover:underline"
-                >
-                  {ellipsis(board.event.author.profile?.name || '', 30)}
-                </Link>
-              )}
+          <Transition.Child
+            as="div"
+            className="z-[4] absolute right-4 top-4"
+            enter="duration-200 delay-100"
+            enterFrom="opacity-0 translate-x-2"
+            enterTo="opacity-100 translate-x-0"
+            leave="duration-200"
+            leaveFrom="opacity-100 translate-x-0"
+            leaveTo="opacity-0 translate-x-2"
+          >
+            <div className="flex gap-2">
+              <BoardLikeButton board={board} circular />
+              <BoardZapButton board={board} circular />
+              {/* TODO: Slideover comments section from right */}
+              {/* <BoardCommentButton board={board} circular /> */}
+            </div>
+          </Transition.Child>
+        </Transition>
 
-              <h3 className="text-sm font-bold text-white">{ellipsis(board.title, 60)}</h3>
-            </Transition.Child>
-            <Link
-              to={`/p/${board.event.author.npub}/${encodeURIComponent(board.title)}`}
-              state={{ backgroundLocation: location }}
-            >
+        {/* !hideAuthor && <AuthorOverview author={board.event.author} /> */}
+        {/* TODO: update AuthorOverview */}
+        {!hideAuthor && (
+          <Link
+            to={`/p/${board.event.author.npub}`}
+            state={{ backgroundLocation: location }}
+            className="text-xs font-semibold text-white focus:border-none focus:outline-none"
+          >
+            <Transition show={isHovering}>
               <Transition.Child
                 as="div"
-                className="z-[1] absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"
-                enter="duration-300"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="duration-100"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-              />
-            </Link>
-          </Transition>
-          <img
-            src={loader(board.image, { w: 300 })}
-            alt={board.title}
-            className="h-full w-full text-gray-100 min-h-[100px] object-contain"
-            loading="lazy"
-          />
-        </div>
+                className="z-[3] absolute left-2 bottom-9 hover:underline"
+                enter="duration-200 delay-100"
+                enterFrom="opacity-0 translate-x-0"
+                enterTo="opacity-100 translate-x-2"
+                leave="duration-200"
+                leaveFrom="opacity-100 translate-x-2"
+                leaveTo="opacity-0 translate-x-0"
+              >
+                {ellipsis(board.event.author.profile?.name || '', 30)}
+              </Transition.Child>
+            </Transition>
+          </Link>
+        )}
 
-        {/* <div className="mt-2 flex justify-between">
+        <Transition show={isHovering}>
+          <Transition.Child
+            as="div"
+            className="z-[2] absolute left-2 bottom-4"
+            enter="duration-200 delay-100"
+            enterFrom="opacity-0 translate-x-0"
+            enterTo="opacity-100 translate-x-2"
+            leave="duration-200"
+            leaveFrom="opacity-100 translate-x-2"
+            leaveTo="opacity-0 translate-x-0"
+          >
+            <h3 className="text-sm font-bold text-white [overflow-wrap:anywhere]">
+              {ellipsis(board.title, 60)}
+            </h3>
+          </Transition.Child>
+        </Transition>
+
+        <Transition show={isHovering}>
+          <Transition.Child
+            as="div"
+            className="z-[1] absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"
+            enter="duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="duration-100"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          />
+        </Transition>
+
+        <Link
+          to={`/p/${board.event.author.npub}/${encodeURIComponent(board.title)}`}
+          state={{ backgroundLocation: location }}
+          className="z-[2] absolute inset-0"
+        />
+
+        <img
+          src={loader(board.image, { w: 300 })}
+          alt={board.title}
+          className="h-full w-full text-gray-100 min-h-[100px] object-contain"
+          loading="lazy"
+        />
+      </div>
+
+      {/* <div className="mt-2 flex justify-between">
           <div>
             <h3 className="text-sm font-semibold text-gray-900 [overflow-wrap:anywhere] hover:underline">
               {ellipsis(board.title, 60)}
@@ -166,7 +189,7 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
             <BoardZapButton board={board} />
           </div>
         </div> */}
-      </div>
+      {/* </div> */}
     </>
   );
 };
