@@ -27,7 +27,7 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
   return (
     <>
       <div
-        className="group relative overflow-hidden rounded-sm bg-gray-100 hover:cursor-pointer"
+        className="z-[5] group relative overflow-hidden rounded-sm bg-gray-100 hover:cursor-pointer"
         onMouseEnter={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
       >
