@@ -107,7 +107,7 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
             </Transition.Child>
             <Transition.Child
               as="div"
-              className="z-[2] absolute left-4 bottom-4"
+              className="z-[2] absolute left-4 bottom-4 right-4"
               enter="duration-200 delay-100"
               enterFrom="opacity-0 translate-x-0"
               enterTo="opacity-100 translate-x-2"
