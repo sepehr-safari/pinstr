@@ -118,7 +118,7 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
               {/* !hideAuthor && <AuthorOverview author={board.event.author} /> */}
               {/* TODO: update AuthorOverview */}
               <div className="absolute bottom-4">
-                {!hideAuthor && (
+                {/* {!hideAuthor && (
                   <Link
                     to={`/p/${board.event.author.npub}`}
                     state={{ backgroundLocation: location }}
@@ -126,7 +126,7 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
                   >
                     {ellipsis(board.event.author.profile?.name || '', 30)}
                   </Link>
-                )}
+                )} */}
 
                 <h3 className="text-sm font-bold text-white [overflow-wrap:anywhere]">
                   {ellipsis(board.title, 60)}
