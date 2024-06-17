@@ -107,29 +107,31 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
             </Transition.Child>
             <Transition.Child
               as="div"
-              className="z-[2] absolute left-4 bottom-4 pr-6"
+              className="z-[2] absolute inset-0"
               enter="duration-200 delay-100"
-              enterFrom="opacity-0 translate-x-0"
-              enterTo="opacity-100 translate-x-2"
+              enterFrom="opacity-0 translate-x-2"
+              enterTo="opacity-100 translate-x-4"
               leave="duration-200"
-              leaveFrom="opacity-100 translate-x-2"
-              leaveTo="opacity-0 translate-x-0"
+              leaveFrom="opacity-100 translate-x-4"
+              leaveTo="opacity-0 translate-x-2"
             >
               {/* !hideAuthor && <AuthorOverview author={board.event.author} /> */}
               {/* TODO: update AuthorOverview */}
-              {!hideAuthor && (
-                <Link
-                  to={`/p/${board.event.author.npub}`}
-                  state={{ backgroundLocation: location }}
-                  className="text-xs font-semibold text-white focus:border-none focus:outline-none hover:underline"
-                >
-                  {ellipsis(board.event.author.profile?.name || '', 30)}
-                </Link>
-              )}
+              <div className="absolute bottom-4">
+                {!hideAuthor && (
+                  <Link
+                    to={`/p/${board.event.author.npub}`}
+                    state={{ backgroundLocation: location }}
+                    className="text-xs font-semibold text-white focus:border-none focus:outline-none hover:underline"
+                  >
+                    {ellipsis(board.event.author.profile?.name || '', 30)}
+                  </Link>
+                )}
 
-              <h3 className="text-sm font-bold text-white [overflow-wrap:anywhere]">
-                {ellipsis(board.title, 60)}
-              </h3>
+                <h3 className="text-sm font-bold text-white [overflow-wrap:anywhere]">
+                  {ellipsis(board.title, 60)}
+                </h3>
+              </div>
             </Transition.Child>
             <Link
               to={`/p/${board.event.author.npub}/${encodeURIComponent(board.title)}`}
