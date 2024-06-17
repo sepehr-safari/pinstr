@@ -49,7 +49,8 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
             ]}
             editType="board"
             buttonTheme="dark"
-            className="top-3 right-3"
+            className="top-3 left-3"
+            slideInFrom="left"
           />
 
           <Transition show={isHovering}>

@@ -1,5 +1,5 @@
 import { Popover } from '@headlessui/react';
-import { EllipsisVerticalIcon } from '@heroicons/react/24/outline';
+import { EllipsisHorizontalIcon } from '@heroicons/react/24/outline';
 import { useMemo } from 'react';
 
 import type { Board } from '@/shared/types';
@@ -61,11 +61,11 @@ export const EllipsisPopover = ({
             ? 'text-gray-500 bg-black/5 hover:bg-black/10'
             : 'text-white bg-black/30 hover:bg-black/50',
           slideInFrom == 'right' ? 'translate-x-2' : '-translate-x-2',
-          'absolute z-[4] outline-none rounded-full p-2 duration-200 opacity-0 group-hover:opacity-100 group-hover:translate-x-0',
+          'absolute z-[4] outline-none rounded-full p-1 duration-200 opacity-0 group-hover:opacity-100 group-hover:translate-x-0',
           className
         )}
       >
-        <EllipsisVerticalIcon className="h-6 w-6" />
+        <EllipsisHorizontalIcon className="h-6 w-6" />
       </Popover.Button>
 
       <TransitionWrapper overlay={overlay}>
