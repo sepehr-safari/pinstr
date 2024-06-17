@@ -1,4 +1,4 @@
-export type PopoverButton = {
+export type PopoverButtonType = {
   title: string;
   onClick: () => void;
   description?: string;

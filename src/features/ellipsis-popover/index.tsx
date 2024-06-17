@@ -1,4 +1,4 @@
-import { Popover } from '@headlessui/react';
+import { Popover, Transition } from '@headlessui/react';
 import { EllipsisHorizontalIcon } from '@heroicons/react/24/outline';
 import { useMemo } from 'react';
 
@@ -10,7 +10,6 @@ import { ActionButton } from './action-button';
 import { EditButtons } from './edit-buttons';
 import { ExternalLink } from './external-link';
 import { InternalLink } from './internal-link';
-import { TransitionWrapper } from './transition-wrapper';
 
 import type { PopoverButton } from './types';
 
@@ -46,6 +45,10 @@ export const EllipsisPopover = ({
   buttonTheme = 'light',
   onClick,
 }: Params) => {
+  // TODO: refactor
+  if (overlay) {
+  }
+
   const hasPublicActionButtons = useMemo(
     () => !!actionButtons && actionButtons.filter((btn) => !btn.private).length > 0,
     [actionButtons]
@@ -68,7 +71,14 @@ export const EllipsisPopover = ({
         <EllipsisHorizontalIcon className="h-6 w-6" />
       </Popover.Button>
 
-      <TransitionWrapper overlay={overlay}>
+      <Transition
+        enter="duration-200"
+        enterFrom="opacity-0 -translate-y-2"
+        enterTo="opacity-100 translate-y-0"
+        leave="duration-150"
+        leaveFrom="opacity-100 translate-y-0"
+        leaveTo="opacity-0 -translate-y-2"
+      >
         <Popover.Panel
           onClick={onClick}
           className={joinClassNames(
@@ -93,7 +103,7 @@ export const EllipsisPopover = ({
             <EditButtons editType={editType} board={board} pinIndex={pinIndex} />
           )}
         </Popover.Panel>
-      </TransitionWrapper>
+      </Transition>
     </Popover>
   );
 };
