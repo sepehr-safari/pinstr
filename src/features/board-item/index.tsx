@@ -82,7 +82,7 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
           leaveFrom="opacity-100 translate-x-2"
           leaveTo="opacity-0 translate-x-0"
         >
-          <div className="z-[3] absolute left-2 bottom-4 text-white">
+          <div className="z-[3] absolute left-2 bottom-4 right-4 text-white">
             <Link
               to={`/p/${board.event.author.npub}`}
               state={{ backgroundLocation: location }}
