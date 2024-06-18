@@ -27,7 +27,7 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
   return (
     <>
       <div
-        className="z-[5] group relative overflow-hidden rounded-sm bg-gray-100 hover:cursor-pointer"
+        className="group relative overflow-hidden rounded-sm bg-gray-100 hover:cursor-pointer"
         onMouseEnter={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
       >
@@ -53,6 +53,12 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
           slideInFrom="left"
         />
 
+        <Link
+          to={`/p/${board.event.author.npub}/${encodeURIComponent(board.title)}`}
+          state={{ backgroundLocation: location }}
+          className="z-[4] absolute inset-0"
+        />
+
         <Transition
           show={isHovering}
           enter="duration-200 delay-100"
@@ -74,7 +80,7 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
         {/* TODO: update AuthorOverview */}
 
         <Transition
-          show={isHovering && !hideAuthor}
+          show={isHovering}
           enter="duration-200 delay-100"
           enterFrom="opacity-0 translate-x-0"
           enterTo="opacity-100 translate-x-2"
@@ -82,18 +88,24 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
           leaveFrom="opacity-100 translate-x-2"
           leaveTo="opacity-0 translate-x-0"
         >
-          <div className="z-[3] absolute left-2 bottom-4 right-4 text-white">
-            <Link
-              to={`/p/${board.event.author.npub}`}
-              state={{ backgroundLocation: location }}
-              className="text-xs font-semibold focus:border-none focus:outline-none hover:underline"
-            >
-              {ellipsis(board.event.author.profile?.name || '', 30)}
-            </Link>
+          <div className="z-[4] absolute left-2 bottom-4 right-4 text-white">
+            {!hideAuthor && (
+              <Link
+                to={`/p/${board.event.author.npub}`}
+                state={{ backgroundLocation: location }}
+                className="text-xs font-semibold focus:border-none focus:outline-none hover:underline"
+              >
+                <h3>{ellipsis(board.event.author.profile?.name || '', 30)}</h3>
+              </Link>
+            )}
 
-            <h3 className="text-sm font-bold [overflow-wrap:anywhere]">
-              {ellipsis(board.title, 60)}
-            </h3>
+            <Link
+              to={`/p/${board.event.author.npub}/${encodeURIComponent(board.title)}`}
+              state={{ backgroundLocation: location }}
+              className="text-sm font-bold [overflow-wrap:anywhere] focus:border-none focus:outline-none hover:underline"
+            >
+              <h4>{ellipsis(board.title, 60)}</h4>
+            </Link>
           </div>
         </Transition>
 
@@ -108,12 +120,6 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
         >
           <div className="z-[1] absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
         </Transition>
-
-        <Link
-          to={`/p/${board.event.author.npub}/${encodeURIComponent(board.title)}`}
-          state={{ backgroundLocation: location }}
-          className="z-[2] absolute inset-0"
-        />
 
         <img
           src={loader(board.image, { w: 300 })}
