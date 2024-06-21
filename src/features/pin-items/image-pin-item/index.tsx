@@ -1,6 +1,8 @@
+import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
+
 import { useUser } from '@/shared/hooks/queries';
 import { Board } from '@/shared/types';
-import { joinClassNames, loader } from '@/shared/utils';
+import { loader } from '@/shared/utils';
 
 import { EllipsisPopover } from '@/features';
 
@@ -19,7 +21,45 @@ export const ImagePinItem = ({ board, setPinIndex }: Props) => {
 
   return (
     <>
-      <ul
+      <ResponsiveMasonry
+        columnsCountBreakPoints={{ 300: 1, 600: 2, 900: 3, 1200: 4, 1500: 5, 1900: 6, 2200: 7 }}
+      >
+        <Masonry gutter="0.25rem">
+          {board.pins.map((imagePin, index) => (
+            <div key={imagePin[0]} className="group relative overflow-hidden rounded-md">
+              <EllipsisPopover
+                board={board}
+                selfBoard={selfBoard}
+                pinIndex={index}
+                externalLinks={[[imagePin[0], 'Open Image']]}
+                editType="pin"
+                buttonTheme="dark"
+              />
+
+              <button
+                type="button"
+                className="z-[3] absolute inset-0 flex items-end"
+                onClick={() => setPinIndex(index)}
+              >
+                <p className="w-full p-2 pt-6 truncate text-start text-xs font-medium text-white md:text-sm bg-gradient-to-t from-black/60 to-transparent">
+                  {imagePin[1]}
+                </p>
+              </button>
+
+              <div className="absolute z-[2] inset-0 hidden bg-black/20 group-hover:block" />
+
+              <img
+                src={loader(imagePin[0], { w: 600 })}
+                alt={imagePin[1]}
+                className="z-[1] bg-gray-200 text-gray-200"
+                loading="lazy"
+              />
+            </div>
+          ))}
+        </Masonry>
+      </ResponsiveMasonry>
+
+      {/* <ul
         role="list"
         className={joinClassNames(
           'grid gap-4 grid-cols-1 sm:grid-cols-2',
@@ -57,7 +97,7 @@ export const ImagePinItem = ({ board, setPinIndex }: Props) => {
             />
           </li>
         ))}
-      </ul>
+      </ul> */}
     </>
   );
 };

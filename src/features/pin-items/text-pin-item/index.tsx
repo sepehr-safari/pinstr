@@ -24,14 +24,14 @@ export const TextPinItem = ({ board, setPinIndex }: Props) => {
       <ul
         role="list"
         className={joinClassNames(
-          'grid gap-4 grid-cols-1 sm:grid-cols-2',
-          'md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-3 4xl:grid-cols-4 5xl:grid-cols-4'
+          'grid gap-4 grid-cols-1',
+          'lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-6 5xl:grid-cols-6'
         )}
       >
         {board.pins.map((textPin, index) => (
           <li
             key={textPin[0]}
-            className="group relative overflow-hidden flex flex-col justify-between rounded-lg bg-white shadow duration-200 hover:shadow-md"
+            className="group relative overflow-hidden flex flex-col justify-between rounded-lg bg-white border shadow-md duration-200 hover:shadow-lg"
           >
             <EllipsisPopover board={board} selfBoard={selfBoard} pinIndex={index} editType="pin" />
 
