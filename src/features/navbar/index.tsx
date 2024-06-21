@@ -1,5 +1,5 @@
 import { Disclosure, Menu, Transition } from '@headlessui/react';
-import { MagnifyingGlassIcon } from '@heroicons/react/20/solid';
+import { MagnifyingGlassIcon, PlusIcon } from '@heroicons/react/20/solid';
 import { NDKUser } from '@nostr-dev-kit/ndk';
 import { nip19 } from 'nostr-tools';
 import { Fragment, useEffect, useState } from 'react';
@@ -48,8 +48,8 @@ export const Navbar = () => {
               </Link>
             </div>
 
-            <div className="relative z-0 flex flex-1 items-center justify-center px-2 md:absolute md:inset-0">
-              <div className="w-full md:max-w-sm">
+            <div className="relative z-0 flex flex-1 items-center justify-center px-2 md:px-4">
+              <div className="w-full">
                 <label htmlFor="search" className="sr-only">
                   Search
                 </label>
@@ -61,7 +61,7 @@ export const Navbar = () => {
                     type="search"
                     id="search"
                     name="search"
-                    className="block w-full rounded-full border-0 bg-opacity-30 bg-white py-3 pl-10 pr-3 text-xs font-light text-gray-900 ring-1 ring-inset ring-gray-900/20 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-gray-500 focus:bg-opacity-50"
+                    className="block w-full rounded-lg border-0 bg-opacity-30 bg-white py-3 pl-10 pr-3 text-xs font-light text-gray-900 ring-1 ring-inset ring-gray-900/20 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-gray-500 focus:bg-opacity-50"
                     // placeholder="Search boards, tags, and people"
                     placeholder="Search tags"
                     autoComplete="off"
@@ -89,8 +89,13 @@ export const Navbar = () => {
                     variant="primary"
                     label="New Board"
                     onClick={() => navigate('/create-board')}
-                    size="lg"
-                    rounded
+                    className="hidden md:block"
+                  />
+                  <Button
+                    variant="primary"
+                    icon={<PlusIcon />}
+                    onClick={() => navigate('/create-board')}
+                    className="md:hidden"
                   />
 
                   <Menu as="div" className="relative flex-shrink-0">

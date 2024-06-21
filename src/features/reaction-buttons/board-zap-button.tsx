@@ -44,7 +44,7 @@ export const BoardZapButton = ({
         type="button"
         onClick={() => setShowModal(true)}
         className={joinClassNames(
-          'inline-flex justify-center items-center text-xs font-semibold bg-white',
+          'inline-flex justify-center items-center text-xs font-semibold bg-white border',
           zapedByUser
             ? 'text-yellow-600 hover:text-yellow-700'
             : 'text-gray-600 hover:text-gray-900',

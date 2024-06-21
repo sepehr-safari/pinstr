@@ -1,3 +1,9 @@
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/shared/components/ui/tooltip';
 import { joinClassNames } from '@/shared/utils';
 
 const variantClasses = {
@@ -28,6 +34,7 @@ type Props = {
   block?: boolean;
   className?: string;
   onClick?: () => void;
+  tooltip?: string;
 };
 
 export const Button = ({
@@ -40,21 +47,39 @@ export const Button = ({
   block = false,
   className = '',
   onClick,
+  tooltip,
 }: Props) => {
   const joinedClassNames = joinClassNames(
     'flex items-center justify-center text-xs font-semibold focus:outline-none',
     sizeClasses[size],
     variantClasses[variant],
-    rounded ? 'rounded-full' : 'rounded-md',
+    rounded ? 'rounded-full' : 'rounded-lg',
     disabled ? 'opacity-50 cursor-not-allowed' : '',
     block ? 'w-full' : '',
     className
   );
 
-  return (
+  const Btn = () => (
     <button className={joinedClassNames} disabled={disabled} onClick={onClick}>
-      {icon && <div className="-ml-1 w-4 h-4 flex items-center">{icon}</div>}
+      {icon && (
+        <div className={joinClassNames('w-4 h-4 flex items-center', !!label ? '' : '')}>{icon}</div>
+      )}
       {label && <span className={joinClassNames(icon ? 'ml-2' : '')}>{label}</span>}
     </button>
   );
+
+  const TooltipBtn = () => (
+    <TooltipProvider delayDuration={500} disableHoverableContent>
+      <Tooltip>
+        <TooltipTrigger>
+          <Btn />
+        </TooltipTrigger>
+        <TooltipContent side="bottom">
+          <p>{tooltip}</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+
+  return !tooltip ? <Btn /> : <TooltipBtn />;
 };

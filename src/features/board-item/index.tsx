@@ -9,7 +9,7 @@ import { useUser } from '@/shared/hooks/queries';
 import { Board } from '@/shared/types';
 import { ellipsis, loader } from '@/shared/utils';
 
-import { EllipsisPopover } from '@/features';
+import { BoardBooster, EllipsisPopover } from '@/features';
 import { BoardLikeButton, BoardZapButton } from '@/features/reaction-buttons';
 
 // TODO: refactor
@@ -21,6 +21,9 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
 
   const navigate = useNavigate();
   const location = useLocation();
+  const state = location.state as { backgroundLocation?: Location };
+  const backgroundLocation =
+    state && state.backgroundLocation ? state.backgroundLocation : location;
 
   // const { format, category } = useFiltersParams();
 
@@ -55,7 +58,7 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
 
         <Link
           to={`/p/${board.event.author.npub}/${encodeURIComponent(board.title)}`}
-          state={{ backgroundLocation: location }}
+          state={{ backgroundLocation }}
           className="z-[4] absolute inset-0"
         />
 
@@ -71,6 +74,7 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
           <div className="z-[4] absolute right-4 top-4 flex gap-2">
             <BoardLikeButton board={board} circular />
             <BoardZapButton board={board} circular />
+            <BoardBooster board={board} />
             {/* TODO: Slideover comments section from right */}
             {/* <BoardCommentButton board={board} circular /> */}
           </div>
@@ -92,7 +96,7 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
             {!hideAuthor && (
               <Link
                 to={`/p/${board.event.author.npub}`}
-                state={{ backgroundLocation: location }}
+                state={{ backgroundLocation }}
                 className="text-xs font-semibold focus:border-none focus:outline-none hover:underline"
               >
                 <h3>{ellipsis(board.event.author.profile?.name || '', 30)}</h3>
@@ -101,7 +105,7 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
 
             <Link
               to={`/p/${board.event.author.npub}/${encodeURIComponent(board.title)}`}
-              state={{ backgroundLocation: location }}
+              state={{ backgroundLocation }}
               className="text-sm font-bold [overflow-wrap:anywhere] focus:border-none focus:outline-none hover:underline"
             >
               <h4>{ellipsis(board.title, 60)}</h4>
@@ -122,7 +126,7 @@ const BoardItem = ({ board, hideAuthor = false }: { board: Board; hideAuthor?: b
         </Transition>
 
         <img
-          src={loader(board.image, { w: 300 })}
+          src={loader(board.image, { w: 600 })}
           alt={board.title}
           className="h-full w-full text-gray-100 min-h-[100px] object-contain"
           loading="lazy"

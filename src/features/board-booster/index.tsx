@@ -104,9 +104,9 @@ export const BoardBooster = ({ board }: Props) => {
 
       <Button
         variant="primary"
-        block
+        rounded
         icon={<RocketLaunchIcon />}
-        label="Boost This Board!"
+        label="BOOSTR ™️"
         onClick={() => {
           setIsExploding(false);
           setAnon(false);
@@ -116,13 +116,14 @@ export const BoardBooster = ({ board }: Props) => {
 
           setIsShowingModal(true);
         }}
+        tooltip="⚡️ Zap to boost"
       />
 
       {isShowingModal && (
         <Modal onClose={() => setIsShowingModal(false)}>
           <div className="flex flex-col gap-4">
             <div className="text-center flex flex-col gap-2">
-              <Text variant="h3">{`🚀 Support Your Favorite Board 🚀`}</Text>
+              <Text variant="h3">{`🚀 Support Your Favorite Boards with ⚡️ Zap!`}</Text>
               <Text variant="h4">{`Boost this board to the FEATURED section!`}</Text>
             </div>
 
@@ -194,9 +195,6 @@ export const BoardBooster = ({ board }: Props) => {
 
             <div className="text-center">
               <Text variant="xs">
-                {`You can not boost an already boosted board, until the boost expires.`}
-              </Text>
-              <Text variant="xs">
                 {`Boosts will be processed automatically once the payment is confirmed.`}
               </Text>
               <Text variant="xs">
@@ -204,6 +202,9 @@ export const BoardBooster = ({ board }: Props) => {
               </Text>
               <Text variant="xs">
                 {`You can also consider supporting your favorite boards by zapping them directly.`}
+              </Text>
+              <Text variant="xs">
+                {`You can not boost an already boosted board, until the boost expires.`}
               </Text>
             </div>
           </div>

@@ -1,5 +1,3 @@
-import { useLocation } from 'react-router-dom';
-
 import { joinClassNames } from '@/shared/utils';
 
 export const MainContainer = ({
@@ -9,18 +7,8 @@ export const MainContainer = ({
   children: React.ReactNode;
   className?: string;
 }) => {
-  const location = useLocation();
-  const state = location.state as { backgroundLocation?: Location };
-
   return (
-    <div
-      className={joinClassNames(
-        'w-full h-full px-4 pb-16 xl:px-0 xl:pt-4',
-        'mx-auto max-w-sm sm:max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg xl:max-w-none',
-        state?.backgroundLocation ? 'xl:mt-16' : 'xl:mt-28',
-        className
-      )}
-    >
+    <div className={joinClassNames('w-full h-full px-4 pb-10', 'mx-auto', className)}>
       {children}
     </div>
   );

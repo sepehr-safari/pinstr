@@ -16,7 +16,7 @@ export const ProfileBanner = () => {
     <div
       className={joinClassNames(
         '-mt-20 absolute top-0 w-full bg-gray-300 rounded-t-md',
-        state?.backgroundLocation ? 'h-40' : 'h-52'
+        state?.backgroundLocation ? 'h-60' : 'h-72'
       )}
     >
       {!!banner ? (

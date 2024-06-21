@@ -11,13 +11,13 @@ export const FiltersNavbar = () => {
         {/* <div className="flex-1 max-w-xs">
           <AuthorGroupMenu />
         </div> */}
-        <div className="flex-1 sm:max-w-sm min-w-[20rem]">
+        <div className="flex-1 min-w-[20rem]">
           <CategoryFilterMenu
             selected={category.value}
             setSelected={(item) => category.set(item.title)}
           />
         </div>
-        <div className="flex-1 sm:max-w-sm min-w-[20rem]">
+        <div className="flex-1 min-w-[20rem]">
           <FormatFilterMenu
             selected={format.value}
             setSelected={(item) => format.set(item.title)}

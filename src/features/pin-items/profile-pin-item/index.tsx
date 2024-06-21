@@ -10,6 +10,7 @@ import { Board } from '@/shared/types';
 import { ellipsis, joinClassNames, loader } from '@/shared/utils';
 
 import { EllipsisPopover } from '@/features';
+import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 
 type Props = {
   board: Board;
@@ -29,32 +30,30 @@ export const ProfilePinItem = ({ board, setPinIndex }: Props) => {
 
   return (
     <>
-      <ul
-        role="list"
-        className={joinClassNames(
-          'grid gap-4 grid-cols-1 sm:grid-cols-2',
-          'md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-5 5xl:grid-cols-6'
-        )}
+      <ResponsiveMasonry
+        columnsCountBreakPoints={{ 300: 1, 600: 2, 900: 3, 1200: 4, 1500: 5, 1900: 6, 2200: 7 }}
       >
-        {board.pins.slice(0, lastPinIndex).map((pin, index) => (
-          <li
-            key={pin[0]}
-            className="relative group overflow-hidden flex flex-col justify-between rounded-lg ease-in-out duration-500 hover:shadow-md hover:bg-gray-50"
-          >
-            <EllipsisPopover
-              board={board}
-              selfBoard={selfBoard}
-              pinIndex={index}
-              internalLinks={[[`/p/${nip19.npubEncode(pin[0])}`, 'Open profile']]}
-              externalLinks={[[`https://njump.me/${nip19.npubEncode(pin[0])}`, 'Open in njump']]}
-              editType="pin"
-              className="bottom-4 right-4"
-            />
+        <Masonry gutter="1rem">
+          {board.pins.slice(0, lastPinIndex).map((pin, index) => (
+            <div
+              key={pin[0]}
+              className="relative group overflow-hidden flex flex-col justify-between rounded-lg shadow border bg-white ease-in-out duration-500 hover:shadow-lg hover:bg-gray-50 hover:-translate-y-1 hover:scale-105"
+            >
+              <EllipsisPopover
+                board={board}
+                selfBoard={selfBoard}
+                pinIndex={index}
+                internalLinks={[[`/p/${nip19.npubEncode(pin[0])}`, 'Open profile']]}
+                externalLinks={[[`https://njump.me/${nip19.npubEncode(pin[0])}`, 'Open in njump']]}
+                editType="pin"
+                className="bottom-4 right-4"
+              />
 
-            <ProfileDetails pubkey={pin[0]} setOpenDetails={() => setPinIndex(index)} summary />
-          </li>
-        ))}
-      </ul>
+              <ProfileDetails pubkey={pin[0]} setOpenDetails={() => setPinIndex(index)} summary />
+            </div>
+          ))}
+        </Masonry>
+      </ResponsiveMasonry>
 
       {hasNextPage && (
         <button
@@ -84,7 +83,7 @@ export const ProfileDetails = ({
 
   if (!isLoading && !author) {
     return (
-      <div className="w-full h-full flex items-center justify-center text-xs text-gray-400 bg-white rounded-lg min-h-[20rem]">
+      <div className="w-full h-full flex items-center justify-center text-xs text-gray-400 bg-white rounded-lg">
         Profile not found!
       </div>
     );
@@ -100,8 +99,8 @@ export const ProfileDetails = ({
       >
         <div
           className={joinClassNames(
-            'w-full h-24 text-gray-200 duration-500 group-hover:rounded-b-none',
-            summary ? 'rounded-lg' : 'rounded-t-lg',
+            'w-full h-24 text-gray-200 duration-500 rounded-t-lg',
+
             isLoading
               ? 'animate-pulse bg-gray-300'
               : 'bg-gradient-to-br from-purple-800 to-purple-500'
@@ -109,10 +108,7 @@ export const ProfileDetails = ({
         >
           {!!author?.profile?.banner && (
             <img
-              className={joinClassNames(
-                'w-full h-full object-cover duration-500 group-hover:rounded-b-none',
-                summary ? 'rounded-lg' : 'rounded-t-lg'
-              )}
+              className={joinClassNames('w-full h-full object-cover duration-500 rounded-t-lg')}
               src={loader(author.profile.banner, { w: 300, h: 96 })}
               alt={author.profile.name + ' banner'}
               loading="lazy"
