@@ -30,7 +30,7 @@ export const BoardCommentButton = ({
         type="button"
         onClick={toggleCommentsParams}
         className={joinClassNames(
-          'inline-flex justify-center items-center text-xs font-semibold bg-white duration-200 text-gray-600 hover:text-gray-900',
+          'inline-flex justify-center items-center text-xs font-semibold bg-white border duration-200 text-gray-600 hover:text-gray-900',
           bgHover ? 'hover:bg-gray-200' : '',
           circular ? 'rounded-full p-2' : ''
         )}

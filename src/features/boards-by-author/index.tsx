@@ -30,7 +30,7 @@ export const BoardsByAuthor = () => {
         loader={<></>}
       >
         <ResponsiveMasonry
-          columnsCountBreakPoints={{ 300: 1, 600: 2, 900: 2, 1200: 2, 1500: 3, 1900: 4, 2200: 5 }}
+          columnsCountBreakPoints={{ 300: 1, 600: 2, 900: 3, 1200: 4, 1500: 5, 1900: 6, 2200: 7 }}
         >
           <Masonry gutter="0.25rem">
             {boards.map((board) => (

@@ -1,17 +1,23 @@
-import { BoardsByAuthor, ProfileCard, FiltersNavbar } from '@/features';
-import { StickyContainer, MainContainer } from '@/shared/layouts';
+import { BoardsByAuthor, FiltersNavbar, ProfileBanner, ProfileCard } from '@/features';
+import { MainContainer } from '@/shared/layouts';
 
 export const Page = () => {
   return (
     <>
-      <div className="relative gap-y-6 gap-x-8 flex flex-col xl:flex-row xl:p-8">
-        <StickyContainer>
-          <ProfileCard />
+      <ProfileBanner />
 
-          <div className="px-4 xl:px-0">
-            <FiltersNavbar />
-          </div>
-        </StickyContainer>
+      <div className="relative gap-y-6 gap-x-8 flex flex-col">
+        {/* <StickyContainer>
+
+<div className="px-4 xl:px-0">
+</div>
+</StickyContainer> */}
+
+        <ProfileCard />
+
+        <div className="mx-auto px-4">
+          <FiltersNavbar />
+        </div>
 
         <MainContainer>
           <BoardsByAuthor />
