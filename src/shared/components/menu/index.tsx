@@ -1,4 +1,5 @@
 import { Menu as HeadlessuiMenu, Transition } from '@headlessui/react';
+import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import { Fragment } from 'react';
 
 import { joinClassNames } from '@/shared/utils';
@@ -30,7 +31,7 @@ export const Menu = ({
         <HeadlessuiMenu.Button
           disabled={disabled}
           className={joinClassNames(
-            'inline-flex w-full justify-center gap-x-1.5 rounded-full px-3 py-2 text-xs font-light shadow-sm ring-1 ring-inset',
+            'inline-flex w-full justify-center gap-x-1.5 rounded-lg px-3 py-2 text-xs font-light shadow-sm ring-1 ring-inset',
             variant === 'primary'
               ? 'bg-gray-900 text-white ring-gray-900/20 hover:bg-gray-800 disabled:bg-gray-900 disabled:text-gray-500'
               : 'bg-white text-gray-900 ring-gray-900/20 hover:bg-gray-100 disabled:bg-gray-100 disabled:text-gray-500'
@@ -38,6 +39,7 @@ export const Menu = ({
         >
           {icon}
           {label}
+          <ChevronDownIcon className="ml-1 w-3 h-3 self-center" />
         </HeadlessuiMenu.Button>
       </div>
 
