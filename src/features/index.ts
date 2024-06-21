@@ -1,5 +1,6 @@
 export * from './author-filter-menu';
 export * from './author-overview';
+export * from './board-banner';
 export * from './board-booster';
 export * from './board-item';
 export * from './board-summary';
